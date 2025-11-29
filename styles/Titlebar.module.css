@@ -1,0 +1,144 @@
+.titlebar {
+    background: var(--titlebar-bg);
+    height: 30px;
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #191d20;
+    position: relative;
+}
+
+.items {
+    flex: 1;
+    display: flex;
+    margin-right: auto;
+    margin-left: 0.5rem;
+}
+
+.title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.items>* {
+    padding: 0 0.5rem;
+    cursor: pointer;
+}
+
+.windowButtons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.windowButtons button {
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.windowButtons button:hover {
+    opacity: 0.8;
+}
+
+.windowButtons button svg {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.windowButtons button:hover svg {
+    opacity: 1;
+}
+
+.minimize {
+    background: #ffff00;
+    position: relative;
+}
+
+.minimize::before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    content: ' ';
+    height: 2px;
+    width: 7px;
+    background-color: #000;
+}
+
+.minimize svg {
+    display: none;
+}
+
+.maximize {
+    background: #00ff00;
+    position: relative;
+}
+
+.maximize::before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    content: ' ';
+    height: 6px;
+    width: 6px;
+    border: 1.5px solid #000;
+    box-sizing: border-box;
+}
+
+.maximize svg {
+    display: none;
+}
+
+.close {
+    background: #ff0000;
+    position: relative;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.close::before,
+.close::after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    content: ' ';
+    height: 8px;
+    width: 1.5px;
+    background-color: #000;
+}
+
+.close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.close svg {
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .items p {
+        display: none;
+    }
+
+    .title {
+        flex: 4;
+    }
+}

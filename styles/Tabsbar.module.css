@@ -1,0 +1,25 @@
+.tabs {
+    display: flex;
+    background: var(--tabs-bg);
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.tabs::-webkit-scrollbar {
+    height: 8px;
+}
+
+.tabs::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-bg);
+}
+
+.tabs::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-bg);
+}
+
+.tabItem {
+    display: inline-block;
+    flex-shrink: 0;
+}

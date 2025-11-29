@@ -1,0 +1,185 @@
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+    align-self: flex-start;
+    padding-top: 2rem;
+}
+
+.terminal {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+.terminalHeader {
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.terminalDots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dotRed {
+    background: #ff5f56;
+}
+
+.dotYellow {
+    background: #ffbd2e;
+}
+
+.dotGreen {
+    background: #27ca40;
+}
+
+.terminalTitle {
+    flex: 1;
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.terminalBody {
+    padding: 2rem;
+}
+
+.bootHeader {
+    color: #00ff88;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.infoBlock {
+    margin-bottom: 2rem;
+}
+
+.infoLine {
+    display: flex;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.infoLabel {
+    color: #888;
+    min-width: 140px;
+}
+
+.infoValue {
+    color: #00d4ff;
+}
+
+.statusMounted {
+    color: #00ff88;
+    font-weight: 600;
+}
+
+.statusReadOnly {
+    color: #ffbd2e;
+}
+
+.divider {
+    border: none;
+    border-top: 1px dashed #333;
+    margin: 2rem 0;
+}
+
+.actionSection {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.downloadBtn {
+    background: transparent;
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    padding: 1rem 2rem;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.downloadBtn:hover {
+    background: #00ff88;
+    color: #0a0a0a;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+}
+
+.downloadBtn:active {
+    transform: scale(0.98);
+}
+
+.blinkingCursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background: #00ff88;
+    margin-left: 4px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.footer {
+    margin-top: 2rem;
+    color: #555;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .terminalBody {
+        padding: 1.5rem 1rem;
+    }
+
+    .bootHeader {
+        font-size: 0.9rem;
+    }
+
+    .infoLine {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .infoLabel {
+        min-width: auto;
+    }
+
+    .downloadBtn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+    }
+}

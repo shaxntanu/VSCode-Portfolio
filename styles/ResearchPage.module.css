@@ -1,0 +1,194 @@
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    align-self: flex-start;
+    height: calc(100vh - 154px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-bottom: 2rem;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.pageTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    text-align: center;
+    padding-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.pageSubtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    line-height: 1.6;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    margin-bottom: 3rem;
+}
+
+.sectionTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--accent-color);
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--article-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(var(--accent-color-rgb), 0.15);
+    transform: translateY(-2px);
+}
+
+.cardIcon {
+    font-size: 2.5rem;
+    color: #fff;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin: 0 0 0.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.cardMeta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.cardId {
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #6b7280;
+}
+
+.cardType {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.cardFooter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cardDate {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.statusBadge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.cardLink {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.card:hover .cardLink {
+    color: var(--accent-color);
+}
+
+.comingSoon {
+    padding: 3rem;
+    text-align: center;
+    background: var(--article-bg);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+}
+
+.comingSoon p {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .pageTitle {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cardMeta,
+    .cardFooter {
+        justify-content: center;
+    }
+
+    .cardIcon {
+        font-size: 2rem;
+    }
+}

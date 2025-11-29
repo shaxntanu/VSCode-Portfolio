@@ -1,0 +1,145 @@
+import Head from '@/components/Head';
+import Image from 'next/image';
+import RepoCard from '@/components/RepoCard';
+import GitHubCalendar from 'react-github-calendar';
+import styles from '@/styles/GithubPage.module.css';
+import { Repo, User } from '@/types';
+
+interface GithubPageProps {
+  repos?: Repo[];
+  user?: User;
+  totalStars?: number;
+  totalForks?: number;
+}
+
+const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: GithubPageProps) => {
+  const username = 'shaxntanu';
+  
+  const calendarTheme = {
+    dark: [
+      'rgba(255, 255, 255, 0.05)',
+      'rgba(0, 212, 255, 0.3)',
+      'rgba(0, 212, 255, 0.5)',
+      'rgba(0, 212, 255, 0.7)',
+      'rgba(0, 212, 255, 1)',
+    ],
+  };
+  
+  return (
+    <>
+      <Head title="Github" />
+      <div className={styles.container}>
+        {user && (
+          <div className={styles.profileSection}>
+            <div className={styles.profileHeader}>
+              <Image
+                src={user.avatar_url}
+                alt={user.login}
+                width={120}
+                height={120}
+                className={styles.avatar}
+              />
+              <div className={styles.profileInfo}>
+                <h1 className={styles.name}>{user.name || user.login}</h1>
+                <a href={user.html_url} target="_blank" rel="noopener noreferrer" className={styles.username}>
+                  @{user.login}
+                </a>
+                {user.bio && <p className={styles.bio}>{user.bio}</p>}
+              </div>
+            </div>
+            
+            <div className={styles.statsGrid}>
+              <div className={styles.statCard}>
+                <span className={styles.statNumber}>{user.public_repos}</span>
+                <span className={styles.statLabel}>Repositories</span>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statNumber}>{user.followers}</span>
+                <span className={styles.statLabel}>Followers</span>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statNumber}>{user.following}</span>
+                <span className={styles.statLabel}>Following</span>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statNumber}>{totalStars}</span>
+                <span className={styles.statLabel}>Total Stars</span>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statNumber}>{totalForks}</span>
+                <span className={styles.statLabel}>Total Forks</span>
+              </div>
+            </div>
+
+            <div className={styles.contributionSection}>
+              <h3 className={styles.sectionTitle}>Contribution Graph</h3>
+              <div className={styles.contributionGraph}>
+                <GitHubCalendar 
+                  username={username}
+                  colorScheme="dark"
+                  blockSize={11}
+                  blockMargin={5}
+                  fontSize={13}
+                  theme={calendarTheme}
+                  style={{
+                    color: 'rgba(255, 255, 255, 0.7)',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className={styles.reposSection}>
+          <h2 className={styles.sectionTitle}>Repositories</h2>
+          {repos.length === 0 ? (
+            <p>Loading repositories...</p>
+          ) : (
+            <div className={styles.grid}>
+              {repos.map((repo) => (
+                <RepoCard key={repo.id} repo={repo} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export async function getStaticProps() {
+  const username = 'shaxntanu';
+  
+  try {
+    const [reposRes, userRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`),
+      fetch(`https://api.github.com/users/${username}`)
+    ]);
+    
+    const repos: Repo[] = await reposRes.json();
+    const user: User = await userRes.json();
+    
+    // Calculate total stars and forks
+    const totalStars = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0) : 0;
+    const totalForks = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.forks || 0), 0) : 0;
+
+    return {
+      props: { 
+        title: 'Github', 
+        repos: Array.isArray(repos) ? repos.slice(0, 10) : [], 
+        user: user?.login ? user : null,
+        totalStars,
+        totalForks
+      },
+      revalidate: 3600,
+    };
+  } catch (error) {
+    console.error('Error fetching GitHub data:', error);
+    return {
+      props: { title: 'Github', repos: [], user: null, totalStars: 0, totalForks: 0 },
+      revalidate: 60,
+    };
+  }
+}
+
+export default GithubPage;

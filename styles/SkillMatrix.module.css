@@ -1,0 +1,172 @@
+.matrixContainer {
+    background: #0a0a0a;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.matrixHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.matrixIcon {
+    color: #00dc8c;
+    font-size: 0.75rem;
+}
+
+.matrixTitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.skillsColumn {
+    flex: 1;
+}
+
+.toolsColumn {
+    text-align: right;
+}
+
+.columnHeader {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+    line-height: 1.8em;
+}
+
+.categoryHeader {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.4em;
+}
+
+.categoryHeaderSpacer {
+    height: 22px;
+    margin-top: 0.5rem;
+}
+
+.skillRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 17px;
+    cursor: pointer;
+}
+
+.skillName {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: -0.03em;
+    line-height: 1.1em;
+    transition: color 0.15s ease;
+}
+
+.scoreBadge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 500;
+    padding: 1.92px 7.68px;
+    border-radius: 33px;
+    min-width: 21.12px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.toolRow {
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.toolName {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1em;
+    transition: color 0.15s ease;
+}
+
+.footer {
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+    text-align: right;
+}
+
+.footerNote {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    line-height: 1.5;
+}
+
+.comment {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.chartContainer {
+    height: 120px;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.hovered .skillName {
+    font-weight: 400;
+}
+
+@media screen and (max-width: 768px) {
+    .matrixContainer {
+        padding: 1rem;
+    }
+
+    .content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .toolsColumn {
+        text-align: left;
+    }
+
+    .toolRow {
+        justify-content: flex-start;
+    }
+
+    .chartContainer {
+        height: 100px;
+    }
+
+    .skillName {
+        font-size: 0.7rem;
+    }
+
+    .toolName {
+        font-size: 0.65rem;
+    }
+
+    .categoryHeaderSpacer {
+        display: none;
+    }
+}
