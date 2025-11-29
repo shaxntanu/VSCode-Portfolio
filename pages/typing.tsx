@@ -7,7 +7,6 @@ interface TypingStats {
   testsCompleted: number;
   completionRate: number;
   timeTyping: string;
-  testActivity: number[];
 }
 
 interface TypingPageProps {
@@ -81,34 +80,6 @@ const TypingPage = ({ stats }: TypingPageProps) => {
           </div>
         </div>
 
-        {stats?.testActivity && stats.testActivity.length > 0 && (
-          <div className={styles.activitySection}>
-            <h3 className={styles.activityTitle}>Test Activity (Last {stats.testActivity.length} Days)</h3>
-            <div className={styles.activityGraph}>
-              {stats.testActivity.slice(-60).map((count, index) => {
-                const maxCount = Math.max(...stats.testActivity.slice(-60), 1);
-                const intensity = count > 0 ? Math.min(Math.ceil((count / maxCount) * 4), 4) : 0;
-                return (
-                  <div
-                    key={index}
-                    className={`${styles.activityCell} ${styles[`intensity${intensity}`]}`}
-                    title={`${count} tests`}
-                  />
-                );
-              })}
-            </div>
-            <div className={styles.activityLegend}>
-              <span>Less</span>
-              <div className={`${styles.activityCell} ${styles.intensity0}`} />
-              <div className={`${styles.activityCell} ${styles.intensity1}`} />
-              <div className={`${styles.activityCell} ${styles.intensity2}`} />
-              <div className={`${styles.activityCell} ${styles.intensity3}`} />
-              <div className={`${styles.activityCell} ${styles.intensity4}`} />
-              <span>More</span>
-            </div>
-          </div>
-        )}
-
         <div className={styles.profileLink}>
           <a 
             href={`https://monkeytype.com/profile/${username}`}
@@ -141,21 +112,14 @@ export async function getStaticProps() {
 
   if (apiKey) {
     try {
-      // Fetch stats and activity in parallel
-      const [statsRes, activityRes] = await Promise.all([
-        fetch('https://api.monkeytype.com/users/stats', {
-          headers: { 'Authorization': `ApeKey ${apiKey}` },
-        }),
-        fetch('https://api.monkeytype.com/users/currentTestActivity', {
-          headers: { 'Authorization': `ApeKey ${apiKey}` },
-        }),
-      ]);
+      const statsRes = await fetch('https://api.monkeytype.com/users/stats', {
+        headers: { 'Authorization': `ApeKey ${apiKey}` },
+      });
 
       let testsStarted = 0;
       let testsCompleted = 0;
       let completionRate = 0;
       let timeTyping = '---';
-      let testActivity: number[] = [];
 
       if (statsRes.ok) {
         const statsData = await statsRes.json();
@@ -174,12 +138,7 @@ export async function getStaticProps() {
         }
       }
 
-      if (activityRes.ok) {
-        const activityData = await activityRes.json();
-        testActivity = activityData.data?.testsByDays || [];
-      }
-
-      stats = { testsStarted, testsCompleted, completionRate, timeTyping, testActivity };
+      stats = { testsStarted, testsCompleted, completionRate, timeTyping };
     } catch (error) {
       console.error('Error fetching MonkeyType stats:', error);
     }
