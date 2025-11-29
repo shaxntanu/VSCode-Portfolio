@@ -66,7 +66,7 @@ const skillData: SkillCategory[] = [
 
 const SkillMatrix = () => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-  const [hoveredChartIndex, setHoveredChartIndex] = useState<number | null>(null);
+  const [, setHoveredChartIndex] = useState<number | null>(null);
   const [animatedScores, setAnimatedScores] = useState<{ [key: string]: number }>({});
   const chartRef = useRef<any>(null);
 
@@ -78,7 +78,6 @@ const SkillMatrix = () => {
       
       let current = 0;
       const increment = targetScore === 33 ? 33 : targetScore === 66 ? 33 : 33;
-      const steps = targetScore / increment;
       let step = 0;
 
       const timer = setInterval(() => {
@@ -246,13 +245,13 @@ const SkillMatrix = () => {
 
       <div className={styles.footer}>
         <div className={styles.footerNote}>
-          <span className={styles.comment}>// skill scores are self-assessed </span>
+          <span className={styles.comment}>{/* skill scores are self-assessed */}</span>
           <span style={{ color: '#a078ff' }}>(total = 100)</span>
         </div>
         <div className={styles.footerNote}>
-          <span className={styles.comment}>// always </span>
+          <span className={styles.comment}>{/* always */}</span>
           <span style={{ color: '#00dc8c' }}>iterating</span>
-          <span className={styles.comment}>, always </span>
+          <span className={styles.comment}>{/* , always */}</span>
           <span style={{ color: '#ff8c50' }}>improving</span>
         </div>
       </div>

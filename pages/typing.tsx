@@ -1,4 +1,5 @@
 import Head from '@/components/Head';
+import Image from 'next/image';
 import styles from '@/styles/TypingPage.module.css';
 
 interface TypingStats {
@@ -41,7 +42,7 @@ const TypingPage = ({ stats }: TypingPageProps) => {
         <div className={styles.statsGrid}>
           <div className={styles.statCard}>
             <div className={styles.statIcon}>
-              <img src="/logos/test_started.svg" alt="Tests Started" width="48" height="48" />
+              <Image src="/logos/test_started.svg" alt="Tests Started" width={48} height={48} />
             </div>
             <div className={styles.statInfo}>
               <span className={styles.statLabel}>Tests Started</span>
@@ -51,7 +52,7 @@ const TypingPage = ({ stats }: TypingPageProps) => {
 
           <div className={styles.statCard}>
             <div className={styles.statIcon}>
-              <img src="/logos/test_completed.svg" alt="Tests Completed" width="48" height="48" />
+              <Image src="/logos/test_completed.svg" alt="Tests Completed" width={48} height={48} />
             </div>
             <div className={styles.statInfo}>
               <span className={styles.statLabel}>Tests Completed</span>
@@ -61,7 +62,7 @@ const TypingPage = ({ stats }: TypingPageProps) => {
 
           <div className={styles.statCard}>
             <div className={styles.statIcon}>
-              <img src="/logos/completion_rate.svg" alt="Completion Rate" width="48" height="48" />
+              <Image src="/logos/completion_rate.svg" alt="Completion Rate" width={48} height={48} />
             </div>
             <div className={styles.statInfo}>
               <span className={styles.statLabel}>Completion Rate</span>
@@ -71,7 +72,7 @@ const TypingPage = ({ stats }: TypingPageProps) => {
 
           <div className={styles.statCard}>
             <div className={styles.statIcon}>
-              <img src="/logos/time_typing.svg" alt="Time Typing" width="48" height="48" />
+              <Image src="/logos/time_typing.svg" alt="Time Typing" width={48} height={48} />
             </div>
             <div className={styles.statInfo}>
               <span className={styles.statLabel}>Time Typing</span>
