@@ -248,13 +248,13 @@ const SkillMatrix = () => {
 
       <div className={styles.footer}>
         <div className={styles.footerNote}>
-          <span className={styles.comment}>// skill scores are self-assessed </span>
+          <span className={styles.comment}>{'// skill scores are self-assessed '}</span>
           <span style={{ color: '#a078ff' }}>(total = 100)</span>
         </div>
         <div className={styles.footerNote}>
-          <span className={styles.comment}>// always </span>
+          <span className={styles.comment}>{'// always '}</span>
           <span style={{ color: '#00dc8c' }}>iterating</span>
-          <span className={styles.comment}>, always </span>
+          <span className={styles.comment}>{', always '}</span>
           <span style={{ color: '#ff8c50' }}>improving</span>
         </div>
       </div>
