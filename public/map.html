@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Map</title>
     <style>
-        html,
-        body {
+        html, body {
             margin: 0;
             height: 100%;
             overflow: hidden;
         }
-
+        
         body {
             display: flex;
             align-items: flex-start;
@@ -26,7 +25,7 @@
             grid-template-columns: repeat(55, 1fr);
             grid-template-rows: repeat(40, 1fr);
             position: relative;
-            margin-top: -28px;
+            margin-top: -50px;
         }
 
         .cell {
@@ -84,6 +83,33 @@
 
             100% {
                 top: 0;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 7px;
+            }
+            
+            .container {
+                margin-top: -30px;
+            }
+            
+            .loader-shape-3 {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .loader-shape-3:before {
+                width: 12px;
+                height: 12px;
+                margin-top: 12px;
+            }
+            
+            .loader-shape-3:after {
+                width: 18px;
+                height: 12px;
+                margin-top: 9px;
             }
         }
     </style>
