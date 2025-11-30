@@ -42,6 +42,23 @@ const AboutPage = () => {
               If I had unlimited resources, I&apos;d build a <span className={styles.highlight}>Neural-Feedback Prosthetic System</span>. Imagine a prosthetic limb that doesn&apos;t just move but actually lets the user feel what they are touching through advanced sensor arrays. It combines my passion for assistive tech with complex sensor integration, taking the concept of the Blind Stick to a completely new level.
             </p>
           </section>
+
+          <section className={styles.section}>
+            <div className={styles.mapContainer}>
+              <iframe 
+                src="/map.html" 
+                className={styles.mapFrame}
+                title="World Map"
+                scrolling="no"
+              />
+            </div>
+            <p className={styles.proudText}>
+              <span className={styles.proudWord}>Proud</span>{' '}
+              <span className={styles.indianOrange}>In</span>
+              <span className={styles.indianWhite}>di</span>
+              <span className={styles.indianGreen}>an</span>
+            </p>
+          </section>
         </div>
       </div>
     </div>
