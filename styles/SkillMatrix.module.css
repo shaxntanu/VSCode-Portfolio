@@ -85,11 +85,11 @@
 
 .scoreBadge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.582rem;
     font-weight: 500;
-    padding: 1.92px 7.68px;
-    border-radius: 33px;
-    min-width: 21.12px;
+    padding: 1.86px 7.45px;
+    border-radius: 32px;
+    min-width: 20.49px;
     text-align: center;
     transition: all 0.2s ease;
 }

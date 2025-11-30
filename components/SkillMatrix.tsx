@@ -70,25 +70,28 @@ const SkillMatrix = () => {
   const [animatedScores, setAnimatedScores] = useState<{ [key: string]: number }>({});
   const chartRef = useRef<any>(null);
 
-  // Counter animation effect
+  // Counter animation effect - counts from 0 to target score
   useEffect(() => {
     if (hoveredSkill) {
       const [catIdx, skillIdx] = hoveredSkill.split('-').map(Number);
       const targetScore = skillData[catIdx].skills[skillIdx].score;
       
       let current = 0;
-      const increment = targetScore === 33 ? 33 : targetScore === 66 ? 33 : 33;
-      let step = 0;
+      const duration = 600; // Total animation duration in ms (0.6 seconds)
+      const steps = 12; // Number of steps in animation
+      const increment = targetScore / steps;
+      const intervalTime = duration / steps;
 
       const timer = setInterval(() => {
-        step++;
-        current = Math.min(step * increment, targetScore);
-        setAnimatedScores(prev => ({ ...prev, [hoveredSkill]: current }));
-        
+        current += increment;
         if (current >= targetScore) {
+          current = targetScore;
+          setAnimatedScores(prev => ({ ...prev, [hoveredSkill]: Math.round(current) }));
           clearInterval(timer);
+        } else {
+          setAnimatedScores(prev => ({ ...prev, [hoveredSkill]: Math.round(current) }));
         }
-      }, 50);
+      }, intervalTime);
 
       return () => clearInterval(timer);
     }
@@ -245,13 +248,13 @@ const SkillMatrix = () => {
 
       <div className={styles.footer}>
         <div className={styles.footerNote}>
-          <span className={styles.comment}>{/* skill scores are self-assessed */}</span>
+          <span className={styles.comment}>// skill scores are self-assessed </span>
           <span style={{ color: '#a078ff' }}>(total = 100)</span>
         </div>
         <div className={styles.footerNote}>
-          <span className={styles.comment}>{/* always */}</span>
+          <span className={styles.comment}>// always </span>
           <span style={{ color: '#00dc8c' }}>iterating</span>
-          <span className={styles.comment}>{/* , always */}</span>
+          <span className={styles.comment}>, always </span>
           <span style={{ color: '#ff8c50' }}>improving</span>
         </div>
       </div>
