@@ -129,6 +129,19 @@ const Explorer = () => {
       <div className={`${styles.explorer} ${mobileMenuOpen ? styles.open : ''}`}>
       <p className={styles.title}>Explorer</p>
       <div>
+        {/* main.cpp at root level */}
+        <Link href="/" prefetch={true} onClick={(e) => handleNavigation(e, '/')}>
+          <div className={styles.file}>
+            <Image
+              src="/logos/cpp_icon.svg"
+              alt="main.cpp"
+              height={18}
+              width={18}
+            />
+            <p>main.cpp</p>
+          </div>
+        </Link>
+
         <div
           className={styles.heading}
           onClick={() => setPortfolioOpen(!portfolioOpen)}
@@ -148,7 +161,7 @@ const Explorer = () => {
               exit="closed"
               variants={containerVariants}
             >
-              {explorerItems.map((item) => (
+              {explorerItems.slice(1).map((item) => (
                 <motion.div key={item.name} variants={itemVariants}>
                   <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
                     <div className={styles.file}>
