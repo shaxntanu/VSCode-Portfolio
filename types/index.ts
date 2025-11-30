@@ -18,6 +18,7 @@ export interface Project {
   link: string;
   slug: string;
   category: ProjectCategory;
+  dateRange: string;
   background?: string;
 }
 

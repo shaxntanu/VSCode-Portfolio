@@ -29,6 +29,7 @@ export const projects: Project[] = [
     link: 'https://github.com/shaxntanu/Zephyr-Station',
     slug: 'zephyr-station',
     category: 'HARDWARE_MODULES',
+    dateRange: 'Aug 2025 - Nov 2025',
   },
   {
     title: 'Blind Stick',
@@ -38,6 +39,7 @@ export const projects: Project[] = [
     link: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
     slug: 'blind-stick',
     category: 'HARDWARE_MODULES',
+    dateRange: 'Jul 2018 - Aug 2018',
   },
   {
     title: 'Marcus Omega',
@@ -47,6 +49,7 @@ export const projects: Project[] = [
     link: 'https://glyphthoughts.github.io/Marcus-Landing-Page',
     slug: 'marcus-omega',
     category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Jul 2025 - Oct 2025',
   },
   {
     title: 'GlyphThoughts',
@@ -56,5 +59,6 @@ export const projects: Project[] = [
     link: 'https://github.com/glyphthoughts',
     slug: 'glyphthoughts',
     category: 'MISC_LABS',
+    dateRange: 'Jul 2025 - Present',
   },
 ];

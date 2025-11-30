@@ -40,6 +40,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <h3 className={styles.title} style={{ color: categoryConfig.color }}>
           {project.title}
         </h3>
+        <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
       </div>
     </a>
