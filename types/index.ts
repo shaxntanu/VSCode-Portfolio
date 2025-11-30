@@ -9,12 +9,22 @@ export interface Article {
   comments_count: number;
 }
 
+export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS';
+
 export interface Project {
   title: string;
   description: string;
   logo: string;
   link: string;
   slug: string;
+  category: ProjectCategory;
+  background?: string;
+}
+
+export interface CategoryConfig {
+  title: string;
+  titleHighlight: string;
+  color: string;
 }
 
 export interface Repo {
