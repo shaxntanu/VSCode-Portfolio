@@ -205,35 +205,6 @@ const Explorer = () => {
                       exit="closed"
                       variants={containerVariants}
                     >
-                      {cvSystemFiles.map((item) => (
-                        <motion.div key={item.name} variants={itemVariants}>
-                          {item.external ? (
-                            <a href={item.path} target="_blank" rel="noopener noreferrer">
-                              <div className={styles.file}>
-                                <Image
-                                  src={item.icon}
-                                  alt={item.name}
-                                  height={18}
-                                  width={18}
-                                />
-                                <p>{item.name}</p>
-                              </div>
-                            </a>
-                          ) : (
-                            <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
-                              <div className={styles.file}>
-                                <Image
-                                  src={item.icon}
-                                  alt={item.name}
-                                  height={18}
-                                  width={18}
-                                />
-                                <p>{item.name}</p>
-                              </div>
-                            </Link>
-                          )}
-                        </motion.div>
-                      ))}
                       <motion.div variants={itemVariants}>
                         <div
                           className={styles.nestedFolder}
@@ -273,6 +244,35 @@ const Explorer = () => {
                           )}
                         </AnimatePresence>
                       </motion.div>
+                      {cvSystemFiles.map((item) => (
+                        <motion.div key={item.name} variants={itemVariants}>
+                          {item.external ? (
+                            <a href={item.path} target="_blank" rel="noopener noreferrer">
+                              <div className={styles.file}>
+                                <Image
+                                  src={item.icon}
+                                  alt={item.name}
+                                  height={18}
+                                  width={18}
+                                />
+                                <p>{item.name}</p>
+                              </div>
+                            </a>
+                          ) : (
+                            <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
+                              <div className={styles.file}>
+                                <Image
+                                  src={item.icon}
+                                  alt={item.name}
+                                  height={18}
+                                  width={18}
+                                />
+                                <p>{item.name}</p>
+                              </div>
+                            </Link>
+                          )}
+                        </motion.div>
+                      ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
