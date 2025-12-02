@@ -9,6 +9,19 @@ const nextConfig: NextConfig = {
       { hostname: 'media2.dev.to', protocol: 'https' },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: '/logos/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

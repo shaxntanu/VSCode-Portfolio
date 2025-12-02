@@ -87,6 +87,32 @@
     overflow: hidden;
 }
 
+.nestedFolder {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.35rem 0.5rem 0.35rem 1rem;
+    user-select: none;
+    margin-top: 0.25rem;
+}
+
+.nestedFolder:hover {
+    background: var(--explorer-hover-bg);
+}
+
+.nestedFolder p {
+    margin-left: 0;
+}
+
+.doubleNestedFiles {
+    padding-left: 1rem;
+    overflow: hidden;
+}
+
 @media screen and (min-width: 2000px) {
     .explorer {
         width: 10vw;

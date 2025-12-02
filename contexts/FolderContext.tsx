@@ -4,10 +4,12 @@ import { useRouter } from 'next/router';
 interface FolderContextType {
   portfolioOpen: boolean;
   cvFolderOpen: boolean;
+  githubFolderOpen: boolean;
   miscLogsOpen: boolean;
   mobileMenuOpen: boolean;
   setPortfolioOpen: (open: boolean) => void;
   setCvFolderOpen: (open: boolean) => void;
+  setGithubFolderOpen: (open: boolean) => void;
   setMiscLogsOpen: (open: boolean) => void;
   setMobileMenuOpen: (open: boolean) => void;
 }
@@ -17,6 +19,7 @@ const FolderContext = createContext<FolderContextType | undefined>(undefined);
 export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const [portfolioOpen, setPortfolioOpenState] = useState(true);
   const [cvFolderOpen, setCvFolderOpenState] = useState(false);
+  const [githubFolderOpen, setGithubFolderOpenState] = useState(false);
   const [miscLogsOpen, setMiscLogsOpenState] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
@@ -25,16 +28,20 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const portfolioPaths = ['/', '/about', '/contact'];
   
   // CV_SYSTEMFILES folder paths
-  const cvPaths = ['/projects', '/techstack', '/skillmatrix', '/github', '/experience', '/research', '/resume'];
+  const cvPaths = ['/projects', '/techstack', '/skillmatrix', '/experience', '/research', '/resume'];
+  
+  // Github folder paths
+  const githubPaths = ['/github', '/readme'];
   
   // MISC_LOGS folder paths
   const miscLogsPaths = ['/typing'];
 
   const setPortfolioOpen = (open: boolean) => {
     setPortfolioOpenState(open);
-    // If closing portfolio folder, also close CV folder and MISC_LOGS (they're nested inside)
+    // If closing portfolio folder, also close CV folder, github folder and MISC_LOGS (they're nested inside)
     if (!open) {
       setCvFolderOpenState(false);
+      setGithubFolderOpenState(false);
       setMiscLogsOpenState(false);
       // Redirect to main.cpp if on any page other than home
       if (router.pathname !== '/') {
@@ -45,8 +52,20 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
 
   const setCvFolderOpen = (open: boolean) => {
     setCvFolderOpenState(open);
-    // If closing CV folder and currently on a CV page, redirect to main.cpp
-    if (!open && cvPaths.includes(router.pathname)) {
+    // If closing CV folder, also close github folder
+    if (!open) {
+      setGithubFolderOpenState(false);
+    }
+    // If closing CV folder and currently on a CV or github page, redirect to main.cpp
+    if (!open && (cvPaths.includes(router.pathname) || githubPaths.includes(router.pathname))) {
+      router.push('/');
+    }
+  };
+
+  const setGithubFolderOpen = (open: boolean) => {
+    setGithubFolderOpenState(open);
+    // If closing github folder and currently on a github page, redirect to main.cpp
+    if (!open && githubPaths.includes(router.pathname)) {
       router.push('/');
     }
   };
@@ -64,10 +83,12 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
       value={{
         portfolioOpen,
         cvFolderOpen,
+        githubFolderOpen,
         miscLogsOpen,
         mobileMenuOpen,
         setPortfolioOpen,
         setCvFolderOpen,
+        setGithubFolderOpen,
         setMiscLogsOpen,
         setMobileMenuOpen,
       }}
