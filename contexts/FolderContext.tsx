@@ -38,24 +38,16 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
 
   const setPortfolioOpen = (open: boolean) => {
     setPortfolioOpenState(open);
-    // If closing portfolio folder, also close CV folder, github folder and MISC_LOGS (they're nested inside)
-    if (!open) {
-      setCvFolderOpenState(false);
-      setGithubFolderOpenState(false);
-      setMiscLogsOpenState(false);
-      // Redirect to main.cpp if on any page other than home
-      if (router.pathname !== '/') {
-        router.push('/');
-      }
+    // Don't close nested folders when portfolio is closed - keep their state
+    // Only redirect if closing and on a non-home page
+    if (!open && router.pathname !== '/') {
+      router.push('/');
     }
   };
 
   const setCvFolderOpen = (open: boolean) => {
     setCvFolderOpenState(open);
-    // If closing CV folder, also close github folder
-    if (!open) {
-      setGithubFolderOpenState(false);
-    }
+    // Don't close github folder when CV folder is closed - keep its state
     // If closing CV folder and currently on a CV or github page, redirect to main.cpp
     if (!open && (cvPaths.includes(router.pathname) || githubPaths.includes(router.pathname))) {
       router.push('/');
