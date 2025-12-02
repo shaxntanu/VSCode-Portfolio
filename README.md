@@ -36,13 +36,16 @@ This portfolio website is designed to mimic the Visual Studio Code interface, pr
 
 ### 🚀 **Interactive Pages**
 - **Home** - Arduino-style C++ code introduction
-- **About** - Personal information and background
+- **About** - Personal information with interactive world map showing location
 - **Projects** - Showcase of IoT and embedded systems projects
 - **Tech Stack** - CSV-style skills table with status indicators
+- **Skill Matrix** - Visual skill proficiency matrix
 - **GitHub** - Live GitHub stats and contribution graph
+- **README** - Auto-fetched GitHub profile README (updates automatically)
 - **Experience** - Timeline-based work history with markdown support
 - **Research** - Academic papers and technical reports
 - **Resume** - Terminal-style CV viewer with download option
+- **Typing Test** - Interactive typing speed test with stats
 - **Contact** - JSON-formatted contact information
 
 ### 🎭 **Animations & Effects**
@@ -68,7 +71,8 @@ This portfolio website is designed to mimic the Visual Studio Code interface, pr
 - **Language:** TypeScript 5.8.2
 - **Styling:** CSS Modules
 - **Animations:** Framer Motion 12.23.24 + GSAP 3.13.0
-- **Icons:** React Icons 5.5.0 (VS Code icons)
+- **Icons:** Iconify + React Icons 5.5.0 (VS Code icons)
+- **Markdown:** React Markdown with rehype-raw
 - **GitHub Integration:** React GitHub Calendar 4.5.6
 - **Deployment:** Vercel
 - **API:** GitHub REST API
@@ -214,7 +218,7 @@ This project is open source and available under the [MIT License](https://github
 ## 🙏 Acknowledgments
 
 - Inspired by Visual Studio Code's interface
-- Icons from [React Icons](https://react-icons.github.io/react-icons/)
+- Icons from [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/)
 - Animations powered by [Framer Motion](https://www.framer.com/motion/)
 
 ---
