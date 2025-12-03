@@ -18,6 +18,11 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     titleHighlight: 'MISC_LABS',
     color: '#a078ff', // Purple - Misc
   },
+  VS_CODE_PORTFOLIO: {
+    title: '// ',
+    titleHighlight: 'VS_CODE_PORTFOLIO',
+    color: '#2196f3', // Blue - VS Code
+  },
 };
 
 export const projects: Project[] = [
@@ -52,6 +57,16 @@ export const projects: Project[] = [
     dateRange: 'Jul 2025 - Oct 2025',
   },
   {
+    title: 'Zephyr Station Dashboard',
+    description:
+      'A real-time web dashboard for visualizing environmental data from the Zephyr Station IoT device, featuring live sensor readings and historical analytics.',
+    logo: '/logos/github_icon.svg',
+    link: 'https://github.com/shaxntanu/Zephyr-Station-Dashboard',
+    slug: 'zephyr-station-dashboard',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Aug 2025 - Dec 2025',
+  },
+  {
     title: 'GlyphThoughts',
     description:
       'A social platform that inspires deep reflection and authentic growth by bridging wisdom, technology, and community.',
@@ -60,5 +75,15 @@ export const projects: Project[] = [
     slug: 'glyphthoughts',
     category: 'MISC_LABS',
     dateRange: 'Jul 2025 - Present',
+  },
+  {
+    title: 'VS Code Portfolio',
+    description:
+      'A developer portfolio website styled as a VS Code editor, featuring an interactive IDE-like interface with file explorer, tabs, and syntax-highlighted content.',
+    logo: '/logos/vscode_icon.svg',
+    link: 'https://vs-code-portfolio-one.vercel.app',
+    slug: 'vs-code-portfolio',
+    category: 'VS_CODE_PORTFOLIO',
+    dateRange: 'Jul 2025 - Present (Regular Maintenance)',
   },
 ];
