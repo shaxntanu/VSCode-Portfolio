@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import styles from '@/styles/CertificatesPage.module.css';
 
 interface Course {
@@ -83,16 +82,7 @@ const certificateData: CertificateCategory[] = [
 const CertificatesPage = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>
-        <Image
-          src="/logos/yaml_icon.svg"
-          alt="YAML"
-          width={28}
-          height={28}
-          className={styles.titleIcon}
-        />
-        upgrades.yaml
-      </h1>
+      <h1 className={styles.title}>upgrades.yaml</h1>
       <div className={styles.yamlContent}>
         <div className={styles.yamlLine}>
           <span className={styles.comment}># Professional Certifications & Training Programs</span>
