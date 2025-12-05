@@ -113,7 +113,7 @@ const CertificatesPage = () => {
                   <span className={styles.indent}>  </span>
                   <span className={styles.listItem}>- </span>
                   <span className={styles.key}>provider:</span>
-                  <span className={styles.string}> "{cert.provider}"</span>
+                  <span className={styles.string}> &quot;{cert.provider}&quot;</span>
                 </div>
                 <div className={styles.yamlLine}>
                   <span className={styles.indent}>    </span>
