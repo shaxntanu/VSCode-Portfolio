@@ -82,7 +82,10 @@ const certificateData: CertificateCategory[] = [
 const CertificatesPage = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>upgrades.yaml</h1>
+      <h1 className={styles.pageTitle}>upgrades.yaml</h1>
+      <p className={styles.pageSubtitle}>
+        A comprehensive collection of professional certifications and training programs spanning technical skills, soft skills, and language proficiency. From AI and IoT courses by MIT and Google to leadership training by Formula 1, these credentials reflect continuous learning and skill development across multiple domains.
+      </p>
       <div className={styles.yamlContent}>
         <div className={styles.yamlLine}>
           <span className={styles.comment}># Professional Certifications & Training Programs</span>
