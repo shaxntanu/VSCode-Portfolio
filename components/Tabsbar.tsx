@@ -69,6 +69,16 @@ const Tabsbar = () => {
               <Tab icon="/logos/arduino_icon.svg" filename="firmware.ino" path="/projects" />
             </motion.div>
             <motion.div
+              key="upgrades-yaml"
+              variants={tabVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={styles.tabItem}
+            >
+              <Tab icon="/logos/yaml_icon.svg" filename="upgrades.yaml" path="/certificates" />
+            </motion.div>
+            <motion.div
               key="techstack-csv"
               variants={tabVariants}
               initial="initial"

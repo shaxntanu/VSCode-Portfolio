@@ -33,6 +33,12 @@ const cvSystemFiles = [
     external: false,
   },
   {
+    name: 'upgrades.yaml',
+    path: '/certificates',
+    icon: '/logos/yaml_icon.svg',
+    external: false,
+  },
+  {
     name: 'sm_techstack.csv',
     path: '/techstack',
     icon: '/logos/csv_icon.svg',
