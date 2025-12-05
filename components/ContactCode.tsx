@@ -17,6 +17,11 @@ const contactItems = [
     href: 'https://github.com/shaxntanu',
   },
   {
+    social: 'google dev',
+    link: 'shaxntanu',
+    href: 'https://g.dev/shaxntanu',
+  },
+  {
     social: 'monkeytype',
     link: 'shaxntanu',
     href: 'https://monkeytype.com/profile/shaxntanu',
