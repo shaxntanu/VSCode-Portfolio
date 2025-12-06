@@ -10,14 +10,14 @@ const ExperiencePage = () => {
 
 ---
 
-## [CURRENT] Product Developer @ Grosity
+## [CURRENT] Product Developer • Chief Technology Officer @ Grosity
 **Timeline:** October 2025 - Present  
 **Status:** Active
 
 ### KEY CONTRIBUTIONS
 *   **System Architecture:** Designed core logic for AI-assisted product development.
 *   **Frontend Engineering:** Built responsive interfaces using **React.js** and **Tailwind CSS**.
-*   **Optimization:** Optimized API calls to reduce data latency.
+*   **IoT Integration:** Worked on an IoT-enabled quality assessment prototype for fresh produce, utilizing Sensors and ML to detect spoilage biomarkers.
 *   **IoT Integration:** Bridged hardware logic with user-facing software.
 
 ---
