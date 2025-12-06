@@ -10,7 +10,7 @@ const ExperiencePage = () => {
 
 ---
 
-## [CURRENT] Product Developer • Chief Technology Officer @ Grosity
+## [Work Experience] Product Developer • Chief Technology Officer @ Grosity
 **Timeline:** October 2025 - Present  
 **Status:** Active
 
