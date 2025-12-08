@@ -10,7 +10,7 @@ const ExperiencePage = () => {
 
 ---
 
-## [Work Experience] Product Developer • Chief Technology Officer @ Grosity
+## [Work Experience] Product Developer • CTO @ Grosity
 **Timeline:** October 2025 - Present  
 **Status:** Active
 
@@ -18,7 +18,6 @@ const ExperiencePage = () => {
 *   **System Architecture:** Designed core logic for AI-assisted product development.
 *   **Frontend Engineering:** Built responsive interfaces using **React.js** and **Tailwind CSS**.
 *   **IoT Integration:** Worked on an IoT-enabled quality assessment prototype for fresh produce, utilizing Sensors and ML to detect spoilage biomarkers.
-*   **IoT Integration:** Bridged hardware logic with user-facing software.
 
 ---
 
