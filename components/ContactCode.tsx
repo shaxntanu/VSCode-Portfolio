@@ -31,7 +31,11 @@ const contactItems = [
     link: 'shaxntanu',
     href: 'https://www.instagram.com/shaxntanu',
   },
-
+  {
+    social: 'duolingo',
+    link: 'shaxntanu',
+    href: 'https://www.duolingo.com/profile/shaxntanu',
+  },
 ];
 
 const ContactCode = () => {
