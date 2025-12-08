@@ -66,16 +66,7 @@ export const projects: Project[] = [
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Aug 2025 - Dec 2025',
   },
-  {
-    title: 'GlyphThoughts',
-    description:
-      'A social platform that inspires deep reflection and authentic growth by bridging wisdom, technology, and community.',
-    logo: '/logos/glyphthoughts_icon.svg',
-    link: 'https://github.com/glyphthoughts',
-    slug: 'glyphthoughts',
-    category: 'MISC_LABS',
-    dateRange: 'Jul 2025 - Present',
-  },
+
   {
     title: 'VS Code Portfolio',
     description:

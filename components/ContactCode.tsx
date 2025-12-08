@@ -31,11 +31,7 @@ const contactItems = [
     link: 'shaxntanu',
     href: 'https://www.instagram.com/shaxntanu',
   },
-  {
-    social: 'musings (glyphthoughts)',
-    link: 'glyphthoughts',
-    href: 'https://github.com/glyphthoughts',
-  },
+
 ];
 
 const ContactCode = () => {
