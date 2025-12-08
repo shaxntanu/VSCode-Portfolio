@@ -70,7 +70,7 @@ const certificateData: CertificateCategory[] = [
     category: "Language Skills",
     certificates: [
       {
-        provider: "Penn ELP",
+        provider: "Penn ELP x Santander",
         courses: [
           { name: "English Fundamentals", url: "https://drive.google.com/file/d/1AE5whHmGpSl8Z7njfOE6gBEVDHYXP8bh/view?usp=sharing" }
         ]
