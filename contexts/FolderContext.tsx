@@ -4,12 +4,10 @@ import { useRouter } from 'next/router';
 interface FolderContextType {
   portfolioOpen: boolean;
   cvFolderOpen: boolean;
-  githubFolderOpen: boolean;
   miscLogsOpen: boolean;
   mobileMenuOpen: boolean;
   setPortfolioOpen: (open: boolean) => void;
   setCvFolderOpen: (open: boolean) => void;
-  setGithubFolderOpen: (open: boolean) => void;
   setMiscLogsOpen: (open: boolean) => void;
   setMobileMenuOpen: (open: boolean) => void;
 }
@@ -19,7 +17,6 @@ const FolderContext = createContext<FolderContextType | undefined>(undefined);
 export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const [portfolioOpen, setPortfolioOpenState] = useState(true);
   const [cvFolderOpen, setCvFolderOpenState] = useState(false);
-  const [githubFolderOpen, setGithubFolderOpenState] = useState(false);
   const [miscLogsOpen, setMiscLogsOpenState] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
@@ -27,11 +24,8 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
   // Portfolio folder paths
   const portfolioPaths = ['/', '/about', '/contact'];
   
-  // CV_SYSTEMFILES folder paths
-  const cvPaths = ['/projects', '/techstack', '/skillmatrix', '/experience', '/research', '/resume'];
-  
-  // Github folder paths
-  const githubPaths = ['/github', '/readme'];
+  // CV_SYSTEMFILES folder paths (now includes github.md)
+  const cvPaths = ['/github', '/projects', '/techstack', '/skillmatrix', '/experience', '/research', '/resume'];
   
   // MISC_LOGS folder paths
   const miscLogsPaths = ['/typing'];
@@ -47,17 +41,8 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
 
   const setCvFolderOpen = (open: boolean) => {
     setCvFolderOpenState(open);
-    // Don't close github folder when CV folder is closed - keep its state
-    // If closing CV folder and currently on a CV or github page, redirect to main.cpp
-    if (!open && (cvPaths.includes(router.pathname) || githubPaths.includes(router.pathname))) {
-      router.push('/');
-    }
-  };
-
-  const setGithubFolderOpen = (open: boolean) => {
-    setGithubFolderOpenState(open);
-    // If closing github folder and currently on a github page, redirect to main.cpp
-    if (!open && githubPaths.includes(router.pathname)) {
+    // If closing CV folder and currently on a CV page, redirect to main.cpp
+    if (!open && cvPaths.includes(router.pathname)) {
       router.push('/');
     }
   };
@@ -75,12 +60,10 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
       value={{
         portfolioOpen,
         cvFolderOpen,
-        githubFolderOpen,
         miscLogsOpen,
         mobileMenuOpen,
         setPortfolioOpen,
         setCvFolderOpen,
-        setGithubFolderOpen,
         setMiscLogsOpen,
         setMobileMenuOpen,
       }}

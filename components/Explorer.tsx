@@ -27,6 +27,12 @@ const explorerItems = [
 
 const cvSystemFiles = [
   {
+    name: 'github.md',
+    path: '/github',
+    icon: '/logos/markdown_icon.svg',
+    external: false,
+  },
+  {
     name: 'firmware.ino',
     path: '/projects',
     icon: '/logos/arduino_icon.svg',
@@ -70,21 +76,6 @@ const cvSystemFiles = [
   },
 ];
 
-const githubFiles = [
-  {
-    name: 'github.md',
-    path: '/github',
-    icon: '/logos/markdown_icon.svg',
-    external: false,
-  },
-  {
-    name: 'readme.md',
-    path: '/readme',
-    icon: '/logos/markdown_icon.svg',
-    external: false,
-  },
-];
-
 const miscLogsFiles = [
   {
     name: 'input_latency.py',
@@ -123,7 +114,7 @@ const itemVariants = {
 };
 
 const Explorer = () => {
-  const { portfolioOpen, setPortfolioOpen, cvFolderOpen, setCvFolderOpen, githubFolderOpen, setGithubFolderOpen, miscLogsOpen, setMiscLogsOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
+  const { portfolioOpen, setPortfolioOpen, cvFolderOpen, setCvFolderOpen, miscLogsOpen, setMiscLogsOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
   const router = useRouter();
 
   const handleNavigation = (e: React.MouseEvent, path: string) => {
@@ -211,45 +202,6 @@ const Explorer = () => {
                       exit="closed"
                       variants={containerVariants}
                     >
-                      <motion.div variants={itemVariants}>
-                        <div
-                          className={styles.nestedFolder}
-                          onClick={() => setGithubFolderOpen(!githubFolderOpen)}
-                        >
-                          <VscChevronRight
-                            className={styles.chevron}
-                            style={githubFolderOpen ? { transform: 'rotate(90deg)' } : {}}
-                          />
-                          <p>GITHUB</p>
-                        </div>
-                        <AnimatePresence initial={false}>
-                          {githubFolderOpen && (
-                            <motion.div
-                              className={styles.doubleNestedFiles}
-                              initial="closed"
-                              animate="open"
-                              exit="closed"
-                              variants={containerVariants}
-                            >
-                              {githubFiles.map((item) => (
-                                <motion.div key={item.name} variants={itemVariants}>
-                                  <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
-                                    <div className={styles.file}>
-                                      <Image
-                                        src={item.icon}
-                                        alt={item.name}
-                                        height={18}
-                                        width={18}
-                                      />
-                                      <p>{item.name}</p>
-                                    </div>
-                                  </Link>
-                                </motion.div>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.div>
                       {cvSystemFiles.map((item) => (
                         <motion.div key={item.name} variants={itemVariants}>
                           {item.external ? (

@@ -11,7 +11,7 @@ const tabVariants = {
 };
 
 const Tabsbar = () => {
-  const { portfolioOpen, cvFolderOpen, githubFolderOpen, miscLogsOpen } = useFolderContext();
+  const { portfolioOpen, cvFolderOpen, miscLogsOpen } = useFolderContext();
 
   return (
     <div className={styles.tabs}>
@@ -58,6 +58,16 @@ const Tabsbar = () => {
       <AnimatePresence>
         {portfolioOpen && cvFolderOpen && (
           <>
+            <motion.div
+              key="github-md"
+              variants={tabVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={styles.tabItem}
+            >
+              <Tab icon="/logos/markdown_icon.svg" filename="github.md" path="/github" />
+            </motion.div>
             <motion.div
               key="firmware-ino"
               variants={tabVariants}
@@ -127,34 +137,6 @@ const Tabsbar = () => {
               className={styles.tabItem}
             >
               <Tab icon="/logos/iso_icon.svg" filename="sysdrive_cv.iso" path="/resume" />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Github folder files */}
-      <AnimatePresence>
-        {portfolioOpen && cvFolderOpen && githubFolderOpen && (
-          <>
-            <motion.div
-              key="github-md"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/markdown_icon.svg" filename="github.md" path="/github" />
-            </motion.div>
-            <motion.div
-              key="readme-md"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/markdown_icon.svg" filename="readme.md" path="/readme" />
             </motion.div>
           </>
         )}

@@ -57,10 +57,18 @@
     border-radius: 2px;
     width: 100%;
     font-size: 0.8rem;
+    transition: all 0.2s ease;
 }
 
 .info button:focus {
     outline: 1px solid var(--accent-color);
+}
+
+.activeButton {
+    background: var(--accent-color) !important;
+    color: var(--bg-color) !important;
+    cursor: default !important;
+    opacity: 0.9;
 }
 
 @media screen and (max-width: 768px) {
