@@ -10,9 +10,10 @@ import '@/styles/themes.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    const theme = localStorage.getItem('theme');
-    if (theme) {
-      document.documentElement.setAttribute('data-theme', theme);
+    const theme = localStorage.getItem('theme') || 'ayu-dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    if (!localStorage.getItem('theme')) {
+      localStorage.setItem('theme', 'ayu-dark');
     }
   }, []);
 

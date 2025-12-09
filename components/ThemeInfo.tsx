@@ -11,17 +11,35 @@ interface ThemeInfoProps {
 }
 
 const ThemeInfo = ({ icon, name, publisher, theme }: ThemeInfoProps) => {
-  const [currentTheme, setCurrentTheme] = useState<string>('');
+  const [currentTheme, setCurrentTheme] = useState<string>('ayu-dark');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || '';
+    const savedTheme = localStorage.getItem('theme') || 'ayu-dark';
     setCurrentTheme(savedTheme);
+
+    // Listen for theme changes from other components
+    const handleStorageChange = () => {
+      const updatedTheme = localStorage.getItem('theme') || 'ayu-dark';
+      setCurrentTheme(updatedTheme);
+    };
+
+    // Custom event for same-tab theme changes
+    window.addEventListener('themeChange', handleStorageChange);
+    // Storage event for cross-tab changes
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('themeChange', handleStorageChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
-  const setTheme = (theme: string) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    setCurrentTheme(theme);
+  const setTheme = (newTheme: string) => {
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    setCurrentTheme(newTheme);
+    // Dispatch custom event to notify other ThemeInfo components
+    window.dispatchEvent(new Event('themeChange'));
   };
 
   const isActive = currentTheme === theme;
