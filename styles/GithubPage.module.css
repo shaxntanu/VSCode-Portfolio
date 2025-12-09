@@ -112,61 +112,24 @@
 }
 
 .contributionGraph {
-    width: 100%;
+    display: inline-block;
     border-radius: 12px;
     background: var(--article-bg);
-    padding: 1.5rem;
+    padding: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: visible;
 }
 
 /* Make contribution calendar cells interactive */
 .contributionGraph rect {
     cursor: pointer;
-    transition: transform 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+    transition: filter 0.15s ease;
 }
 
 .contributionGraph rect:hover {
     filter: brightness(1.4);
     stroke: rgba(255, 255, 255, 0.6);
     stroke-width: 1px;
-}
-
-.activitySection {
-    margin-bottom: 2rem;
-}
-
-.activityGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.activityCard {
-    background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.languageCard {
-    background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.activityImage {
-    max-width: 100%;
-    height: auto;
 }
 
 .reposSection {
@@ -205,10 +168,6 @@
 
     .statNumber {
         font-size: 1.2rem;
-    }
-
-    .activityGrid {
-        grid-template-columns: 1fr;
     }
 
     .grid {

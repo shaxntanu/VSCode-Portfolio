@@ -84,38 +84,10 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
                   theme={calendarTheme}
                   style={{
                     color: 'rgba(255, 255, 255, 0.7)',
-                    width: '100%',
                   }}
                   labels={{
                     totalCount: '{{count}} contributions in the last year',
                   }}
-                />
-              </div>
-            </div>
-
-            <div className={styles.activitySection}>
-              <h3 className={styles.sectionTitle}>Activity Overview</h3>
-              <div className={styles.activityGrid}>
-                <div className={styles.activityCard}>
-                  <img 
-                    src={`https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=transparent&hide_border=true&title_color=00d4ff&icon_color=00d4ff&text_color=ffffff&bg_color=00000000`}
-                    alt="GitHub Stats"
-                    className={styles.activityImage}
-                  />
-                </div>
-                <div className={styles.activityCard}>
-                  <img 
-                    src={`https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=transparent&hide_border=true&ring=00d4ff&fire=00d4ff&currStreakLabel=00d4ff&sideLabels=ffffff&currStreakNum=ffffff&sideNums=ffffff&dates=888888&background=00000000`}
-                    alt="GitHub Streak"
-                    className={styles.activityImage}
-                  />
-                </div>
-              </div>
-              <div className={styles.languageCard}>
-                <img 
-                  src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=transparent&hide_border=true&title_color=00d4ff&text_color=ffffff&bg_color=00000000`}
-                  alt="Top Languages"
-                  className={styles.activityImage}
                 />
               </div>
             </div>
