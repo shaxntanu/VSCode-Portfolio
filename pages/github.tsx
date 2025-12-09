@@ -77,14 +77,14 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
                 <GitHubCalendar 
                   username={username}
                   colorScheme="dark"
-                  blockSize={12}
-                  blockMargin={4}
+                  blockSize={10}
+                  blockMargin={3}
                   blockRadius={2}
-                  fontSize={13}
+                  fontSize={12}
                   theme={calendarTheme}
-                  showWeekdayLabels
                   style={{
                     color: 'rgba(255, 255, 255, 0.7)',
+                    width: '100%',
                   }}
                   labels={{
                     totalCount: '{{count}} contributions in the last year',
