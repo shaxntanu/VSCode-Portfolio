@@ -74,7 +74,7 @@ export const projects: Project[] = [
     link: '#',
     slug: 'helix',
     category: 'HARDWARE_MODULES',
-    dateRange: 'Coming Soon',
+    dateRange: 'Dec 2025',
   },
   {
     title: 'VS Code Portfolio',
