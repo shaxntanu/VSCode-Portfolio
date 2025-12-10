@@ -39,7 +39,7 @@ export const projects: Project[] = [
   {
     title: 'Blind Stick',
     description:
-      'A smart mobility aid engineered to provide independence. Detects knee-level obstacles instantly, alerting users through intuitive buzzers and voice prompts.',
+      'A smart mobility aid that detects obstacles and alerts users through buzzers and voice prompts.',
     logo: '/logos/notion_icon.svg',
     link: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
     slug: 'blind-stick',
