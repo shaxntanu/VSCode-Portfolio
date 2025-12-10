@@ -73,7 +73,7 @@ export const projects: Project[] = [
     logo: '/logos/github_icon.svg',
     link: '#',
     slug: 'helix',
-    category: 'MISC_LABS',
+    category: 'HARDWARE_MODULES',
     dateRange: 'Coming Soon',
   },
   {
