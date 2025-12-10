@@ -68,6 +68,15 @@ export const projects: Project[] = [
   },
 
   {
+    title: 'HELIX',
+    description: 'Coming Soon',
+    logo: '/logos/github_icon.svg',
+    link: '#',
+    slug: 'helix',
+    category: 'MISC_LABS',
+    dateRange: 'Coming Soon',
+  },
+  {
     title: 'VS Code Portfolio',
     description:
       'A developer portfolio website styled as a VS Code editor, featuring an interactive IDE-like interface with file explorer, tabs, and syntax-highlighted content.',
