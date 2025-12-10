@@ -32,6 +32,17 @@ const ExperiencePage = () => {
 
 ---
 
+## [PROJECT] Blind Stick
+**Role:** Lead Engineer  
+**Timeline:** 2018
+
+### KEY DELIVERABLES
+*   Developed a smart mobility aid for visually impaired individuals.
+*   Integrated ultrasonic sensors for obstacle detection.
+*   Implemented buzzer and voice prompt alerts for user safety.
+
+---
+
 ## [EDUCATION] Thapar Institute (TIET)
 **Degree:** B.E. Electrical Engineering  
 **Focus:** Embedded Systems, Circuit Analysis`;
