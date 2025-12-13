@@ -76,14 +76,12 @@ const cvSystemFiles = [
   },
 ];
 
-const miscLogsFiles = [
-  {
-    name: 'input_latency.py',
-    path: '/typing',
-    icon: '/logos/python_icon.svg',
-    external: false,
-  },
-];
+const miscLogsFiles: Array<{
+  name: string;
+  path: string;
+  icon: string;
+  external: boolean;
+}> = [];
 
 // Container variants for staggered children
 const containerVariants = {
@@ -235,45 +233,7 @@ const Explorer = () => {
                   )}
                 </AnimatePresence>
               </motion.div>
-              <motion.div variants={itemVariants}>
-                <div
-                  className={styles.folder}
-                  onClick={() => setMiscLogsOpen(!miscLogsOpen)}
-                >
-                  <VscChevronRight
-                    className={styles.chevron}
-                    style={miscLogsOpen ? { transform: 'rotate(90deg)' } : {}}
-                  />
-                  <p>MISC_LOGS</p>
-                </div>
-                <AnimatePresence initial={false}>
-                  {miscLogsOpen && (
-                    <motion.div
-                      className={styles.nestedFiles}
-                      initial="closed"
-                      animate="open"
-                      exit="closed"
-                      variants={containerVariants}
-                    >
-                      {miscLogsFiles.map((item) => (
-                        <motion.div key={item.name} variants={itemVariants}>
-                          <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
-                            <div className={styles.file}>
-                              <Image
-                                src={item.icon}
-                                alt={item.name}
-                                height={18}
-                                width={18}
-                              />
-                              <p>{item.name}</p>
-                            </div>
-                          </Link>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+
             </motion.div>
           )}
         </AnimatePresence>

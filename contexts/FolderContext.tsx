@@ -28,7 +28,7 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const cvPaths = ['/github', '/projects', '/techstack', '/skillmatrix', '/experience', '/research', '/resume'];
   
   // MISC_LOGS folder paths
-  const miscLogsPaths = ['/typing'];
+  const miscLogsPaths: string[] = [];
 
   const setPortfolioOpen = (open: boolean) => {
     setPortfolioOpenState(open);

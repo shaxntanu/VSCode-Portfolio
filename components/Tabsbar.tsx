@@ -142,21 +142,7 @@ const Tabsbar = () => {
         )}
       </AnimatePresence>
 
-      {/* MISC_LOGS folder files */}
-      <AnimatePresence>
-        {portfolioOpen && miscLogsOpen && (
-          <motion.div
-            key="input-latency-py"
-            variants={tabVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className={styles.tabItem}
-          >
-            <Tab icon="/logos/python_icon.svg" filename="input_latency.py" path="/typing" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+
     </div>
   );
 };
