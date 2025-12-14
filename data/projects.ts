@@ -79,7 +79,7 @@ export const projects: Project[] = [
   {
     title: 'HELIX',
     description: 'Coming Soon',
-    logo: '/logos/github_icon.svg',
+    logo: '/logos/helix_icon.svg',
     link: '#',
     slug: 'helix',
     category: 'HARDWARE_MODULES',
@@ -88,7 +88,7 @@ export const projects: Project[] = [
   {
     title: 'Jolt Locator',
     description: 'Coming Soon',
-    logo: '/logos/github_icon.svg',
+    logo: '/logos/jolt_locator_icon.svg',
     link: '#',
     slug: 'jolt-locator',
     category: 'HOBBY_FUN_PROJECTS',
