@@ -49,7 +49,7 @@ export const projects: Project[] = [
   {
     title: 'Marcus Omega',
     description:
-      'A philosophical conversational AI System powered by the Google Gemini API, designed to engage users in deep, context-aware dialectic discussions.',
+      'A philosophical AI chatbot powered by Gemini API for deep, context-aware discussions.',
     logo: '/logos/marcus_omega.svg',
     link: 'https://glyphthoughts.github.io/Marcus-Landing-Page',
     slug: 'marcus-omega',
@@ -59,7 +59,7 @@ export const projects: Project[] = [
   {
     title: 'Zephyr Station Dashboard',
     description:
-      'A real-time web dashboard for visualizing environmental data from the Zephyr Station IoT device, featuring live sensor readings and historical analytics.',
+      'Real-time web dashboard for Zephyr Station with live sensor readings and analytics.',
     logo: '/logos/github_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station-Dashboard',
     slug: 'zephyr-station-dashboard',
@@ -69,7 +69,7 @@ export const projects: Project[] = [
   {
     title: 'VS Code Portfolio',
     description:
-      'A developer portfolio website styled as a VS Code editor, featuring an interactive IDE-like interface with file explorer, tabs, and syntax-highlighted content.',
+      'Portfolio website styled as VS Code with file explorer, tabs, and syntax highlighting.',
     logo: '/logos/vscode_icon.svg',
     link: 'https://vs-code-portfolio-one.vercel.app',
     slug: 'vs-code-portfolio',
