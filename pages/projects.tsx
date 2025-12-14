@@ -14,7 +14,7 @@ const ProjectsPage = () => {
   }, {} as Record<ProjectCategory, typeof projects>);
 
   // Define category order
-  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'SOFTWARE_SYSTEMS', 'MISC_LABS', 'VS_CODE_PORTFOLIO'];
+  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'SOFTWARE_SYSTEMS', 'MISC_LABS', 'HOBBY_FUN_PROJECTS'];
 
   return (
     <div className={styles.layout}>
