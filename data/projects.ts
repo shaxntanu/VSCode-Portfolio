@@ -20,8 +20,8 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   },
   HOBBY_FUN_PROJECTS: {
     title: '// ',
-    titleHighlight: 'HOBBY_FUN_PROJECTS',
-    color: '#2196f3', // Blue - Hobby/Fun
+    titleHighlight: 'SIDE_QUESTS',
+    color: '#2196f3', // Blue - Side Quests
   },
 };
 
