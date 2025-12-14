@@ -30,7 +30,7 @@ export const projects: Project[] = [
     title: 'Zephyr Station',
     description:
       'Multi-sensor IoT station tracking air quality, temperature, and pressure using an ESP32.',
-    logo: '/logos/github_icon.svg',
+    logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station',
     slug: 'zephyr-station',
     category: 'HARDWARE_MODULES',
@@ -79,7 +79,7 @@ export const projects: Project[] = [
   {
     title: 'HELIX',
     description: 'Coming Soon',
-    logo: '/logos/helix_icon.svg',
+    logo: '/logos/stmicroelectronics_icon.svg',
     link: '#',
     slug: 'helix',
     category: 'HARDWARE_MODULES',
@@ -88,7 +88,7 @@ export const projects: Project[] = [
   {
     title: 'Jolt Locator',
     description: 'Coming Soon',
-    logo: '/logos/jolt_locator_icon.svg',
+    logo: '/logos/espressif_icon.svg',
     link: '#',
     slug: 'jolt-locator',
     category: 'HOBBY_FUN_PROJECTS',
