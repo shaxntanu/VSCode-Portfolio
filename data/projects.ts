@@ -87,8 +87,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Jolt Locator',
-    description:
-      'A fun project to locate and track jolts or sudden movements using sensors.',
+    description: 'Coming Soon',
     logo: '/logos/github_icon.svg',
     link: '#',
     slug: 'jolt-locator',
