@@ -76,13 +76,6 @@ const cvSystemFiles = [
   },
 ];
 
-const miscLogsFiles: Array<{
-  name: string;
-  path: string;
-  icon: string;
-  external: boolean;
-}> = [];
-
 // Container variants for staggered children
 const containerVariants = {
   open: {
@@ -112,7 +105,7 @@ const itemVariants = {
 };
 
 const Explorer = () => {
-  const { portfolioOpen, setPortfolioOpen, cvFolderOpen, setCvFolderOpen, miscLogsOpen, setMiscLogsOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
+  const { portfolioOpen, setPortfolioOpen, cvFolderOpen, setCvFolderOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
   const router = useRouter();
 
   const handleNavigation = (e: React.MouseEvent, path: string) => {

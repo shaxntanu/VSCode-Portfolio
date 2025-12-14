@@ -11,7 +11,7 @@ const tabVariants = {
 };
 
 const Tabsbar = () => {
-  const { portfolioOpen, cvFolderOpen, miscLogsOpen } = useFolderContext();
+  const { portfolioOpen, cvFolderOpen } = useFolderContext();
 
   return (
     <div className={styles.tabs}>
