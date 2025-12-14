@@ -18,10 +18,10 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     titleHighlight: 'MISC_LABS',
     color: '#a078ff', // Purple - Misc
   },
-  VS_CODE_PORTFOLIO: {
+  HOBBY_FUN_PROJECTS: {
     title: '// ',
-    titleHighlight: 'VS_CODE_PORTFOLIO',
-    color: '#2196f3', // Blue - VS Code
+    titleHighlight: 'HOBBY_FUN_PROJECTS',
+    color: '#2196f3', // Blue - Hobby/Fun
   },
 };
 
@@ -66,7 +66,16 @@ export const projects: Project[] = [
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Aug 2025 - Dec 2025',
   },
-
+  {
+    title: 'VS Code Portfolio',
+    description:
+      'A developer portfolio website styled as a VS Code editor, featuring an interactive IDE-like interface with file explorer, tabs, and syntax-highlighted content.',
+    logo: '/logos/vscode_icon.svg',
+    link: 'https://vs-code-portfolio-one.vercel.app',
+    slug: 'vs-code-portfolio',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Jul 2025 - Present (Regular Maintenance)',
+  },
   {
     title: 'HELIX',
     description: 'Coming Soon',
@@ -77,13 +86,13 @@ export const projects: Project[] = [
     dateRange: 'Dec 2025',
   },
   {
-    title: 'VS Code Portfolio',
+    title: 'Jolt Locator',
     description:
-      'A developer portfolio website styled as a VS Code editor, featuring an interactive IDE-like interface with file explorer, tabs, and syntax-highlighted content.',
-    logo: '/logos/vscode_icon.svg',
-    link: 'https://vs-code-portfolio-one.vercel.app',
-    slug: 'vs-code-portfolio',
-    category: 'VS_CODE_PORTFOLIO',
-    dateRange: 'Jul 2025 - Present (Regular Maintenance)',
+      'A fun project to locate and track jolts or sudden movements using sensors.',
+    logo: '/logos/github_icon.svg',
+    link: '#',
+    slug: 'jolt-locator',
+    category: 'HOBBY_FUN_PROJECTS',
+    dateRange: 'TBD',
   },
 ];

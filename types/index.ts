@@ -9,7 +9,7 @@ export interface Article {
   comments_count: number;
 }
 
-export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'VS_CODE_PORTFOLIO';
+export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'HOBBY_FUN_PROJECTS';
 
 export interface Project {
   title: string;
