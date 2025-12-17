@@ -18,7 +18,7 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     titleHighlight: 'MISC_LABS',
     color: '#a078ff', // Purple - Misc
   },
-  HOBBY_FUN_PROJECTS: {
+  COMMUNITY_PROJECT: {
     title: '// ',
     titleHighlight: 'ARCEUS_LABS',
     color: '#2196f3', // Blue - Arceus Labs
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/Jolt-Locator',
     slug: 'jolt-locator',
-    category: 'HOBBY_FUN_PROJECTS',
+    category: 'COMMUNITY_PROJECT',
     dateRange: 'Nov 2025 - Jan 2025 Expected',
   },
 ];
