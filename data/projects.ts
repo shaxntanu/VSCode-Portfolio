@@ -22,6 +22,7 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     title: '// ',
     titleHighlight: 'ARCEUS_LABS',
     color: '#2196f3', // Blue - Arceus Labs
+    link: 'https://arceuslabs.carrd.co',
   },
 };
 

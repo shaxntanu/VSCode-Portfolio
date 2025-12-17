@@ -33,7 +33,18 @@ const ProjectsPage = () => {
           <div key={category} className={styles.categorySection}>
             <div className={styles.categoryHeader}>
               <span className={styles.comment}>{config.title}</span>
-              <span style={{ color: config.color }}>{config.titleHighlight}</span>
+              {config.link ? (
+                <a 
+                  href={config.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ color: config.color, fontWeight: 'bold', textDecoration: 'none' }}
+                >
+                  {config.titleHighlight}
+                </a>
+              ) : (
+                <span style={{ color: config.color }}>{config.titleHighlight}</span>
+              )}
             </div>
             <div className={styles.container}>
               {categoryProjects.map((project) => (

@@ -26,6 +26,7 @@ export interface CategoryConfig {
   title: string;
   titleHighlight: string;
   color: string;
+  link?: string;
 }
 
 export interface Repo {
