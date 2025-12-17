@@ -28,8 +28,7 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
 export const projects: Project[] = [
   {
     title: 'Zephyr Station',
-    description:
-      'Multi-sensor IoT station tracking air quality, temperature, and pressure using an ESP32.',
+    description: 'ESP32-based IoT station for environmental monitoring.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station',
     slug: 'zephyr-station',
@@ -38,8 +37,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Blind Stick',
-    description:
-      'A smart mobility aid that detects obstacles and alerts users through buzzers and voice prompts.',
+    description: 'Smart mobility aid with obstacle detection and voice alerts.',
     logo: '/logos/notion_icon.svg',
     link: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
     slug: 'blind-stick',
@@ -48,8 +46,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Marcus Omega',
-    description:
-      'A philosophical AI chatbot powered by Gemini API for deep, context-aware discussions.',
+    description: 'Philosophical AI chatbot powered by Gemini API.',
     logo: '/logos/marcus_omega.svg',
     link: 'https://glyphthoughts.github.io/Marcus-Landing-Page',
     slug: 'marcus-omega',
@@ -58,8 +55,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Zephyr Station Dashboard',
-    description:
-      'Real-time web dashboard for Zephyr Station with live sensor readings and analytics.',
+    description: 'Real-time web dashboard for Zephyr Station analytics.',
     logo: '/logos/github_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station-Dashboard',
     slug: 'zephyr-station-dashboard',
@@ -68,8 +64,7 @@ export const projects: Project[] = [
   },
   {
     title: 'VS Code Portfolio',
-    description:
-      'Portfolio website styled as VS Code with file explorer, tabs, and syntax highlighting.',
+    description: 'Portfolio website styled as VS Code editor.',
     logo: '/logos/vscode_icon.svg',
     link: 'https://vs-code-portfolio-one.vercel.app',
     slug: 'vs-code-portfolio',
@@ -87,11 +82,11 @@ export const projects: Project[] = [
   },
   {
     title: 'Jolt Locator',
-    description: 'Coming Soon',
+    description: 'Under Development',
     logo: '/logos/espressif_icon.svg',
-    link: '#',
+    link: 'https://github.com/Arceus-Labs/Jolt-Locator',
     slug: 'jolt-locator',
     category: 'HOBBY_FUN_PROJECTS',
-    dateRange: 'TBD',
+    dateRange: 'Nov 2025 - Jan 2025 Expected',
   },
 ];
