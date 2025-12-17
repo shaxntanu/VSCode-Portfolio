@@ -34,11 +34,12 @@ const ProjectsPage = () => {
             <div className={styles.categoryHeader}>
               <span className={styles.comment}>{config.title}</span>
               {config.link ? (
-                <a 
-                  href={config.link} 
-                  target="_blank" 
+                <a
+                  href={config.link}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: config.color, fontWeight: 'bold', textDecoration: 'none' }}
+                  className={styles.categoryLink}
+                  style={{ color: config.color }}
                 >
                   {config.titleHighlight}
                 </a>
