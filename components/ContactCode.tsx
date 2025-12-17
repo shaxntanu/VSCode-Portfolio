@@ -2,37 +2,37 @@ import styles from '@/styles/ContactCode.module.css';
 
 const contactItems = [
   {
-    social: 'email',
+    social: 'E-Mail',
     link: 'i.am.shantanu07@gmail.com',
     href: 'mailto:i.am.shantanu07@gmail.com',
   },
   {
-    social: 'linkedin',
+    social: 'Linkedin',
     link: 'Shantanu Maratha',
     href: 'https://www.linkedin.com/in/shantanu-maratha28',
   },
   {
-    social: 'github',
+    social: 'GitHub',
     link: 'shaxntanu',
     href: 'https://github.com/shaxntanu',
   },
   {
-    social: 'google dev',
+    social: 'Google for Developers',
     link: 'shaxntanu',
     href: 'https://g.dev/shaxntanu',
   },
   {
-    social: 'monkeytype',
+    social: 'Monkeytype',
     link: 'shaxntanu',
     href: 'https://monkeytype.com/profile/shaxntanu',
   },
   {
-    social: 'instagram',
+    social: 'Instagram',
     link: 'shaxntanu',
     href: 'https://www.instagram.com/shaxntanu',
   },
   {
-    social: 'duolingo',
+    social: 'Duolingo',
     link: 'shaxntanu',
     href: 'https://www.duolingo.com/profile/shaxntanu',
   },
