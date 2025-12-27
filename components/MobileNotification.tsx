@@ -41,6 +41,9 @@ const MobileNotification = () => {
           <p className={styles.submessage}>
             You can still browse on mobile, but some features may be limited.
           </p>
+          <p className={styles.submessage}>
+            May cause lagging on some devices.
+          </p>
         </div>
 
         <div className={styles.footer}>
