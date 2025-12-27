@@ -88,6 +88,6 @@ export const projects: Project[] = [
     link: 'https://github.com/Arceus-Labs/Jolt-Locator',
     slug: 'jolt-locator',
     category: 'COMMUNITY_PROJECT',
-    dateRange: 'Nov 2025 - Jan 2026 Expected',
+    dateRange: 'Nov 2025 - Dec 2025',
   },
 ];

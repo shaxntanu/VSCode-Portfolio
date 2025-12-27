@@ -23,7 +23,7 @@ const papers = [
     id: 'DOC-JLT-003',
     title: 'Jolt Locator: Technical Report',
     type: 'Technical Report',
-    date: '2025-11-27',
+    date: '2025-12-27',
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909',
   },
