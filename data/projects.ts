@@ -83,11 +83,11 @@ export const projects: Project[] = [
   },
   {
     title: 'Jolt Locator',
-    description: 'Under Development',
+    description: 'Offline GPS navigation device with compass guidance.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/Jolt-Locator',
     slug: 'jolt-locator',
     category: 'COMMUNITY_PROJECT',
-    dateRange: 'Nov 2025 - Jan 2025 Expected',
+    dateRange: 'Nov 2025 - Jan 2026 Expected',
   },
 ];
