@@ -19,6 +19,14 @@ const papers = [
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/Zephyr-Station-Technical-Report-de41e9c0afd3444195afbac904fe2edc',
   },
+  {
+    id: 'DOC-JLT-003',
+    title: 'Jolt Locator: Technical Report',
+    type: 'Technical Report',
+    date: 'Nov - Dec 2025',
+    status: 'PUBLISHED',
+    link: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909',
+  },
 ];
 
 const ResearchPage = () => {
