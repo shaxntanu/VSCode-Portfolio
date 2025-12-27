@@ -79,7 +79,7 @@ export const projects: Project[] = [
     link: '#',
     slug: 'helix',
     category: 'HARDWARE_MODULES',
-    dateRange: 'Dec 2025',
+    dateRange: 'TBD (Nov 25)',
   },
   {
     title: 'Jolt Locator',
