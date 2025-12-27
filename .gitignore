@@ -36,5 +36,8 @@ yarn-error.log*
 # cursor
 .cursor
 
+# vscode
+.vscode
+
 # misc logs (not pushed until commanded)
 /MISC_LOGS
