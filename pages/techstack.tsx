@@ -1,21 +1,28 @@
 import styles from '@/styles/TechstackPage.module.css';
 
 const csvData = `ID,COMPONENT,CATEGORY,PROFICIENCY,STATUS
-001,C++ (Arduino),Language,Intermediate,Daily Driver
-002,JavaScript,Language,Functional,Project-Based
-003,Notion,Documentation,Advanced,Daily Driver
-004,Obsidian,Documentation,Advanced,Daily Driver
-005,Python,Language,Basic,Automation
-006,ESP32,Hardware,Intermediate,Deployed
-007,Arduino Uno,Hardware,Intermediate,Prototyping
-008,KiCad,PCB Design,Basic,Schematic Only
-009,Multimeter,Hardware,Intermediate,Active
-010,Tinkercad,Tools,Intermediate,Prototyping
-011,Wokwi,Tools,Intermediate,Prototyping
-012,MQTT,Protocol,Applied,Library Use
-013,I2C / SPI,Protocol,Applied,Learning
-014,Git / GitHub,Tools,Intermediate,Version Control
-015,VS Code,IDE,Advanced,Daily Driver`;
+001,KiCAD,PCB Design,Intermediate,Schematic Only
+002,ESP32,Microcontroller,Advanced,Daily Driver
+003,Arduino,Microcontroller,Advanced,Daily Driver
+004,BME280 / GPS / OLED / Ultrasonic / SD,Sensors,Advanced,Deployed
+005,Multimeter,Measurement,Intermediate,Active
+006,Vernier Caliper,Measurement,Advanced,Active
+007,I2C / SPI / UART,Protocol,Intermediate,Applied
+008,MQTT,Protocol,Intermediate,Library Use
+009,C (Embedded),Language,Advanced,Firmware
+010,C++ (Arduino/ESP32),Language,Intermediate,Daily Driver
+011,Serial Monitor,Debugging,Advanced,Active
+012,Arduino IDE,IDE,Advanced,Daily Driver
+013,Kiro IDE,IDE,Advanced,Daily Driver
+014,Tinkercad,Simulation,Advanced,Prototyping
+015,Wokwi,Simulation,Advanced,Prototyping
+016,Git / GitHub,Version Control,Advanced,Active
+017,Notion,Documentation,Advanced,Daily Driver
+018,Obsidian,Documentation,Advanced,Daily Driver
+019,HTML / CSS / JavaScript,Web Frontend,Basic,AI-Assisted
+020,React / Tailwind CSS,Web Framework,Basic,AI-Assisted
+021,Firebase,Database,Basic,AI-Assisted
+022,Vercel,Deployment,Basic,AI-Assisted`;
 
 const TechStackPage = () => {
   // Parse CSV
@@ -25,10 +32,10 @@ const TechStackPage = () => {
 
   const getStatusColor = (status: string) => {
     const lowerStatus = status.toLowerCase();
-    if (['daily driver', 'deployed', 'active', 'version control'].includes(lowerStatus)) {
+    if (['daily driver', 'deployed', 'active', 'firmware'].includes(lowerStatus)) {
       return styles.statusGreen;
     }
-    if (['learning', 'project-based', 'assisted', 'automation', 'prototyping', 'schematic only', 'library use', 'entry-level'].includes(lowerStatus)) {
+    if (['learning', 'project-based', 'prototyping', 'schematic only', 'library use', 'applied', 'ai-assisted'].includes(lowerStatus)) {
       return styles.statusYellow;
     }
     return '';

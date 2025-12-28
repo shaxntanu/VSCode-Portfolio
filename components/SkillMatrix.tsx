@@ -33,10 +33,12 @@ const skillData: SkillCategory[] = [
     titleHighlight: 'HARDWARE_LAYER',
     color: '#ff8c50',
     skills: [
-      { name: 'PCB Design & Schematics', tools: 'KiCad, EasyEDA', score: 99, categoryColor: '#ff8c50' },
-      { name: 'Sensor Integration', tools: 'I2C, SPI, Analog', score: 99, categoryColor: '#ff8c50' },
-      { name: 'ESP32 / Arduino', tools: 'PlatformIO, Arduino IDE', score: 66, categoryColor: '#ff8c50' },
-      { name: 'MQTT / IoT Protocols', tools: 'Mosquitto, HiveMQ', score: 99, categoryColor: '#ff8c50' },
+      { name: 'PCB Design & Schematics', tools: 'KiCAD', score: 66, categoryColor: '#ff8c50' },
+      { name: 'Microcontrollers', tools: 'ESP32, Arduino', score: 99, categoryColor: '#ff8c50' },
+      { name: 'Sensor Integration', tools: 'BME280, GPS, OLED, Ultrasonic, SD', score: 99, categoryColor: '#ff8c50' },
+      { name: 'Measurement Tools', tools: 'Multimeter, Vernier Caliper', score: 99, categoryColor: '#ff8c50' },
+      { name: 'Communication Protocols', tools: 'I2C, SPI, UART', score: 66, categoryColor: '#ff8c50' },
+      { name: 'MQTT / IoT Protocols', tools: 'MQTT', score: 66, categoryColor: '#ff8c50' },
     ],
   },
   {
@@ -44,9 +46,9 @@ const skillData: SkillCategory[] = [
     titleHighlight: 'FIRMWARE_LOGIC',
     color: '#00dc8c',
     skills: [
-      { name: 'C / C++ (Embedded)', tools: 'GCC, PlatformIO', score: 66, categoryColor: '#00dc8c' },
-      { name: 'Multimeter', tools: 'Fluke, Analog', score: 66, categoryColor: '#00dc8c' },
-      { name: 'Python (Scripting)', tools: 'NumPy, Automation', score: 33, categoryColor: '#00dc8c' },
+      { name: 'C (Embedded)', tools: 'Embedded C', score: 99, categoryColor: '#00dc8c' },
+      { name: 'C++ (Arduino/ESP32)', tools: 'Arduino, ESP-IDF', score: 66, categoryColor: '#00dc8c' },
+      { name: 'Debugging', tools: 'Serial Monitor, Hardware', score: 99, categoryColor: '#00dc8c' },
     ],
   },
   {
@@ -54,12 +56,21 @@ const skillData: SkillCategory[] = [
     titleHighlight: 'TOOLCHAIN_OPS',
     color: '#a078ff',
     skills: [
-      { name: 'VS Code / PlatformIO', tools: 'Extensions, Debugging', score: 99, categoryColor: '#a078ff' },
-      { name: 'Git / Version Control', tools: 'GitHub, GitLab', score: 66, categoryColor: '#a078ff' },
-      { name: 'Tinkercad', tools: '3D Modeling, Circuits', score: 66, categoryColor: '#a078ff' },
-      { name: 'Wokwi', tools: '3D Modeling, Circuits', score: 66, categoryColor: '#a078ff' },
-      { name: 'Notion', tools: 'Docs, Planning', score: 99, categoryColor: '#a078ff' },
-      { name: 'Obsidian', tools: 'Notes, Knowledge Base', score: 99, categoryColor: '#a078ff' },
+      { name: 'Development IDE', tools: 'Arduino IDE, Kiro IDE', score: 99, categoryColor: '#a078ff' },
+      { name: 'Simulation', tools: 'Tinkercad, Wokwi', score: 99, categoryColor: '#a078ff' },
+      { name: 'Version Control', tools: 'Git, GitHub', score: 99, categoryColor: '#a078ff' },
+      { name: 'Documentation', tools: 'Notion, Obsidian', score: 99, categoryColor: '#a078ff' },
+    ],
+  },
+  {
+    title: '// ',
+    titleHighlight: 'WEB_INTEGRATION',
+    color: '#2196f3',
+    skills: [
+      { name: 'Frontend', tools: 'HTML, CSS, JavaScript', score: 33, categoryColor: '#2196f3' },
+      { name: 'Frameworks', tools: 'React, Tailwind CSS', score: 33, categoryColor: '#2196f3' },
+      { name: 'Database', tools: 'Firebase', score: 33, categoryColor: '#2196f3' },
+      { name: 'Deployment', tools: 'Vercel', score: 33, categoryColor: '#2196f3' },
     ],
   },
 ];
@@ -256,6 +267,14 @@ const SkillMatrix = () => {
           <span style={{ color: '#00dc8c' }}>iterating</span>
           <span className={styles.comment}>{', always '}</span>
           <span style={{ color: '#ff8c50' }}>improving</span>
+        </div>
+        <div className={styles.footerNote}>
+          <span className={styles.comment}>{'// '}</span>
+          <span style={{ color: '#2196f3' }}>WEB_INTEGRATION</span>
+          <span className={styles.comment}>{' skills are AI-assisted'}</span>
+        </div>
+        <div className={styles.footerNote}>
+          <span className={styles.comment}>{'// focusing on rapid prototyping for IoT dashboards and startup projects'}</span>
         </div>
       </div>
 

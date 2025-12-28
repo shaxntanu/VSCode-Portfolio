@@ -64,6 +64,39 @@
     text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
+.typingText {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.15em solid #00ff88;
+    animation: typing 4s steps(49) infinite, blinkCursor 0.5s step-end infinite alternate;
+    max-width: max-content;
+}
+
+@keyframes typing {
+
+    0%,
+    10% {
+        width: 0;
+    }
+
+    45%,
+    55% {
+        width: 49ch;
+    }
+
+    90%,
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes blinkCursor {
+    50% {
+        border-right-color: transparent;
+    }
+}
+
 .infoBlock {
     margin-bottom: 2rem;
 }
@@ -124,29 +157,6 @@
 
 .downloadBtn:active {
     transform: scale(0.98);
-}
-
-.blinkingCursor {
-    display: inline-block;
-    width: 10px;
-    height: 1.2em;
-    background: #00ff88;
-    margin-left: 4px;
-    animation: blink 1s infinite;
-    vertical-align: middle;
-}
-
-@keyframes blink {
-
-    0%,
-    50% {
-        opacity: 1;
-    }
-
-    51%,
-    100% {
-        opacity: 0;
-    }
 }
 
 .footer {

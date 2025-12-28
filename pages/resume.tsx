@@ -22,13 +22,12 @@ const ResumePage = () => {
 
         <div className={styles.terminalBody}>
           <div className={styles.bootHeader}>
-            SYSTEM_PDF_LOADED: Shantanu_Resume_Classic (v2.4)
-            <span className={styles.blinkingCursor}></span>
+            <span className={styles.typingText}>SYSTEM_PDF_LOADED: Shantanu_Resume_Classic (v2.4)</span>
           </div>
 
           <div className={styles.infoBlock}>
             <div className={styles.infoLine}>
-              <span className={styles.infoLabel}>Image Size:</span>
+              <span className={styles.infoLabel}>File Size:</span>
               <span className={styles.infoValue}>53.8 KB (55,156 bytes)</span>
             </div>
             <div className={styles.infoLine}>
