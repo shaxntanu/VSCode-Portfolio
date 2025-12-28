@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { VscChevronRight } from 'react-icons/vsc';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFolderContext } from '@/contexts/FolderContext';
@@ -76,37 +77,43 @@ const cvSystemFiles = [
   },
 ];
 
-// Container variants for staggered children
-const containerVariants = {
-  open: {
-    transition: {
-      staggerChildren: 0.03,
-      delayChildren: 0.02,
-    },
-  },
-  closed: {
-    transition: {
-      staggerChildren: 0.02,
-      staggerDirection: -1,
-    },
-  },
-};
-
-// Item variants for individual files
-const itemVariants = {
-  open: {
-    opacity: 1,
-    y: 0,
-  },
-  closed: {
-    opacity: 0,
-    y: -8,
-  },
-};
-
 const Explorer = () => {
   const { portfolioOpen, setPortfolioOpen, cvFolderOpen, setCvFolderOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+  }, []);
+
+  // Simplified variants for mobile (no stagger, instant)
+  const containerVariants = {
+    open: {
+      transition: {
+        staggerChildren: isMobile ? 0 : 0.03,
+        delayChildren: isMobile ? 0 : 0.02,
+      },
+    },
+    closed: {
+      transition: {
+        staggerChildren: isMobile ? 0 : 0.02,
+        staggerDirection: -1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: isMobile ? 0.1 : 0.2 },
+    },
+    closed: {
+      opacity: 0,
+      y: isMobile ? 0 : -8,
+      transition: { duration: isMobile ? 0.1 : 0.2 },
+    },
+  };
 
   const handleNavigation = (e: React.MouseEvent, path: string) => {
     e.preventDefault();

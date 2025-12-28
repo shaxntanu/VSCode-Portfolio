@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, ReactNode } from 'react';
+import { useRef, useEffect, useCallback, ReactNode, useState } from 'react';
 
 interface ClickSparkProps {
   sparkColor?: string;
@@ -31,6 +31,17 @@ const ClickSpark = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sparksRef = useRef<Spark[]>([]);
   const startTimeRef = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+  }, []);
+
+  // If mobile, just render children without spark effect
+  if (isMobile) {
+    return <>{children}</>;
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current;

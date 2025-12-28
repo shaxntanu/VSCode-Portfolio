@@ -22,7 +22,7 @@ const csvData = `ID,COMPONENT,CATEGORY,PROFICIENCY,STATUS
 019,HTML / CSS / JavaScript,Web Frontend,Basic,AI-Assisted
 020,React / Tailwind CSS,Web Framework,Basic,AI-Assisted
 021,Firebase,Database,Basic,AI-Assisted
-022,Vercel,Deployment,Basic,AI-Assisted`;
+022,Vercel,Deployment,Advanced,Active`;
 
 const TechStackPage = () => {
   // Parse CSV

@@ -70,7 +70,7 @@ const skillData: SkillCategory[] = [
       { name: 'Frontend', tools: 'HTML, CSS, JavaScript', score: 33, categoryColor: '#2196f3' },
       { name: 'Frameworks', tools: 'React, Tailwind CSS', score: 33, categoryColor: '#2196f3' },
       { name: 'Database', tools: 'Firebase', score: 33, categoryColor: '#2196f3' },
-      { name: 'Deployment', tools: 'Vercel', score: 33, categoryColor: '#2196f3' },
+      { name: 'Deployment', tools: 'Vercel', score: 99, categoryColor: '#2196f3' },
     ],
   },
 ];
