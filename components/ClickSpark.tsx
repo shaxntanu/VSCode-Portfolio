@@ -38,12 +38,9 @@ const ClickSpark = ({
     setIsMobile(window.innerWidth <= 768);
   }, []);
 
-  // If mobile, just render children without spark effect
-  if (isMobile) {
-    return <>{children}</>;
-  }
-
   useEffect(() => {
+    if (isMobile) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -73,7 +70,7 @@ const ClickSpark = ({
       ro.disconnect();
       clearTimeout(resizeTimeout);
     };
-  }, []);
+  }, [isMobile]);
 
   const easeFunc = useCallback(
     (t: number) => {
@@ -92,6 +89,8 @@ const ClickSpark = ({
   );
 
   useEffect(() => {
+    if (isMobile) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -141,9 +140,11 @@ const ClickSpark = ({
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
+  }, [isMobile, sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -161,6 +162,11 @@ const ClickSpark = ({
 
     sparksRef.current.push(...newSparks);
   };
+
+  // On mobile, just render children without the canvas
+  if (isMobile) {
+    return <>{children}</>;
+  }
 
   return (
     <div
