@@ -3,7 +3,7 @@ import styles from '@/styles/ResumePage.module.css';
 const ResumePage = () => {
   const handleDownload = () => {
     window.open(
-      'https://drive.google.com/file/d/1sLCQ54jk2x6-wUUPy2CTXkO8L1vBljvM/view?usp=sharing',
+      'https://drive.google.com/file/d/1lREyUuiZXIdN79z3NAmNMXGV6SHEB969/view?usp=sharing',
       '_blank'
     );
   };
