@@ -9,7 +9,7 @@
 
 **A stunning developer portfolio that looks and feels like VS Code**
 
-[🌐 Live Demo](https://vs-code-portfolio-one.vercel.app) • [📝 Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [✨ Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
+[🌐 Deployed](https://vs-code-portfolio-one.vercel.app) • [📝 Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [✨ Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
 
 </div>
 
