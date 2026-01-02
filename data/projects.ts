@@ -30,7 +30,7 @@ export const projects: Project[] = [
   {
     title: 'Zephyr Station',
     description: 'ESP32-based IoT station for environmental monitoring.',
-    logo: '/logos/espressif_icon.svg',
+    logo: '/logos/vercel_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station',
     slug: 'zephyr-station',
     category: 'HARDWARE_MODULES',
@@ -57,7 +57,7 @@ export const projects: Project[] = [
   {
     title: 'Zephyr Station Dashboard',
     description: 'Real-time web dashboard for Zephyr Station analytics.',
-    logo: '/logos/github_icon.svg',
+    logo: '/logos/vercel_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station-Dashboard',
     slug: 'zephyr-station-dashboard',
     category: 'SOFTWARE_SYSTEMS',
@@ -89,5 +89,23 @@ export const projects: Project[] = [
     slug: 'jolt-locator',
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Nov 2025 - Dec 2025',
+  },
+  {
+    title: 'The Ruin Machine',
+    description: 'ESP32 device proving gambling always loses through math.',
+    logo: '/logos/espressif_icon.svg',
+    link: '#',
+    slug: 'the-ruin-machine',
+    category: 'COMMUNITY_PROJECT',
+    dateRange: 'Jan 2026 - Jan 2026',
+  },
+  {
+    title: 'TRM Dashboard',
+    description: 'Next.js app demonstrating why all betting strategies fail.',
+    logo: '/logos/vercel_icon.svg',
+    link: '#',
+    slug: 'trm-dashboard',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Jan 2026 - Jan 2026',
   },
 ];
