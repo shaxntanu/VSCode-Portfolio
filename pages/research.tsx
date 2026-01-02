@@ -27,6 +27,14 @@ const papers = [
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909?pvs=73',
   },
+  {
+    id: 'DOC-TRM-004',
+    title: 'The Ruin Machine: Technical Report',
+    type: 'Technical Report',
+    date: '2026-01-02',
+    status: 'PUBLISHED',
+    link: 'https://crocus-zenobia-863.notion.site/The-Ruin-Machine-2dc1ebfe206480ad890dee12dd7386bd?pvs=73',
+  },
 ];
 
 const ResearchPage = () => {
