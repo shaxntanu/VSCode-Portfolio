@@ -33,7 +33,7 @@ const papers = [
     type: 'Technical Report',
     date: '2026-01-02',
     status: 'PUBLISHED',
-    link: 'https://crocus-zenobia-863.notion.site/The-Ruin-Machine-2dc1ebfe206480ad890dee12dd7386bd?pvs=73',
+    link: 'https://crocus-zenobia-863.notion.site/The-Ruin-Machine-Technical-Report-2dc1ebfe2064806a9625f49a9871aaf3?pvs=73',
   },
 ];
 
