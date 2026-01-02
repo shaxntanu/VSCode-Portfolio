@@ -25,7 +25,7 @@ const papers = [
     type: 'Technical Report',
     date: '2025-12-27',
     status: 'PUBLISHED',
-    link: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909',
+    link: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909?pvs=73',
   },
 ];
 
