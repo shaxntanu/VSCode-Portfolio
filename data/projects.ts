@@ -94,7 +94,7 @@ export const projects: Project[] = [
     title: 'The Ruin Machine',
     description: 'ESP32 device proving gambling always loses through math.',
     logo: '/logos/espressif_icon.svg',
-    link: '#',
+    link: 'https://github.com/Arceus-Labs/The-Ruin-Machine',
     slug: 'the-ruin-machine',
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Jan 2026 - Jan 2026',
