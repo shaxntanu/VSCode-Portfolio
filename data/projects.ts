@@ -30,7 +30,7 @@ export const projects: Project[] = [
   {
     title: 'Zephyr Station',
     description: 'ESP32-based IoT station for environmental monitoring.',
-    logo: '/logos/vercel_icon.svg',
+    logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station',
     slug: 'zephyr-station',
     category: 'HARDWARE_MODULES',
@@ -55,11 +55,11 @@ export const projects: Project[] = [
     dateRange: 'Jul 2025 - Oct 2025',
   },
   {
-    title: 'Zephyr Station Dashboard',
+    title: 'ZM Dashboard',
     description: 'Real-time web dashboard for Zephyr Station analytics.',
     logo: '/logos/vercel_icon.svg',
     link: 'https://zephyr-station-dashboard.vercel.app',
-    slug: 'zephyr-station-dashboard',
+    slug: 'zm-dashboard',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Aug 2025 - Dec 2025',
   },

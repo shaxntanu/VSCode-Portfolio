@@ -1,4 +1,3 @@
-import Head from '@/components/Head';
 import Image from 'next/image';
 import RepoCard from '@/components/RepoCard';
 import GitHubCalendar from 'react-github-calendar';
@@ -26,9 +25,7 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
   };
   
   return (
-    <>
-      <Head title="Github" />
-      <div className={styles.container}>
+    <div className={styles.container}>
         {user && (
           <div className={styles.profileSection}>
             <div className={styles.profileHeader}>
@@ -107,7 +104,7 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

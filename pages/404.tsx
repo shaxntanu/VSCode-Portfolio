@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Head from '@/components/Head';
 import styles from '@/styles/404Page.module.css';
 
 const Custom404 = () => {
@@ -67,9 +66,7 @@ const Custom404 = () => {
   }, []);
 
   return (
-    <>
-      <Head title="404 - Page Not Found" />
-      <div className={styles.container}>
+    <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.logoWrapper}>
             <canvas ref={canvasRef} className={styles.canvas}></canvas>
@@ -94,8 +91,13 @@ const Custom404 = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
+
+export async function getStaticProps() {
+  return {
+    props: { title: '404 - Page Not Found' },
+  };
+}
 
 export default Custom404;
