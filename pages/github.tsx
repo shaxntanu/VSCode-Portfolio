@@ -103,7 +103,6 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 };
