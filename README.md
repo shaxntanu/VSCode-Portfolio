@@ -2,6 +2,8 @@
 
 <div align="center">
 
+![Portfolio Cover](public/og-image.png)
+
 ![VS Code Portfolio](https://img.shields.io/badge/VS%20Code-Portfolio-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-15.2.3-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)

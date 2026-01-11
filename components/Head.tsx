@@ -1,4 +1,4 @@
-import Head from 'next/head';
+ import Head from 'next/head';
 
 interface CustomHeadProps {
   title: string;
@@ -19,10 +19,10 @@ const CustomHead = ({ title }: CustomHeadProps) => {
       <meta property="og:title" content="Shantanu's Portfolio" />
       <meta
         property="og:description"
-        content="A full-stack developer building websites that you'd like to use."
+        content="IoT/Embedded Systems Engineer building the physical internet with ESP32, custom PCB design, and end-to-end IoT integration."
       />
-      <meta property="og:image" content="https://imgur.com/4zi5KkQ.png" />
-      <meta property="og:url" content="https://vscode-portfolio.vercel.app" />
+      <meta property="og:image" content="https://vs-code-portfolio-one.vercel.app/og-image.png" />
+      <meta property="og:url" content="https://vs-code-portfolio-one.vercel.app" />
       <meta name="twitter:card" content="summary_large_image" />
     </Head>
   );
