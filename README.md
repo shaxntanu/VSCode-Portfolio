@@ -87,7 +87,7 @@ This project is open source and available under the [MIT License](https://github
 
 **Shantanu Maratha**
 
-- Portfolio: [vs-code-portfolio-one.vercel.app](https://vs-code-portfolio-one.vercel.app)
+- Portfolio: [vs-code-portfolio-one.vercel.app](https://shantanu-vsc-portfolio.vercel.app)
 - GitHub: [@shaxntanu](https://github.com/shaxntanu)
 
 ## 🙏 Acknowledgments
