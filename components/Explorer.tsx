@@ -40,6 +40,12 @@ const cvSystemFiles = [
     external: false,
   },
   {
+    name: 'keysprint.env',
+    path: '/keysprint',
+    icon: '/logos/env_icon.svg',
+    external: false,
+  },
+  {
     name: 'upgrades.yaml',
     path: '/certificates',
     icon: '/logos/yaml_icon.svg',
@@ -73,12 +79,6 @@ const cvSystemFiles = [
     name: 'sysdrive_cv.iso',
     path: '/resume',
     icon: '/logos/iso_icon.svg',
-    external: false,
-  },
-  {
-    name: 'keysprint.env',
-    path: '/keysprint',
-    icon: '/logos/env_icon.svg',
     external: false,
   },
 ];

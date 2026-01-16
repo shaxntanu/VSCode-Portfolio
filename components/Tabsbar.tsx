@@ -79,6 +79,16 @@ const Tabsbar = () => {
               <Tab icon="/logos/arduino_icon.svg" filename="firmware.ino" path="/projects" />
             </motion.div>
             <motion.div
+              key="keysprint-env"
+              variants={tabVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={styles.tabItem}
+            >
+              <Tab icon="/logos/env_icon.svg" filename="keysprint.env" path="/keysprint" />
+            </motion.div>
+            <motion.div
               key="upgrades-yaml"
               variants={tabVariants}
               initial="initial"
@@ -137,16 +147,6 @@ const Tabsbar = () => {
               className={styles.tabItem}
             >
               <Tab icon="/logos/iso_icon.svg" filename="sysdrive_cv.iso" path="/resume" />
-            </motion.div>
-            <motion.div
-              key="keysprint-env"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/env_icon.svg" filename="keysprint.env" path="/keysprint" />
             </motion.div>
           </>
         )}
