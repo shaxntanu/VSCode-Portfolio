@@ -43,7 +43,7 @@ export const projects: Project[] = [
     link: 'https://glyphthoughts.github.io/Marcus-Landing-Page',
     slug: 'marcus-omega',
     category: 'SOFTWARE_SYSTEMS',
-    dateRange: 'Jul 2025 - Oct 2025',
+    dateRange: 'Jul 2025 - Sep 2025',
   },
   {
     title: 'VS Code Portfolio',
