@@ -97,6 +97,19 @@
     font-weight: bold;
 }
 
+.link {
+    color: #2196f3;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
 .hr {
     border: none;
     border-top: 1px solid #374151;

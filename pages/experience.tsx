@@ -153,6 +153,24 @@ const ExperiencePage = () => {
           </strong>
         );
       }
+      // Check for "Arceus Labs" and make it a link
+      if (part.includes('Arceus Labs')) {
+        const segments = part.split('Arceus Labs');
+        return (
+          <span key={index}>
+            {segments[0]}
+            <a
+              href="https://arceuslabs.carrd.co"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              Arceus Labs
+            </a>
+            {segments[1]}
+          </span>
+        );
+      }
       return part;
     });
   };
