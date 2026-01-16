@@ -1,53 +1,81 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+const MONKEYTYPE_API = 'https://api.monkeytype.com';
+const USERNAME = 'shaxntanu';
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const apiKey = process.env.MONKEYTYPE_API_KEY;
 
-  if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured' });
-  }
+  const headers = {
+    'Accept': 'application/json',
+    ...(apiKey && { 'Authorization': `ApeKey ${apiKey}` }),
+  };
 
   try {
-    // Fetch personal bests
-    const pbResponse = await fetch('https://api.monkeytype.com/users/personalBests?mode=time', {
-      headers: {
-        'Authorization': `ApeKey ${apiKey}`,
-        'Accept': 'application/json',
-      },
+    // Fetch public profile (doesn't require auth)
+    const profileResponse = await fetch(`${MONKEYTYPE_API}/users/${USERNAME}/profile`, {
+      headers: { 'Accept': 'application/json' },
     });
 
-    // Fetch typing stats
-    const statsResponse = await fetch('https://api.monkeytype.com/users/stats', {
-      headers: {
-        'Authorization': `ApeKey ${apiKey}`,
-        'Accept': 'application/json',
-      },
-    });
+    // These require API key
+    const fetchWithAuth = async (endpoint: string) => {
+      if (!apiKey) return null;
+      const response = await fetch(`${MONKEYTYPE_API}${endpoint}`, { headers });
+      if (!response.ok) return null;
+      return response.json();
+    };
 
-    const pbData = await pbResponse.json();
-    const statsData = await statsResponse.json();
+    const [pbData, statsData, streakData, activityData] = await Promise.all([
+      fetchWithAuth('/users/personalBests?mode=time'),
+      fetchWithAuth('/users/stats'),
+      fetchWithAuth('/users/streak'),
+      fetchWithAuth('/users/currentTestActivity'),
+    ]);
 
-    // Log for debugging
-    console.log('PB Response status:', pbResponse.status);
-    console.log('Stats Response status:', statsResponse.status);
+    const profileData = profileResponse.ok ? await profileResponse.json() : null;
 
-    if (!pbResponse.ok) {
-      console.error('PB Error:', pbData);
-      return res.status(pbResponse.status).json({ error: pbData.message || 'Failed to fetch personal bests' });
+    // Build response with available data
+    const responseData: Record<string, unknown> = {};
+
+    if (profileData?.data) {
+      responseData.profile = {
+        name: profileData.data.name,
+        uid: profileData.data.uid,
+        xp: profileData.data.xp,
+        streak: profileData.data.streak,
+        maxStreak: profileData.data.maxStreak,
+        details: profileData.data.details,
+        personalBests: profileData.data.personalBests,
+        typingStats: profileData.data.typingStats,
+        testActivity: profileData.data.testActivity,
+        allTimeLbs: profileData.data.allTimeLbs,
+      };
     }
 
-    if (!statsResponse.ok) {
-      console.error('Stats Error:', statsData);
-      return res.status(statsResponse.status).json({ error: statsData.message || 'Failed to fetch stats' });
+    if (pbData?.data) {
+      responseData.personalBests = pbData.data;
     }
 
-    res.status(200).json({
-      personalBests: pbData.data,
-      typingStats: statsData.data,
-    });
+    if (statsData?.data) {
+      responseData.typingStats = statsData.data;
+    }
+
+    if (streakData?.data) {
+      responseData.streak = streakData.data;
+    }
+
+    if (activityData?.data) {
+      responseData.testActivity = activityData.data;
+    }
+
+    if (Object.keys(responseData).length === 0) {
+      return res.status(500).json({ error: 'Unable to fetch any data from MonkeyType' });
+    }
+
+    res.status(200).json(responseData);
   } catch (error) {
     console.error('MonkeyType API error:', error);
     res.status(500).json({ error: 'Failed to connect to MonkeyType API' });

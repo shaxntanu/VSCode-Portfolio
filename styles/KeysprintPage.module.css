@@ -261,6 +261,159 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Username in subtitle */
+.username {
+    color: var(--accent-color);
+}
+
+/* Overview Row - Streak & XP */
+.overviewRow {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.streakCard {
+    flex: 1;
+    min-width: 200px;
+    background: var(--article-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.streakIcon {
+    font-size: 2rem;
+}
+
+.streakInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.streakValue {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ff9500;
+}
+
+.streakLabel {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.streakMax {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.streakMaxLabel {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+.streakMaxValue {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.xpCard {
+    background: var(--article-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.xpLabel {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.xpValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #a855f7;
+}
+
+/* Consistency stat */
+.statConsistency {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.25rem;
+}
+
+/* Activity Heatmap */
+.heatmapContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.heatmap {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 3px;
+}
+
+.heatmapCell {
+    aspect-ratio: 1;
+    background: var(--accent-color);
+    border-radius: 2px;
+    min-width: 12px;
+    min-height: 12px;
+}
+
+.heatmapLegend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    justify-content: flex-end;
+}
+
+.legendCells {
+    display: flex;
+    gap: 2px;
+}
+
+.legendCells .heatmapCell {
+    min-width: 10px;
+    min-height: 10px;
+}
+
+/* Profile links */
+.envValue a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.envValue a:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -276,5 +429,13 @@
 
     .statValue {
         font-size: 1.5rem;
+    }
+
+    .overviewRow {
+        flex-direction: column;
+    }
+
+    .heatmap {
+        grid-template-columns: repeat(7, 1fr);
     }
 }
