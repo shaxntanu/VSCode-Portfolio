@@ -110,27 +110,91 @@
     margin-bottom: 1rem;
 }
 
-.yearSelector {
-    background: var(--article-bg);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    font-family: 'JetBrains Mono', monospace;
+/* Custom Dropdown Styles */
+.select {
+    width: fit-content;
     cursor: pointer;
-    transition: all 0.2s ease;
+    position: relative;
+    transition: 300ms;
+    color: white;
+    overflow: visible;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.yearSelector:hover {
-    border-color: var(--accent-color);
-    background: rgba(0, 212, 255, 0.1);
+.selected {
+    background-color: var(--article-bg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 100;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 300ms;
 }
 
-.yearSelector:focus {
-    outline: none;
+.select:hover .selected {
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.arrow {
+    height: 10px;
+    width: 12px;
+    fill: var(--accent-color);
+    transition: 300ms;
+    transform: rotate(-90deg);
+}
+
+.select:hover .arrow {
+    transform: rotate(0deg);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    padding: 5px;
+    background-color: var(--article-bg);
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: 300ms;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.select:hover .options {
+    opacity: 1;
+    visibility: visible;
+}
+
+.option {
+    border-radius: 4px;
+    padding: 8px 12px;
+    transition: 200ms;
+    background-color: transparent;
+    min-width: 120px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--accent-color);
+}
+
+.optionSelected {
+    background-color: rgba(var(--accent-color-rgb, 0, 212, 255), 0.2);
+    color: var(--accent-color);
 }
 
 .sectionTitle {

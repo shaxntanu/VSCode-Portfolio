@@ -15,7 +15,7 @@ interface GithubPageProps {
 const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: GithubPageProps) => {
   const username = 'shaxntanu';
   const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState<number | 'last-year'>(currentYear);
+  const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   
   const calendarTheme = {
     dark: [
@@ -28,10 +28,18 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
   };
 
   // Generate year options (from 2018 to current year)
-  const yearOptions = [];
+  const yearOptions: (number | 'last-year')[] = ['last-year'];
   for (let year = currentYear; year >= 2018; year--) {
     yearOptions.push(year);
   }
+
+  const getYearLabel = (year: number | 'last-year') => {
+    return year === 'last-year' ? 'Last 12 Months' : year.toString();
+  };
+
+  const handleYearSelect = (year: number | 'last-year') => {
+    setSelectedYear(year);
+  };
   
   return (
     <div className={styles.container}>
@@ -80,16 +88,25 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             <div className={styles.contributionSection}>
               <div className={styles.contributionHeader}>
                 <h3 className={styles.sectionTitle}>Contribution Graph</h3>
-                <select 
-                  value={selectedYear} 
-                  onChange={(e) => setSelectedYear(e.target.value === 'last-year' ? 'last-year' : parseInt(e.target.value))}
-                  className={styles.yearSelector}
-                >
-                  <option value="last-year">Last 12 Months</option>
-                  {yearOptions.map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
+                <div className={styles.select}>
+                  <div className={styles.selected}>
+                    <span>{getYearLabel(selectedYear)}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" className={styles.arrow}>
+                      <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+                    </svg>
+                  </div>
+                  <div className={styles.options}>
+                    {yearOptions.map((year) => (
+                      <div 
+                        key={year} 
+                        className={`${styles.option} ${selectedYear === year ? styles.optionSelected : ''}`}
+                        onClick={() => handleYearSelect(year)}
+                      >
+                        {getYearLabel(year)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               <div className={styles.contributionGraph}>
                 <GitHubCalendar 
