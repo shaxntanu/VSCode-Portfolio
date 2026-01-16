@@ -219,12 +219,10 @@ const KeysprintPage = () => {
     if (!activity?.testsByDays) return { weeks: [], totalTests: 0, monthLabels: [] };
 
     const { testsByDays } = activity;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Normalize to start of day
     
-    console.log('testsByDays length:', testsByDays.length);
-    console.log('First few entries:', testsByDays.slice(0, 10));
-    console.log('Today:', today.toISOString());
+    // Get today at start of day in local time
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     
     // Determine date range based on selection
     let startDate: Date;
@@ -238,20 +236,16 @@ const KeysprintPage = () => {
       startDate.setDate(startDate.getDate() + 1);
     } else {
       // Specific year - show Jan 1 to today (if current year) or Dec 31 (if past year)
-      startDate = new Date(selectedYear, 0, 1); // Jan 1
+      startDate = new Date(selectedYear, 0, 1, 0, 0, 0, 0); // Jan 1 at midnight local
       if (selectedYear === currentYear) {
         endDate = new Date(today);
       } else if (selectedYear > currentYear) {
         // Future year - shouldn't happen but handle it
         return { weeks: [], totalTests: 0, monthLabels: [] };
       } else {
-        endDate = new Date(selectedYear, 11, 31); // Dec 31
+        endDate = new Date(selectedYear, 11, 31, 0, 0, 0, 0); // Dec 31 at midnight local
       }
     }
-    
-    console.log('Selected year:', selectedYear);
-    console.log('Start date:', startDate.toISOString());
-    console.log('End date:', endDate.toISOString());
     
     // Adjust start to beginning of week (Sunday)
     const startDayOfWeek = startDate.getDay();
@@ -277,8 +271,9 @@ const KeysprintPage = () => {
       const inRange = currentDate >= startDate && currentDate <= endDate;
       
       // Get count from testsByDays array (index 0 = today)
-      // Only get data for days that have passed (daysAgo >= 0)
-      const count = (daysAgo >= 0 && daysAgo < testsByDays.length) ? (testsByDays[daysAgo] || 0) : 0;
+      // testsByDays can contain null for days with no activity
+      const rawCount = (daysAgo >= 0 && daysAgo < testsByDays.length) ? testsByDays[daysAgo] : null;
+      const count = rawCount ?? 0; // Convert null/undefined to 0
       
       if (inRange) {
         totalTests += count;
