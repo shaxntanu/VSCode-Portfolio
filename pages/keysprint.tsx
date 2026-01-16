@@ -350,14 +350,14 @@ const KeysprintPage = () => {
                     <div className={styles.envLine}>
                       <span className={styles.envKey}>KEYBOARD</span>
                       <span className={styles.envEquals}>=</span>
-                      <span className={styles.envValue}>"{profile.details.keyboard}"</span>
+                      <span className={styles.envValue}>&quot;{profile.details.keyboard}&quot;</span>
                     </div>
                   )}
                   {profile.details.bio && (
                     <div className={styles.envLine}>
                       <span className={styles.envKey}>BIO</span>
                       <span className={styles.envEquals}>=</span>
-                      <span className={styles.envValue}>"{profile.details.bio}"</span>
+                      <span className={styles.envValue}>&quot;{profile.details.bio}&quot;</span>
                     </div>
                   )}
                   {profile.details.socialProfiles?.github && (
