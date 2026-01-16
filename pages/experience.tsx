@@ -10,6 +10,17 @@ const ExperiencePage = () => {
 
 ---
 
+## [Work Experience] Early-Stage Founding Engineer @ Grosity
+**Timeline:** October 2025 - Present  
+**Location:** Patiala, Punjab
+
+### KEY CONTRIBUTIONS
+*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
+*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
+*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
+
+---
+
 ## [HARDWARE PROJECT] Smart Blind Stick
 **Role:** Lead Engineer  
 **Timeline:** Jul 2018 - Aug 2018  
@@ -31,17 +42,6 @@ const ExperiencePage = () => {
 *   **ESP32-based environmental monitoring system** with real-time sensor acquisition, **OLED display**, **SD card data logging**, and threshold-based alerts.
 *   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors for comprehensive environmental monitoring.
 *   Designed custom power management circuits for off-grid reliability and low-power operation.
-
----
-
-## [Work Experience] Early-Stage Founding Engineer @ Grosity
-**Timeline:** October 2025 - Present  
-**Location:** Patiala, Punjab
-
-### KEY CONTRIBUTIONS
-*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
-*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
-*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
 
 ---
 
