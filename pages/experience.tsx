@@ -10,14 +10,15 @@ const ExperiencePage = () => {
 
 ---
 
-## [Work Experience] Early-Stage Founding Engineer @ Grosity
-**Timeline:** October 2025 - Present  
-**Location:** Patiala, Punjab
+## [HARDWARE PROJECT] Smart Blind Stick
+**Role:** Lead Engineer  
+**Timeline:** Jul 2018 - Aug 2018  
+**Tech Stack:** Arduino, C++
 
-### KEY CONTRIBUTIONS
-*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
-*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
-*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
+### KEY DELIVERABLES
+*   Developed a **smart mobility aid** for visually impaired individuals with obstacle detection capabilities.
+*   Integrated **ultrasonic sensors** for real-time distance measurement and collision avoidance.
+*   Implemented multi-modal alerts with **buzzer** and **voice prompts** for enhanced user safety and navigation.
 
 ---
 
@@ -30,6 +31,17 @@ const ExperiencePage = () => {
 *   **ESP32-based environmental monitoring system** with real-time sensor acquisition, **OLED display**, **SD card data logging**, and threshold-based alerts.
 *   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors for comprehensive environmental monitoring.
 *   Designed custom power management circuits for off-grid reliability and low-power operation.
+
+---
+
+## [Work Experience] Early-Stage Founding Engineer @ Grosity
+**Timeline:** October 2025 - Present  
+**Location:** Patiala, Punjab
+
+### KEY CONTRIBUTIONS
+*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
+*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
+*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
 
 ---
 
@@ -54,18 +66,6 @@ const ExperiencePage = () => {
 *   **Probability and stochastic-model simulator** implemented on **ESP32** with physical I/O (**OLED + buzzer**).
 *   Mathematical demonstration proving gambling always leads to loss through interactive simulations.
 *   Designed intuitive user interface for educational purposes showing betting strategy failures.
-
----
-
-## [HARDWARE PROJECT] Smart Blind Stick
-**Role:** Lead Engineer  
-**Timeline:** Jul 2018 - Aug 2018  
-**Tech Stack:** Arduino, C++
-
-### KEY DELIVERABLES
-*   Developed a **smart mobility aid** for visually impaired individuals with obstacle detection capabilities.
-*   Integrated **ultrasonic sensors** for real-time distance measurement and collision avoidance.
-*   Implemented multi-modal alerts with **buzzer** and **voice prompts** for enhanced user safety and navigation.
 
 ---
 

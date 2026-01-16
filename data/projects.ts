@@ -28,15 +28,6 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
 
 export const projects: Project[] = [
   {
-    title: 'Zephyr Station',
-    description: 'ESP32-based IoT station for environmental monitoring.',
-    logo: '/logos/espressif_icon.svg',
-    link: 'https://github.com/shaxntanu/Zephyr-Station',
-    slug: 'zephyr-station',
-    category: 'HARDWARE_MODULES',
-    dateRange: 'Aug 2025 - Nov 2025',
-  },
-  {
     title: 'Blind Stick',
     description: 'Smart mobility aid with obstacle detection and voice alerts.',
     logo: '/logos/notion_icon.svg',
@@ -55,15 +46,6 @@ export const projects: Project[] = [
     dateRange: 'Jul 2025 - Oct 2025',
   },
   {
-    title: 'ZM Dashboard',
-    description: 'Real-time web dashboard for Zephyr Station analytics.',
-    logo: '/logos/vercel_icon.svg',
-    link: 'https://zephyr-station-dashboard.vercel.app',
-    slug: 'zm-dashboard',
-    category: 'SOFTWARE_SYSTEMS',
-    dateRange: 'Aug 2025 - Dec 2025',
-  },
-  {
     title: 'VS Code Portfolio',
     description: 'Portfolio website styled as VS Code editor.',
     logo: '/logos/vscode_icon.svg',
@@ -71,6 +53,24 @@ export const projects: Project[] = [
     slug: 'vs-code-portfolio',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Jul 2025 - Present (Regular Maintenance)',
+  },
+  {
+    title: 'Zephyr Station',
+    description: 'ESP32-based IoT station for environmental monitoring.',
+    logo: '/logos/espressif_icon.svg',
+    link: 'https://github.com/shaxntanu/Zephyr-Station',
+    slug: 'zephyr-station',
+    category: 'HARDWARE_MODULES',
+    dateRange: 'Aug 2025 - Nov 2025',
+  },
+  {
+    title: 'ZM Dashboard',
+    description: 'Real-time web dashboard for Zephyr Station analytics.',
+    logo: '/logos/vercel_icon.svg',
+    link: 'https://zephyr-station-dashboard.vercel.app',
+    slug: 'zm-dashboard',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Aug 2025 - Dec 2025',
   },
   {
     title: 'Jolt Locator',
