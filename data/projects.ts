@@ -73,15 +73,6 @@ export const projects: Project[] = [
     dateRange: 'Jul 2025 - Present (Regular Maintenance)',
   },
   {
-    title: 'HELIX',
-    description: 'Coming Soon',
-    logo: '/logos/stmicroelectronics_icon.svg',
-    link: '#',
-    slug: 'helix',
-    category: 'HARDWARE_MODULES',
-    dateRange: 'TBD (Nov 25)',
-  },
-  {
     title: 'Jolt Locator',
     description: 'Offline GPS navigation device with compass guidance.',
     logo: '/logos/espressif_icon.svg',

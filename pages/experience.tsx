@@ -23,7 +23,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Zephyr-Station
 **Role:** Lead Engineer  
-**Timeline:** 2025  
+**Timeline:** Aug 2025 - Nov 2025  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
@@ -33,27 +33,39 @@ const ExperiencePage = () => {
 
 ---
 
-## [HARDWARE PROJECT] Jolt-Locator
+## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
 **Role:** Lead Engineer  
-**Timeline:** 2025  
+**Timeline:** Nov 2025 - Dec 2025  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
 *   **GPS-based true-north navigation system** running on **ESP32** with real-time heading and location processing.
-*   Implemented accurate compass functionality with magnetic declination correction.
-*   Designed for outdoor navigation and location tracking applications.
+*   Implemented accurate compass functionality with magnetic declination correction for offline navigation.
+*   Designed for outdoor navigation and location tracking applications with intuitive display interface.
 
 ---
 
-## [HARDWARE PROJECT] The-Ruin-Machine
+## [HARDWARE PROJECT] The-Ruin-Machine | Arceus Labs
 **Role:** Lead Engineer  
-**Timeline:** 2025  
+**Timeline:** Jan 2026  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
 *   **Probability and stochastic-model simulator** implemented on **ESP32** with physical I/O (**OLED + buzzer**).
-*   Created interactive demonstration of random processes and statistical concepts.
-*   Designed intuitive user interface for educational and experimental purposes.
+*   Mathematical demonstration proving gambling always leads to loss through interactive simulations.
+*   Designed intuitive user interface for educational purposes showing betting strategy failures.
+
+---
+
+## [HARDWARE PROJECT] Smart Blind Stick
+**Role:** Lead Engineer  
+**Timeline:** Jul 2018 - Aug 2018  
+**Tech Stack:** Arduino, C++
+
+### KEY DELIVERABLES
+*   Developed a **smart mobility aid** for visually impaired individuals with obstacle detection capabilities.
+*   Integrated **ultrasonic sensors** for real-time distance measurement and collision avoidance.
+*   Implemented multi-modal alerts with **buzzer** and **voice prompts** for enhanced user safety and navigation.
 
 ---
 
