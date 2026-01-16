@@ -31,8 +31,6 @@ const ExperiencePage = () => {
 *   Integrated **ultrasonic sensors** for real-time distance measurement and collision avoidance.
 *   Implemented multi-modal alerts with **buzzer** and **voice prompts** for enhanced user safety and navigation.
 
----
-
 ## [HARDWARE PROJECT] Zephyr-Station
 **Role:** Lead Engineer  
 **Timeline:** Aug 2025 - Nov 2025  
@@ -43,8 +41,6 @@ const ExperiencePage = () => {
 *   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors for comprehensive environmental monitoring.
 *   Designed custom power management circuits for off-grid reliability and low-power operation.
 
----
-
 ## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
 **Role:** Lead Engineer  
 **Timeline:** Nov 2025 - Dec 2025  
@@ -54,8 +50,6 @@ const ExperiencePage = () => {
 *   **GPS-based true-north navigation system** running on **ESP32** with real-time heading and location processing.
 *   Implemented accurate compass functionality with magnetic declination correction for offline navigation.
 *   Designed for outdoor navigation and location tracking applications with intuitive display interface.
-
----
 
 ## [HARDWARE PROJECT] The-Ruin-Machine | Arceus Labs
 **Role:** Lead Engineer  
