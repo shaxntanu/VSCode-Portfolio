@@ -10,51 +10,50 @@ const ExperiencePage = () => {
 
 ---
 
-## [Work Experience] Product Developer @ Grosity
-**Timeline:** October 2024 - Present  
-**Status:** Active
+## [Work Experience] Early-Stage Founding Engineer @ Grosity
+**Timeline:** October 2025 - Present  
+**Location:** Patiala, Punjab
 
 ### KEY CONTRIBUTIONS
-*   **System Architecture:** Designed core logic for AI-assisted product development platform.
-*   **Frontend Engineering:** Built responsive interfaces using **React.js** and **Tailwind CSS**.
-*   **IoT Integration:** Developed IoT-enabled quality assessment prototype for fresh produce, utilizing sensors and ML to detect spoilage biomarkers.
-*   **Full-Stack Development:** Implemented end-to-end features from database design to user interface.
+*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
+*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
+*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
 
 ---
 
-## [HARDWARE PROJECT] Zephyr Station
+## [HARDWARE PROJECT] Zephyr-Station
 **Role:** Lead Engineer  
-**Timeline:** 2025
+**Timeline:** 2025  
+**Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
-*   Engineered an **ESP32-based** environmental monitoring system with real-time data logging.
-*   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors.
+*   **ESP32-based environmental monitoring system** with real-time sensor acquisition, **OLED display**, **SD card data logging**, and threshold-based alerts.
+*   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors for comprehensive environmental monitoring.
 *   Designed custom power management circuits for off-grid reliability and low-power operation.
-*   Implemented wireless data transmission and cloud integration for remote monitoring.
 
 ---
 
-## [HARDWARE PROJECT] Smart Blind Stick
+## [HARDWARE PROJECT] Jolt-Locator
 **Role:** Lead Engineer  
-**Timeline:** 2018
+**Timeline:** 2025  
+**Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
-*   Developed an assistive mobility device for visually impaired individuals using **Arduino**.
-*   Integrated **ultrasonic sensors** (HC-SR04) for real-time obstacle detection (up to 3 meters).
-*   Implemented multi-modal alerts: **buzzer** for proximity warnings and **voice prompts** for navigation.
-*   Designed ergonomic form factor with rechargeable battery system.
+*   **GPS-based true-north navigation system** running on **ESP32** with real-time heading and location processing.
+*   Implemented accurate compass functionality with magnetic declination correction.
+*   Designed for outdoor navigation and location tracking applications.
 
 ---
 
-## [HARDWARE PROJECT] IoT Weather Station
-**Role:** Hardware Engineer  
-**Timeline:** 2024
+## [HARDWARE PROJECT] The-Ruin-Machine
+**Role:** Lead Engineer  
+**Timeline:** 2025  
+**Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
-*   Built a multi-sensor weather monitoring system using **ESP8266** and **DHT22** sensors.
-*   Implemented real-time data visualization dashboard with **ThingSpeak** cloud integration.
-*   Designed PCB layout for compact, weatherproof enclosure.
-*   Achieved 24/7 operation with solar panel charging system.
+*   **Probability and stochastic-model simulator** implemented on **ESP32** with physical I/O (**OLED + buzzer**).
+*   Created interactive demonstration of random processes and statistical concepts.
+*   Designed intuitive user interface for educational and experimental purposes.
 
 ---
 
