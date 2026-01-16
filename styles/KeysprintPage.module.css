@@ -70,19 +70,13 @@
     border-radius: 8px;
     padding: 1.5rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.75rem;
     color: #ff6b6b;
 }
 
 .errorIcon {
-    font-size: 1.5rem;
-}
-
-.errorHint {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85rem;
-    margin: 0.5rem 0 0 0;
+    font-size: 1.2rem;
 }
 
 .content {
@@ -107,6 +101,84 @@
 
 .keyword {
     color: #c586c0;
+}
+
+/* Graph Styles */
+.graphContainer {
+    display: flex;
+    gap: 1rem;
+    height: 200px;
+    padding: 1rem 0;
+}
+
+.graphYAxis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding-right: 0.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.graph {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    position: relative;
+}
+
+.graph::before {
+    content: '';
+    position: absolute;
+    bottom: 1.5rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.barContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 80px;
+    height: 100%;
+}
+
+.bar {
+    width: 100%;
+    background: linear-gradient(180deg, var(--accent-color) 0%, rgba(var(--accent-color-rgb, 0, 212, 255), 0.3) 100%);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    min-height: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.bar:hover {
+    filter: brightness(1.2);
+}
+
+.barValue {
+    position: absolute;
+    top: -24px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.barLabel {
+    position: absolute;
+    bottom: 0;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .statsGrid {

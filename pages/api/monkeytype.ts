@@ -7,14 +7,15 @@ export default async function handler(
   const apiKey = process.env.MONKEYTYPE_API_KEY;
 
   if (!apiKey) {
-    return res.status(500).json({ error: 'MonkeyType API key not configured' });
+    return res.status(500).json({ error: 'API key not configured' });
   }
 
   try {
     // Fetch personal bests
-    const pbResponse = await fetch('https://api.monkeytype.com/users/personalBests', {
+    const pbResponse = await fetch('https://api.monkeytype.com/users/personalBests?mode=time', {
       headers: {
         'Authorization': `ApeKey ${apiKey}`,
+        'Accept': 'application/json',
       },
     });
 
@@ -22,15 +23,26 @@ export default async function handler(
     const statsResponse = await fetch('https://api.monkeytype.com/users/stats', {
       headers: {
         'Authorization': `ApeKey ${apiKey}`,
+        'Accept': 'application/json',
       },
     });
 
-    if (!pbResponse.ok || !statsResponse.ok) {
-      throw new Error('Failed to fetch from MonkeyType API');
-    }
-
     const pbData = await pbResponse.json();
     const statsData = await statsResponse.json();
+
+    // Log for debugging
+    console.log('PB Response status:', pbResponse.status);
+    console.log('Stats Response status:', statsResponse.status);
+
+    if (!pbResponse.ok) {
+      console.error('PB Error:', pbData);
+      return res.status(pbResponse.status).json({ error: pbData.message || 'Failed to fetch personal bests' });
+    }
+
+    if (!statsResponse.ok) {
+      console.error('Stats Error:', statsData);
+      return res.status(statsResponse.status).json({ error: statsData.message || 'Failed to fetch stats' });
+    }
 
     res.status(200).json({
       personalBests: pbData.data,
@@ -38,6 +50,6 @@ export default async function handler(
     });
   } catch (error) {
     console.error('MonkeyType API error:', error);
-    res.status(500).json({ error: 'Failed to fetch typing stats' });
+    res.status(500).json({ error: 'Failed to connect to MonkeyType API' });
   }
 }

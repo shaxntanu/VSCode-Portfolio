@@ -2,13 +2,21 @@ import Head from '@/components/Head';
 import styles from '@/styles/KeysprintPage.module.css';
 import { useState, useEffect } from 'react';
 
+interface PersonalBest {
+  wpm: number;
+  acc: number;
+  timestamp: number;
+  raw?: number;
+  consistency?: number;
+}
+
 interface MonkeyTypeStats {
   personalBests?: {
     time?: {
-      '15'?: Array<{ wpm: number; acc: number; timestamp: number }>;
-      '30'?: Array<{ wpm: number; acc: number; timestamp: number }>;
-      '60'?: Array<{ wpm: number; acc: number; timestamp: number }>;
-      '120'?: Array<{ wpm: number; acc: number; timestamp: number }>;
+      '15'?: PersonalBest[];
+      '30'?: PersonalBest[];
+      '60'?: PersonalBest[];
+      '120'?: PersonalBest[];
     };
   };
   typingStats?: {
@@ -27,13 +35,17 @@ const KeysprintPage = () => {
     const fetchStats = async () => {
       try {
         const response = await fetch('/api/monkeytype');
-        if (!response.ok) {
-          throw new Error('Failed to fetch typing stats');
-        }
         const data = await response.json();
+        
+        if (!response.ok) {
+          setError(data.error || 'Failed to fetch data');
+          return;
+        }
+        
         setStats(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        setError(null);
+      } catch {
+        setError('Unable to connect to API');
       } finally {
         setLoading(false);
       }
@@ -48,11 +60,27 @@ const KeysprintPage = () => {
     return `${hours}h ${minutes}m`;
   };
 
-  const getBestWpm = (timeMode: '15' | '30' | '60' | '120') => {
+  const getBestWpm = (timeMode: '15' | '30' | '60' | '120'): PersonalBest | null => {
     const tests = stats?.personalBests?.time?.[timeMode];
     if (!tests || tests.length === 0) return null;
     return tests.reduce((best, test) => (test.wpm > best.wpm ? test : best), tests[0]);
   };
+
+  // Get all personal bests for the graph
+  const getGraphData = () => {
+    const modes = ['15', '30', '60', '120'] as const;
+    return modes.map(mode => {
+      const best = getBestWpm(mode);
+      return {
+        mode,
+        wpm: best?.wpm || 0,
+        acc: best?.acc || 0,
+      };
+    });
+  };
+
+  const graphData = getGraphData();
+  const maxWpm = Math.max(...graphData.map(d => d.wpm), 100);
 
   return (
     <>
@@ -72,16 +100,43 @@ const KeysprintPage = () => {
           </div>
         )}
 
-        {error && (
+        {error && !loading && (
           <div className={styles.error}>
             <span className={styles.errorIcon}>⚠</span>
             <span>{error}</span>
-            <p className={styles.errorHint}>Make sure MONKEYTYPE_API_KEY is set in environment variables</p>
           </div>
         )}
 
-        {stats && !loading && (
+        {stats && !loading && !error && (
           <div className={styles.content}>
+            {/* WPM Graph Section */}
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                <span className={styles.keyword}>graph</span> WPM_BY_DURATION
+              </h2>
+              <div className={styles.graphContainer}>
+                <div className={styles.graphYAxis}>
+                  <span>{Math.round(maxWpm)}</span>
+                  <span>{Math.round(maxWpm * 0.5)}</span>
+                  <span>0</span>
+                </div>
+                <div className={styles.graph}>
+                  {graphData.map((data) => (
+                    <div key={data.mode} className={styles.barContainer}>
+                      <div 
+                        className={styles.bar}
+                        style={{ height: `${(data.wpm / maxWpm) * 100}%` }}
+                      >
+                        <span className={styles.barValue}>{Math.round(data.wpm)}</span>
+                      </div>
+                      <span className={styles.barLabel}>{data.mode}s</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Personal Bests Cards */}
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>
                 <span className={styles.keyword}>export</span> PERSONAL_BESTS
@@ -107,6 +162,7 @@ const KeysprintPage = () => {
               </div>
             </div>
 
+            {/* Typing Stats */}
             {stats.typingStats && (
               <div className={styles.section}>
                 <h2 className={styles.sectionTitle}>
