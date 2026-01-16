@@ -16,6 +16,7 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
   const username = 'shaxntanu';
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
+  const [totalContributions, setTotalContributions] = useState<number>(0);
   
   const calendarTheme = {
     dark: [
@@ -27,15 +28,11 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
     ],
   };
 
-  // Generate year options (from current year down to 2025 when account started)
-  const yearOptions: (number | 'last-year')[] = ['last-year'];
-  for (let year = currentYear; year >= 2025; year--) {
+  // Generate year options (from current year down to 2024 when account started)
+  const yearOptions: number[] = [];
+  for (let year = currentYear; year >= 2024; year--) {
     yearOptions.push(year);
   }
-
-  const getYearLabel = (year: number | 'last-year') => {
-    return year === 'last-year' ? 'Last 12 Months' : year.toString();
-  };
 
   const handleYearSelect = (year: number | 'last-year') => {
     setSelectedYear(year);
@@ -86,55 +83,64 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             </div>
 
             <div className={styles.contributionSection}>
-              <h3 className={styles.sectionTitle}>Contribution Graph</h3>
-              <div className={styles.contributionWrapper}>
-                <div className={styles.contributionGraph}>
-                  <div className={styles.calendarInner}>
-                    <div className={styles.dayLabels}>
-                      <span></span>
-                      <span>Mon</span>
-                      <span></span>
-                      <span>Wed</span>
-                      <span></span>
-                      <span>Fri</span>
-                      <span></span>
-                    </div>
-                    <GitHubCalendar 
-                      username={username}
-                      colorScheme="dark"
-                      blockSize={10}
-                      blockMargin={3}
-                      blockRadius={2}
-                      fontSize={12}
-                      theme={calendarTheme}
-                      year={selectedYear === 'last-year' ? undefined : selectedYear}
-                      hideColorLegend
-                      hideTotalCount
-                      style={{
-                        color: 'rgba(255, 255, 255, 0.7)',
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.select}>
-                  <div className={styles.selected}>
-                    <span>{getYearLabel(selectedYear)}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" className={styles.arrow}>
-                      <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+              <div className={styles.contributionContainer}>
+                <div className={styles.contributionHeader}>
+                  <h3 className={styles.contributionTitle}>
+                    {totalContributions.toLocaleString()} contributions in {selectedYear === 'last-year' ? 'the last year' : selectedYear}
+                  </h3>
+                  <div className={styles.contributionSettings}>
+                    <span className={styles.settingsText}>Contribution settings</span>
+                    <svg className={styles.caretIcon} viewBox="0 0 16 16" width="16" height="16">
+                      <path fillRule="evenodd" d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"></path>
                     </svg>
                   </div>
-                  <div className={styles.options}>
-                    {yearOptions.map((year) => (
-                      <div 
-                        key={year} 
-                        className={`${styles.option} ${selectedYear === year ? styles.optionSelected : ''}`}
-                        onClick={() => handleYearSelect(year)}
-                      >
-                        {getYearLabel(year)}
-                      </div>
-                    ))}
+                </div>
+                <div className={styles.contributionGraph}>
+                  <GitHubCalendar 
+                    username={username}
+                    colorScheme="dark"
+                    blockSize={10}
+                    blockMargin={3}
+                    blockRadius={2}
+                    fontSize={11}
+                    theme={calendarTheme}
+                    year={selectedYear === 'last-year' ? undefined : selectedYear}
+                    hideColorLegend
+                    hideTotalCount
+                    transformData={(data) => {
+                      const total = data.reduce((sum, day) => sum + day.count, 0);
+                      setTotalContributions(total);
+                      return data;
+                    }}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                    }}
+                  />
+                </div>
+                <div className={styles.contributionFooter}>
+                  <div className={styles.legendContainer}>
+                    <span className={styles.legendText}>Less</span>
+                    <div className={styles.legendSquares}>
+                      <span className={`${styles.legendSquare} ${styles.level0}`}></span>
+                      <span className={`${styles.legendSquare} ${styles.level1}`}></span>
+                      <span className={`${styles.legendSquare} ${styles.level2}`}></span>
+                      <span className={`${styles.legendSquare} ${styles.level3}`}></span>
+                      <span className={`${styles.legendSquare} ${styles.level4}`}></span>
+                    </div>
+                    <span className={styles.legendText}>More</span>
                   </div>
                 </div>
+              </div>
+              <div className={styles.yearSelector}>
+                {yearOptions.map((year) => (
+                  <button
+                    key={year}
+                    className={`${styles.yearButton} ${selectedYear === year ? styles.yearButtonActive : ''}`}
+                    onClick={() => handleYearSelect(year)}
+                  >
+                    {year}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
