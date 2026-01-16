@@ -220,6 +220,11 @@ const KeysprintPage = () => {
 
     const { testsByDays } = activity;
     const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize to start of day
+    
+    console.log('testsByDays length:', testsByDays.length);
+    console.log('First few entries:', testsByDays.slice(0, 10));
+    console.log('Today:', today.toISOString());
     
     // Determine date range based on selection
     let startDate: Date;
@@ -232,10 +237,21 @@ const KeysprintPage = () => {
       startDate.setFullYear(startDate.getFullYear() - 1);
       startDate.setDate(startDate.getDate() + 1);
     } else {
-      // Specific year - show Jan 1 to Dec 31 (or today if current year)
+      // Specific year - show Jan 1 to today (if current year) or Dec 31 (if past year)
       startDate = new Date(selectedYear, 0, 1); // Jan 1
-      endDate = selectedYear === currentYear ? new Date(today) : new Date(selectedYear, 11, 31);
+      if (selectedYear === currentYear) {
+        endDate = new Date(today);
+      } else if (selectedYear > currentYear) {
+        // Future year - shouldn't happen but handle it
+        return { weeks: [], totalTests: 0, monthLabels: [] };
+      } else {
+        endDate = new Date(selectedYear, 11, 31); // Dec 31
+      }
     }
+    
+    console.log('Selected year:', selectedYear);
+    console.log('Start date:', startDate.toISOString());
+    console.log('End date:', endDate.toISOString());
     
     // Adjust start to beginning of week (Sunday)
     const startDayOfWeek = startDate.getDay();
@@ -253,14 +269,16 @@ const KeysprintPage = () => {
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
     while (currentDate <= endDate || currentWeek.length > 0) {
-      // Calculate days ago from today
-      const daysAgo = Math.floor((today.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
+      // Calculate days ago from today (index 0 = today, index 1 = yesterday, etc.)
+      const timeDiff = today.getTime() - currentDate.getTime();
+      const daysAgo = Math.round(timeDiff / (1000 * 60 * 60 * 24));
       
       // Check if date is within the selected range
       const inRange = currentDate >= startDate && currentDate <= endDate;
       
       // Get count from testsByDays array (index 0 = today)
-      const count = daysAgo >= 0 && daysAgo < testsByDays.length ? testsByDays[daysAgo] : 0;
+      // Only get data for days that have passed (daysAgo >= 0)
+      const count = (daysAgo >= 0 && daysAgo < testsByDays.length) ? (testsByDays[daysAgo] || 0) : 0;
       
       if (inRange) {
         totalTests += count;
