@@ -216,7 +216,7 @@ const KeysprintPage = () => {
   // Generate activity heatmap data in GitHub style (weeks x 7 days)
   const getActivityHeatmap = () => {
     const activity = data?.testActivity || data?.profile?.testActivity;
-    if (!activity?.testsByDays) return { weeks: [], totalTests: 0 };
+    if (!activity?.testsByDays) return { weeks: [], totalTests: 0, monthLabels: [] };
 
     const { testsByDays } = activity;
     const today = new Date();
@@ -244,10 +244,13 @@ const KeysprintPage = () => {
     
     // Build the grid from adjustedStart to endDate
     const weeks: Array<Array<{ date: Date; count: number; inRange: boolean } | null>> = [];
+    const monthLabels: Array<{ month: string; weekIndex: number }> = [];
     let currentWeek: Array<{ date: Date; count: number; inRange: boolean } | null> = [];
     let totalTests = 0;
+    let lastMonth = -1;
     
     const currentDate = new Date(adjustedStart);
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
     while (currentDate <= endDate || currentWeek.length > 0) {
       // Calculate days ago from today
@@ -261,6 +264,13 @@ const KeysprintPage = () => {
       
       if (inRange) {
         totalTests += count;
+      }
+      
+      // Track month changes for labels
+      const currentMonth = currentDate.getMonth();
+      if (currentMonth !== lastMonth && inRange && currentDate.getDate() <= 7) {
+        monthLabels.push({ month: monthNames[currentMonth], weekIndex: weeks.length });
+        lastMonth = currentMonth;
       }
       
       currentWeek.push({
@@ -281,13 +291,13 @@ const KeysprintPage = () => {
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    return { weeks, totalTests };
+    return { weeks, totalTests, monthLabels };
   };
 
   const typingStats = getTypingStats();
   const streakData = data?.streak;
   const profile = data?.profile;
-  const { weeks: heatmapWeeks, totalTests } = getActivityHeatmap();
+  const { weeks: heatmapWeeks, totalTests, monthLabels } = getActivityHeatmap();
   
   // Calculate max activity for color scaling
   const maxActivity = Math.max(
@@ -296,6 +306,13 @@ const KeysprintPage = () => {
     ),
     1
   );
+
+  // Get color for heatmap cell - empty cells are very dark, active cells scale with intensity
+  const getHeatmapColor = (count: number) => {
+    if (count === 0) return 'rgba(255, 255, 255, 0.05)'; // Very dark for no activity
+    const intensity = Math.min(0.3 + (count / maxActivity) * 0.7, 1);
+    return `rgba(0, 212, 255, ${intensity})`;
+  };
 
   return (
     <>
@@ -417,11 +434,26 @@ const KeysprintPage = () => {
                 </div>
                 <div className={styles.heatmapWrapper}>
                   <div className={styles.heatmapLabels}>
+                    <span></span>
                     <span>Mon</span>
+                    <span></span>
                     <span>Wed</span>
+                    <span></span>
                     <span>Fri</span>
+                    <span></span>
                   </div>
                   <div className={styles.heatmapContainer}>
+                    <div className={styles.monthLabels}>
+                      {monthLabels.map((label, i) => (
+                        <span 
+                          key={i} 
+                          className={styles.monthLabel}
+                          style={{ gridColumn: label.weekIndex + 1 }}
+                        >
+                          {label.month}
+                        </span>
+                      ))}
+                    </div>
                     <div className={styles.heatmap}>
                       {heatmapWeeks.map((week, weekIndex) => (
                         <div key={weekIndex} className={styles.heatmapWeek}>
@@ -431,7 +463,7 @@ const KeysprintPage = () => {
                               className={styles.heatmapCell}
                               style={{
                                 backgroundColor: day && day.inRange
-                                  ? `rgba(0, 212, 255, ${day.count === 0 ? 0.1 : Math.min(0.3 + (day.count / maxActivity) * 0.7, 1)})`
+                                  ? getHeatmapColor(day.count)
                                   : 'transparent',
                               }}
                               title={

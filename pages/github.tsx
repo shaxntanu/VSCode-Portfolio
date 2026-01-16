@@ -88,13 +88,17 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             <div className={styles.contributionSection}>
               <h3 className={styles.sectionTitle}>Contribution Graph</h3>
               <div className={styles.contributionWrapper}>
-                <div className={styles.calendarWrapper}>
-                  <div className={styles.dayLabels}>
-                    <span>Mon</span>
-                    <span>Wed</span>
-                    <span>Fri</span>
-                  </div>
-                  <div className={styles.contributionGraph}>
+                <div className={styles.contributionGraph}>
+                  <div className={styles.calendarInner}>
+                    <div className={styles.dayLabels}>
+                      <span></span>
+                      <span>Mon</span>
+                      <span></span>
+                      <span>Wed</span>
+                      <span></span>
+                      <span>Fri</span>
+                      <span></span>
+                    </div>
                     <GitHubCalendar 
                       username={username}
                       colorScheme="dark"
