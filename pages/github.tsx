@@ -3,6 +3,7 @@ import RepoCard from '@/components/RepoCard';
 import GitHubCalendar from 'react-github-calendar';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
+import { useState } from 'react';
 
 interface GithubPageProps {
   repos?: Repo[];
@@ -13,6 +14,8 @@ interface GithubPageProps {
 
 const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: GithubPageProps) => {
   const username = 'shaxntanu';
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState<number | 'last-year'>(currentYear);
   
   const calendarTheme = {
     dark: [
@@ -23,6 +26,12 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
       'rgba(0, 212, 255, 1)',
     ],
   };
+
+  // Generate year options (from 2018 to current year)
+  const yearOptions = [];
+  for (let year = currentYear; year >= 2018; year--) {
+    yearOptions.push(year);
+  }
   
   return (
     <div className={styles.container}>
@@ -69,7 +78,19 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             </div>
 
             <div className={styles.contributionSection}>
-              <h3 className={styles.sectionTitle}>Contribution Graph</h3>
+              <div className={styles.contributionHeader}>
+                <h3 className={styles.sectionTitle}>Contribution Graph</h3>
+                <select 
+                  value={selectedYear} 
+                  onChange={(e) => setSelectedYear(e.target.value === 'last-year' ? 'last-year' : parseInt(e.target.value))}
+                  className={styles.yearSelector}
+                >
+                  <option value="last-year">Last 12 Months</option>
+                  {yearOptions.map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
               <div className={styles.contributionGraph}>
                 <GitHubCalendar 
                   username={username}
@@ -79,11 +100,14 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
                   blockRadius={2}
                   fontSize={12}
                   theme={calendarTheme}
+                  year={selectedYear === 'last-year' ? undefined : selectedYear}
                   style={{
                     color: 'rgba(255, 255, 255, 0.7)',
                   }}
                   labels={{
-                    totalCount: '{{count}} contributions in the last year',
+                    totalCount: selectedYear === 'last-year' 
+                      ? '{{count}} contributions in the last year'
+                      : `{{count}} contributions in ${selectedYear}`,
                   }}
                 />
               </div>
