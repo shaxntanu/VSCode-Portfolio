@@ -27,9 +27,9 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
     ],
   };
 
-  // Generate year options (from 2018 to current year)
+  // Generate year options (from 2025 to current year only - when GitHub was started)
   const yearOptions: (number | 'last-year')[] = ['last-year'];
-  for (let year = currentYear; year >= 2018; year--) {
+  for (let year = currentYear; year >= 2025; year--) {
     yearOptions.push(year);
   }
 
@@ -86,8 +86,28 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             </div>
 
             <div className={styles.contributionSection}>
-              <div className={styles.contributionHeader}>
-                <h3 className={styles.sectionTitle}>Contribution Graph</h3>
+              <h3 className={styles.sectionTitle}>Contribution Graph</h3>
+              <div className={styles.contributionWrapper}>
+                <div className={styles.contributionGraph}>
+                  <GitHubCalendar 
+                    username={username}
+                    colorScheme="dark"
+                    blockSize={10}
+                    blockMargin={3}
+                    blockRadius={2}
+                    fontSize={12}
+                    theme={calendarTheme}
+                    year={selectedYear === 'last-year' ? undefined : selectedYear}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                    }}
+                    labels={{
+                      totalCount: selectedYear === 'last-year' 
+                        ? '{{count}} contributions in the last year'
+                        : `{{count}} contributions in ${selectedYear}`,
+                    }}
+                  />
+                </div>
                 <div className={styles.select}>
                   <div className={styles.selected}>
                     <span>{getYearLabel(selectedYear)}</span>
@@ -107,26 +127,6 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
                     ))}
                   </div>
                 </div>
-              </div>
-              <div className={styles.contributionGraph}>
-                <GitHubCalendar 
-                  username={username}
-                  colorScheme="dark"
-                  blockSize={10}
-                  blockMargin={3}
-                  blockRadius={2}
-                  fontSize={12}
-                  theme={calendarTheme}
-                  year={selectedYear === 'last-year' ? undefined : selectedYear}
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
-                  }}
-                  labels={{
-                    totalCount: selectedYear === 'last-year' 
-                      ? '{{count}} contributions in the last year'
-                      : `{{count}} contributions in ${selectedYear}`,
-                  }}
-                />
               </div>
             </div>
           </div>

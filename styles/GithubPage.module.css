@@ -103,11 +103,11 @@
     margin-bottom: 2rem;
 }
 
-.contributionHeader {
+.contributionWrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 /* Custom Dropdown Styles */
@@ -119,11 +119,12 @@
     color: white;
     overflow: visible;
     font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
 }
 
 .selected {
     background-color: var(--article-bg);
-    padding: 8px 12px;
+    padding: 10px 14px;
     border-radius: 6px;
     position: relative;
     z-index: 100;
@@ -161,15 +162,30 @@
     background-color: var(--article-bg);
     position: absolute;
     top: calc(100% + 5px);
-    right: 0;
+    left: 0;
     opacity: 0;
     visibility: hidden;
     transition: 300ms;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: auto;
+}
+
+/* Custom scrollbar for options */
+.options::-webkit-scrollbar {
+    width: 6px;
+}
+
+.options::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.options::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
 }
 
 .select:hover .options {
@@ -262,6 +278,20 @@
 
     .statNumber {
         font-size: 1.2rem;
+    }
+
+    .contributionWrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .select {
+        align-self: flex-start;
+    }
+
+    .contributionGraph {
+        overflow-x: auto;
+        max-width: 100%;
     }
 
     .grid {
