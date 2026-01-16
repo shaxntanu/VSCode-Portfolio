@@ -216,9 +216,13 @@ const KeysprintPage = () => {
   // Generate activity heatmap data in GitHub style (weeks x 7 days)
   const getActivityHeatmap = () => {
     const activity = data?.testActivity || data?.profile?.testActivity;
-    if (!activity?.testsByDays) return { weeks: [], totalTests: 0, monthLabels: [] };
+    if (!activity?.testsByDays || !activity?.lastDay) return { weeks: [], totalTests: 0, monthLabels: [] };
 
-    const { testsByDays } = activity;
+    const { testsByDays, lastDay } = activity;
+    
+    // lastDay is the timestamp for index 0 in testsByDays
+    const lastDayDate = new Date(lastDay);
+    lastDayDate.setHours(0, 0, 0, 0);
     
     // Get today at start of day in local time
     const today = new Date();
@@ -229,16 +233,16 @@ const KeysprintPage = () => {
     let endDate: Date;
     
     if (selectedYear === 'last-year') {
-      // Last 12 months
-      endDate = new Date(today);
-      startDate = new Date(today);
+      // Last 12 months from lastDay (most recent data point)
+      endDate = new Date(lastDayDate);
+      startDate = new Date(lastDayDate);
       startDate.setFullYear(startDate.getFullYear() - 1);
       startDate.setDate(startDate.getDate() + 1);
     } else {
-      // Specific year - show Jan 1 to today (if current year) or Dec 31 (if past year)
+      // Specific year - show Jan 1 to Dec 31 (or lastDay if current year)
       startDate = new Date(selectedYear, 0, 1, 0, 0, 0, 0); // Jan 1 at midnight local
       if (selectedYear === currentYear) {
-        endDate = new Date(today);
+        endDate = new Date(lastDayDate); // Use lastDay as end for current year
       } else if (selectedYear > currentYear) {
         // Future year - shouldn't happen but handle it
         return { weeks: [], totalTests: 0, monthLabels: [] };
@@ -263,16 +267,17 @@ const KeysprintPage = () => {
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
     while (currentDate <= endDate || currentWeek.length > 0) {
-      // Calculate days ago from today (index 0 = today, index 1 = yesterday, etc.)
-      const timeDiff = today.getTime() - currentDate.getTime();
-      const daysAgo = Math.round(timeDiff / (1000 * 60 * 60 * 24));
+      // Calculate index: days from currentDate to lastDay
+      // Index 0 = lastDay, Index 1 = lastDay - 1 day, etc.
+      const timeDiff = lastDayDate.getTime() - currentDate.getTime();
+      const dayIndex = Math.round(timeDiff / (1000 * 60 * 60 * 24));
       
       // Check if date is within the selected range
       const inRange = currentDate >= startDate && currentDate <= endDate;
       
-      // Get count from testsByDays array (index 0 = today)
+      // Get count from testsByDays array
       // testsByDays can contain null for days with no activity
-      const rawCount = (daysAgo >= 0 && daysAgo < testsByDays.length) ? testsByDays[daysAgo] : null;
+      const rawCount = (dayIndex >= 0 && dayIndex < testsByDays.length) ? testsByDays[dayIndex] : null;
       const count = rawCount ?? 0; // Convert null/undefined to 0
       
       if (inRange) {
