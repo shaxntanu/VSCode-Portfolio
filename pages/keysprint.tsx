@@ -84,17 +84,13 @@ const KeysprintPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
+  const [selectedYear, setSelectedYear] = useState<number>(currentYear);
 
-  // Generate year options (from current year down to 2025 when MonkeyType was started)
-  const yearOptions: (number | 'last-year')[] = ['last-year'];
-  for (let year = currentYear; year >= 2025; year--) {
+  // Generate year options (from current year down to 2024)
+  const yearOptions: number[] = [];
+  for (let year = currentYear; year >= 2024; year--) {
     yearOptions.push(year);
   }
-
-  const getYearLabel = (year: number | 'last-year') => {
-    return year === 'last-year' ? 'Last 12 Months' : year.toString();
-  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -232,23 +228,15 @@ const KeysprintPage = () => {
     let startDate: Date;
     let endDate: Date;
     
-    if (selectedYear === 'last-year') {
-      // Last 12 months from lastDay (most recent data point)
-      endDate = new Date(lastDayDate);
-      startDate = new Date(lastDayDate);
-      startDate.setFullYear(startDate.getFullYear() - 1);
-      startDate.setDate(startDate.getDate() + 1);
+    // Specific year - show Jan 1 to Dec 31 (or lastDay if current year)
+    startDate = new Date(selectedYear, 0, 1, 0, 0, 0, 0); // Jan 1 at midnight local
+    if (selectedYear === currentYear) {
+      endDate = new Date(lastDayDate); // Use lastDay as end for current year
+    } else if (selectedYear > currentYear) {
+      // Future year - shouldn't happen but handle it
+      return { weeks: [], totalTests: 0, monthLabels: [] };
     } else {
-      // Specific year - show Jan 1 to Dec 31 (or lastDay if current year)
-      startDate = new Date(selectedYear, 0, 1, 0, 0, 0, 0); // Jan 1 at midnight local
-      if (selectedYear === currentYear) {
-        endDate = new Date(lastDayDate); // Use lastDay as end for current year
-      } else if (selectedYear > currentYear) {
-        // Future year - shouldn't happen but handle it
-        return { weeks: [], totalTests: 0, monthLabels: [] };
-      } else {
-        endDate = new Date(selectedYear, 11, 31, 0, 0, 0, 0); // Dec 31 at midnight local
-      }
+      endDate = new Date(selectedYear, 11, 31, 0, 0, 0, 0); // Dec 31 at midnight local
     }
     
     // Adjust start to beginning of week (Sunday)
@@ -418,101 +406,95 @@ const KeysprintPage = () => {
               </div>
             </div>
 
-            {/* Activity Heatmap */}
+            {/* Activity Heatmap - GitHub Style */}
             {(data?.testActivity || profile?.testActivity) && heatmapWeeks.length > 0 && (
-              <div className={styles.section}>
-                <div className={styles.activityHeader}>
-                  <h2 className={styles.sectionTitle}>
-                    <span className={styles.keyword}>render</span> TEST_ACTIVITY
-                  </h2>
-                  <div className={styles.select}>
-                    <div className={styles.selected}>
-                      <span>{getYearLabel(selectedYear)}</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 512 512"
-                        className={styles.arrow}
-                      >
-                        <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
+              <div className={styles.activitySection}>
+                <div className={styles.activityContainer}>
+                  <div className={styles.activityHeader}>
+                    <h3 className={styles.activityTitle}>
+                      {totalTests.toLocaleString()} tests in {selectedYear}
+                    </h3>
+                    <div className={styles.activitySettings}>
+                      <span className={styles.settingsText}>Activity settings</span>
+                      <svg className={styles.caretIcon} viewBox="0 0 16 16" width="16" height="16">
+                        <path fillRule="evenodd" d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"></path>
                       </svg>
                     </div>
-                    <div className={styles.options}>
-                      {yearOptions.map((year) => (
-                        <div
-                          key={year}
-                          className={`${styles.option} ${selectedYear === year ? styles.optionSelected : ''}`}
-                          onClick={() => setSelectedYear(year)}
-                        >
-                          {getYearLabel(year)}
-                        </div>
-                      ))}
-                    </div>
                   </div>
-                </div>
-                <div className={styles.heatmapWrapper}>
-                  <div className={styles.heatmapLabels}>
-                    <span></span>
-                    <span>Mon</span>
-                    <span></span>
-                    <span>Wed</span>
-                    <span></span>
-                    <span>Fri</span>
-                    <span></span>
-                  </div>
-                  <div className={styles.heatmapContainer}>
-                    <div className={styles.monthLabels}>
-                      {monthLabels.map((label, i) => (
-                        <span 
-                          key={i} 
-                          className={styles.monthLabel}
-                          style={{ gridColumn: label.weekIndex + 1 }}
-                        >
-                          {label.month}
-                        </span>
-                      ))}
-                    </div>
-                    <div className={styles.heatmap}>
-                      {heatmapWeeks.map((week, weekIndex) => (
-                        <div key={weekIndex} className={styles.heatmapWeek}>
-                          {week.map((day, dayIndex) => (
-                            <div
-                              key={dayIndex}
-                              className={styles.heatmapCell}
-                              style={{
-                                backgroundColor: day && day.inRange
-                                  ? getHeatmapColor(day.count)
-                                  : 'transparent',
-                              }}
-                              title={
-                                day && day.inRange
-                                  ? `${day.date.toLocaleDateString()}: ${day.count} tests`
-                                  : ''
-                              }
-                            />
+                  <div className={styles.activityGraph}>
+                    <div className={styles.heatmapWrapper}>
+                      <div className={styles.heatmapContainer}>
+                        <div className={styles.monthLabels}>
+                          {monthLabels.map((label, i) => (
+                            <span 
+                              key={i} 
+                              className={styles.monthLabel}
+                              style={{ gridColumn: label.weekIndex + 1 }}
+                            >
+                              {label.month}
+                            </span>
                           ))}
                         </div>
-                      ))}
+                        <div className={styles.heatmapInner}>
+                          <div className={styles.dayLabels}>
+                            <span></span>
+                            <span>Mon</span>
+                            <span></span>
+                            <span>Wed</span>
+                            <span></span>
+                            <span>Fri</span>
+                            <span></span>
+                          </div>
+                          <div className={styles.heatmap}>
+                            {heatmapWeeks.map((week, weekIndex) => (
+                              <div key={weekIndex} className={styles.heatmapWeek}>
+                                {week.map((day, dayIndex) => (
+                                  <div
+                                    key={dayIndex}
+                                    className={styles.heatmapCell}
+                                    style={{
+                                      backgroundColor: day && day.inRange
+                                        ? getHeatmapColor(day.count)
+                                        : 'transparent',
+                                    }}
+                                    title={
+                                      day && day.inRange
+                                        ? `${day.date.toLocaleDateString()}: ${day.count} tests`
+                                        : ''
+                                    }
+                                  />
+                                ))}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.activityFooter}>
+                    <div className={styles.legendContainer}>
+                      <span className={styles.legendText}>Less</span>
+                      <div className={styles.legendSquares}>
+                        <span className={`${styles.legendSquare} ${styles.level0}`}></span>
+                        <span className={`${styles.legendSquare} ${styles.level1}`}></span>
+                        <span className={`${styles.legendSquare} ${styles.level2}`}></span>
+                        <span className={`${styles.legendSquare} ${styles.level3}`}></span>
+                        <span className={`${styles.legendSquare} ${styles.level4}`}></span>
+                      </div>
+                      <span className={styles.legendText}>More</span>
                     </div>
                   </div>
                 </div>
-                <div className={styles.heatmapFooter}>
-                  <span className={styles.heatmapTotal}>
-                    {totalTests.toLocaleString()} tests {selectedYear === 'last-year' ? 'in the last year' : `in ${selectedYear}`}
-                  </span>
-                  <div className={styles.heatmapLegend}>
-                    <span>Less</span>
-                    <div className={styles.legendCells}>
-                      {[0.1, 0.3, 0.5, 0.7, 1].map((opacity, i) => (
-                        <div
-                          key={i}
-                          className={styles.heatmapCell}
-                          style={{ backgroundColor: `rgba(0, 212, 255, ${opacity})` }}
-                        />
-                      ))}
-                    </div>
-                    <span>More</span>
-                  </div>
+                <div className={styles.yearSelector}>
+                  {yearOptions.map((year) => (
+                    <button
+                      key={year}
+                      className={`${styles.yearButton} ${selectedYear === year ? styles.yearButtonActive : ''}`}
+                      onClick={() => setSelectedYear(year)}
+                    >
+                      {year}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
