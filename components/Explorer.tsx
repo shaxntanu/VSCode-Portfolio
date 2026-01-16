@@ -75,6 +75,12 @@ const cvSystemFiles = [
     icon: '/logos/iso_icon.svg',
     external: false,
   },
+  {
+    name: 'keysprint.env',
+    path: '/keysprint',
+    icon: '/logos/env_icon.svg',
+    external: false,
+  },
 ];
 
 const Explorer = () => {

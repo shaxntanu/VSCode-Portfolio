@@ -1,0 +1,208 @@
+.container {
+    padding: 2rem;
+    max-width: 900px;
+    width: 100%;
+    align-self: flex-start;
+    height: calc(100vh - 154px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Hide scrollbar */
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.comment {
+    color: #6a9955;
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.loadingText {
+    color: var(--accent-color);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.error {
+    background: rgba(255, 100, 100, 0.1);
+    border: 1px solid rgba(255, 100, 100, 0.3);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #ff6b6b;
+}
+
+.errorIcon {
+    font-size: 1.5rem;
+}
+
+.errorHint {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin: 0.5rem 0 0 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.section {
+    background: var(--article-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+}
+
+.keyword {
+    color: #c586c0;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.statCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.statCard:hover {
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.statLabel {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.5rem;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.statUnit {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.25rem;
+}
+
+.statAcc {
+    font-size: 0.8rem;
+    color: #4ec9b0;
+    margin-top: 0.5rem;
+}
+
+.envBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.envLine {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.envKey {
+    color: #9cdcfe;
+}
+
+.envEquals {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.envValue {
+    color: #ce9178;
+}
+
+.footer {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+}
