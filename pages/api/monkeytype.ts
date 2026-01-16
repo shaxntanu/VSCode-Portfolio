@@ -18,13 +18,20 @@ export default async function handler(
     // Fetch public profile (doesn't require auth)
     const profileResponse = await fetch(`${MONKEYTYPE_API}/users/${USERNAME}/profile`, {
       headers: { 'Accept': 'application/json' },
+      cache: 'no-store', // Don't cache
     });
 
     // These require API key
     const fetchWithAuth = async (endpoint: string) => {
       if (!apiKey) return null;
-      const response = await fetch(`${MONKEYTYPE_API}${endpoint}`, { headers });
-      if (!response.ok) return null;
+      const response = await fetch(`${MONKEYTYPE_API}${endpoint}`, { 
+        headers,
+        cache: 'no-store', // Don't cache
+      });
+      if (!response.ok) {
+        console.log(`Failed to fetch ${endpoint}:`, response.status);
+        return null;
+      }
       return response.json();
     };
 
@@ -36,6 +43,22 @@ export default async function handler(
     ]);
 
     const profileData = profileResponse.ok ? await profileResponse.json() : null;
+
+    // Log activity data for debugging
+    if (activityData?.data) {
+      console.log('Activity data from API:', {
+        length: activityData.data.testsByDays?.length,
+        lastDay: activityData.data.lastDay,
+        first10: activityData.data.testsByDays?.slice(0, 10),
+      });
+    }
+    if (profileData?.data?.testActivity) {
+      console.log('Profile activity data:', {
+        length: profileData.data.testActivity.testsByDays?.length,
+        lastDay: profileData.data.testActivity.lastDay,
+        first10: profileData.data.testActivity.testsByDays?.slice(0, 10),
+      });
+    }
 
     // Build response with available data
     const responseData: Record<string, unknown> = {};
@@ -67,6 +90,7 @@ export default async function handler(
       responseData.streak = streakData.data;
     }
 
+    // Prefer authenticated activity data over profile data
     if (activityData?.data) {
       responseData.testActivity = activityData.data;
     }
