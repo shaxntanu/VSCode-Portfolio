@@ -83,7 +83,18 @@ const KeysprintPage = () => {
   const [data, setData] = useState<MonkeyTypeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedPeriod, setSelectedPeriod] = useState<'30' | '90' | '365'>('90');
+  const currentYear = new Date().getFullYear();
+  const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
+
+  // Generate year options (from current year down to 2025 when MonkeyType was started)
+  const yearOptions: (number | 'last-year')[] = ['last-year'];
+  for (let year = currentYear; year >= 2025; year--) {
+    yearOptions.push(year);
+  }
+
+  const getYearLabel = (year: number | 'last-year') => {
+    return year === 'last-year' ? 'Last 12 Months' : year.toString();
+  };
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -208,16 +219,43 @@ const KeysprintPage = () => {
     if (!activity?.testsByDays) return { weeks: [], totalTests: 0 };
 
     const { testsByDays } = activity;
-    const days = parseInt(selectedPeriod);
     const today = new Date();
+    
+    // Determine date range based on selection
+    let startDate: Date;
+    let endDate: Date;
+    
+    if (selectedYear === 'last-year') {
+      // Last 12 months (365 days)
+      endDate = new Date(today);
+      startDate = new Date(today);
+      startDate.setFullYear(startDate.getFullYear() - 1);
+    } else {
+      // Specific year
+      startDate = new Date(selectedYear, 0, 1); // Jan 1
+      endDate = new Date(selectedYear, 11, 31); // Dec 31
+      // Don't go beyond today
+      if (endDate > today) {
+        endDate = new Date(today);
+      }
+    }
     
     // Build array of days with their data
     const daysData: { date: Date; count: number; dayOfWeek: number }[] = [];
     let totalTests = 0;
     
-    for (let i = 0; i < Math.min(testsByDays.length, days); i++) {
+    // Calculate days from today back to start
+    const daysDiff = Math.ceil((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    for (let i = 0; i < Math.min(testsByDays.length, daysDiff + 1); i++) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
+      
+      // Skip if outside selected year range
+      if (selectedYear !== 'last-year') {
+        if (date.getFullYear() !== selectedYear) continue;
+      }
+      
       const count = testsByDays[i] || 0;
       totalTests += count;
       
@@ -232,11 +270,11 @@ const KeysprintPage = () => {
     const weeks: Array<Array<{ date: Date; count: number } | null>> = [];
     let currentWeek: Array<{ date: Date; count: number } | null> = new Array(7).fill(null);
     
-    daysData.forEach((day) => {
+    daysData.forEach((day, index) => {
       currentWeek[day.dayOfWeek] = { date: day.date, count: day.count };
       
       // If Saturday or last day, push week
-      if (day.dayOfWeek === 6 || day === daysData[daysData.length - 1]) {
+      if (day.dayOfWeek === 6 || index === daysData.length - 1) {
         weeks.push([...currentWeek]);
         currentWeek = new Array(7).fill(null);
       }
@@ -353,13 +391,7 @@ const KeysprintPage = () => {
                   </h2>
                   <div className={styles.select}>
                     <div className={styles.selected}>
-                      <span>
-                        {selectedPeriod === '30'
-                          ? 'Last 30 Days'
-                          : selectedPeriod === '90'
-                            ? 'Last 90 Days'
-                            : 'Last Year'}
-                      </span>
+                      <span>{getYearLabel(selectedYear)}</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="1em"
@@ -370,27 +402,15 @@ const KeysprintPage = () => {
                       </svg>
                     </div>
                     <div className={styles.options}>
-                      <div
-                        className={`${styles.option} ${selectedPeriod === '30' ? styles.optionSelected : ''
-                          }`}
-                        onClick={() => setSelectedPeriod('30')}
-                      >
-                        Last 30 Days
-                      </div>
-                      <div
-                        className={`${styles.option} ${selectedPeriod === '90' ? styles.optionSelected : ''
-                          }`}
-                        onClick={() => setSelectedPeriod('90')}
-                      >
-                        Last 90 Days
-                      </div>
-                      <div
-                        className={`${styles.option} ${selectedPeriod === '365' ? styles.optionSelected : ''
-                          }`}
-                        onClick={() => setSelectedPeriod('365')}
-                      >
-                        Last Year
-                      </div>
+                      {yearOptions.map((year) => (
+                        <div
+                          key={year}
+                          className={`${styles.option} ${selectedYear === year ? styles.optionSelected : ''}`}
+                          onClick={() => setSelectedYear(year)}
+                        >
+                          {getYearLabel(year)}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -428,7 +448,7 @@ const KeysprintPage = () => {
                 </div>
                 <div className={styles.heatmapFooter}>
                   <span className={styles.heatmapTotal}>
-                    {totalTests.toLocaleString()} tests in the selected period
+                    {totalTests.toLocaleString()} tests {selectedYear === 'last-year' ? 'in the last year' : `in ${selectedYear}`}
                   </span>
                   <div className={styles.heatmapLegend}>
                     <span>Less</span>
