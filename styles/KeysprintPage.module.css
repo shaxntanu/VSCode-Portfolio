@@ -315,33 +315,73 @@
     color: var(--accent-color);
 }
 
-/* Activity Heatmap */
-.heatmapContainer {
+/* Activity Heatmap - GitHub Style */
+.heatmapWrapper {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.heatmapLabels {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    justify-content: space-around;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding-right: 0.5rem;
+    min-height: 105px;
+}
+
+.heatmapLabels span {
+    height: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.heatmapContainer {
+    flex: 1;
+    overflow-x: auto;
 }
 
 .heatmap {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12px, 1fr));
+    display: flex;
     gap: 3px;
-    max-width: 100%;
+    width: fit-content;
+}
+
+.heatmapWeek {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .heatmapCell {
-    aspect-ratio: 1;
-    background: var(--accent-color);
+    width: 11px;
+    height: 11px;
+    background: rgba(0, 212, 255, 0.1);
     border-radius: 2px;
-    min-width: 10px;
-    min-height: 10px;
     cursor: pointer;
-    transition: filter 0.15s ease;
+    transition: all 0.15s ease;
 }
 
 .heatmapCell:hover {
-    filter: brightness(1.4);
     outline: 1px solid rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+}
+
+.heatmapFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.heatmapTotal {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .heatmapLegend {
@@ -350,17 +390,16 @@
     gap: 0.5rem;
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.5);
-    justify-content: flex-end;
 }
 
 .legendCells {
     display: flex;
-    gap: 2px;
+    gap: 3px;
 }
 
 .legendCells .heatmapCell {
-    min-width: 10px;
-    min-height: 10px;
+    width: 10px;
+    height: 10px;
 }
 
 /* Typing Stats */
@@ -445,14 +484,31 @@
         align-self: flex-start;
     }
 
-    .heatmap {
-        grid-template-columns: repeat(auto-fill, minmax(8px, 1fr));
-        gap: 2px;
+    .heatmapWrapper {
+        flex-direction: column;
+    }
+
+    .heatmapLabels {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 1rem;
+        min-height: auto;
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+    }
+
+    .heatmapLabels span {
+        height: auto;
     }
 
     .heatmapCell {
-        min-width: 8px;
-        min-height: 8px;
+        width: 9px;
+        height: 9px;
+    }
+
+    .heatmapFooter {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
@@ -471,5 +527,10 @@
 
     .statsGrid {
         grid-template-columns: 1fr;
+    }
+
+    .heatmapCell {
+        width: 8px;
+        height: 8px;
     }
 }

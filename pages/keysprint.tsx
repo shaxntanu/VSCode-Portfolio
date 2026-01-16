@@ -202,33 +202,61 @@ const KeysprintPage = () => {
     },
   };
 
-  // Generate activity heatmap data
+  // Generate activity heatmap data in GitHub style (weeks x 7 days)
   const getActivityHeatmap = () => {
     const activity = data?.testActivity || data?.profile?.testActivity;
-    if (!activity?.testsByDays) return [];
+    if (!activity?.testsByDays) return { weeks: [], totalTests: 0 };
 
     const { testsByDays } = activity;
-    const today = new Date();
     const days = parseInt(selectedPeriod);
-    const heatmapData: { date: Date; count: number }[] = [];
-
+    const today = new Date();
+    
+    // Build array of days with their data
+    const daysData: { date: Date; count: number; dayOfWeek: number }[] = [];
+    let totalTests = 0;
+    
     for (let i = 0; i < Math.min(testsByDays.length, days); i++) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      heatmapData.unshift({
+      const count = testsByDays[i] || 0;
+      totalTests += count;
+      
+      daysData.unshift({
         date,
-        count: testsByDays[i] || 0,
+        count,
+        dayOfWeek: date.getDay(), // 0 = Sunday, 6 = Saturday
       });
     }
 
-    return heatmapData;
+    // Group into weeks (Sunday to Saturday)
+    const weeks: Array<Array<{ date: Date; count: number } | null>> = [];
+    let currentWeek: Array<{ date: Date; count: number } | null> = new Array(7).fill(null);
+    
+    daysData.forEach((day) => {
+      currentWeek[day.dayOfWeek] = { date: day.date, count: day.count };
+      
+      // If Saturday or last day, push week
+      if (day.dayOfWeek === 6 || day === daysData[daysData.length - 1]) {
+        weeks.push([...currentWeek]);
+        currentWeek = new Array(7).fill(null);
+      }
+    });
+
+    return { weeks, totalTests };
   };
 
   const typingStats = getTypingStats();
   const streakData = data?.streak;
   const profile = data?.profile;
-  const heatmapData = getActivityHeatmap();
-  const maxActivity = Math.max(...heatmapData.map((d) => d.count), 1);
+  const { weeks: heatmapWeeks, totalTests } = getActivityHeatmap();
+  
+  // Calculate max activity for color scaling
+  const maxActivity = Math.max(
+    ...heatmapWeeks.flatMap(week => 
+      week.filter(day => day !== null).map(day => day!.count)
+    ),
+    1
+  );
 
   return (
     <>
@@ -317,7 +345,7 @@ const KeysprintPage = () => {
             </div>
 
             {/* Activity Heatmap */}
-            {(data?.testActivity || profile?.testActivity) && (
+            {(data?.testActivity || profile?.testActivity) && heatmapWeeks.length > 0 && (
               <div className={styles.section}>
                 <div className={styles.activityHeader}>
                   <h2 className={styles.sectionTitle}>
@@ -329,8 +357,8 @@ const KeysprintPage = () => {
                         {selectedPeriod === '30'
                           ? 'Last 30 Days'
                           : selectedPeriod === '90'
-                          ? 'Last 90 Days'
-                          : 'Last Year'}
+                            ? 'Last 90 Days'
+                            : 'Last Year'}
                       </span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -343,25 +371,22 @@ const KeysprintPage = () => {
                     </div>
                     <div className={styles.options}>
                       <div
-                        className={`${styles.option} ${
-                          selectedPeriod === '30' ? styles.optionSelected : ''
-                        }`}
+                        className={`${styles.option} ${selectedPeriod === '30' ? styles.optionSelected : ''
+                          }`}
                         onClick={() => setSelectedPeriod('30')}
                       >
                         Last 30 Days
                       </div>
                       <div
-                        className={`${styles.option} ${
-                          selectedPeriod === '90' ? styles.optionSelected : ''
-                        }`}
+                        className={`${styles.option} ${selectedPeriod === '90' ? styles.optionSelected : ''
+                          }`}
                         onClick={() => setSelectedPeriod('90')}
                       >
                         Last 90 Days
                       </div>
                       <div
-                        className={`${styles.option} ${
-                          selectedPeriod === '365' ? styles.optionSelected : ''
-                        }`}
+                        className={`${styles.option} ${selectedPeriod === '365' ? styles.optionSelected : ''
+                          }`}
                         onClick={() => setSelectedPeriod('365')}
                       >
                         Last Year
@@ -369,25 +394,51 @@ const KeysprintPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className={styles.heatmapContainer}>
-                  <div className={styles.heatmap}>
-                    {heatmapData.map((day, i) => (
-                      <div
-                        key={i}
-                        className={styles.heatmapCell}
-                        style={{
-                          opacity:
-                            day.count === 0 ? 0.1 : Math.min(0.3 + (day.count / maxActivity) * 0.7, 1),
-                        }}
-                        title={`${day.date.toLocaleDateString()}: ${day.count} tests`}
-                      />
-                    ))}
+                <div className={styles.heatmapWrapper}>
+                  <div className={styles.heatmapLabels}>
+                    <span>Mon</span>
+                    <span>Wed</span>
+                    <span>Fri</span>
                   </div>
+                  <div className={styles.heatmapContainer}>
+                    <div className={styles.heatmap}>
+                      {heatmapWeeks.map((week, weekIndex) => (
+                        <div key={weekIndex} className={styles.heatmapWeek}>
+                          {week.map((day, dayIndex) => (
+                            <div
+                              key={dayIndex}
+                              className={styles.heatmapCell}
+                              style={{
+                                backgroundColor: day
+                                  ? `rgba(0, 212, 255, ${day.count === 0 ? 0.1 : Math.min(0.3 + (day.count / maxActivity) * 0.7, 1)
+                                  })`
+                                  : 'transparent',
+                              }}
+                              title={
+                                day
+                                  ? `${day.date.toLocaleDateString()}: ${day.count} tests`
+                                  : ''
+                              }
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.heatmapFooter}>
+                  <span className={styles.heatmapTotal}>
+                    {totalTests.toLocaleString()} tests in the selected period
+                  </span>
                   <div className={styles.heatmapLegend}>
                     <span>Less</span>
                     <div className={styles.legendCells}>
                       {[0.1, 0.3, 0.5, 0.7, 1].map((opacity, i) => (
-                        <div key={i} className={styles.heatmapCell} style={{ opacity }} />
+                        <div
+                          key={i}
+                          className={styles.heatmapCell}
+                          style={{ backgroundColor: `rgba(0, 212, 255, ${opacity})` }}
+                        />
                       ))}
                     </div>
                     <span>More</span>

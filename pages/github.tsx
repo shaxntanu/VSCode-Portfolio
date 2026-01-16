@@ -27,7 +27,7 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
     ],
   };
 
-  // Generate year options (from 2025 to current year only - when GitHub was started)
+  // Generate year options (from current year down to 2025 when account started)
   const yearOptions: (number | 'last-year')[] = ['last-year'];
   for (let year = currentYear; year >= 2025; year--) {
     yearOptions.push(year);
