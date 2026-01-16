@@ -34,11 +34,6 @@ interface StreakData {
   hourOffset?: number;
 }
 
-interface TestActivity {
-  testsByDays: number[];
-  lastDay: number;
-}
-
 interface ProfileDetails {
   bio?: string;
   keyboard?: string;
@@ -65,7 +60,6 @@ interface MonkeyTypeData {
       startedTests: number;
       timeTyping: number;
     };
-    testActivity?: TestActivity;
   };
   personalBests?: {
     time?: Record<string, PersonalBest[]>;
@@ -76,21 +70,12 @@ interface MonkeyTypeData {
     timeTyping: number;
   };
   streak?: StreakData;
-  testActivity?: TestActivity;
 }
 
 const KeysprintPage = () => {
   const [data, setData] = useState<MonkeyTypeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState<number>(currentYear);
-
-  // Generate year options (from current year down to 2024)
-  const yearOptions: number[] = [];
-  for (let year = currentYear; year >= 2024; year--) {
-    yearOptions.push(year);
-  }
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -209,116 +194,9 @@ const KeysprintPage = () => {
     },
   };
 
-  // Generate activity heatmap data in GitHub style (weeks x 7 days)
-  const getActivityHeatmap = () => {
-    const activity = data?.testActivity || data?.profile?.testActivity;
-    if (!activity?.testsByDays || !activity?.lastDay) return { weeks: [], totalTests: 0, monthLabels: [] };
-
-    const { testsByDays, lastDay } = activity;
-    
-    // lastDay is the timestamp for index 0 in testsByDays
-    const lastDayDate = new Date(lastDay);
-    lastDayDate.setHours(0, 0, 0, 0);
-    
-    // Get today at start of day in local time
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    // Determine date range based on selection
-    let startDate: Date;
-    let endDate: Date;
-    
-    // Specific year - show Jan 1 to Dec 31 (or lastDay if current year)
-    startDate = new Date(selectedYear, 0, 1, 0, 0, 0, 0); // Jan 1 at midnight local
-    if (selectedYear === currentYear) {
-      endDate = new Date(lastDayDate); // Use lastDay as end for current year
-    } else if (selectedYear > currentYear) {
-      // Future year - shouldn't happen but handle it
-      return { weeks: [], totalTests: 0, monthLabels: [] };
-    } else {
-      endDate = new Date(selectedYear, 11, 31, 0, 0, 0, 0); // Dec 31 at midnight local
-    }
-    
-    // Adjust start to beginning of week (Sunday)
-    const startDayOfWeek = startDate.getDay();
-    const adjustedStart = new Date(startDate);
-    adjustedStart.setDate(adjustedStart.getDate() - startDayOfWeek);
-    
-    // Build the grid from adjustedStart to endDate
-    const weeks: Array<Array<{ date: Date; count: number; inRange: boolean } | null>> = [];
-    const monthLabels: Array<{ month: string; weekIndex: number }> = [];
-    let currentWeek: Array<{ date: Date; count: number; inRange: boolean } | null> = [];
-    let totalTests = 0;
-    let lastMonth = -1;
-    
-    const currentDate = new Date(adjustedStart);
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
-    while (currentDate <= endDate || currentWeek.length > 0) {
-      // Calculate index: days from currentDate to lastDay
-      // Index 0 = lastDay, Index 1 = lastDay - 1 day, etc.
-      const timeDiff = lastDayDate.getTime() - currentDate.getTime();
-      const dayIndex = Math.round(timeDiff / (1000 * 60 * 60 * 24));
-      
-      // Check if date is within the selected range
-      const inRange = currentDate >= startDate && currentDate <= endDate;
-      
-      // Get count from testsByDays array
-      // testsByDays can contain null for days with no activity
-      const rawCount = (dayIndex >= 0 && dayIndex < testsByDays.length) ? testsByDays[dayIndex] : null;
-      const count = rawCount ?? 0; // Convert null/undefined to 0
-      
-      if (inRange) {
-        totalTests += count;
-      }
-      
-      // Track month changes for labels
-      const currentMonth = currentDate.getMonth();
-      if (currentMonth !== lastMonth && inRange && currentDate.getDate() <= 7) {
-        monthLabels.push({ month: monthNames[currentMonth], weekIndex: weeks.length });
-        lastMonth = currentMonth;
-      }
-      
-      currentWeek.push({
-        date: new Date(currentDate),
-        count,
-        inRange,
-      });
-      
-      // If Saturday, push week and start new one
-      if (currentDate.getDay() === 6) {
-        weeks.push([...currentWeek]);
-        currentWeek = [];
-        
-        // Stop if we've passed the end date
-        if (currentDate > endDate) break;
-      }
-      
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return { weeks, totalTests, monthLabels };
-  };
-
   const typingStats = getTypingStats();
   const streakData = data?.streak;
   const profile = data?.profile;
-  const { weeks: heatmapWeeks, totalTests, monthLabels } = getActivityHeatmap();
-  
-  // Calculate max activity for color scaling
-  const maxActivity = Math.max(
-    ...heatmapWeeks.flatMap(week => 
-      week.filter(day => day !== null && day.inRange).map(day => day!.count)
-    ),
-    1
-  );
-
-  // Get color for heatmap cell - empty cells are very dark, active cells scale with intensity
-  const getHeatmapColor = (count: number) => {
-    if (count === 0) return 'rgba(255, 255, 255, 0.05)'; // Very dark for no activity
-    const intensity = Math.min(0.3 + (count / maxActivity) * 0.7, 1);
-    return `rgba(0, 212, 255, ${intensity})`;
-  };
 
   return (
     <>
@@ -405,99 +283,6 @@ const KeysprintPage = () => {
                 })}
               </div>
             </div>
-
-            {/* Activity Heatmap - GitHub Style */}
-            {(data?.testActivity || profile?.testActivity) && heatmapWeeks.length > 0 && (
-              <div className={styles.activitySection}>
-                <div className={styles.activityContainer}>
-                  <div className={styles.activityHeader}>
-                    <h3 className={styles.activityTitle}>
-                      {totalTests.toLocaleString()} tests in {selectedYear}
-                    </h3>
-                    <div className={styles.activitySettings}>
-                      <span className={styles.settingsText}>Activity settings</span>
-                      <svg className={styles.caretIcon} viewBox="0 0 16 16" width="16" height="16">
-                        <path fillRule="evenodd" d="M4.427 7.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 7H4.604a.25.25 0 00-.177.427z"></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className={styles.activityGraph}>
-                    <div className={styles.heatmapWrapper}>
-                      <div className={styles.heatmapContainer}>
-                        <div className={styles.monthLabels}>
-                          {monthLabels.map((label, i) => (
-                            <span 
-                              key={i} 
-                              className={styles.monthLabel}
-                              style={{ gridColumn: label.weekIndex + 1 }}
-                            >
-                              {label.month}
-                            </span>
-                          ))}
-                        </div>
-                        <div className={styles.heatmapInner}>
-                          <div className={styles.dayLabels}>
-                            <span></span>
-                            <span>Mon</span>
-                            <span></span>
-                            <span>Wed</span>
-                            <span></span>
-                            <span>Fri</span>
-                            <span></span>
-                          </div>
-                          <div className={styles.heatmap}>
-                            {heatmapWeeks.map((week, weekIndex) => (
-                              <div key={weekIndex} className={styles.heatmapWeek}>
-                                {week.map((day, dayIndex) => (
-                                  <div
-                                    key={dayIndex}
-                                    className={styles.heatmapCell}
-                                    style={{
-                                      backgroundColor: day && day.inRange
-                                        ? getHeatmapColor(day.count)
-                                        : 'transparent',
-                                    }}
-                                    title={
-                                      day && day.inRange
-                                        ? `${day.date.toLocaleDateString()}: ${day.count} tests`
-                                        : ''
-                                    }
-                                  />
-                                ))}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.activityFooter}>
-                    <div className={styles.legendContainer}>
-                      <span className={styles.legendText}>Less</span>
-                      <div className={styles.legendSquares}>
-                        <span className={`${styles.legendSquare} ${styles.level0}`}></span>
-                        <span className={`${styles.legendSquare} ${styles.level1}`}></span>
-                        <span className={`${styles.legendSquare} ${styles.level2}`}></span>
-                        <span className={`${styles.legendSquare} ${styles.level3}`}></span>
-                        <span className={`${styles.legendSquare} ${styles.level4}`}></span>
-                      </div>
-                      <span className={styles.legendText}>More</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.yearSelector}>
-                  {yearOptions.map((year) => (
-                    <button
-                      key={year}
-                      className={`${styles.yearButton} ${selectedYear === year ? styles.yearButtonActive : ''}`}
-                      onClick={() => setSelectedYear(year)}
-                    >
-                      {year}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Typing Stats */}
             {typingStats && (
