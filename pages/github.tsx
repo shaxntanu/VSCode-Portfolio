@@ -88,25 +88,29 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             <div className={styles.contributionSection}>
               <h3 className={styles.sectionTitle}>Contribution Graph</h3>
               <div className={styles.contributionWrapper}>
-                <div className={styles.contributionGraph}>
-                  <GitHubCalendar 
-                    username={username}
-                    colorScheme="dark"
-                    blockSize={10}
-                    blockMargin={3}
-                    blockRadius={2}
-                    fontSize={12}
-                    theme={calendarTheme}
-                    year={selectedYear === 'last-year' ? undefined : selectedYear}
-                    style={{
-                      color: 'rgba(255, 255, 255, 0.7)',
-                    }}
-                    labels={{
-                      totalCount: selectedYear === 'last-year' 
-                        ? '{{count}} contributions in the last year'
-                        : `{{count}} contributions in ${selectedYear}`,
-                    }}
-                  />
+                <div className={styles.calendarWrapper}>
+                  <div className={styles.dayLabels}>
+                    <span>Mon</span>
+                    <span>Wed</span>
+                    <span>Fri</span>
+                  </div>
+                  <div className={styles.contributionGraph}>
+                    <GitHubCalendar 
+                      username={username}
+                      colorScheme="dark"
+                      blockSize={10}
+                      blockMargin={3}
+                      blockRadius={2}
+                      fontSize={12}
+                      theme={calendarTheme}
+                      year={selectedYear === 'last-year' ? undefined : selectedYear}
+                      hideColorLegend
+                      hideTotalCount
+                      style={{
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className={styles.select}>
                   <div className={styles.selected}>

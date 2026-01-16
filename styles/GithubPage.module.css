@@ -221,6 +221,27 @@
     font-family: 'JetBrains Mono', monospace;
 }
 
+.calendarWrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dayLabels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 1rem 0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.dayLabels span {
+    height: 10px;
+    display: flex;
+    align-items: center;
+}
+
 .contributionGraph {
     display: inline-block;
     border-radius: 12px;
@@ -283,6 +304,17 @@
     .contributionWrapper {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .calendarWrapper {
+        flex-direction: column;
+    }
+
+    .dayLabels {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 2rem;
+        padding: 0 0 0.5rem 0;
     }
 
     .select {

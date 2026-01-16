@@ -226,59 +226,60 @@ const KeysprintPage = () => {
     let endDate: Date;
     
     if (selectedYear === 'last-year') {
-      // Last 12 months (365 days)
+      // Last 12 months
       endDate = new Date(today);
       startDate = new Date(today);
       startDate.setFullYear(startDate.getFullYear() - 1);
+      startDate.setDate(startDate.getDate() + 1);
     } else {
-      // Specific year
+      // Specific year - show Jan 1 to Dec 31 (or today if current year)
       startDate = new Date(selectedYear, 0, 1); // Jan 1
-      endDate = new Date(selectedYear, 11, 31); // Dec 31
-      // Don't go beyond today
-      if (endDate > today) {
-        endDate = new Date(today);
-      }
+      endDate = selectedYear === currentYear ? new Date(today) : new Date(selectedYear, 11, 31);
     }
     
-    // Build array of days with their data
-    const daysData: { date: Date; count: number; dayOfWeek: number }[] = [];
+    // Adjust start to beginning of week (Sunday)
+    const startDayOfWeek = startDate.getDay();
+    const adjustedStart = new Date(startDate);
+    adjustedStart.setDate(adjustedStart.getDate() - startDayOfWeek);
+    
+    // Build the grid from adjustedStart to endDate
+    const weeks: Array<Array<{ date: Date; count: number; inRange: boolean } | null>> = [];
+    let currentWeek: Array<{ date: Date; count: number; inRange: boolean } | null> = [];
     let totalTests = 0;
     
-    // Calculate days from today back to start
-    const daysDiff = Math.ceil((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    const currentDate = new Date(adjustedStart);
     
-    for (let i = 0; i < Math.min(testsByDays.length, daysDiff + 1); i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
+    while (currentDate <= endDate || currentWeek.length > 0) {
+      // Calculate days ago from today
+      const daysAgo = Math.floor((today.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
       
-      // Skip if outside selected year range
-      if (selectedYear !== 'last-year') {
-        if (date.getFullYear() !== selectedYear) continue;
+      // Check if date is within the selected range
+      const inRange = currentDate >= startDate && currentDate <= endDate;
+      
+      // Get count from testsByDays array (index 0 = today)
+      const count = daysAgo >= 0 && daysAgo < testsByDays.length ? testsByDays[daysAgo] : 0;
+      
+      if (inRange) {
+        totalTests += count;
       }
       
-      const count = testsByDays[i] || 0;
-      totalTests += count;
-      
-      daysData.unshift({
-        date,
+      currentWeek.push({
+        date: new Date(currentDate),
         count,
-        dayOfWeek: date.getDay(), // 0 = Sunday, 6 = Saturday
+        inRange,
       });
-    }
-
-    // Group into weeks (Sunday to Saturday)
-    const weeks: Array<Array<{ date: Date; count: number } | null>> = [];
-    let currentWeek: Array<{ date: Date; count: number } | null> = new Array(7).fill(null);
-    
-    daysData.forEach((day, index) => {
-      currentWeek[day.dayOfWeek] = { date: day.date, count: day.count };
       
-      // If Saturday or last day, push week
-      if (day.dayOfWeek === 6 || index === daysData.length - 1) {
+      // If Saturday, push week and start new one
+      if (currentDate.getDay() === 6) {
         weeks.push([...currentWeek]);
-        currentWeek = new Array(7).fill(null);
+        currentWeek = [];
+        
+        // Stop if we've passed the end date
+        if (currentDate > endDate) break;
       }
-    });
+      
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
 
     return { weeks, totalTests };
   };
@@ -291,7 +292,7 @@ const KeysprintPage = () => {
   // Calculate max activity for color scaling
   const maxActivity = Math.max(
     ...heatmapWeeks.flatMap(week => 
-      week.filter(day => day !== null).map(day => day!.count)
+      week.filter(day => day !== null && day.inRange).map(day => day!.count)
     ),
     1
   );
@@ -429,13 +430,12 @@ const KeysprintPage = () => {
                               key={dayIndex}
                               className={styles.heatmapCell}
                               style={{
-                                backgroundColor: day
-                                  ? `rgba(0, 212, 255, ${day.count === 0 ? 0.1 : Math.min(0.3 + (day.count / maxActivity) * 0.7, 1)
-                                  })`
+                                backgroundColor: day && day.inRange
+                                  ? `rgba(0, 212, 255, ${day.count === 0 ? 0.1 : Math.min(0.3 + (day.count / maxActivity) * 0.7, 1)})`
                                   : 'transparent',
                               }}
                               title={
-                                day
+                                day && day.inRange
                                   ? `${day.date.toLocaleDateString()}: ${day.count} tests`
                                   : ''
                               }
