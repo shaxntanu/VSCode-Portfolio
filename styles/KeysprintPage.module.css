@@ -1,6 +1,7 @@
 .container {
     padding: 2rem;
-    max-width: 900px;
+    max-width: 1200px;
+    margin: 0 auto;
     width: 100%;
     align-self: flex-start;
     height: calc(100vh - 154px);
@@ -38,6 +39,10 @@
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.9rem;
     margin: 0;
+}
+
+.username {
+    color: var(--accent-color);
 }
 
 .loading {
@@ -85,6 +90,57 @@
     gap: 2rem;
 }
 
+/* Streak Card */
+.streakCard {
+    background: var(--article-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: fit-content;
+}
+
+.streakIcon {
+    font-size: 2rem;
+}
+
+.streakInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.streakValue {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ff9500;
+}
+
+.streakLabel {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.streakMax {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.streakMaxLabel {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+.streakMaxValue {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .section {
     background: var(--article-bg);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -103,84 +159,13 @@
     color: #c586c0;
 }
 
-/* Graph Styles */
-.graphContainer {
-    display: flex;
-    gap: 1rem;
-    height: 200px;
-    padding: 1rem 0;
-}
-
-.graphYAxis {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    padding-right: 0.5rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.graph {
-    flex: 1;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    gap: 1rem;
-    padding-bottom: 1.5rem;
-    position: relative;
-}
-
-.graph::before {
-    content: '';
-    position: absolute;
-    bottom: 1.5rem;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.barContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    max-width: 80px;
-    height: 100%;
-}
-
-.bar {
+/* Chart Container */
+.chartContainer {
+    height: 300px;
     width: 100%;
-    background: linear-gradient(180deg, var(--accent-color) 0%, rgba(var(--accent-color-rgb, 0, 212, 255), 0.3) 100%);
-    border-radius: 4px 4px 0 0;
-    position: relative;
-    min-height: 4px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
 }
 
-.bar:hover {
-    filter: brightness(1.2);
-}
-
-.barValue {
-    position: absolute;
-    top: -24px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent-color);
-}
-
-.barLabel {
-    position: absolute;
-    bottom: 0;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
+/* Stats Grid */
 .statsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -228,6 +213,157 @@
     margin-top: 0.5rem;
 }
 
+.statConsistency {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.25rem;
+}
+
+/* Activity Header with Dropdown */
+.activityHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Custom Dropdown Styles (matching GitHub page) */
+.select {
+    width: fit-content;
+    cursor: pointer;
+    position: relative;
+    transition: 300ms;
+    color: white;
+    overflow: visible;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+}
+
+.selected {
+    background-color: var(--article-bg);
+    padding: 10px 14px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 100;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 300ms;
+}
+
+.select:hover .selected {
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.arrow {
+    height: 10px;
+    width: 12px;
+    fill: var(--accent-color);
+    transition: 300ms;
+    transform: rotate(-90deg);
+}
+
+.select:hover .arrow {
+    transform: rotate(0deg);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    padding: 5px;
+    background-color: var(--article-bg);
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: 300ms;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.select:hover .options {
+    opacity: 1;
+    visibility: visible;
+}
+
+.option {
+    border-radius: 4px;
+    padding: 8px 12px;
+    transition: 200ms;
+    background-color: transparent;
+    min-width: 120px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--accent-color);
+}
+
+.optionSelected {
+    background-color: rgba(var(--accent-color-rgb, 0, 212, 255), 0.2);
+    color: var(--accent-color);
+}
+
+/* Activity Heatmap */
+.heatmapContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.heatmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12px, 1fr));
+    gap: 3px;
+    max-width: 100%;
+}
+
+.heatmapCell {
+    aspect-ratio: 1;
+    background: var(--accent-color);
+    border-radius: 2px;
+    min-width: 10px;
+    min-height: 10px;
+    cursor: pointer;
+    transition: filter 0.15s ease;
+}
+
+.heatmapCell:hover {
+    filter: brightness(1.4);
+    outline: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.heatmapLegend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    justify-content: flex-end;
+}
+
+.legendCells {
+    display: flex;
+    gap: 2px;
+}
+
+.legendCells .heatmapCell {
+    min-width: 10px;
+    min-height: 10px;
+}
+
+/* Typing Stats */
 .envBlock {
     display: flex;
     flex-direction: column;
@@ -256,6 +392,15 @@
     color: #ce9178;
 }
 
+.envValue a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.envValue a:hover {
+    text-decoration: underline;
+}
+
 .footer {
     padding-top: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -270,150 +415,6 @@
     text-decoration: underline;
 }
 
-/* Username in subtitle */
-.username {
-    color: var(--accent-color);
-}
-
-/* Overview Row - Streak & XP */
-.overviewRow {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.streakCard {
-    flex: 1;
-    min-width: 200px;
-    background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.streakIcon {
-    font-size: 2rem;
-}
-
-.streakInfo {
-    display: flex;
-    flex-direction: column;
-}
-
-.streakValue {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #ff9500;
-}
-
-.streakLabel {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.streakMax {
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.streakMaxLabel {
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.4);
-    text-transform: uppercase;
-}
-
-.streakMaxValue {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.xpCard {
-    background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 1.25rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.xpLabel {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-
-.xpValue {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #a855f7;
-}
-
-/* Consistency stat */
-.statConsistency {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 0.25rem;
-}
-
-/* Activity Heatmap */
-.heatmapContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.heatmap {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 3px;
-}
-
-.heatmapCell {
-    aspect-ratio: 1;
-    background: var(--accent-color);
-    border-radius: 2px;
-    min-width: 12px;
-    min-height: 12px;
-}
-
-.heatmapLegend {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
-    justify-content: flex-end;
-}
-
-.legendCells {
-    display: flex;
-    gap: 2px;
-}
-
-.legendCells .heatmapCell {
-    min-width: 10px;
-    min-height: 10px;
-}
-
-/* Profile links */
-.envValue a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-.envValue a:hover {
-    text-decoration: underline;
-}
-
 @media screen and (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -421,6 +422,10 @@
 
     .title {
         font-size: 1.4rem;
+    }
+
+    .chartContainer {
+        height: 250px;
     }
 
     .statsGrid {
@@ -431,11 +436,40 @@
         font-size: 1.5rem;
     }
 
-    .overviewRow {
+    .activityHeader {
         flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .select {
+        align-self: flex-start;
     }
 
     .heatmap {
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(8px, 1fr));
+        gap: 2px;
+    }
+
+    .heatmapCell {
+        min-width: 8px;
+        min-height: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0.75rem;
+    }
+
+    .section {
+        padding: 1rem;
+    }
+
+    .chartContainer {
+        height: 200px;
+    }
+
+    .statsGrid {
+        grid-template-columns: 1fr;
     }
 }
