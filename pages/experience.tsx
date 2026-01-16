@@ -10,42 +10,57 @@ const ExperiencePage = () => {
 
 ---
 
-## [Work Experience] Product Developer • CTO @ Grosity
-**Timeline:** October 2025 - Present  
+## [Work Experience] Product Developer @ Grosity
+**Timeline:** October 2024 - Present  
 **Status:** Active
 
 ### KEY CONTRIBUTIONS
-*   **System Architecture:** Designed core logic for AI-assisted product development.
+*   **System Architecture:** Designed core logic for AI-assisted product development platform.
 *   **Frontend Engineering:** Built responsive interfaces using **React.js** and **Tailwind CSS**.
-*   **IoT Integration:** Worked on an IoT-enabled quality assessment prototype for fresh produce, utilizing Sensors and ML to detect spoilage biomarkers.
+*   **IoT Integration:** Developed IoT-enabled quality assessment prototype for fresh produce, utilizing sensors and ML to detect spoilage biomarkers.
+*   **Full-Stack Development:** Implemented end-to-end features from database design to user interface.
 
 ---
 
-## [PROJECT] Zephyr Station
+## [HARDWARE PROJECT] Zephyr Station
 **Role:** Lead Engineer  
 **Timeline:** 2025
 
 ### KEY DELIVERABLES
-*   Engineered an **ESP32-based** environmental monitoring system.
-*   Integrated BME280 & MQ135 sensors for real-time air quality data.
-*   Designed power management circuits for off-grid reliability.
+*   Engineered an **ESP32-based** environmental monitoring system with real-time data logging.
+*   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors.
+*   Designed custom power management circuits for off-grid reliability and low-power operation.
+*   Implemented wireless data transmission and cloud integration for remote monitoring.
 
 ---
 
-## [PROJECT] Blind Stick
+## [HARDWARE PROJECT] Smart Blind Stick
 **Role:** Lead Engineer  
 **Timeline:** 2018
 
 ### KEY DELIVERABLES
-*   Developed a smart mobility aid for visually impaired individuals.
-*   Integrated ultrasonic sensors for obstacle detection.
-*   Implemented buzzer and voice prompt alerts for user safety.
+*   Developed an assistive mobility device for visually impaired individuals using **Arduino**.
+*   Integrated **ultrasonic sensors** (HC-SR04) for real-time obstacle detection (up to 3 meters).
+*   Implemented multi-modal alerts: **buzzer** for proximity warnings and **voice prompts** for navigation.
+*   Designed ergonomic form factor with rechargeable battery system.
+
+---
+
+## [HARDWARE PROJECT] IoT Weather Station
+**Role:** Hardware Engineer  
+**Timeline:** 2024
+
+### KEY DELIVERABLES
+*   Built a multi-sensor weather monitoring system using **ESP8266** and **DHT22** sensors.
+*   Implemented real-time data visualization dashboard with **ThingSpeak** cloud integration.
+*   Designed PCB layout for compact, weatherproof enclosure.
+*   Achieved 24/7 operation with solar panel charging system.
 
 ---
 
 ## [EDUCATION] Thapar Institute (TIET)
-**Degree:** B.E. Electrical Engineering  
-**Focus:** Embedded Systems, Circuit Analysis`;
+**Degree:** B.E. Electronics and Communication Engineering  
+**Focus:** Embedded Systems, IoT, Circuit Design, Signal Processing`;
 
   const parseMarkdown = (text: string) => {
     const lines = text.split('\n');
