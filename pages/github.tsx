@@ -103,7 +103,7 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
                     }}
                     labels={{
                       totalCount: selectedYear === 'last-year' 
-                        ? '{{count}} contributions in the last year'
+                        ? '{{count}} contributions in the last 12 months'
                         : `{{count}} contributions in ${selectedYear}`,
                     }}
                   />
