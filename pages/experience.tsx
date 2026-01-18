@@ -10,19 +10,30 @@ const ExperiencePage = () => {
 
 ---
 
-## [Work Experience] Early-Stage Founding Engineer @ Grosity
-**Timeline:** October 2025 - Present  
-**Location:** Patiala, Punjab
+## [Project / Research Initiative] Core Engineer @ Ragastra
+**Timeline:** December 2025 - Present  
+**Location:** India
+
+### KEY FOCUS
+*   Working on **Ragastra**, a modular maglev-inspired mobility system designed for controlled environments such as campuses and industrial zones.
+*   Exploring the practical scaling-down of maglev principles, focusing on **electromagnetic suspension (EMS)**, **contactless power delivery (WPT)**, and system-level cost optimization.
+*   Translating high-level transportation concepts into buildable subsystems with clear mechanical, electrical, and control boundaries.
 
 ### KEY CONTRIBUTIONS
-*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
-*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
-*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
+*   Designed the system architecture covering **levitation**, **propulsion**, **power delivery**, and **fail-safe mechanisms**.
+*   Worked on **WPT TX/RX coil design**, power flow modeling, and cost breakdowns for short-track deployments.
+*   Analyzed levitation force requirements, safety wheel integration, and mechanical load paths for fault-tolerant operation.
+*   Contributed to pitch preparation, technical justification, and feasibility analysis for early-stage evaluations and competitions.
+
+### CORE THEMES
+*   **Systems thinking** over isolated components.
+*   **Engineering-first decision making**, prioritizing safety, controllability, and scalability.
+*   Balancing ambitious ideas with realistic prototyping constraints.
 
 ---
 
 ## [Open Source Organization] Founder @ Arceus Labs
-**Timeline:** November 2025 - Present  
+**Timeline:** December 2025 - Present  
 **Location:** Remote
 
 ### MISSION
@@ -35,6 +46,17 @@ const ExperiencePage = () => {
 *   **Open hardware philosophy** - Every project designed to be forked, learned from, and improved upon.
 *   **Public iteration** - Making mistakes in public, learning from them, and building something real.
 *   Covering **IoT devices**, **custom PCB design**, **firmware development**, and **hardware-level understanding**.
+
+---
+
+## [Work Experience] Early-Stage Founding Engineer @ Grosity
+**Timeline:** October 2025 - Present  
+**Location:** Patiala, Punjab
+
+### KEY CONTRIBUTIONS
+*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
+*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
+*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
 
 ---
 

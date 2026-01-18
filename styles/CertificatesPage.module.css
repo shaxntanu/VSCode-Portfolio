@@ -104,6 +104,20 @@
     color: #3794ff;
 }
 
+.tags {
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    color: #808080;
+    font-size: 0.85rem;
+    font-style: italic;
+    pointer-events: none;
+    user-select: none;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
