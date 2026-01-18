@@ -43,6 +43,12 @@ const certificateData: CertificateCategory[] = [
         courses: [
           { name: "Generative AI Fundamentals", url: "https://drive.google.com/file/d/16eQ8iMVPF9vurbloSS-g0Fwt-r4MFML1/view?usp=sharing" }
         ]
+      },
+      {
+        provider: "Humble Coders",
+        courses: [
+          { name: "Android App Development", url: "https://drive.google.com/file/d/17XK9oVthSAgXq4OPoHJxRYKTchSmWv0x/view?usp=drive_link" }
+        ]
       }
     ]
   },

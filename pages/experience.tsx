@@ -21,6 +21,23 @@ const ExperiencePage = () => {
 
 ---
 
+## [Open Source Organization] Founder @ Arceus Labs
+**Timeline:** November 2025 - Present  
+**Location:** Remote
+
+### MISSION
+*   Created **Arceus Labs** as an open-source hardware organization for developers who want to go beyond tutorials and actually ship hardware.
+*   Built a collaborative space where **schematics are shared**, **firmware is open sourced**, and **documentation is written for real-world use**.
+*   Focused on making hardware development **accessible, collaborative, and educational** through public iteration and shared learning.
+
+### KEY PRINCIPLES
+*   **By developers, for developers** - Building real hardware, writing real firmware, sharing everything.
+*   **Open hardware philosophy** - Every project designed to be forked, learned from, and improved upon.
+*   **Public iteration** - Making mistakes in public, learning from them, and building something real.
+*   Covering **IoT devices**, **custom PCB design**, **firmware development**, and **hardware-level understanding**.
+
+---
+
 ## [HARDWARE PROJECT] Smart Blind Stick
 **Role:** Lead Engineer  
 **Timeline:** Jul 2018 - Aug 2018  
