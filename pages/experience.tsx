@@ -10,9 +10,9 @@ const ExperiencePage = () => {
 
 ---
 
-## [Project / Research Initiative] Core Engineer @ Ragastra
+## [Project / Research Initiative] Core Engineer: Wireless Power Transfer @ Ragastra
 **Timeline:** December 2025 - Present  
-**Location:** India
+**Location:** Patiala, Punjab
 
 ### KEY FOCUS
 *   Working on **Ragastra**, a modular maglev-inspired mobility system designed for controlled environments such as campuses and industrial zones.
@@ -29,6 +29,10 @@ const ExperiencePage = () => {
 *   **Systems thinking** over isolated components.
 *   **Engineering-first decision making**, prioritizing safety, controllability, and scalability.
 *   Balancing ambitious ideas with realistic prototyping constraints.
+
+### ACHIEVEMENTS
+*   **1st Prize – Ideastorm Prelims (Punjab Zonals)**, E-Summit '26, IIT Roorkee (hosted at Thapar Institute of Engineering & Technology).
+*   Project selected through zonal-level evaluation based on technical feasibility, system design clarity, and cost rationale.
 
 ---
 
