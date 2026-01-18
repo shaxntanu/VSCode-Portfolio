@@ -98,7 +98,7 @@ const CertificatesPage = () => {
           <span className={styles.comment}># Professional Certifications & Training Programs</span>
         </div>
         <div className={styles.yamlLine}>
-          <span className={styles.comment}># Last Updated: December 2025</span>
+          <span className={styles.comment}># Last Updated: January 2026</span>
         </div>
         <div className={styles.yamlLine}></div>
         
