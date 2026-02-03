@@ -11,7 +11,7 @@ const ExperiencePage = () => {
 ---
 
 ## [Project / Research Initiative] Core Engineer: Wireless Power Transfer @ Ragastra
-**Timeline:** December 2025 - Present  
+**Timeline:** September 2025 - Present  
 **Location:** Patiala, Punjab
 
 ### KEY FOCUS
