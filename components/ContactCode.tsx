@@ -17,11 +17,6 @@ const contactItems = [
     href: 'https://github.com/shaxntanu',
   },
   {
-    social: 'Google for Developers',
-    link: 'shaxntanu',
-    href: 'https://g.dev/shaxntanu',
-  },
-  {
     social: 'Monkeytype',
     link: 'shaxntanu',
     href: 'https://monkeytype.com/profile/shaxntanu',
@@ -35,6 +30,11 @@ const contactItems = [
     social: 'Duolingo',
     link: 'shaxntanu',
     href: 'https://www.duolingo.com/profile/shaxntanu',
+  },
+  {
+    social: 'Google for Developers',
+    link: 'shaxntanu',
+    href: 'https://g.dev/shaxntanu',
   },
 ];
 
