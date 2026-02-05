@@ -97,7 +97,7 @@ export const projects: Project[] = [
     link: 'https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller',
     slug: 'electromagnet-controller',
     category: 'COMMUNITY_PROJECT',
-    dateRange: 'Jan 2026 - Jan 2026',
+    dateRange: 'Jan 2026 - Feb 2026',
   },
   {
     title: 'TRM Dashboard',
