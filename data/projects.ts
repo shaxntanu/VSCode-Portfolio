@@ -88,7 +88,7 @@ export const projects: Project[] = [
     link: 'https://github.com/Arceus-Labs/The-Ruin-Machine',
     slug: 'the-ruin-machine',
     category: 'COMMUNITY_PROJECT',
-    dateRange: 'Jan 2026 - Jan 2026',
+    dateRange: 'Dec 2025 - Jan 2026',
   },
   {
     title: 'Electromagnet Controller',
@@ -106,6 +106,6 @@ export const projects: Project[] = [
     link: 'https://the-ruin-machine-web.vercel.app',
     slug: 'trm-dashboard',
     category: 'SOFTWARE_SYSTEMS',
-    dateRange: 'Jan 2026 - Jan 2026',
+    dateRange: 'Dec 2025 - Jan 2026',
   },
 ];
