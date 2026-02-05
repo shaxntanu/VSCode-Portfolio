@@ -91,6 +91,15 @@ export const projects: Project[] = [
     dateRange: 'Jan 2026 - Jan 2026',
   },
   {
+    title: 'Electromagnet Controller',
+    description: 'Arduino-based electromagnet turns controller for precise coil winding.',
+    logo: '/logos/arduino_icon.svg',
+    link: 'https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller',
+    slug: 'electromagnet-controller',
+    category: 'COMMUNITY_PROJECT',
+    dateRange: 'Jan 2026 - Jan 2026',
+  },
+  {
     title: 'TRM Dashboard',
     description: 'Next.js app demonstrating why all betting strategies fail.',
     logo: '/logos/vercel_icon.svg',
