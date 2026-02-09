@@ -83,42 +83,6 @@ const SettingsPage = () => {
             publisher="sarah.drasner"
             theme="night-owl"
           />
-          <ThemeInfo
-            name="Monokai Pro"
-            icon="/themes/monokai.png"
-            publisher="monokai"
-            theme="monokai-pro"
-          />
-          <ThemeInfo
-            name="One Dark Pro"
-            icon="/themes/one-dark.png"
-            publisher="zhuangtongfa"
-            theme="one-dark-pro"
-          />
-          <ThemeInfo
-            name="Tokyo Night"
-            icon="/themes/tokyo-night.png"
-            publisher="enkia"
-            theme="tokyo-night"
-          />
-          <ThemeInfo
-            name="Gruvbox Dark"
-            icon="/themes/gruvbox.png"
-            publisher="jdinhlife"
-            theme="gruvbox-dark"
-          />
-          <ThemeInfo
-            name="Cobalt2"
-            icon="/themes/cobalt2.png"
-            publisher="wesbos"
-            theme="cobalt2"
-          />
-          <ThemeInfo
-            name="Material Ocean"
-            icon="/themes/material.png"
-            publisher="Equinusocio"
-            theme="material-ocean"
-          />
         </div>
       </div>
     </div>
