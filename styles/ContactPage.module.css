@@ -4,6 +4,7 @@
     height: calc(100vh - 154px);
     overflow-y: auto;
     box-sizing: border-box;
+    padding-bottom: 3rem;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
