@@ -30,6 +30,11 @@ const MazeGame = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Get computed styles for colors
+    const accentColor = getComputedStyle(document.documentElement)
+      .getPropertyValue('--accent-color')
+      .trim() || '#007acc';
+
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -40,7 +45,7 @@ const MazeGame = () => {
         
         if (cell === 0) {
           // Wall
-          ctx.fillStyle = 'var(--accent-color)';
+          ctx.fillStyle = accentColor;
           ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
         } else if (cell === 2) {
           // Start
@@ -110,7 +115,10 @@ const MazeGame = () => {
   };
 
   useEffect(() => {
-    drawMaze();
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      drawMaze();
+    }, 100);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -142,7 +150,10 @@ const MazeGame = () => {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [gameWon]);
 
   return (

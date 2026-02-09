@@ -52,6 +52,8 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    background: #1e1e1e;
+    display: block;
 }
 
 .mazeStats {
