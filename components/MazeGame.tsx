@@ -24,7 +24,8 @@ const MazeGame = () => {
       svg.removeChild(svg.firstChild);
     }
 
-    // Generate random diagonal lines
+    // Generate random diagonal lines with animation
+    let pathIndex = 0;
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -38,9 +39,19 @@ const MazeGame = () => {
         path.setAttribute('stroke-width', '0.05');
         path.setAttribute('fill', 'none');
         path.setAttribute('stroke-linecap', 'round');
-        path.setAttribute('opacity', '0.9');
+        
+        // Start invisible
+        path.setAttribute('opacity', '0');
+        path.classList.add(styles.mazePath);
+        
+        // Staggered animation
+        const delay = pathIndex * 0.003; // 3ms delay between each line
+        const duration = 0.1 + Math.random() * 0.2;
+        path.style.animationDelay = `${delay}s`;
+        path.style.animationDuration = `${duration}s`;
 
         svg.appendChild(path);
+        pathIndex++;
       }
     }
 
