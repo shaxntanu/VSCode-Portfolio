@@ -8,18 +8,16 @@ const MazeGame = () => {
   const rows = 8;
 
   // Monokai Pro colors
-  const colors = [
-    { name: 'accent1', color: '#FF6188' },
-    { name: 'accent2', color: '#FC9867' },
-    { name: 'accent3', color: '#FFD866' },
-    { name: 'accent4', color: '#A9DC76' },
-    { name: 'accent5', color: '#78DCE8' },
-    { name: 'accent6', color: '#AB9DF2' },
-  ];
+  const colors = ['#FF6188', '#FC9867', '#FFD866', '#A9DC76', '#78DCE8', '#AB9DF2'];
 
   const generateMaze = () => {
     const svg = svgRef.current;
-    if (!svg) return;
+    if (!svg) {
+      console.log('SVG ref not found');
+      return;
+    }
+
+    console.log('Generating maze...');
 
     // Clear existing paths
     while (svg.firstChild) {
@@ -30,29 +28,23 @@ const MazeGame = () => {
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        
+
         // Randomly choose forward or backward slash
         const isForward = Math.random() > 0.5;
-        const d = isForward 
-          ? `M ${x} ${y} l 1 1`  // Forward slash: \
-          : `M ${x + 1} ${y} l -1 1`; // Backward slash: /
-        
+        const d = isForward ? `M ${x} ${y} l 1 1` : `M ${x + 1} ${y} l -1 1`;
+
         path.setAttribute('d', d);
-        
-        // Random color
-        const colorObj = colors[Math.floor(Math.random() * colors.length)];
-        path.setAttribute('class', `${styles[colorObj.name]} ${styles.mazePath}`);
-        path.setAttribute('stroke', colorObj.color);
-        
-        // Random animation delay and duration
-        const delay = Math.random() * 1;
-        const duration = 0.1 + Math.random() * 0.3;
-        path.style.animationDelay = `${delay}s`;
-        path.style.animationDuration = `${duration}s`;
-        
+        path.setAttribute('stroke', colors[Math.floor(Math.random() * colors.length)]);
+        path.setAttribute('stroke-width', '0.05');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('opacity', '0.9');
+
         svg.appendChild(path);
       }
     }
+
+    console.log(`Generated ${rows * cols} paths`);
   };
 
   const handleGenerate = () => {
@@ -64,10 +56,11 @@ const MazeGame = () => {
   };
 
   useEffect(() => {
+    console.log('MazeGame mounted');
     const timer = setTimeout(() => {
       generateMaze();
     }, 100);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -78,11 +71,9 @@ const MazeGame = () => {
         <p className={styles.mazeInstructions}>
           <span className={styles.codeText}>10 PRINT CHR$(205.5 + RND(1)); : GOTO 10</span>
         </p>
-        <p className={styles.mazeSubtext}>
-          The classic maze generation oneliner in BASIC
-        </p>
+        <p className={styles.mazeSubtext}>The classic maze generation oneliner in BASIC</p>
       </div>
-      
+
       <div className={styles.mazeWrapper}>
         <svg
           ref={svgRef}
@@ -93,11 +84,7 @@ const MazeGame = () => {
       </div>
 
       <div className={styles.mazeStats}>
-        <button 
-          onClick={handleGenerate} 
-          className={styles.executeButton}
-          disabled={isGenerating}
-        >
+        <button onClick={handleGenerate} className={styles.executeButton} disabled={isGenerating}>
           {isGenerating ? 'generating...' : 'execute'}
         </button>
       </div>
