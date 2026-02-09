@@ -214,6 +214,24 @@ const ExperiencePage = () => {
           </span>
         );
       }
+      // Check for "Ragastra" and make it a link
+      if (part.includes('Ragastra')) {
+        const segments = part.split('Ragastra');
+        return (
+          <span key={index}>
+            {segments[0]}
+            <a
+              href="https://github.com/Ragastra"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              Ragastra
+            </a>
+            {segments[1]}
+          </span>
+        );
+      }
       return part;
     });
   };
