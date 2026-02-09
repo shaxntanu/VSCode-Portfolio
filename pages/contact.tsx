@@ -1,4 +1,5 @@
 import ContactCode from '@/components/ContactCode';
+import MazeGame from '@/components/MazeGame';
 
 import styles from '@/styles/ContactPage.module.css';
 
@@ -14,6 +15,7 @@ const ContactPage = () => {
           <ContactCode />
         </div>
       </div>
+      <MazeGame />
     </div>
   );
 };

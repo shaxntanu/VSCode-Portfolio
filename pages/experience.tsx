@@ -84,7 +84,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Smart Blind Stick
 **Role:** Lead Engineer  
-**Timeline:** Jul 2018 - Aug 2018 · ${calculateDuration('2018-07-01', '2018-08-31')}  
+**Timeline:** Jul 2018 - Aug 2018  
 **Tech Stack:** Arduino, C++
 
 ### KEY DELIVERABLES
@@ -94,7 +94,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Zephyr-Station
 **Role:** Lead Engineer  
-**Timeline:** Aug 2025 - Nov 2025 · ${calculateDuration('2025-08-01', '2025-11-30')}  
+**Timeline:** Aug 2025 - Nov 2025  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
@@ -104,7 +104,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
 **Role:** Lead Engineer  
-**Timeline:** Nov 2025 - Dec 2025 · ${calculateDuration('2025-11-01', '2025-12-31')}  
+**Timeline:** Nov 2025 - Dec 2025  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
@@ -114,7 +114,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] The-Ruin-Machine | Arceus Labs
 **Role:** Lead Engineer  
-**Timeline:** Jan 2026 · ${calculateDuration('2026-01-01', '2026-01-31')}  
+**Timeline:** Jan 2026  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
@@ -125,7 +125,7 @@ const ExperiencePage = () => {
 ---
 
 ## [EDUCATION] Thapar Institute (TIET)
-**Degree:** B.E. Electronics and Communication Engineering  
+**Degree:** '29 B.E. Electronics and Communication Engineering  
 **Focus:** Embedded Systems, IoT, Circuit Design, Signal Processing`;
 
   const parseMarkdown = (text: string) => {
