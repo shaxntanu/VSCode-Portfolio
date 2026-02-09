@@ -64,7 +64,11 @@ const MazeGame = () => {
   };
 
   useEffect(() => {
-    generateMaze();
+    const timer = setTimeout(() => {
+      generateMaze();
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (

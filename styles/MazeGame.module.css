@@ -64,6 +64,7 @@
 .mazeSvg {
     width: 100%;
     max-width: 800px;
+    min-height: 200px;
     height: auto;
     background: #1e1e1e;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -74,8 +75,8 @@
 
 .mazePath {
     fill: none;
-    stroke-width: 0.08;
-    stroke-linecap: square;
+    stroke-width: 0.05;
+    stroke-linecap: round;
     opacity: 0;
     animation: fadeIn 0.3s ease-in forwards;
 }
@@ -83,12 +84,10 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
-        stroke-width: 0;
     }
 
     to {
-        opacity: 1;
-        stroke-width: 0.08;
+        opacity: 0.9;
     }
 }
 
