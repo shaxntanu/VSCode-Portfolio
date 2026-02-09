@@ -61,14 +61,59 @@
     padding: 1rem 0;
 }
 
-.mazeCanvas {
+.mazeSvg {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    background: #1e1e1e;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    background: #1e1e1e;
     display: block;
+}
+
+.mazePath {
+    fill: none;
+    stroke-width: 0.08;
+    stroke-linecap: square;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        stroke-width: 0;
+    }
+
+    to {
+        opacity: 1;
+        stroke-width: 0.08;
+    }
+}
+
+.accent1 {
+    stroke: #FF6188;
+}
+
+.accent2 {
+    stroke: #FC9867;
+}
+
+.accent3 {
+    stroke: #FFD866;
+}
+
+.accent4 {
+    stroke: #A9DC76;
+}
+
+.accent5 {
+    stroke: #78DCE8;
+}
+
+.accent6 {
+    stroke: #AB9DF2;
 }
 
 .mazeStats {
@@ -125,7 +170,7 @@
     }
 
     .codeText {
-        font-size: 0.85rem;
+        font-size: 0.75rem;
     }
 
     .mazeWrapper {
@@ -133,9 +178,8 @@
         padding: 0.5rem 0;
     }
 
-    .mazeCanvas {
+    .mazeSvg {
         max-width: 100%;
-        height: auto;
     }
 
     .executeButton {
