@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -5,6 +6,13 @@ import styles from '@/styles/Titlebar.module.css';
 
 const Titlebar = () => {
   const router = useRouter();
+  const [liteMode, setLiteMode] = useState(true);
+
+  useEffect(() => {
+    const savedLiteMode = localStorage.getItem('liteMode');
+    const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+    setLiteMode(isLiteMode);
+  }, []);
 
   const allPaths = ['/about', '/contact', '/projects', '/techstack', '/github', '/experience'];
 
@@ -68,7 +76,12 @@ const Titlebar = () => {
         <p onClick={() => handleMenuClick('Terminal')}>Terminal</p>
         <p onClick={() => handleMenuClick('Help')}>Help</p>
       </div>
-      <p className={styles.title}>Shantanu - Visual Studio Code</p>
+      <p className={styles.title}>
+        Shantanu - Visual Studio Code
+        <span className={styles.modeIndicator}>
+          [{liteMode ? 'Lite Mode' : 'Full Mode'}]
+        </span>
+      </p>
       <div className={styles.windowButtons}>
         <button 
           className={styles.maximize} 

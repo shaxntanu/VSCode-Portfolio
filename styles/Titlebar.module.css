@@ -24,6 +24,16 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modeIndicator {
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.8;
 }
 
 .items>* {

@@ -18,11 +18,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       localStorage.setItem('theme', 'ayu-dark');
     }
 
-    // Check for lite mode preference
-    const savedLiteMode = localStorage.getItem('liteMode') === 'true';
-    setLiteMode(savedLiteMode);
-    if (savedLiteMode) {
+    // Check for lite mode preference - default to true (enabled)
+    const savedLiteMode = localStorage.getItem('liteMode');
+    const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+    
+    setLiteMode(isLiteMode);
+    
+    if (isLiteMode) {
       document.documentElement.setAttribute('data-lite-mode', 'true');
+      if (savedLiteMode === null) {
+        localStorage.setItem('liteMode', 'true');
+      }
     }
   }, []);
 
