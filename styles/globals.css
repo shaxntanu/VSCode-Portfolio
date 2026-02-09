@@ -19,3 +19,15 @@ body {
 a {
     text-decoration: none;
 }
+
+/* Lite Mode - Disable animations for performance */
+[data-lite-mode="true"] * {
+    animation: none !important;
+    transition: none !important;
+}
+
+[data-lite-mode="true"] .motion-div,
+[data-lite-mode="true"] [class*="motion"] {
+    animation: none !important;
+    transition: none !important;
+}

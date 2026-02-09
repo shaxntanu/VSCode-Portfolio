@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
 
 import Layout from '@/components/Layout';
@@ -9,13 +9,34 @@ import '@/styles/globals.css';
 import '@/styles/themes.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [liteMode, setLiteMode] = useState(false);
+
   useEffect(() => {
     const theme = localStorage.getItem('theme') || 'ayu-dark';
     document.documentElement.setAttribute('data-theme', theme);
     if (!localStorage.getItem('theme')) {
       localStorage.setItem('theme', 'ayu-dark');
     }
+
+    // Check for lite mode preference
+    const savedLiteMode = localStorage.getItem('liteMode') === 'true';
+    setLiteMode(savedLiteMode);
+    if (savedLiteMode) {
+      document.documentElement.setAttribute('data-lite-mode', 'true');
+    }
   }, []);
+
+  const content = (
+    <Layout>
+      <Head title={`Shantanu | ${pageProps.title}`} />
+      <Component {...pageProps} />
+    </Layout>
+  );
+
+  // Skip ClickSpark in lite mode
+  if (liteMode) {
+    return content;
+  }
 
   return (
     <ClickSpark
@@ -25,10 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       sparkCount={8}
       duration={400}
     >
-      <Layout>
-        <Head title={`Shantanu | ${pageProps.title}`} />
-        <Component {...pageProps} />
-      </Layout>
+      {content}
     </ClickSpark>
   );
 }

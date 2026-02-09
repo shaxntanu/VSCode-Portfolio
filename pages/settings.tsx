@@ -1,11 +1,51 @@
+import { useState, useEffect } from 'react';
 import ThemeInfo from '@/components/ThemeInfo';
 
 import styles from '@/styles/SettingsPage.module.css';
 
 const SettingsPage = () => {
+  const [liteMode, setLiteMode] = useState(false);
+
+  useEffect(() => {
+    const savedLiteMode = localStorage.getItem('liteMode') === 'true';
+    setLiteMode(savedLiteMode);
+  }, []);
+
+  const toggleLiteMode = () => {
+    const newLiteMode = !liteMode;
+    setLiteMode(newLiteMode);
+    localStorage.setItem('liteMode', String(newLiteMode));
+    
+    if (newLiteMode) {
+      document.documentElement.setAttribute('data-lite-mode', 'true');
+    } else {
+      document.documentElement.removeAttribute('data-lite-mode');
+    }
+    
+    // Reload to apply changes
+    window.location.reload();
+  };
+
   return (
     <div className={styles.layout}>
+      <div className={styles.performanceSection}>
+        <h2 className={styles.sectionTitle}>Performance</h2>
+        <div className={styles.performanceCard}>
+          <div className={styles.performanceInfo}>
+            <h3>Lite Mode</h3>
+            <p>Disable animations and effects for better performance</p>
+          </div>
+          <button 
+            onClick={toggleLiteMode}
+            className={`${styles.toggleButton} ${liteMode ? styles.active : ''}`}
+          >
+            {liteMode ? 'Enabled' : 'Disabled'}
+          </button>
+        </div>
+      </div>
+
       <div className={styles.container}>
+        <h2 className={styles.sectionTitle}>Themes</h2>
         <ThemeInfo
           name="GitHub Dark"
           icon="/themes/github-dark.png"
