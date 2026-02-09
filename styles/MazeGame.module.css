@@ -27,6 +27,20 @@
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.6);
     line-height: 1.5;
+    margin-bottom: 0.5rem;
+}
+
+.codeText {
+    font-family: 'Courier New', monospace;
+    color: #4ECDC4;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.mazeSubtext {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
 }
 
 .green {
@@ -48,7 +62,7 @@
 }
 
 .mazeCanvas {
-    border: 2px solid var(--accent-color);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     image-rendering: pixelated;
@@ -59,70 +73,41 @@
 
 .mazeStats {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
 }
 
-.statItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.statLabel {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.statValue {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--accent-color);
-}
-
-.winMessage {
-    flex: 1;
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #2ecc71;
-    animation: pulse 1s ease-in-out infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.7;
-    }
-}
-
-.resetButton {
-    padding: 0.6rem 1.5rem;
-    background: var(--accent-color);
-    color: var(--bg-color);
+.executeButton {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
+    border-radius: 8px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin: 0 auto;
+    display: block;
 }
 
-.resetButton:hover {
+.executeButton:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    opacity: 0.9;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
-.resetButton:active {
+.executeButton:active:not(:disabled) {
     transform: translateY(0);
+}
+
+.executeButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 @media screen and (max-width: 600px) {
@@ -139,6 +124,10 @@
         font-size: 0.85rem;
     }
 
+    .codeText {
+        font-size: 0.85rem;
+    }
+
     .mazeWrapper {
         overflow-x: auto;
         padding: 0.5rem 0;
@@ -149,21 +138,8 @@
         height: auto;
     }
 
-    .mazeStats {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .statItem {
-        justify-content: center;
-    }
-
-    .winMessage {
-        order: -1;
-        margin-bottom: 0.5rem;
-    }
-
-    .resetButton {
+    .executeButton {
         width: 100%;
+        padding: 0.7rem 1.5rem;
     }
 }
