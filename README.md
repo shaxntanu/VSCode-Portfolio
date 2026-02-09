@@ -11,7 +11,7 @@
 
 **A stunning developer portfolio that looks and feels like VS Code**
 
-[🌐 Deployed](https://vs-code-portfolio-one.vercel.app) • [📝 Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [✨ Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
+[🌐 Deployed](https://shantanu-vsc-portfolio.vercel.app) • [📝 Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [✨ Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
 
 </div>
 
@@ -87,7 +87,7 @@ This project is open source and available under the [MIT License](https://github
 
 **Shantanu Maratha**
 
-- Portfolio: [vs-code-portfolio-one.vercel.app](https://shantanu-vsc-portfolio.vercel.app)
+- Portfolio: [shantanu-vsc-portfolio.vercel.app](https://shantanu-vsc-portfolio.vercel.app)
 - GitHub: [@shaxntanu](https://github.com/shaxntanu)
 
 ## 🙏 Acknowledgments
