@@ -6,12 +6,30 @@ import { JSX } from 'react';
 const ExperiencePage = () => {
   const rotatingTexts = ['LOG', 'Product', 'IoT', 'Embedded Systems', 'Circuits', 'Sketch', 'Design'];
 
+  // Function to calculate duration between two dates
+  const calculateDuration = (startDate: string, endDate: string | 'Present') => {
+    const start = new Date(startDate);
+    const end = endDate === 'Present' ? new Date() : new Date(endDate);
+    
+    const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+    
+    if (years > 0 && remainingMonths > 0) {
+      return `${years} yr${years > 1 ? 's' : ''} ${remainingMonths} mo${remainingMonths > 1 ? 's' : ''}`;
+    } else if (years > 0) {
+      return `${years} yr${years > 1 ? 's' : ''}`;
+    } else {
+      return `${remainingMonths} mo${remainingMonths > 1 ? 's' : ''}`;
+    }
+  };
+
   const markdownContent = `# EXPERIENCE LOG
 
 ---
 
 ## [Project / Research Initiative] Core Engineer: Wireless Power Transfer @ Ragastra
-**Timeline:** September 2025 - Present  
+**Timeline:** September 2025 - Present · ${calculateDuration('2025-09-01', 'Present')}  
 **Location:** Patiala, Punjab
 
 ### KEY FOCUS
@@ -37,7 +55,7 @@ const ExperiencePage = () => {
 ---
 
 ## [Open Source Organization] Founder @ Arceus Labs
-**Timeline:** December 2025 - Present  
+**Timeline:** December 2025 - Present · ${calculateDuration('2025-12-01', 'Present')}  
 **Location:** Remote
 
 ### MISSION
@@ -54,7 +72,7 @@ const ExperiencePage = () => {
 ---
 
 ## [Work Experience] Early-Stage Founding Engineer @ Grosity
-**Timeline:** October 2025 - Present  
+**Timeline:** October 2025 - February 2026 · ${calculateDuration('2025-10-01', '2026-02-28')}  
 **Location:** Patiala, Punjab
 
 ### KEY CONTRIBUTIONS
@@ -66,7 +84,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Smart Blind Stick
 **Role:** Lead Engineer  
-**Timeline:** Jul 2018 - Aug 2018  
+**Timeline:** Jul 2018 - Aug 2018 · ${calculateDuration('2018-07-01', '2018-08-31')}  
 **Tech Stack:** Arduino, C++
 
 ### KEY DELIVERABLES
@@ -76,7 +94,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Zephyr-Station
 **Role:** Lead Engineer  
-**Timeline:** Aug 2025 - Nov 2025  
+**Timeline:** Aug 2025 - Nov 2025 · ${calculateDuration('2025-08-01', '2025-11-30')}  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
@@ -86,7 +104,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
 **Role:** Lead Engineer  
-**Timeline:** Nov 2025 - Dec 2025  
+**Timeline:** Nov 2025 - Dec 2025 · ${calculateDuration('2025-11-01', '2025-12-31')}  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
@@ -96,7 +114,7 @@ const ExperiencePage = () => {
 
 ## [HARDWARE PROJECT] The-Ruin-Machine | Arceus Labs
 **Role:** Lead Engineer  
-**Timeline:** Jan 2026  
+**Timeline:** Jan 2026 · ${calculateDuration('2026-01-01', '2026-01-31')}  
 **Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
