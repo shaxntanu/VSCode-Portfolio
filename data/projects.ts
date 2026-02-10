@@ -118,6 +118,15 @@ export const projects: Project[] = [
     dateRange: 'Jan 2026 - Jan 2026',
   },
   {
+    title: 'RFID Attendance System',
+    description: 'Automated attendance tracking system using RFID cards with ESP32 and Arduino integration.',
+    logo: '/logos/arduino_icon.svg',
+    link: 'https://github.com/Arceus-Labs/RFID-Attendance-System',
+    slug: 'rfid-attendance-system',
+    category: 'COMMUNITY_PROJECT',
+    dateRange: 'Jan 2026 - Feb 2026',
+  },
+  {
     title: 'TRM Dashboard',
     description: 'Next.js app demonstrating why all betting strategies fail.',
     logo: '/logos/vercel_icon.svg',
