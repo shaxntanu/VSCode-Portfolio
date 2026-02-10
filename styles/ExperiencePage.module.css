@@ -65,21 +65,26 @@
     position: relative;
     height: 2.5rem;
     padding-left: 0.5rem;
-    display: flex;
-    flex-direction: column;
+}
+
+.words::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(var(--bg-color, #111) 10%,
+            transparent 30%,
+            transparent 70%,
+            var(--bg-color, #111) 90%);
+    z-index: 20;
+    pointer-events: none;
 }
 
 .word {
     display: block;
-    height: 2.5rem;
-    min-height: 2.5rem;
+    height: 100%;
     color: var(--accent-color);
-    line-height: 2.5rem;
-    flex-shrink: 0;
-}
-
-.words .word:first-child {
     animation: spin_words 6s infinite;
+    line-height: 2.5rem;
 }
 
 @keyframes spin_words {
