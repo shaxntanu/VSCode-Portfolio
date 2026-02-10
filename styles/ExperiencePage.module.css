@@ -67,18 +67,6 @@
     padding-left: 0.5rem;
 }
 
-.words::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(var(--bg-color, #111) 10%,
-            transparent 30%,
-            transparent 70%,
-            var(--bg-color, #111) 90%);
-    z-index: 20;
-    pointer-events: none;
-}
-
 .word {
     display: block;
     height: 100%;
