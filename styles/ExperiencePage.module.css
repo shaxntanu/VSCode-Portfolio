@@ -50,83 +50,20 @@
     gap: 0.5rem;
 }
 
-.loader {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-weight: 500;
-    font-size: 2rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.words {
+.rotatingTextBox {
+    background: var(--accent-color);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
     overflow: hidden;
-    position: relative;
-    height: 2.5rem;
-    padding-left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.words::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(var(--bg-color, #111) 10%,
-            transparent 30%,
-            transparent 70%,
-            var(--bg-color, #111) 90%);
-    z-index: 20;
-    pointer-events: none;
-}
-
-.word {
-    display: block;
-    height: 100%;
-    color: var(--accent-color);
-    animation: spin_words 6s infinite;
-    line-height: 2.5rem;
-}
-
-@keyframes spin_words {
-    10% {
-        transform: translateY(-105%);
-    }
-
-    20% {
-        transform: translateY(-100%);
-    }
-
-    30% {
-        transform: translateY(-205%);
-    }
-
-    40% {
-        transform: translateY(-200%);
-    }
-
-    50% {
-        transform: translateY(-305%);
-    }
-
-    60% {
-        transform: translateY(-300%);
-    }
-
-    70% {
-        transform: translateY(-405%);
-    }
-
-    80% {
-        transform: translateY(-400%);
-    }
-
-    90% {
-        transform: translateY(-505%);
-    }
-
-    100% {
-        transform: translateY(-500%);
-    }
+.rotatingTextOverflow {
+    overflow: hidden;
+    padding-bottom: 0.25rem;
 }
 
 .h2 {
@@ -202,19 +139,6 @@
 
     .h1 {
         font-size: 1.5rem;
-    }
-
-    .loader {
-        font-size: 1.5rem;
-        height: 2rem;
-    }
-
-    .words {
-        height: 2rem;
-    }
-
-    .word {
-        line-height: 2rem;
     }
 
     .h2 {
