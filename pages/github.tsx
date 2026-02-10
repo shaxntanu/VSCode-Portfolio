@@ -3,7 +3,7 @@ import RepoCard from '@/components/RepoCard';
 import GitHubCalendar from 'react-github-calendar';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 interface GithubPageProps {
   repos?: Repo[];
@@ -17,7 +17,7 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const closeTimeoutRef = useState<NodeJS.Timeout | null>(null)[0];
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const calendarTheme = {
     dark: [
@@ -45,21 +45,16 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
   };
 
   const handleMouseEnter = () => {
-    if (closeTimeoutRef) {
-      clearTimeout(closeTimeoutRef);
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
     }
     setIsDropdownOpen(true);
   };
 
   const handleMouseLeave = () => {
-    const timeout = setTimeout(() => {
+    closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
     }, 500); // 0.5 second delay
-    
-    if (closeTimeoutRef) {
-      clearTimeout(closeTimeoutRef);
-    }
-    Object.assign(closeTimeoutRef, timeout);
   };
 
   return (
