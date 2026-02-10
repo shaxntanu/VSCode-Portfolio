@@ -16,6 +16,8 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
   const username = 'shaxntanu';
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const closeTimeoutRef = useState<NodeJS.Timeout | null>(null)[0];
   
   const calendarTheme = {
     dark: [
@@ -39,6 +41,25 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
 
   const handleYearSelect = (year: number | 'last-year') => {
     setSelectedYear(year);
+    setIsDropdownOpen(false);
+  };
+
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef) {
+      clearTimeout(closeTimeoutRef);
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 500); // 0.5 second delay
+    
+    if (closeTimeoutRef) {
+      clearTimeout(closeTimeoutRef);
+    }
+    Object.assign(closeTimeoutRef, timeout);
   };
 
   return (
@@ -108,14 +129,18 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
                     }}
                   />
                 </div>
-                <div className={styles.select}>
+                <div 
+                  className={styles.select}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <div className={styles.selected}>
                     <span>{getYearLabel(selectedYear)}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" className={styles.arrow}>
                       <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path>
                     </svg>
                   </div>
-                  <div className={styles.options}>
+                  <div className={`${styles.options} ${isDropdownOpen ? styles.optionsOpen : ''}`}>
                     {yearOptions.map((year) => (
                       <div
                         key={year}

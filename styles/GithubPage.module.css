@@ -161,11 +161,11 @@
     padding: 5px;
     background-color: var(--article-bg);
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% + 2px);
     left: 0;
     opacity: 0;
     visibility: hidden;
-    transition: 300ms;
+    transition: opacity 200ms ease, visibility 200ms ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -188,7 +188,7 @@
     border-radius: 3px;
 }
 
-.select:hover .options {
+.optionsOpen {
     opacity: 1;
     visibility: visible;
 }
