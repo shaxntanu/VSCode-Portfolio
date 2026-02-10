@@ -20,7 +20,7 @@ const ProjectsPage = () => {
     <div className={styles.layout}>
       <h1 className={styles.pageTitle}>firmware.ino</h1>
       <p className={styles.pageSubtitle}>
-        A showcase of engineered systems across the hardware-software spectrum. From embedded IoT solutions like Zephyr Station and the Smart Blind Stick, to exploring artificial intelligence with Marcus Omega, these projects demonstrate my ability to build both physical devices and intelligent digital applications.
+        A collection of hardware and software projects spanning embedded systems, IoT devices, and intelligent applications. From environmental monitoring stations and navigation systems to AI-powered chatbots and web dashboards, each project represents hands-on engineering work across the full technology stack.
       </p>
 
       {categoryOrder.map((category) => {
