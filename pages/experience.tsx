@@ -1,10 +1,8 @@
 import Head from '@/components/Head';
 import styles from '@/styles/ExperiencePage.module.css';
-import RotatingText from '@/components/RotatingText';
 import { JSX } from 'react';
 
 const ExperiencePage = () => {
-  const rotatingTexts = ['LOG', 'Product', 'IoT', 'Embedded Systems', 'Circuits', 'Sketch', 'Design'];
 
   // Function to calculate duration between two dates
   const calculateDuration = (startDate: string, endDate: string | 'Present') => {
@@ -142,19 +140,17 @@ const ExperiencePage = () => {
           <div key={key++} className={styles.h1Wrapper}>
             <div className={styles.h1Border}></div>
             <h1 className={styles.h1}>
-              EXPERIENCE{' '}
-              <RotatingText
-                texts={rotatingTexts}
-                rotationInterval={2000}
-                staggerFrom="last"
-                staggerDuration={0.025}
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '-120%' }}
-                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-                mainClassName={styles.rotatingTextBox}
-                splitLevelClassName={styles.rotatingTextOverflow}
-              />
+              <div className={styles.loader}>
+                <span>EXPERIENCE</span>
+                <div className={styles.words}>
+                  <span className={styles.word}>LOG</span>
+                  <span className={styles.word}>Product</span>
+                  <span className={styles.word}>IoT</span>
+                  <span className={styles.word}>Embedded</span>
+                  <span className={styles.word}>Circuits</span>
+                  <span className={styles.word}>LOG</span>
+                </div>
+              </div>
             </h1>
           </div>
         );
