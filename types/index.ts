@@ -14,7 +14,7 @@ export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LA
 export interface Project {
   title: string;
   description: string;
-  logo: string;
+  logo: string | string[]; // Support single or multiple logos
   link: string;
   slug: string;
   category: ProjectCategory;

@@ -120,7 +120,7 @@ export const projects: Project[] = [
   {
     title: 'RFID Attendance System',
     description: 'Automated attendance tracking system using RFID cards with ESP32 and Arduino integration.',
-    logo: '/logos/arduino_icon.svg',
+    logo: ['/logos/arduino_icon.svg', '/logos/espressif_icon.svg'],
     link: 'https://github.com/Arceus-Labs/RFID-Attendance-System',
     slug: 'rfid-attendance-system',
     category: 'COMMUNITY_PROJECT',

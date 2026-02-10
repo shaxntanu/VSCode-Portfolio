@@ -10,6 +10,8 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
+  const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
+  
   return (
     <a
       href={project.link}
@@ -23,13 +25,16 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
       <div className={styles.cardGlow}></div>
       <div className={styles.content}>
         <div className={styles.logoWrapper}>
-          <Image
-            src={project.logo}
-            alt={`${project.title} logo`}
-            width={24}
-            height={24}
-            className={styles.logo}
-          />
+          {logos.map((logo, index) => (
+            <Image
+              key={index}
+              src={logo}
+              alt={`${project.title} logo ${index + 1}`}
+              width={24}
+              height={24}
+              className={styles.logo}
+            />
+          ))}
         </div>
         <div 
           className={styles.categoryBadge}
