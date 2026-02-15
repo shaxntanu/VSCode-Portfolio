@@ -256,7 +256,8 @@
     gap: 1.5rem;
     position: relative;
     z-index: 2;
-    padding: 3rem 0;
+    padding: 0;
+    align-self: flex-start;
 }
 
 .developerName {
