@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import styles from '@/styles/HomePage.module.css';
 import DecryptedText from '@/components/DecryptedText';
+import TimeCloudCard from '@/components/TimeCloudCard';
 
 export default function HomePage() {
   const [activeLineIndex, setActiveLineIndex] = useState(0);
@@ -196,6 +197,8 @@ export default function HomePage() {
               </button>
             </Link>
           </div>
+
+          <TimeCloudCard />
         </div>
       </div>
 
