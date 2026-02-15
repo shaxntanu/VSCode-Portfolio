@@ -3,10 +3,28 @@ import Link from 'next/link';
 
 import styles from '@/styles/HomePage.module.css';
 import DecryptedText from '@/components/DecryptedText';
-import TimeCloudCard from '@/components/TimeCloudCard';
 
 export default function HomePage() {
   const [activeLineIndex, setActiveLineIndex] = useState(0);
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const updateGreeting = () => {
+      const hour = new Date().getHours();
+      if (hour < 12) {
+        setGreeting('Good Morning');
+      } else if (hour < 18) {
+        setGreeting('Good Afternoon');
+      } else {
+        setGreeting('Good Evening');
+      }
+    };
+
+    updateGreeting();
+    const interval = setInterval(updateGreeting, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
 
   const codeLines = [
     { code: '/*\n* Project: Portfolio_System_v2.0', type: 'comment' },
@@ -163,6 +181,9 @@ export default function HomePage() {
         </div>
 
         <div className={styles.infoSection}>
+          <div className={styles.greeting}>{greeting},</div>
+          <div className={styles.iAm}>I Am</div>
+          
           <h1 className={styles.developerName}>
             <DecryptedText
               text="Shantanu"
@@ -197,8 +218,6 @@ export default function HomePage() {
               </button>
             </Link>
           </div>
-
-          <TimeCloudCard />
         </div>
       </div>
 
