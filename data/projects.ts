@@ -152,7 +152,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Shape Detection System',
-    description: 'Computer vision pipeline for detecting and recognizing geometric shapes using OpenCV.',
+    description: 'OpenCV-based geometric shape detection and recognition.',
     logo: ['/logos/python_icon.svg', '/logos/jupyter_icon.svg'],
     link: 'https://github.com/shaxntanu/Geometrical-Shape-Detection-and-Recognition-using-Python-in-Image-Processing-ELC-TIET-2029-ECE',
     slug: 'shape-detection-system',
