@@ -7,7 +7,7 @@ const ProjectsPage = () => {
   // Group projects by year first, then by category
   const projectsByYear = projects.reduce((acc, project) => {
     if (!acc[project.year]) {
-      acc[project.year] = {};
+      acc[project.year] = {} as Record<ProjectCategory, typeof projects>;
     }
     if (!acc[project.year][project.category]) {
       acc[project.year][project.category] = [];
