@@ -78,6 +78,39 @@
     line-height: 1.6;
 }
 
+.yearDivider {
+    display: flex;
+    align-items: center;
+    margin: 3rem 0 2rem 0;
+    position: relative;
+}
+
+.yearDivider::before {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    margin-right: 1rem;
+}
+
+.yearDivider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.2), transparent);
+    margin-left: 1rem;
+}
+
+.yearLabel {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    padding: 0 1rem;
+    white-space: nowrap;
+    text-shadow: 0 0 20px currentColor;
+}
+
 @media screen and (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
@@ -95,5 +128,13 @@
 
     .categoryHeader {
         font-size: 0.8rem;
+    }
+
+    .yearLabel {
+        font-size: 1.2rem;
+    }
+
+    .yearDivider {
+        margin: 2rem 0 1.5rem 0;
     }
 }

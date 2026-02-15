@@ -19,6 +19,7 @@ export interface Project {
   slug: string;
   category: ProjectCategory;
   dateRange: string;
+  year: number;
   background?: string;
 }
 
