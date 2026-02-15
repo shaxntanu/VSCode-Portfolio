@@ -179,10 +179,10 @@ export default function HomePage() {
             </span>
           </h1>
 
-          <div className={styles.developerRole}>Product Developer & IoT/Embedded Systems Engineer</div>
+          <div className={styles.developerRole}>Embedded Systems & IoT Developer</div>
 
           <p className={styles.bio}>
-            Building the physical internet. Specialized in ESP32, custom PCB design, and end-to-end IoT integration, along with product development.
+            ESP32 • Custom PCBs • End-to-End Hardware Integration
           </p>
 
           <div className={styles.actionLinks}>
