@@ -3,19 +3,9 @@ import Link from 'next/link';
 
 import styles from '@/styles/HomePage.module.css';
 import DecryptedText from '@/components/DecryptedText';
-import RotatingText from '@/components/RotatingText';
 
 export default function HomePage() {
   const [activeLineIndex, setActiveLineIndex] = useState(0);
-
-  const greetings = [
-    'Good Morning',      // English
-    'おはよう',           // Japanese
-    'Bonjour',          // French
-    'Guten Morgen',     // German
-    'Buongiorno',       // Italian
-    'नमस्ते'             // Hindi
-  ];
 
   const codeLines = [
     { code: '/*\n* Project: Portfolio_System_v2.0', type: 'comment' },
@@ -172,21 +162,6 @@ export default function HomePage() {
         </div>
 
         <div className={styles.infoSection}>
-          <div className={styles.greetingContainer}>
-            <RotatingText
-              texts={greetings}
-              rotationInterval={2500}
-              staggerFrom="last"
-              enter={{ y: '120%' }}
-              exit={{ y: '-120%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-              mainClassName={styles.greeting}
-              splitLevelClassName={styles.greeting}
-            />
-            <span className={styles.greeting}>,</span>
-          </div>
-          <div className={styles.iAm}>I Am</div>
-          
           <h1 className={styles.developerName}>
             <DecryptedText
               text="Shantanu"
