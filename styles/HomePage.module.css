@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
 .container {
     max-width: 1200px;
@@ -262,25 +262,21 @@
 }
 
 .greeting {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 3rem;
+    font-weight: 200;
     margin-bottom: -0.5rem;
-    font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: -0.01em;
-    background: linear-gradient(135deg, var(--accent-color), var(--text-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Poppins', sans-serif;
+    letter-spacing: -0.02em;
+    color: var(--text-color);
 }
 
 .iAm {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 3rem;
+    font-weight: 200;
     margin-bottom: -0.5rem;
-    font-family: 'Poppins', sans-serif;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Poppins', sans-serif;
+    letter-spacing: -0.02em;
+    color: var(--text-color);
 }
 
 .developerName {
@@ -707,11 +703,11 @@
     }
 
     .greeting {
-        font-size: 1.75rem;
+        font-size: 2.5rem;
     }
 
     .iAm {
-        font-size: 1.3rem;
+        font-size: 2.5rem;
     }
 
     .developerRole {
@@ -848,14 +844,13 @@
     }
 
     .greeting {
-        font-size: 1.5rem;
+        font-size: 2rem;
         margin-bottom: -0.3rem;
     }
 
     .iAm {
-        font-size: 1.1rem;
+        font-size: 2rem;
         margin-bottom: -0.3rem;
-        letter-spacing: 0.15em;
     }
 
     .accentText {
