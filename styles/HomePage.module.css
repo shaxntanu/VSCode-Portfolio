@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 .container {
     max-width: 1200px;
@@ -265,8 +265,8 @@
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: -0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: -0.02em;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.01em;
     background: linear-gradient(135deg, var(--accent-color), var(--text-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -275,11 +275,11 @@
 
 .iAm {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.5);
     margin-bottom: -0.5rem;
-    font-family: 'Inter', sans-serif;
-    letter-spacing: 0.1em;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 
