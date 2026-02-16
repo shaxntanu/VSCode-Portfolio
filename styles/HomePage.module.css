@@ -265,7 +265,7 @@
     font-size: 3rem;
     font-weight: 200;
     margin-bottom: -0.5rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     letter-spacing: -0.02em;
     color: var(--text-color);
 }
@@ -274,7 +274,7 @@
     font-size: 3rem;
     font-weight: 200;
     margin-bottom: -0.5rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     letter-spacing: -0.02em;
     color: var(--text-color);
 }
