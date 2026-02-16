@@ -181,6 +181,7 @@ export default function HomePage() {
               exit={{ y: '-120%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 400 }}
               mainClassName={styles.greeting}
+              splitLevelClassName={styles.greeting}
             />
             <span className={styles.greeting}>,</span>
           </div>
