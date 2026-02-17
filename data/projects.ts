@@ -31,10 +31,10 @@ export const projects: Project[] = [
   {
     title: 'Blind Stick',
     description: 'Smart mobility aid with obstacle detection and voice alerts.',
-    logo: '/logos/notion_icon.svg',
-    link: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
+    logo: '/logos/arduino_icon.svg',
+    link: 'https://github.com/shaxntanu/Blind-Stick',
     slug: 'blind-stick',
-    category: 'HARDWARE_MODULES',
+    category: 'COMMUNITY_PROJECT',
     dateRange: 'Jul 2018 - Aug 2018',
     year: 2018,
   },
