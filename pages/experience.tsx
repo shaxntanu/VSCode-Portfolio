@@ -82,7 +82,7 @@ const ExperiencePage = () => {
 
 ---
 
-## [HARDWARE PROJECT] Smart Blind Stick
+## [HARDWARE PROJECT] Smart Blind Stick | Arceus Labs
 **Role:** Lead Engineer  
 **Timeline:** Jul 2018 - Aug 2018  
 **Tech Stack:** Arduino, C++
@@ -101,16 +101,6 @@ const ExperiencePage = () => {
 *   **ESP32-based environmental monitoring system** with real-time sensor acquisition, **OLED display**, **SD card data logging**, and threshold-based alerts.
 *   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors for comprehensive environmental monitoring.
 *   Designed custom power management circuits for off-grid reliability and low-power operation.
-
-## [HARDWARE PROJECT] Blind Stick | Arceus Labs
-**Role:** Lead Engineer  
-**Timeline:** Jul 2018 - Aug 2018  
-**Tech Stack:** Arduino, C++
-
-### KEY DELIVERABLES
-*   **Arduino-based assistive device** with **HC-SR04 ultrasonic sensor** for obstacle detection and audio feedback system.
-*   Implemented distance-based alert system with varying beep patterns for real-time navigation assistance.
-*   Designed as an educational prototype demonstrating sensor integration and Arduino programming fundamentals.
 
 ## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
 **Role:** Lead Engineer  
