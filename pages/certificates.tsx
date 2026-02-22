@@ -54,6 +54,17 @@ const certificateData: CertificateCategory[] = [
     ]
   },
   {
+    category: "Competitions & Achievements",
+    certificates: [
+      {
+        provider: "E-Cell IIT Roorkee",
+        courses: [
+          { name: "Ideastorm 2026 - Ragastra Maglev Pitch", url: "https://drive.google.com/file/d/1vn5fvfZB6D2pnZbpqawYoXkIzwwhABUb/view?usp=sharing", tags: ["#Innovation", "#MaglevTechnology", "#Entrepreneurship"] }
+        ]
+      }
+    ]
+  },
+  {
     category: "Soft Skills",
     certificates: [
       {
