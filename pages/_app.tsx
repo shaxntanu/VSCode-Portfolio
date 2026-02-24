@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
+import { Analytics } from '@vercel/analytics/next';
 
 import Layout from '@/components/Layout';
 import Head from '@/components/Head';
@@ -41,19 +42,27 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   // Skip ClickSpark in lite mode
   if (liteMode) {
-    return content;
+    return (
+      <>
+        {content}
+        <Analytics />
+      </>
+    );
   }
 
   return (
-    <ClickSpark
-      sparkColor='#fff'
-      sparkSize={10}
-      sparkRadius={15}
-      sparkCount={8}
-      duration={400}
-    >
-      {content}
-    </ClickSpark>
+    <>
+      <ClickSpark
+        sparkColor='#fff'
+        sparkSize={10}
+        sparkRadius={15}
+        sparkCount={8}
+        duration={400}
+      >
+        {content}
+      </ClickSpark>
+      <Analytics />
+    </>
   );
 }
 
