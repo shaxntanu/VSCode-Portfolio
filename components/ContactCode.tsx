@@ -45,8 +45,8 @@ const ContactCode = () => {
         <span className={styles.className}>.socials</span> &#123;
       </p>
       {contactItems.map((item, index) => (
-        <p className={styles.line} key={index}>
-          &nbsp;&nbsp;&nbsp;{item.social}:{' '}
+        <p className={`${styles.line} ${styles.property}`} key={index}>
+          <span className={styles.indent}>{item.social}:</span>{' '}
           <a href={item.href} target="_blank" rel="noopener">
             {item.link}
           </a>
