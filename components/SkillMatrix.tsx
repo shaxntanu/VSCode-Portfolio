@@ -39,6 +39,7 @@ const skillData: SkillCategory[] = [
       { name: 'Measurement Tools', tools: 'Multimeter, Vernier Caliper', score: 99, categoryColor: '#ff8c50' },
       { name: 'Communication Protocols', tools: 'I2C, SPI, UART', score: 66, categoryColor: '#ff8c50' },
       { name: 'MQTT / IoT Protocols', tools: 'MQTT', score: 66, categoryColor: '#ff8c50' },
+      { name: 'Electromagnet', tools: 'Electromagnet', score: 66, categoryColor: '#ff8c50' },
     ],
   },
   {
