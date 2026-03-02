@@ -42,7 +42,7 @@ const papers = [
   },
   {
     id: 'DOC-WHP-005',
-    title: 'Whitepaper Research Document',
+    title: 'Geometrical Shape Detection and Recognition using Python in Image Processing',
     type: 'Whitepaper',
     date: '2026-03-01',
     status: 'PUBLISHED',
