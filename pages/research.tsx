@@ -1,5 +1,6 @@
 import { VscLinkExternal } from 'react-icons/vsc';
 import { SiNotion } from 'react-icons/si';
+import Image from 'next/image';
 import styles from '@/styles/ResearchPage.module.css';
 
 const papers = [
@@ -10,6 +11,7 @@ const papers = [
     date: '2025-11-25',
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
+    icon: 'notion',
   },
   {
     id: 'DOC-ZPH-002',
@@ -18,6 +20,7 @@ const papers = [
     date: '2025-11-26',
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/Zephyr-Station-Technical-Report-de41e9c0afd3444195afbac904fe2edc',
+    icon: 'notion',
   },
   {
     id: 'DOC-JLT-003',
@@ -26,6 +29,7 @@ const papers = [
     date: '2025-12-27',
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909?pvs=73',
+    icon: 'notion',
   },
   {
     id: 'DOC-TRM-004',
@@ -34,6 +38,16 @@ const papers = [
     date: '2026-01-02',
     status: 'PUBLISHED',
     link: 'https://crocus-zenobia-863.notion.site/The-Ruin-Machine-Technical-Report-2dc1ebfe2064806a9625f49a9871aaf3?pvs=73',
+    icon: 'notion',
+  },
+  {
+    id: 'DOC-WHP-005',
+    title: 'Whitepaper Research Document',
+    type: 'Whitepaper',
+    date: '2026-03-01',
+    status: 'PUBLISHED',
+    link: 'https://docs.google.com/document/d/10oCl39Ste8v906QpB7fuZsjLb0rCIReW/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
+    icon: 'word',
   },
 ];
 
@@ -57,7 +71,16 @@ const ResearchPage = () => {
               className={styles.card}
             >
               <div className={styles.cardIcon}>
-                <SiNotion />
+                {paper.icon === 'word' ? (
+                  <Image 
+                    src="/logos/word_icon.svg" 
+                    alt="Word Document" 
+                    width={24} 
+                    height={24} 
+                  />
+                ) : (
+                  <SiNotion />
+                )}
               </div>
               <div className={styles.cardContent}>
                 <h3 className={styles.cardTitle}>{paper.title}</h3>
