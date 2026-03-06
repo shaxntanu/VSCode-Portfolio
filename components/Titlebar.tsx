@@ -78,7 +78,10 @@ const Titlebar = () => {
       </div>
       <p className={styles.title}>
         Shantanu - Visual Studio Code
-        <span className={styles.modeIndicator}>
+        <span 
+          className={styles.modeIndicator}
+          onClick={() => router.push('/settings')}
+        >
           [{liteMode ? 'Lite Mode' : 'Full Mode'}]
         </span>
       </p>
