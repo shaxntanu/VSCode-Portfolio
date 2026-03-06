@@ -27,9 +27,9 @@ const contactItems = [
     href: 'https://monkeytype.com/profile/shaxntanu',
   },
   {
-    social: 'Instagram',
+    social: 'Medium',
     link: 'shaxntanu',
-    href: 'https://www.instagram.com/shaxntanu',
+    href: 'https://shaxntanu.medium.com',
   },
   {
     social: 'Duolingo',
