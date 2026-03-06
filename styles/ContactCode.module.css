@@ -58,7 +58,8 @@
 }
 
 .className {
-    color: var(--accent-color);
+    color: #7a8a99;
+    font-weight: 500;
 }
 
 .property {
