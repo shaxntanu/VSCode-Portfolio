@@ -7,11 +7,23 @@ import styles from '@/styles/Titlebar.module.css';
 const Titlebar = () => {
   const router = useRouter();
   const [liteMode, setLiteMode] = useState(true);
+  const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
 
   useEffect(() => {
     const savedLiteMode = localStorage.getItem('liteMode');
     const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
     setLiteMode(isLiteMode);
+
+    const theme = localStorage.getItem('theme') || 'ayu-dark';
+    const themeNames: { [key: string]: string } = {
+      'github-dark': 'GitHub Dark',
+      'dracula': 'Dracula',
+      'ayu-dark': 'Ayu Dark',
+      'ayu-mirage': 'Ayu Mirage',
+      'nord': 'Nord',
+      'night-owl': 'Night Owl',
+    };
+    setCurrentTheme(themeNames[theme] || 'Ayu Dark');
   }, []);
 
   const allPaths = ['/about', '/contact', '/projects', '/techstack', '/github', '/experience'];
@@ -78,6 +90,12 @@ const Titlebar = () => {
       </div>
       <p className={styles.title}>
         Shantanu - Visual Studio Code
+        <span 
+          className={styles.themeIndicator}
+          onClick={() => router.push('/settings')}
+        >
+          [{currentTheme}]
+        </span>
         <span 
           className={styles.modeIndicator}
           onClick={() => router.push('/settings')}

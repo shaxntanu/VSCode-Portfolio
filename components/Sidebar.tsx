@@ -23,7 +23,7 @@ const sidebarTopItems = [
 ];
 
 const sidebarBottomItems = [
-  { Icon: VscAccount, path: '/' },
+  { Icon: VscAccount, path: '/about' },
   { Icon: VscSettings, path: '/settings' },
 ];
 

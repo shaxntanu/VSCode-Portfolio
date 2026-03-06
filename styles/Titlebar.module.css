@@ -44,6 +44,22 @@
     opacity: 1;
 }
 
+.themeIndicator {
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.8;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    margin-right: 0.25rem;
+}
+
+.themeIndicator:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
 .items>* {
     padding: 0 0.5rem;
     cursor: pointer;
