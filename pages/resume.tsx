@@ -51,8 +51,12 @@ const ResumePage = () => {
           <hr className={styles.divider} />
 
           <div className={styles.actionSection}>
-            <button className={styles.downloadBtn} onClick={handleDownload}>
-              [ INITIATE DOWNLOAD SEQUENCE ]
+            <button className={styles.button} onClick={handleDownload}>
+              <span className={styles.shadow}></span>
+              <span className={styles.edge}></span>
+              <div className={styles.front}>
+                <span>[ INITIATE DOWNLOAD SEQUENCE ]</span>
+              </div>
             </button>
           </div>
 

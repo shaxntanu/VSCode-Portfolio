@@ -136,27 +136,86 @@
     padding: 1rem 0;
 }
 
-.downloadBtn {
+/* 3D Button Styles */
+.button {
+    position: relative;
+    border: none;
     background: transparent;
-    border: 2px solid #00ff88;
-    color: #00ff88;
-    padding: 1rem 2rem;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 1rem;
+    padding: 0;
+    outline: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* Shadow layer */
+.button .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    transform: translateY(2px);
+    transition: transform 150ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+/* Edge layer */
+.button .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(to left,
+            color-mix(in srgb, var(--accent-color) 40%, #000) 0%,
+            color-mix(in srgb, var(--accent-color) 60%, #000) 8%,
+            color-mix(in srgb, var(--accent-color) 60%, #000) 92%,
+            color-mix(in srgb, var(--accent-color) 40%, #000) 100%);
+}
+
+/* Front layer */
+.button .front {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-size: 1rem;
+    color: white;
+    background: var(--accent-color);
+    border-radius: 8px;
+    transform: translateY(-4px);
+    transition: transform 150ms cubic-bezier(0.3, 0.7, 0.4, 1);
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-.downloadBtn:hover {
-    background: #00ff88;
-    color: #0a0a0a;
-    box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+/* Hover and active states */
+.button:hover .shadow {
+    transform: translateY(4px);
+    transition: transform 150ms cubic-bezier(0.3, 0.7, 0.4, 1);
 }
 
-.downloadBtn:active {
-    transform: scale(0.98);
+.button:hover .front {
+    transform: translateY(-6px);
+    transition: transform 150ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.button:active .shadow {
+    transform: translateY(1px);
+    transition: transform 50ms;
+}
+
+.button:active .front {
+    transform: translateY(-2px);
+    transition: transform 50ms;
+}
+
+/* Disable text selection */
+.button .front span {
+    user-select: none;
 }
 
 .footer {
@@ -188,8 +247,8 @@
         min-width: auto;
     }
 
-    .downloadBtn {
-        padding: 0.75rem 1.5rem;
+    .button .front {
+        padding: 10px 20px;
         font-size: 0.85rem;
     }
 }
