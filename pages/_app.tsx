@@ -13,29 +13,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [liteMode, setLiteMode] = useState(false);
 
   useEffect(() => {
-    const availableThemes = [
-      'github-dark',
-      'dracula',
-      'ayu-dark',
-      'ayu-mirage',
-      'nord',
-      'night-owl'
-    ];
-
-    // Check if user has a saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    
-    let theme;
-    if (!savedTheme) {
-      // First time visitor - pick a random theme
-      theme = availableThemes[Math.floor(Math.random() * availableThemes.length)];
-      localStorage.setItem('theme', theme);
-    } else {
-      // Returning visitor - use their saved theme
-      theme = savedTheme;
-    }
-    
+    // Set default theme to Ayu Dark
+    const theme = localStorage.getItem('theme') || 'ayu-dark';
     document.documentElement.setAttribute('data-theme', theme);
+    if (!localStorage.getItem('theme')) {
+      localStorage.setItem('theme', 'ayu-dark');
+    }
 
     // Check for lite mode preference - default to true (enabled)
     const savedLiteMode = localStorage.getItem('liteMode');

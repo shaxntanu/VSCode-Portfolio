@@ -10,20 +10,46 @@ const Titlebar = () => {
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
 
   useEffect(() => {
-    const savedLiteMode = localStorage.getItem('liteMode');
-    const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
-    setLiteMode(isLiteMode);
+    const updateThemeAndMode = () => {
+      const savedLiteMode = localStorage.getItem('liteMode');
+      const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+      setLiteMode(isLiteMode);
 
-    const theme = localStorage.getItem('theme') || 'ayu-dark';
-    const themeNames: { [key: string]: string } = {
-      'github-dark': 'GitHub Dark',
-      'dracula': 'Dracula',
-      'ayu-dark': 'Ayu Dark',
-      'ayu-mirage': 'Ayu Mirage',
-      'nord': 'Nord',
-      'night-owl': 'Night Owl',
+      const theme = localStorage.getItem('theme') || 'ayu-dark';
+      const themeNames: { [key: string]: string } = {
+        'github-dark': 'GitHub Dark',
+        'dracula': 'Dracula',
+        'ayu-dark': 'Ayu Dark',
+        'ayu-mirage': 'Ayu Mirage',
+        'nord': 'Nord',
+        'night-owl': 'Night Owl',
+      };
+      setCurrentTheme(themeNames[theme] || 'Ayu Dark');
     };
-    setCurrentTheme(themeNames[theme] || 'Ayu Dark');
+
+    // Initial load
+    updateThemeAndMode();
+
+    // Listen for storage changes (when theme/mode changes in settings)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme' || e.key === 'liteMode') {
+        updateThemeAndMode();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Also listen for custom event for same-window updates
+    const handleCustomUpdate = () => {
+      updateThemeAndMode();
+    };
+
+    window.addEventListener('themeChanged', handleCustomUpdate);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('themeChanged', handleCustomUpdate);
+    };
   }, []);
 
   const allPaths = ['/about', '/contact', '/projects', '/techstack', '/github', '/experience'];

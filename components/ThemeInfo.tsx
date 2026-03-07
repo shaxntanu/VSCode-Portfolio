@@ -38,8 +38,9 @@ const ThemeInfo = ({ icon, name, publisher, theme }: ThemeInfoProps) => {
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     setCurrentTheme(newTheme);
-    // Dispatch custom event to notify other ThemeInfo components
+    // Dispatch custom events to notify other components
     window.dispatchEvent(new Event('themeChange'));
+    window.dispatchEvent(new Event('themeChanged'));
   };
 
   const isActive = currentTheme === theme;
