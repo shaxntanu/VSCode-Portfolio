@@ -26,13 +26,7 @@ const explorerItems = [
   },
 ];
 
-const cvSystemFiles = [
-  {
-    name: 'github.md',
-    path: '/github',
-    icon: '/logos/markdown_icon.svg',
-    external: false,
-  },
+const developmentFiles = [
   {
     name: 'firmware.ino',
     path: '/projects',
@@ -40,17 +34,14 @@ const cvSystemFiles = [
     external: false,
   },
   {
-    name: 'keysprint.env',
-    path: '/keysprint',
-    icon: '/logos/env_icon.svg',
+    name: 'github.md',
+    path: '/github',
+    icon: '/logos/markdown_icon.svg',
     external: false,
   },
-  {
-    name: 'upgrades.yaml',
-    path: '/certificates',
-    icon: '/logos/yaml_icon.svg',
-    external: false,
-  },
+];
+
+const skillsFiles = [
   {
     name: 'sm_techstack.csv',
     path: '/techstack',
@@ -64,17 +55,38 @@ const cvSystemFiles = [
     external: false,
   },
   {
+    name: 'keysprint.env',
+    path: '/keysprint',
+    icon: '/logos/env_icon.svg',
+    external: false,
+  },
+];
+
+const careerFiles = [
+  {
     name: 'experience_log.md',
     path: '/experience',
     icon: '/logos/markdown_icon.svg',
     external: false,
   },
   {
+    name: 'upgrades.yaml',
+    path: '/certificates',
+    icon: '/logos/yaml_icon.svg',
+    external: false,
+  },
+];
+
+const researchFiles = [
+  {
     name: 'whitepapers.pdf',
     path: '/research',
     icon: '/logos/pdf_icon.svg',
     external: false,
   },
+];
+
+const resumeFiles = [
   {
     name: 'sysdrive_cv.iso',
     path: '/resume',
@@ -84,7 +96,12 @@ const cvSystemFiles = [
 ];
 
 const Explorer = () => {
-  const { portfolioOpen, setPortfolioOpen, cvFolderOpen, setCvFolderOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
+  const { portfolioOpen, setPortfolioOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
+  const [developmentOpen, setDevelopmentOpen] = useState(false);
+  const [skillsOpen, setSkillsOpen] = useState(false);
+  const [careerOpen, setCareerOpen] = useState(false);
+  const [researchOpen, setResearchOpen] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -186,19 +203,21 @@ const Explorer = () => {
                   </Link>
                 </motion.div>
               ))}
+              
+              {/* DEVELOPMENT Folder */}
               <motion.div variants={itemVariants}>
                 <div
                   className={styles.folder}
-                  onClick={() => setCvFolderOpen(!cvFolderOpen)}
+                  onClick={() => setDevelopmentOpen(!developmentOpen)}
                 >
                   <VscChevronRight
                     className={styles.chevron}
-                    style={cvFolderOpen ? { transform: 'rotate(90deg)' } : {}}
+                    style={developmentOpen ? { transform: 'rotate(90deg)' } : {}}
                   />
-                  <p>CV_SYSTEMFILES</p>
+                  <p>DEVELOPMENT</p>
                 </div>
                 <AnimatePresence initial={false}>
-                  {cvFolderOpen && (
+                  {developmentOpen && (
                     <motion.div
                       className={styles.nestedFiles}
                       initial="closed"
@@ -206,33 +225,183 @@ const Explorer = () => {
                       exit="closed"
                       variants={containerVariants}
                     >
-                      {cvSystemFiles.map((item) => (
+                      {developmentFiles.map((item) => (
                         <motion.div key={item.name} variants={itemVariants}>
-                          {item.external ? (
-                            <a href={item.path} target="_blank" rel="noopener noreferrer">
-                              <div className={styles.file}>
-                                <Image
-                                  src={item.icon}
-                                  alt={item.name}
-                                  height={18}
-                                  width={18}
-                                />
-                                <p>{item.name}</p>
-                              </div>
-                            </a>
-                          ) : (
-                            <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
-                              <div className={styles.file}>
-                                <Image
-                                  src={item.icon}
-                                  alt={item.name}
-                                  height={18}
-                                  width={18}
-                                />
-                                <p>{item.name}</p>
-                              </div>
-                            </Link>
-                          )}
+                          <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
+                            <div className={styles.file}>
+                              <Image
+                                src={item.icon}
+                                alt={item.name}
+                                height={18}
+                                width={18}
+                              />
+                              <p>{item.name}</p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+              {/* SKILLS Folder */}
+              <motion.div variants={itemVariants}>
+                <div
+                  className={styles.folder}
+                  onClick={() => setSkillsOpen(!skillsOpen)}
+                >
+                  <VscChevronRight
+                    className={styles.chevron}
+                    style={skillsOpen ? { transform: 'rotate(90deg)' } : {}}
+                  />
+                  <p>SKILLS</p>
+                </div>
+                <AnimatePresence initial={false}>
+                  {skillsOpen && (
+                    <motion.div
+                      className={styles.nestedFiles}
+                      initial="closed"
+                      animate="open"
+                      exit="closed"
+                      variants={containerVariants}
+                    >
+                      {skillsFiles.map((item) => (
+                        <motion.div key={item.name} variants={itemVariants}>
+                          <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
+                            <div className={styles.file}>
+                              <Image
+                                src={item.icon}
+                                alt={item.name}
+                                height={18}
+                                width={18}
+                              />
+                              <p>{item.name}</p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+              {/* CAREER Folder */}
+              <motion.div variants={itemVariants}>
+                <div
+                  className={styles.folder}
+                  onClick={() => setCareerOpen(!careerOpen)}
+                >
+                  <VscChevronRight
+                    className={styles.chevron}
+                    style={careerOpen ? { transform: 'rotate(90deg)' } : {}}
+                  />
+                  <p>CAREER</p>
+                </div>
+                <AnimatePresence initial={false}>
+                  {careerOpen && (
+                    <motion.div
+                      className={styles.nestedFiles}
+                      initial="closed"
+                      animate="open"
+                      exit="closed"
+                      variants={containerVariants}
+                    >
+                      {careerFiles.map((item) => (
+                        <motion.div key={item.name} variants={itemVariants}>
+                          <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
+                            <div className={styles.file}>
+                              <Image
+                                src={item.icon}
+                                alt={item.name}
+                                height={18}
+                                width={18}
+                              />
+                              <p>{item.name}</p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+              {/* RESEARCH Folder */}
+              <motion.div variants={itemVariants}>
+                <div
+                  className={styles.folder}
+                  onClick={() => setResearchOpen(!researchOpen)}
+                >
+                  <VscChevronRight
+                    className={styles.chevron}
+                    style={researchOpen ? { transform: 'rotate(90deg)' } : {}}
+                  />
+                  <p>RESEARCH</p>
+                </div>
+                <AnimatePresence initial={false}>
+                  {researchOpen && (
+                    <motion.div
+                      className={styles.nestedFiles}
+                      initial="closed"
+                      animate="open"
+                      exit="closed"
+                      variants={containerVariants}
+                    >
+                      {researchFiles.map((item) => (
+                        <motion.div key={item.name} variants={itemVariants}>
+                          <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
+                            <div className={styles.file}>
+                              <Image
+                                src={item.icon}
+                                alt={item.name}
+                                height={18}
+                                width={18}
+                              />
+                              <p>{item.name}</p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+              {/* RESUME Folder */}
+              <motion.div variants={itemVariants}>
+                <div
+                  className={styles.folder}
+                  onClick={() => setResumeOpen(!resumeOpen)}
+                >
+                  <VscChevronRight
+                    className={styles.chevron}
+                    style={resumeOpen ? { transform: 'rotate(90deg)' } : {}}
+                  />
+                  <p>RESUME</p>
+                </div>
+                <AnimatePresence initial={false}>
+                  {resumeOpen && (
+                    <motion.div
+                      className={styles.nestedFiles}
+                      initial="closed"
+                      animate="open"
+                      exit="closed"
+                      variants={containerVariants}
+                    >
+                      {resumeFiles.map((item) => (
+                        <motion.div key={item.name} variants={itemVariants}>
+                          <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
+                            <div className={styles.file}>
+                              <Image
+                                src={item.icon}
+                                alt={item.name}
+                                height={18}
+                                width={18}
+                              />
+                              <p>{item.name}</p>
+                            </div>
+                          </Link>
                         </motion.div>
                       ))}
                     </motion.div>
