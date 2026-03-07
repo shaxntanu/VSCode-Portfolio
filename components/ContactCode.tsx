@@ -32,14 +32,14 @@ const contactItems = [
     href: 'https://shaxntanu.medium.com',
   },
   {
-    social: 'Duolingo',
-    link: 'shaxntanu',
-    href: 'https://www.duolingo.com/profile/shaxntanu',
-  },
-  {
     social: 'Google for Developers',
     link: 'shaxntanu',
     href: 'https://g.dev/shaxntanu',
+  },
+  {
+    social: 'Duolingo',
+    link: 'shaxntanu',
+    href: 'https://www.duolingo.com/profile/shaxntanu',
   },
 ];
 
