@@ -62,8 +62,17 @@
     font-weight: 500;
 }
 
+.category {
+    padding-left: 3rem;
+}
+
+.categoryName {
+    color: #6a9fb5;
+    font-weight: 500;
+}
+
 .property {
-    padding-left: 3.5rem;
+    padding-left: 4.5rem;
 }
 
 .indent {
@@ -89,6 +98,10 @@
     }
 
     .property {
-        padding-left: 3rem;
+        padding-left: 3.5rem;
+    }
+
+    .category {
+        padding-left: 2.5rem;
     }
 }

@@ -1,45 +1,75 @@
 import styles from '@/styles/ContactCode.module.css';
 
-const contactItems = [
+const contactCategories = [
   {
-    social: 'E-Mail',
-    link: 'i.am.shantanu07@gmail.com',
-    href: 'mailto:i.am.shantanu07@gmail.com',
+    category: 'Professional',
+    items: [
+      {
+        social: 'E-Mail',
+        link: 'i.am.shantanu07@gmail.com',
+        href: 'mailto:i.am.shantanu07@gmail.com',
+      },
+      {
+        social: 'LinkedIn',
+        link: 'Shantanu Maratha',
+        href: 'https://www.linkedin.com/in/shantanu-maratha28',
+      },
+    ],
   },
   {
-    social: 'Linkedin',
-    link: 'Shantanu Maratha',
-    href: 'https://www.linkedin.com/in/shantanu-maratha28',
+    category: 'Engineering',
+    items: [
+      {
+        social: 'GitHub',
+        link: 'shaxntanu',
+        href: 'https://github.com/shaxntanu',
+      },
+      {
+        social: 'Hackaday',
+        link: 'shaxntanu',
+        href: 'https://hackaday.io/shaxntanu',
+      },
+      {
+        social: 'Instructables',
+        link: 'shaxntanu',
+        href: 'https://www.instructables.com/member/shaxntanu',
+      },
+      {
+        social: 'Google for Developers',
+        link: 'shaxntanu',
+        href: 'https://g.dev/shaxntanu',
+      },
+    ],
   },
   {
-    social: 'GitHub',
-    link: 'shaxntanu',
-    href: 'https://github.com/shaxntanu',
+    category: 'Developer Platforms',
+    items: [
+      {
+        social: 'Git City',
+        link: 'shaxntanu',
+        href: 'https://www.thegitcity.com/dev/shaxntanu',
+      },
+      {
+        social: 'Medium',
+        link: 'shaxntanu',
+        href: 'https://shaxntanu.medium.com',
+      },
+    ],
   },
   {
-    social: 'Git City',
-    link: 'shaxntanu',
-    href: 'https://www.thegitcity.com/dev/shaxntanu',
-  },
-  {
-    social: 'Monkeytype',
-    link: 'shaxntanu',
-    href: 'https://monkeytype.com/profile/shaxntanu',
-  },
-  {
-    social: 'Medium',
-    link: 'shaxntanu',
-    href: 'https://shaxntanu.medium.com',
-  },
-  {
-    social: 'Google for Developers',
-    link: 'shaxntanu',
-    href: 'https://g.dev/shaxntanu',
-  },
-  {
-    social: 'Duolingo',
-    link: 'shaxntanu',
-    href: 'https://www.duolingo.com/profile/shaxntanu',
+    category: 'Personal',
+    items: [
+      {
+        social: 'Monkeytype',
+        link: 'shaxntanu',
+        href: 'https://monkeytype.com/profile/shaxntanu',
+      },
+      {
+        social: 'Duolingo',
+        link: 'shaxntanu',
+        href: 'https://www.duolingo.com/profile/shaxntanu',
+      },
+    ],
   },
 ];
 
@@ -49,14 +79,22 @@ const ContactCode = () => {
       <p className={styles.line}>
         <span className={styles.className}>.socials</span> &#123;
       </p>
-      {contactItems.map((item, index) => (
-        <p className={`${styles.line} ${styles.property}`} key={index}>
-          <span className={styles.indent}>{item.social}:</span>{' '}
-          <a href={item.href} target="_blank" rel="noopener">
-            {item.link}
-          </a>
-          ;
-        </p>
+      {contactCategories.map((category, catIndex) => (
+        <div key={catIndex}>
+          <p className={`${styles.line} ${styles.category}`}>
+            <span className={styles.categoryName}>{category.category}</span> &#123;
+          </p>
+          {category.items.map((item, itemIndex) => (
+            <p className={`${styles.line} ${styles.property}`} key={itemIndex}>
+              <span className={styles.indent}>{item.social}:</span>{' '}
+              <a href={item.href} target="_blank" rel="noopener">
+                {item.link}
+              </a>
+              ;
+            </p>
+          ))}
+          <p className={`${styles.line} ${styles.category}`}>&#125;</p>
+        </div>
       ))}
       <p className={styles.line}>&#125;</p>
     </div>
