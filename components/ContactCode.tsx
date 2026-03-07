@@ -64,11 +64,6 @@ const contactCategories = [
         link: 'shaxntanu',
         href: 'https://monkeytype.com/profile/shaxntanu',
       },
-      {
-        social: 'Duolingo',
-        link: 'shaxntanu',
-        href: 'https://www.duolingo.com/profile/shaxntanu',
-      },
     ],
   },
 ];
