@@ -6,10 +6,20 @@ interface FolderContextType {
   cvFolderOpen: boolean;
   miscLogsOpen: boolean;
   mobileMenuOpen: boolean;
+  developmentOpen: boolean;
+  skillsOpen: boolean;
+  careerOpen: boolean;
+  researchOpen: boolean;
+  resumeOpen: boolean;
   setPortfolioOpen: (open: boolean) => void;
   setCvFolderOpen: (open: boolean) => void;
   setMiscLogsOpen: (open: boolean) => void;
   setMobileMenuOpen: (open: boolean) => void;
+  setDevelopmentOpen: (open: boolean) => void;
+  setSkillsOpen: (open: boolean) => void;
+  setCareerOpen: (open: boolean) => void;
+  setResearchOpen: (open: boolean) => void;
+  setResumeOpen: (open: boolean) => void;
 }
 
 const FolderContext = createContext<FolderContextType | undefined>(undefined);
@@ -19,6 +29,11 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const [cvFolderOpen, setCvFolderOpenState] = useState(false);
   const [miscLogsOpen, setMiscLogsOpenState] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [developmentOpen, setDevelopmentOpen] = useState(false);
+  const [skillsOpen, setSkillsOpen] = useState(false);
+  const [careerOpen, setCareerOpen] = useState(false);
+  const [researchOpen, setResearchOpen] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
   const router = useRouter();
 
   // Portfolio folder paths
@@ -62,10 +77,20 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
         cvFolderOpen,
         miscLogsOpen,
         mobileMenuOpen,
+        developmentOpen,
+        skillsOpen,
+        careerOpen,
+        researchOpen,
+        resumeOpen,
         setPortfolioOpen,
         setCvFolderOpen,
         setMiscLogsOpen,
         setMobileMenuOpen,
+        setDevelopmentOpen,
+        setSkillsOpen,
+        setCareerOpen,
+        setResearchOpen,
+        setResumeOpen,
       }}
     >
       {children}

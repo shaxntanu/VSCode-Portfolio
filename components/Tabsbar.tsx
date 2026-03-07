@@ -11,7 +11,14 @@ const tabVariants = {
 };
 
 const Tabsbar = () => {
-  const { portfolioOpen, cvFolderOpen } = useFolderContext();
+  const { 
+    portfolioOpen, 
+    developmentOpen, 
+    skillsOpen, 
+    careerOpen, 
+    researchOpen, 
+    resumeOpen 
+  } = useFolderContext();
 
   return (
     <div className={styles.tabs}>
@@ -54,20 +61,10 @@ const Tabsbar = () => {
         )}
       </AnimatePresence>
 
-      {/* CV_SYSTEMFILES folder files */}
+      {/* DEVELOPMENT folder files */}
       <AnimatePresence>
-        {portfolioOpen && cvFolderOpen && (
+        {portfolioOpen && developmentOpen && (
           <>
-            <motion.div
-              key="github-md"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/markdown_icon.svg" filename="github.md" path="/github" />
-            </motion.div>
             <motion.div
               key="firmware-ino"
               variants={tabVariants}
@@ -79,25 +76,23 @@ const Tabsbar = () => {
               <Tab icon="/logos/arduino_icon.svg" filename="firmware.ino" path="/projects" />
             </motion.div>
             <motion.div
-              key="keysprint-env"
+              key="github-md"
               variants={tabVariants}
               initial="initial"
               animate="animate"
               exit="exit"
               className={styles.tabItem}
             >
-              <Tab icon="/logos/env_icon.svg" filename="keysprint.env" path="/keysprint" />
+              <Tab icon="/logos/markdown_icon.svg" filename="github.md" path="/github" />
             </motion.div>
-            <motion.div
-              key="upgrades-yaml"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/yaml_icon.svg" filename="upgrades.yaml" path="/certificates" />
-            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* SKILLS folder files */}
+      <AnimatePresence>
+        {portfolioOpen && skillsOpen && (
+          <>
             <motion.div
               key="techstack-csv"
               variants={tabVariants}
@@ -119,6 +114,24 @@ const Tabsbar = () => {
               <Tab icon="/logos/jupyter_icon.svg" filename="skillmatrix.ipynb" path="/skillmatrix" />
             </motion.div>
             <motion.div
+              key="keysprint-env"
+              variants={tabVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={styles.tabItem}
+            >
+              <Tab icon="/logos/env_icon.svg" filename="keysprint.env" path="/keysprint" />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* CAREER folder files */}
+      <AnimatePresence>
+        {portfolioOpen && careerOpen && (
+          <>
+            <motion.div
               key="experience-md"
               variants={tabVariants}
               initial="initial"
@@ -129,6 +142,24 @@ const Tabsbar = () => {
               <Tab icon="/logos/markdown_icon.svg" filename="experience_log.md" path="/experience" />
             </motion.div>
             <motion.div
+              key="upgrades-yaml"
+              variants={tabVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={styles.tabItem}
+            >
+              <Tab icon="/logos/yaml_icon.svg" filename="upgrades.yaml" path="/certificates" />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* RESEARCH folder files */}
+      <AnimatePresence>
+        {portfolioOpen && researchOpen && (
+          <>
+            <motion.div
               key="research-pdf"
               variants={tabVariants}
               initial="initial"
@@ -138,6 +169,14 @@ const Tabsbar = () => {
             >
               <Tab icon="/logos/pdf_icon.svg" filename="whitepapers.pdf" path="/research" />
             </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* RESUME folder files */}
+      <AnimatePresence>
+        {portfolioOpen && resumeOpen && (
+          <>
             <motion.div
               key="resume-iso"
               variants={tabVariants}
@@ -151,8 +190,6 @@ const Tabsbar = () => {
           </>
         )}
       </AnimatePresence>
-
-
     </div>
   );
 };

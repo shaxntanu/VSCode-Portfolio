@@ -96,12 +96,22 @@ const resumeFiles = [
 ];
 
 const Explorer = () => {
-  const { portfolioOpen, setPortfolioOpen, mobileMenuOpen, setMobileMenuOpen } = useFolderContext();
-  const [developmentOpen, setDevelopmentOpen] = useState(false);
-  const [skillsOpen, setSkillsOpen] = useState(false);
-  const [careerOpen, setCareerOpen] = useState(false);
-  const [researchOpen, setResearchOpen] = useState(false);
-  const [resumeOpen, setResumeOpen] = useState(false);
+  const { 
+    portfolioOpen, 
+    setPortfolioOpen, 
+    mobileMenuOpen, 
+    setMobileMenuOpen,
+    developmentOpen,
+    setDevelopmentOpen,
+    skillsOpen,
+    setSkillsOpen,
+    careerOpen,
+    setCareerOpen,
+    researchOpen,
+    setResearchOpen,
+    resumeOpen,
+    setResumeOpen,
+  } = useFolderContext();
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
 
