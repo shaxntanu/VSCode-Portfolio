@@ -215,7 +215,7 @@ const Explorer = () => {
               ))}
               
               {/* DEVELOPMENT Folder */}
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} layout>
                 <div
                   className={styles.folder}
                   onClick={() => setDevelopmentOpen(!developmentOpen)}
@@ -256,7 +256,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* SKILLS Folder */}
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} layout>
                 <div
                   className={styles.folder}
                   onClick={() => setSkillsOpen(!skillsOpen)}
@@ -297,7 +297,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* CAREER Folder */}
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} layout>
                 <div
                   className={styles.folder}
                   onClick={() => setCareerOpen(!careerOpen)}
@@ -338,7 +338,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* RESEARCH Folder */}
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} layout>
                 <div
                   className={styles.folder}
                   onClick={() => setResearchOpen(!researchOpen)}
@@ -379,7 +379,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* RESUME Folder */}
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} layout>
                 <div
                   className={styles.folder}
                   onClick={() => setResumeOpen(!resumeOpen)}
