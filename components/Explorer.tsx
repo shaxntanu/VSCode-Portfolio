@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { VscChevronRight } from 'react-icons/vsc';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { useFolderContext } from '@/contexts/FolderContext';
 
 import styles from '@/styles/Explorer.module.css';
@@ -191,6 +191,7 @@ const Explorer = () => {
         </div>
         <AnimatePresence initial={false}>
           {portfolioOpen && (
+            <LayoutGroup>
             <motion.div
               className={styles.files}
               initial="closed"
@@ -215,7 +216,7 @@ const Explorer = () => {
               ))}
               
               {/* DEVELOPMENT Folder */}
-              <motion.div variants={itemVariants} layout>
+              <motion.div variants={itemVariants}>
                 <div
                   className={styles.folder}
                   onClick={() => setDevelopmentOpen(!developmentOpen)}
@@ -256,7 +257,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* SKILLS Folder */}
-              <motion.div variants={itemVariants} layout>
+              <motion.div variants={itemVariants}>
                 <div
                   className={styles.folder}
                   onClick={() => setSkillsOpen(!skillsOpen)}
@@ -297,7 +298,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* CAREER Folder */}
-              <motion.div variants={itemVariants} layout>
+              <motion.div variants={itemVariants}>
                 <div
                   className={styles.folder}
                   onClick={() => setCareerOpen(!careerOpen)}
@@ -338,7 +339,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* RESEARCH Folder */}
-              <motion.div variants={itemVariants} layout>
+              <motion.div variants={itemVariants}>
                 <div
                   className={styles.folder}
                   onClick={() => setResearchOpen(!researchOpen)}
@@ -379,7 +380,7 @@ const Explorer = () => {
               </motion.div>
 
               {/* RESUME Folder */}
-              <motion.div variants={itemVariants} layout>
+              <motion.div variants={itemVariants}>
                 <div
                   className={styles.folder}
                   onClick={() => setResumeOpen(!resumeOpen)}
@@ -420,6 +421,7 @@ const Explorer = () => {
               </motion.div>
 
             </motion.div>
+            </LayoutGroup>
           )}
         </AnimatePresence>
       </div>
