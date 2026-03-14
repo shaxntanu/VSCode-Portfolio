@@ -70,6 +70,16 @@ export const projects: Project[] = [
     year: 2025,
   },
   {
+    title: 'ARC-4 (Under Development)',
+    description: 'Next-generation hardware module with advanced capabilities.',
+    logo: '/logos/espressif_icon.svg',
+    link: '#',
+    slug: 'arc-4',
+    category: 'HARDWARE_MODULES',
+    dateRange: 'Jan 2026',
+    year: 2026,
+  },
+  {
     title: 'ZM Dashboard',
     description: 'Real-time web dashboard for Zephyr Station analytics.',
     logo: '/logos/vercel_icon.svg',
