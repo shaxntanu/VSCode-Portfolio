@@ -71,7 +71,7 @@ export const projects: Project[] = [
   },
   {
     title: 'ARC-4 (Under Development)',
-    description: 'Next-generation hardware module with advanced capabilities.',
+    description: 'Coming soon.',
     logo: '/logos/espressif_icon.svg',
     link: '#',
     slug: 'arc-4',
