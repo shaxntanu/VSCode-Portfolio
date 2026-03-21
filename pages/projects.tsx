@@ -1,9 +1,14 @@
+import { useState } from 'react';
+import { VscInfo } from 'react-icons/vsc';
 import ProjectCard from '@/components/ProjectCard';
+import SoftwareInfoPopup from '@/components/SoftwareInfoPopup';
 import { projects, categoryConfig, ProjectCategory } from '@/data/projects';
 
 import styles from '@/styles/ProjectsPage.module.css';
 
 const ProjectsPage = () => {
+  const [showSoftwareInfo, setShowSoftwareInfo] = useState(false);
+
   // Group projects by category
   const groupedProjects = projects.reduce((acc, project) => {
     if (!acc[project.category]) {
@@ -18,8 +23,8 @@ const ProjectsPage = () => {
     groupedProjects[category as ProjectCategory].sort((a, b) => a.year - b.year);
   });
 
-  // Define category order
-  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'SOFTWARE_SYSTEMS', 'MISC_LABS', 'COMMUNITY_PROJECT'];
+  // Define category order: Hardware first, then Arceus Labs, then Software
+  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'COMMUNITY_PROJECT', 'SOFTWARE_SYSTEMS', 'MISC_LABS'];
 
   return (
     <div className={styles.layout}>
@@ -51,6 +56,17 @@ const ProjectsPage = () => {
               ) : (
                 <span style={{ color: config.color }}>{config.titleHighlight}</span>
               )}
+              {category === 'SOFTWARE_SYSTEMS' && (
+                <button
+                  className={styles.infoButton}
+                  onClick={() => setShowSoftwareInfo(true)}
+                  aria-label="Software projects info"
+                  title="Click for more info"
+                >
+                  <VscInfo />
+                  <span className={styles.infoText}>AI-Assisted</span>
+                </button>
+              )}
             </div>
             <div className={styles.container}>
               {categoryProjects.map((project) => (
@@ -64,6 +80,8 @@ const ProjectsPage = () => {
           </div>
         );
       })}
+      
+      {showSoftwareInfo && <SoftwareInfoPopup onClose={() => setShowSoftwareInfo(false)} />}
     </div>
   );
 };
