@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { VscClose, VscInfo } from 'react-icons/vsc';
 import styles from '@/styles/SoftwareInfoPopup.module.css';
 
