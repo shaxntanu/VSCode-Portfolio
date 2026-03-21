@@ -5,7 +5,7 @@ export type { Project, ProjectCategory, CategoryConfig };
 export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   HARDWARE_MODULES: {
     title: '// ',
-    titleHighlight: 'HARDWARE_MODULES',
+    titleHighlight: 'HARDWARE_MODULES (Flagship Projects)',
     color: '#ff8c50', // Red/Orange - Hardware
   },
   SOFTWARE_SYSTEMS: {
