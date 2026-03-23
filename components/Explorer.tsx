@@ -165,7 +165,7 @@ const Explorer = () => {
       
       <div className={`${styles.explorer} ${mobileMenuOpen ? styles.open : ''}`}>
       <p className={styles.title}>Explorer</p>
-      <div>
+      <div className={styles.scrollableContent}>
         {/* main.cpp at root level */}
         <Link href="/" prefetch={true} onClick={(e) => handleNavigation(e, '/')}>
           <div className={styles.file}>

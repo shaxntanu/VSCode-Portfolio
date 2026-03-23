@@ -44,13 +44,14 @@
 
 .content {
     padding: 1.75rem;
-    padding-right: 5rem;
+    padding-right: 1.75rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     height: 100%;
     position: relative;
     z-index: 1;
+    overflow: hidden;
 }
 
 .logoWrapper {
@@ -120,6 +121,18 @@
     opacity: 1;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     transition: all 0.3s ease;
+    flex: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Auto-span card for long descriptions */
+.card:has(.description[style*="line-clamp"]) {
+    grid-row: span 2;
+    height: auto;
+    min-height: 280px;
 }
 
 .card:hover .title {
