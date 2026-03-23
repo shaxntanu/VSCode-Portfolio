@@ -62,6 +62,20 @@
     gap: 1.5rem;
 }
 
+/* Make last card span 2 columns if it's alone in the last row */
+@supports (selector(:nth-last-child(1 of .card))) {
+    .container:has(> :nth-child(3n+1):last-child)> :last-child {
+        grid-column: span 2;
+    }
+}
+
+/* Fallback for browsers without :has() support */
+@media screen and (min-width: 768px) {
+    .container> :nth-child(3n+1):last-child {
+        grid-column: span 2;
+    }
+}
+
 .pageTitle {
     font-size: 2rem;
     font-weight: 700;

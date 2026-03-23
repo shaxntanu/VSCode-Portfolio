@@ -21,10 +21,10 @@ const SoftwareInfoPopup = ({ onClose }: SoftwareInfoPopupProps) => {
         
         <div className={styles.content}>
           <p className={styles.message}>
-            These software projects are made with AI assistance.
+            The web applications are made with AI assistance.
           </p>
           <p className={styles.submessage}>
-            My primary focus is on electronics and hardware development. I create these software modules for fun and rapid prototyping of IoT dashboards and web interfaces.
+            My primary focus is on electronics and hardware development. I create these web applications for rapid prototyping of IoT dashboards and web interfaces.
           </p>
         </div>
 
