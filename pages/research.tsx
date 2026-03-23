@@ -1,5 +1,5 @@
 import { VscLinkExternal } from 'react-icons/vsc';
-import { SiNotion } from 'react-icons/si';
+import { SiNotion, SiMedium } from 'react-icons/si';
 import Image from 'next/image';
 import styles from '@/styles/ResearchPage.module.css';
 
@@ -52,11 +52,11 @@ const papers = [
   {
     id: 'DOC-ARC-006',
     title: 'ARC-4',
-    type: 'Technical Report',
+    type: 'Article',
     date: 'Coming Soon',
     status: 'IN PROGRESS',
     link: '#',
-    icon: 'notion',
+    icon: 'medium',
   },
 ];
 
@@ -84,9 +84,11 @@ const ResearchPage = () => {
                   <Image 
                     src="/logos/word_icon.svg" 
                     alt="Word Document" 
-                    width={24} 
-                    height={24} 
+                    width={28} 
+                    height={28} 
                   />
+                ) : paper.icon === 'medium' ? (
+                  <SiMedium />
                 ) : (
                   <SiNotion />
                 )}
