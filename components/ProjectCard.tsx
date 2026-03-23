@@ -23,7 +23,14 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
     return <VscGithubInverted />; // default
   };
 
+  const getReportIcon = () => {
+    if (!project.reportLink) return null;
+    if (project.reportLink.includes('notion.site')) return <SiNotion />;
+    return <SiNotion />; // default to Notion
+  };
+
   const linkIcon = getLinkIcon();
+  const reportIcon = getReportIcon();
   
   return (
     <div
@@ -58,18 +65,32 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
         
-        {linkIcon && (
+        {(linkIcon || reportIcon) && (
           <div className={styles.linkIcons}>
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.iconLink}
-              style={{ color: categoryConfig.color }}
-              title={`View on ${project.link.includes('github') ? 'GitHub' : project.link.includes('vercel') ? 'Vercel' : 'Notion'}`}
-            >
-              {linkIcon}
-            </a>
+            {linkIcon && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+                title={`View on ${project.link.includes('github') ? 'GitHub' : project.link.includes('vercel') ? 'Vercel' : 'Notion'}`}
+              >
+                {linkIcon}
+              </a>
+            )}
+            {reportIcon && (
+              <a
+                href={project.reportLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+                title="View Technical Report"
+              >
+                {reportIcon}
+              </a>
+            )}
           </div>
         )}
       </div>

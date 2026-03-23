@@ -21,6 +21,7 @@ export interface Project {
   dateRange: string;
   year: number;
   background?: string;
+  reportLink?: string; // Optional link to technical report/article
 }
 
 export interface CategoryConfig {

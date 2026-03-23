@@ -14,7 +14,6 @@
 }
 
 .card:hover {
-    transform: translateY(-10px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     border-color: var(--card-accent-color, rgba(var(--accent-color-rgb), 0.2));
 }
@@ -26,10 +25,6 @@
     opacity: 0;
     transition: opacity 0.5s ease;
     z-index: 0;
-}
-
-.card:hover .cardGlow {
-    opacity: 0.3;
 }
 
 @keyframes shine {
@@ -70,11 +65,6 @@
     top: 1.75rem;
     right: 1.75rem;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.card:hover .logoWrapper {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -133,18 +123,6 @@
     grid-row: span 2;
     height: auto;
     min-height: 280px;
-}
-
-.card:hover .title {
-    transform: translateX(2px);
-}
-
-.card:hover .dateRange {
-    transform: translateX(2px);
-}
-
-.card:hover .description {
-    transform: translateX(2px);
 }
 
 .linkIcons {

@@ -43,6 +43,7 @@ export const projects: Project[] = [
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Jul 2018 - Aug 2018',
     year: 2018,
+    reportLink: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
   },
   // 2025
   {
@@ -74,6 +75,7 @@ export const projects: Project[] = [
     category: 'HARDWARE_MODULES',
     dateRange: 'Aug 2025 - Nov 2025',
     year: 2025,
+    reportLink: 'https://crocus-zenobia-863.notion.site/Zephyr-Station-Technical-Report-de41e9c0afd3444195afbac904fe2edc',
   },
   {
     title: 'ARC-4 (Under Development)',
@@ -104,6 +106,7 @@ export const projects: Project[] = [
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Nov 2025 - Dec 2025',
     year: 2025,
+    reportLink: 'https://crocus-zenobia-863.notion.site/Jolt-Locator-Technical-Report-2d61ebfe20648069a6e1c0589107c909?pvs=73',
   },
   {
     title: 'The Ruin Machine',
@@ -114,6 +117,7 @@ export const projects: Project[] = [
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Dec 2025 - Jan 2026',
     year: 2025,
+    reportLink: 'https://crocus-zenobia-863.notion.site/The-Ruin-Machine-Technical-Report-2dc1ebfe2064806a9625f49a9871aaf3?pvs=73',
   },
   {
     title: 'TRM Dashboard',
