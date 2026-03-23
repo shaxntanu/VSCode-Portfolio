@@ -60,7 +60,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
-    grid-auto-flow: dense;
 }
 
 .pageTitle {
@@ -71,6 +70,7 @@
     letter-spacing: -0.03em;
     line-height: 1.2;
     text-transform: lowercase;
+    text-align: center;
 }
 
 .pageSubtitle {
@@ -80,6 +80,9 @@
     margin-bottom: 3rem;
     max-width: 600px;
     line-height: 1.6;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .infoButton {
