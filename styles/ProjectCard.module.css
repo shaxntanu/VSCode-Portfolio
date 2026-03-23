@@ -5,7 +5,7 @@
     border-radius: 20px;
     overflow: hidden;
     position: relative;
-    height: 280px;
+    height: 320px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
@@ -123,7 +123,7 @@
 .card:has(.description[style*="line-clamp"]) {
     grid-row: span 2;
     height: auto;
-    min-height: 280px;
+    min-height: 320px;
 }
 
 .linkIcons {
