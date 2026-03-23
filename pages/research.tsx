@@ -49,6 +49,15 @@ const papers = [
     link: 'https://docs.google.com/document/d/10oCl39Ste8v906QpB7fuZsjLb0rCIReW/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
     icon: 'word',
   },
+  {
+    id: 'DOC-ARC-006',
+    title: 'ARC-4',
+    type: 'Technical Report',
+    date: 'Coming Soon',
+    status: 'IN PROGRESS',
+    link: '#',
+    icon: 'notion',
+  },
 ];
 
 const ResearchPage = () => {
@@ -60,7 +69,7 @@ const ResearchPage = () => {
       </p>
 
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Technical Reports</h2>
+        <h2 className={styles.sectionTitle}>Technical Reports and Articles</h2>
         <div className={styles.grid}>
           {papers.map((paper) => (
             <a

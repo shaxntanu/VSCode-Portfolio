@@ -425,6 +425,41 @@ const Explorer = () => {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Expand/Collapse All Button */}
+      <div className={styles.expandButtonWrapper}>
+        <button 
+          className={styles.expandButton}
+          onClick={() => {
+            const allExpanded = portfolioOpen && developmentOpen && skillsOpen && careerOpen && researchOpen && resumeOpen;
+            if (allExpanded) {
+              setPortfolioOpen(false);
+              setDevelopmentOpen(false);
+              setSkillsOpen(false);
+              setCareerOpen(false);
+              setResearchOpen(false);
+              setResumeOpen(false);
+            } else {
+              setPortfolioOpen(true);
+              setDevelopmentOpen(true);
+              setSkillsOpen(true);
+              setCareerOpen(true);
+              setResearchOpen(true);
+              setResumeOpen(true);
+            }
+          }}
+        >
+          <span className={styles.buttonShadow}></span>
+          <span className={styles.buttonEdge}></span>
+          <div className={styles.buttonFront}>
+            <span className={styles.buttonText}>
+              {portfolioOpen && developmentOpen && skillsOpen && careerOpen && researchOpen && resumeOpen 
+                ? 'Collapse All' 
+                : 'Expand All'}
+            </span>
+          </div>
+        </button>
+      </div>
     </div>
     </>
   );

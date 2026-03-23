@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { VscGithubInverted } from 'react-icons/vsc';
+import { SiVercel, SiNotion } from 'react-icons/si';
 
 import { Project, CategoryConfig } from '@/types';
 
@@ -12,11 +14,19 @@ interface ProjectCardProps {
 const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
   const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
   
+  // Determine which icon to show based on the link
+  const getLinkIcon = () => {
+    if (project.link === '#') return null;
+    if (project.link.includes('github.com')) return <VscGithubInverted />;
+    if (project.link.includes('vercel.app')) return <SiVercel />;
+    if (project.link.includes('notion.site')) return <SiNotion />;
+    return <VscGithubInverted />; // default
+  };
+
+  const linkIcon = getLinkIcon();
+  
   return (
-    <a
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       className={styles.card}
       style={{
         '--card-accent-color': categoryConfig.color,
@@ -47,8 +57,23 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         </h3>
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
+        
+        {linkIcon && (
+          <div className={styles.linkIcons}>
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.iconLink}
+              style={{ color: categoryConfig.color }}
+              title={`View on ${project.link.includes('github') ? 'GitHub' : project.link.includes('vercel') ? 'Vercel' : 'Notion'}`}
+            >
+              {linkIcon}
+            </a>
+          </div>
+        )}
       </div>
-    </a>
+    </div>
   );
 };
 
