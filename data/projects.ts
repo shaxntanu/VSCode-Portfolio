@@ -11,7 +11,7 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   SOFTWARE_SYSTEMS: {
     title: '// ',
     titleHighlight: 'SOFTWARE_SYSTEMS',
-    color: '#00dc8c', // Blue/Green - Software
+    color: '#2196f3', // Blue - Software (swapped)
   },
   MISC_LABS: {
     title: '// ',
@@ -21,8 +21,14 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   COMMUNITY_PROJECT: {
     title: '// ',
     titleHighlight: 'ARCEUS_LABS',
-    color: '#2196f3', // Blue - Arceus Labs
+    color: '#00dc8c', // Green - Arceus Labs (swapped)
     link: 'https://arceuslabs.carrd.co',
+  },
+  RAGASTRA_PROJECT: {
+    title: '// ',
+    titleHighlight: 'RAGASTRA',
+    color: '#a078ff', // Purple - Ragastra
+    link: 'https://github.com/Ragastra',
   },
 };
 
@@ -126,7 +132,7 @@ export const projects: Project[] = [
     logo: '/logos/arduino_icon.svg',
     link: 'https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller',
     slug: 'electromagnet-controller',
-    category: 'COMMUNITY_PROJECT',
+    category: 'RAGASTRA_PROJECT',
     dateRange: 'Jan 2026 - Feb 2026',
     year: 2026,
   },
@@ -136,7 +142,7 @@ export const projects: Project[] = [
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/esp8266-inductance-meter',
     slug: 'inductance-meter',
-    category: 'COMMUNITY_PROJECT',
+    category: 'RAGASTRA_PROJECT',
     dateRange: 'Jan 2026 - Jan 2026',
     year: 2026,
   },

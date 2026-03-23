@@ -23,8 +23,8 @@ const ProjectsPage = () => {
     groupedProjects[category as ProjectCategory].sort((a, b) => a.year - b.year);
   });
 
-  // Define category order: Hardware first, then Arceus Labs, then Software
-  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'COMMUNITY_PROJECT', 'SOFTWARE_SYSTEMS', 'MISC_LABS'];
+  // Define category order: Hardware first, then Arceus Labs, then Ragastra, then Software
+  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'COMMUNITY_PROJECT', 'RAGASTRA_PROJECT', 'SOFTWARE_SYSTEMS', 'MISC_LABS'];
 
   return (
     <div className={styles.layout}>
