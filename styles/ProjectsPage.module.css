@@ -58,21 +58,52 @@
 
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
 
-/* Make last card span 2 columns if it's alone in the last row */
-@supports (selector(:nth-last-child(1 of .card))) {
-    .container:has(> :nth-child(3n+1):last-child)> :last-child {
+/* Last item spanning rules for 3-column layout */
+/* If last item is alone in its row (position 3n+1), span full width */
+.container> :last-child:nth-child(3n+1) {
+    grid-column: span 3;
+}
+
+/* If last item is second in its row (position 3n+2), span 2 columns */
+.container> :last-child:nth-child(3n+2) {
+    grid-column: span 2;
+}
+
+/* Tablet: 2 columns */
+@media screen and (max-width: 1024px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Reset 3-column rules */
+    .container> :last-child:nth-child(3n+1),
+    .container> :last-child:nth-child(3n+2) {
+        grid-column: span 1;
+    }
+
+    /* Apply 2-column rules */
+    /* If last item is alone in its row (odd position), span full width */
+    .container> :last-child:nth-child(odd) {
         grid-column: span 2;
     }
 }
 
-/* Fallback for browsers without :has() support */
-@media screen and (min-width: 768px) {
-    .container> :nth-child(3n+1):last-child {
-        grid-column: span 2;
+/* Mobile: 1 column */
+@media screen and (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    /* Reset all spanning rules */
+    .container> :last-child:nth-child(3n+1),
+    .container> :last-child:nth-child(3n+2),
+    .container> :last-child:nth-child(odd) {
+        grid-column: span 1;
     }
 }
 
