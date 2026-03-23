@@ -48,7 +48,7 @@ export const projects: Project[] = [
   {
     title: 'Marcus Omega',
     description: 'Philosophical AI chatbot powered by Gemini API.',
-    logo: '/logos/marcus_omega.svg',
+    logo: '/logos/vercel_icon.svg',
     link: 'https://glyphthoughts.github.io/Marcus-Landing-Page',
     slug: 'marcus-omega',
     category: 'SOFTWARE_SYSTEMS',
@@ -158,7 +158,7 @@ export const projects: Project[] = [
   },
   {
     title: 'RFID Attendance System',
-    description: 'Automated attendance tracking system using RFID cards with ESP32 and Arduino integration.',
+    description: 'Automated attendance tracking with RFID cards, ESP32 and Arduino.',
     logo: ['/logos/arduino_icon.svg', '/logos/espressif_icon.svg'],
     link: 'https://github.com/Arceus-Labs/RFID-Attendance-System',
     slug: 'rfid-attendance-system',
