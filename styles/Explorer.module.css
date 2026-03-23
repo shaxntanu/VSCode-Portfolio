@@ -207,10 +207,10 @@
     padding: 1rem 0.75rem;
     border-top: 1px solid var(--explorer-border);
     background: var(--explorer-bg);
-    position: fixed;
-    bottom: 22px;
+    position: absolute;
+    bottom: 0;
     left: 0;
-    width: 200px;
+    right: 0;
     box-sizing: border-box;
     z-index: 10;
 }
@@ -229,7 +229,6 @@
 
 @media screen and (max-width: 600px) {
     .expandButtonWrapper {
-        position: absolute;
         width: 100%;
         left: 0;
     }
@@ -243,7 +242,9 @@
     outline: none;
     cursor: pointer;
     width: 100%;
-    margin: 0;
+    max-width: 168px;
+    margin: 0 auto;
+    display: block;
 }
 
 .buttonShadow {
