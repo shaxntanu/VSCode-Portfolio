@@ -14,7 +14,7 @@
 [🌐 Deployed](https://shantanu-vsc-portfolio.vercel.app) • [📝 Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [✨ Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
 
 </div>
- 
+  
 ---
 
 ## 🎯 Overview
