@@ -1,11 +1,51 @@
+import { useState, useEffect } from 'react';
 import styles from '@/styles/ResumePage.module.css';
 
+const RESUME_PDF_URL = 'https://shaxntanu.github.io/LaTeX-Resume-Shantanu/resume.pdf';
+const GITHUB_API_URL = 'https://api.github.com/repos/shaxntanu/LaTeX-Resume-Shantanu/commits/main';
+
 const ResumePage = () => {
-  const handleDownload = () => {
-    window.open(
-      'https://drive.google.com/file/d/1lREyUuiZXIdN79z3NAmNMXGV6SHEB969/view?usp=sharing',
-      '_blank'
-    );
+  const [lastUpdated, setLastUpdated] = useState('Loading...');
+
+  useEffect(() => {
+    // Fetch last commit date from GitHub
+    const fetchLastUpdated = async () => {
+      try {
+        const response = await fetch(GITHUB_API_URL);
+        const data = await response.json();
+        const commitDate = new Date(data.commit.committer.date);
+        
+        // Format to DD/MM/YYYY
+        const day = String(commitDate.getDate()).padStart(2, '0');
+        const month = String(commitDate.getMonth() + 1).padStart(2, '0');
+        const year = commitDate.getFullYear();
+        
+        setLastUpdated(`${day}/${month}/${year}`);
+      } catch (error) {
+        console.error('Failed to fetch last updated date:', error);
+        setLastUpdated('UNKNOWN');
+      }
+    };
+
+    fetchLastUpdated();
+  }, []);
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(RESUME_PDF_URL);
+      const blob = await response.blob();
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'Shantanu_Resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error('Download failed:', error);
+      // Fallback to direct link
+      window.open(RESUME_PDF_URL, '_blank');
+    }
   };
 
   return (
@@ -43,6 +83,18 @@ const ResumePage = () => {
               <span className={styles.infoValue}>PDF/ISO-9660</span>
             </div>
             <div className={styles.infoLine}>
+              <span className={styles.infoLabel}>Source:</span>
+              <span className={styles.infoValue}>GITHUB_REPO</span>
+            </div>
+            <div className={styles.infoLine}>
+              <span className={styles.infoLabel}>Build:</span>
+              <span className={styles.statusMounted}>AUTOMATED</span>
+            </div>
+            <div className={styles.infoLine}>
+              <span className={styles.infoLabel}>Last Updated:</span>
+              <span className={styles.infoValue}>{lastUpdated}</span>
+            </div>
+            <div className={styles.infoLine}>
               <span className={styles.infoLabel}>Checksum:</span>
               <span className={styles.infoValue}>SHA256:OK</span>
             </div>
@@ -58,6 +110,19 @@ const ResumePage = () => {
                 <span>[ INITIATE DOWNLOAD SEQUENCE ]</span>
               </div>
             </button>
+          </div>
+
+          <hr className={styles.divider} />
+
+          <div className={styles.previewSection}>
+            <div className={styles.previewHeader}>
+              <span className={styles.previewLabel}>[ PREVIEW MODE ]</span>
+            </div>
+            <iframe
+              src={RESUME_PDF_URL}
+              className={styles.pdfPreview}
+              title="Resume Preview"
+            />
           </div>
 
           <p className={styles.footer}>

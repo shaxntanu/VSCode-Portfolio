@@ -225,6 +225,30 @@
     text-align: center;
 }
 
+.previewSection {
+    margin-top: 2rem;
+}
+
+.previewHeader {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.previewLabel {
+    color: #00d4ff;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.pdfPreview {
+    width: 100%;
+    height: 600px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #1a1a1a;
+}
+
 @media screen and (max-width: 600px) {
     .container {
         padding: 1rem;
@@ -250,5 +274,9 @@
     .button .front {
         padding: 10px 20px;
         font-size: 0.85rem;
+    }
+
+    .pdfPreview {
+        height: 400px;
     }
 }
