@@ -245,7 +245,6 @@ export default function HomePage() {
                   </span>
                   <span className={`${styles.codeText} ${styles[line.type]}`}>
                     {line.code}
-                    {line.comment && <span className={styles.comment}>{line.comment}</span>}
                   </span>
                 </div>
               ))}
