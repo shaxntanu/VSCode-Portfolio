@@ -84,7 +84,14 @@ const ResumePage = () => {
             </div>
             <div className={styles.infoLine}>
               <span className={styles.infoLabel}>Source:</span>
-              <span className={styles.infoValue}>GITHUB_REPO</span>
+              <a 
+                href="https://github.com/shaxntanu/LaTeX-Resume-Shantanu" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.infoLink}
+              >
+                GITHUB_REPO
+              </a>
             </div>
             <div className={styles.infoLine}>
               <span className={styles.infoLabel}>Build:</span>
