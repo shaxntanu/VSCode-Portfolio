@@ -27,7 +27,24 @@ const AboutPage = () => {
               I don&apos;t like building things just to show them off. If something doesn&apos;t solve a real problem, it&apos;s not worth the time.
             </p>
             <p className={styles.paragraph}>
-              Most of my projects are centered around practical impact — whether it&apos;s assistive systems like a Smart Blind Stick or environmental monitoring like Zephyr Station.
+              Most of my projects are centered around practical impact — whether it&apos;s assistive systems like a{' '}
+              <a 
+                href="https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                Smart Blind Stick
+              </a>{' '}
+              or environmental monitoring like{' '}
+              <a 
+                href="https://github.com/shaxntanu/Zephyr-Station" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                Zephyr Station
+              </a>.
             </p>
             <p className={styles.paragraph}>
               The goal is simple: make things that actually work in the real world, not just on paper.
@@ -37,13 +54,33 @@ const AboutPage = () => {
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>03. Startup Experience</h2>
             <p className={styles.paragraph}>
-              Being a core member and working on <span className={styles.highlight}>Ragastra</span> gave me direct exposure to what building a product from scratch actually feels like.
+              Being a core engineer at{' '}
+              <a 
+                href="https://github.com/Ragastra" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                Ragastra
+              </a>{' '}
+              gave me direct exposure to what building a product from scratch actually feels like. Working on a modular maglev-inspired mobility system meant dealing with electromagnetic suspension, wireless power transfer, and system-level cost optimization — all while keeping things buildable.
             </p>
             <p className={styles.paragraph}>
               There was no fixed roadmap — we had to figure things out as we went. From shaping ideas to turning them into working systems, I was involved in making decisions, solving problems, and pushing things forward.
             </p>
             <p className={styles.paragraph}>
-              It forced me to think beyond just code — handling uncertainty, adapting quickly, and focusing on execution instead of overplanning.
+              At{' '}
+              <a 
+                href="https://grosity.in" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                Grosity
+              </a>, I worked as an early-stage founding engineer, contributing to R&D for autonomous payload-delivery drone systems and helping align engineering decisions with business strategy. It taught me how to move fast in an early-stage environment.
+            </p>
+            <p className={styles.paragraph}>
+              Both experiences forced me to think beyond just code — handling uncertainty, adapting quickly, and focusing on execution instead of overplanning.
             </p>
             <p className={styles.paragraph}>
               It made one thing clear: real-world building is chaotic, and you learn by doing, not by waiting.
