@@ -11,7 +11,7 @@ const contactCategories = [
       },
       {
         social: 'LinkedIn',
-        link: 'Shantanu Maratha',
+        link: 'Shantanu M.',
         href: 'https://www.linkedin.com/in/shantanu-maratha28',
       },
     ],
