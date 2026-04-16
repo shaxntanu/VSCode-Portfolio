@@ -59,26 +59,6 @@ I needed a portfolio that actually represents what I do. Most templates felt too
 
 The web development part was done with AI assistance (Claude, Copilot, Kiro IDE) because I'd rather spend time on hardware. But the content, structure, and design decisions are all mine.
 
-## Running Locally
-
-```bash
-# Clone it
-git clone https://github.com/shaxntanu/VSCode-Portfolio.git
-cd VSCode-Portfolio
-
-# Install dependencies
-npm install
-
-# Run dev server
-npm run dev
-
-# Build for production
-npm run build
-npm start
-```
-
-Open `http://localhost:3000` and you're good to go.
-
 ## Resume Auto-Update
 
 The resume page pulls the latest PDF from my [LaTeX Resume repo](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Whenever I update my resume there, it automatically reflects here. No manual uploads needed.
