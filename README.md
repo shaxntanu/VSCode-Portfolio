@@ -9,99 +9,99 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)
 
-**A stunning developer portfolio that looks and feels like VS Code**
+**My portfolio, but make it look like VS Code**
 
-[🌐 Deployed](https://shantanu-vsc-portfolio.vercel.app) • [📝 Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [✨ Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
+[🌐 Live Site](https://shantanu-vsc-portfolio.vercel.app) • [🐛 Found a Bug?](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [💡 Got Ideas?](https://github.com/shaxntanu/VSCode-Portfolio/issues)
 
 </div>
   
 ---
 
-## 🎯 Overview
+## What's This?
 
-This portfolio website is designed to mimic the Visual Studio Code interface, providing a unique and immersive experience for visitors. Built with modern web technologies, it showcases projects, skills, and experience in an interactive and developer-friendly way.
+I spend most of my time in VS Code building hardware and firmware, so I figured — why not make my portfolio look like it too?
 
-## ✨ Features
+This isn't just a themed website. It actually mimics VS Code's interface with a working file explorer, tabs, sidebar navigation, and even a terminal-style resume viewer. The home page shows Arduino/C++ pseudo-code that describes how I work (spoiler: lots of debugging and coffee).
 
-### 🎨 **VS Code Interface**
-- Authentic VS Code dark theme with custom color schemes
-- Functional sidebar with navigation icons
-- Tabbed interface with smooth animations
-- Explorer panel with collapsible folders
-- Bottom status bar with real-time information
+Built with Next.js because I wanted something fast and SEO-friendly. The web stuff is mostly AI-assisted since my focus is on embedded systems and IoT hardware.
 
-### 📱 **Responsive Design**
-- Mobile-friendly with hamburger menu
-- Tablet and desktop optimized layouts
-- Mobile notification for optimal viewing experience
-- Touch-friendly interactions
+## What's Inside
 
-### 🚀 **Interactive Pages**
-- **Home** - Arduino-style C++ code introduction
-- **About** - Personal information with interactive world map showing location
-- **Projects** - Showcase of IoT and embedded systems projects
-- **Tech Stack** - CSV-style skills table with status indicators
-- **Skill Matrix** - Visual skill proficiency matrix
-- **GitHub** - Live GitHub stats and contribution graph
-- **README** - Auto-fetched GitHub profile README (updates automatically)
-- **Experience** - Timeline-based work history with markdown support
-- **Research** - Academic papers and technical reports
-- **Resume** - Terminal-style CV viewer with download option
-- **Typing Test** - Interactive typing speed test with stats
-- **Contact** - JSON-formatted contact information
+**Pages:**
+- **Home** - Pseudo-code that won't compile but tells you how I think
+- **About** - Who I am, what I build, and why (with a world map because why not)
+- **Projects** - Hardware modules, IoT systems, and some web dashboards
+- **Resume** - Terminal-style CV that auto-updates from my LaTeX repo on GitHub
+- **Experience** - Work history with Ragastra and Grosity
+- **Research** - Technical reports and articles
+- **GitHub** - Live stats pulled from GitHub API
+- **Skills** - Tech stack in CSV format + skill matrix visualization
+- **Contact** - JSON-formatted contact info (keeping the dev theme consistent)
 
-### 🎭 **Animations & Effects**
-- **RotatingText** - Animated text rotation with character-by-character stagger effects
-- **DecryptedText** - Matrix-style text decryption animation on hover/view
-- **ShinyText** - Gradient shimmer effect for text elements
-- **ClickSpark** - Interactive spark particles on click
-- Framer Motion animations for smooth page transitions
-- Staggered folder/file animations in explorer
-- Tab slide-in/out effects with smooth transitions
+**Cool Stuff:**
+- Animated text effects (decryption, rotation, shimmer)
+- Click sparks because they're fun
+- Collapsible file explorer with smooth animations
+- Theme switcher (multiple VS Code themes)
+- Lite mode toggle for performance
+- Mobile-friendly (with a notification suggesting desktop for best experience)
 
-### 🔧 **Technical Features**
-- Server-side rendering with Next.js
-- TypeScript for type safety
-- Dynamic routing and prefetching
-- GitHub API integration
-- Local storage for user preferences
-- SEO optimized with custom meta tags
+**Technical:**
+- Next.js 15 with TypeScript
+- CSS Modules for styling
+- Framer Motion for animations
+- GitHub API integration for live data
+- Vercel deployment with auto-updates
 
-## 🛠️ Tech Stack
+## Why This Exists
 
-- **Framework:** Next.js 15.2.3
-- **Language:** TypeScript 5.8.2
-- **Styling:** CSS Modules
-- **Animations:** Framer Motion 12.23.24 + GSAP 3.13.0
-- **Icons:** Iconify + React Icons 5.5.0 (VS Code icons)
-- **Markdown:** React Markdown with rehype-raw
-- **GitHub Integration:** React GitHub Calendar 4.5.6
-- **Deployment:** Vercel
-- **API:** GitHub REST API
+I needed a portfolio that actually represents what I do. Most templates felt too corporate or startup-y. Since I live in VS Code anyway, this felt more honest.
 
-## 📝 License
+The web development part was done with AI assistance (Claude, Copilot, Kiro IDE) because I'd rather spend time on hardware. But the content, structure, and design decisions are all mine.
 
-This project is open source and available under the [MIT License](https://github.com/shaxntanu/VSCode-Portfolio/blob/main/LICENSE).
+## Running Locally
 
-## 👨‍💻 Author
+```bash
+# Clone it
+git clone https://github.com/shaxntanu/VSCode-Portfolio.git
+cd VSCode-Portfolio
 
-**Shantanu Maratha**
+# Install dependencies
+npm install
 
-- Portfolio: [shantanu-vsc-portfolio.vercel.app](https://shantanu-vsc-portfolio.vercel.app)
-- GitHub: [@shaxntanu](https://github.com/shaxntanu)
+# Run dev server
+npm run dev
 
-## 🙏 Acknowledgments
+# Build for production
+npm run build
+npm start
+```
 
-- Inspired by Visual Studio Code's interface
-- Icons from [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/)
-- Animations powered by [Framer Motion](https://www.framer.com/motion/)
+Open `http://localhost:3000` and you're good to go.
+
+## Resume Auto-Update
+
+The resume page pulls the latest PDF from my [LaTeX Resume repo](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Whenever I update my resume there, it automatically reflects here. No manual uploads needed.
+
+## License
+
+MIT License - use it, fork it, modify it. Just don't claim you built it from scratch.
+
+See [LICENSE](https://github.com/shaxntanu/VSCode-Portfolio/blob/main/LICENSE) for details.
+
+## Credits
+
+- VS Code for the interface inspiration
+- [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/) for icons
+- [Framer Motion](https://www.framer.com/motion/) for smooth animations
+- Coffee for making this possible
 
 ---
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful!**
+**If this helped you, star it. If it didn't, open an issue.**
 
-Made with ❤️ and lots of ☕ By Shantanu
+Built by [Shantanu](https://github.com/shaxntanu) • Deployed on [Vercel](https://vercel.com)
 
 </div>
