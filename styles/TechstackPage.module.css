@@ -1,11 +1,28 @@
 .container {
-    padding: 2rem 2rem 3rem 2rem;
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
+    /* Exact height to fit inside background: 100vh - 90px (bars) - 64px (padding) */
+    height: calc(100vh - 154px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 2rem 2rem 3rem 2rem;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
+    /* Left aligned */
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .header {
