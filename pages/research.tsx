@@ -58,6 +58,15 @@ const papers = [
     link: '#',
     icon: 'medium',
   },
+  {
+    id: 'DOC-NMA-007',
+    title: 'NOEMA',
+    type: 'Article',
+    date: 'Coming Soon',
+    status: 'IN PROGRESS',
+    link: '#',
+    icon: 'medium',
+  },
 ];
 
 const ResearchPage = () => {

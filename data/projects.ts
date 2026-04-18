@@ -88,6 +88,16 @@ export const projects: Project[] = [
     year: 2026,
   },
   {
+    title: 'NOEMA (Under Development)',
+    description: 'Coming soon.',
+    logo: '/logos/espressif_icon.svg',
+    link: '#',
+    slug: 'noema',
+    category: 'HARDWARE_MODULES',
+    dateRange: 'Feb 2026',
+    year: 2026,
+  },
+  {
     title: 'ZM Dashboard',
     description: 'Real-time web dashboard for Zephyr Station analytics.',
     logo: '/logos/vercel_icon.svg',
