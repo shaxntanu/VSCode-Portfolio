@@ -43,7 +43,6 @@ export const projects: Project[] = [
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Jul 2018 - Aug 2018',
     year: 2018,
-    reportLink: 'https://crocus-zenobia-863.notion.site/Smart-Blind-Stick-Report-2a01ebfe2064802580bcd52932677de4',
   },
   // 2025
   {
