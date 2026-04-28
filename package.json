@@ -25,7 +25,7 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10",
+    "@types/node": "^25.6.0",
     "@types/react": "^19.0.11",
     "eslint": "^9.22.0",
     "eslint-config-next": "^15.2.3",
