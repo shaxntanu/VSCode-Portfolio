@@ -67,6 +67,15 @@ const papers = [
     link: '#',
     icon: 'medium',
   },
+  {
+    id: 'DOC-HPS-008',
+    title: 'HopShift',
+    type: 'Article',
+    date: 'Coming Soon',
+    status: 'IN PROGRESS',
+    link: '#',
+    icon: 'medium',
+  },
 ];
 
 const ResearchPage = () => {

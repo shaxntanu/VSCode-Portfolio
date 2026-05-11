@@ -122,6 +122,15 @@ const ExperiencePage = () => {
 *   Mathematical demonstration proving gambling always leads to loss through interactive simulations.
 *   Designed intuitive user interface for educational purposes showing betting strategy failures.
 
+## [UNDER DEVELOPMENT] ARC-4
+**Timeline:** Jan 2026
+
+## [UNDER DEVELOPMENT] NOEMA
+**Timeline:** Feb 2026
+
+## [UNDER DEVELOPMENT] HopShift
+**Timeline:** Apr 2026
+
 ---
 
 ## [EDUCATION] Thapar Institute (TIET)
