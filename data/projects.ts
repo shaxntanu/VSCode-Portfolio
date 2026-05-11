@@ -99,7 +99,7 @@ export const projects: Project[] = [
   {
     title: 'HopShift (Under Development)',
     description: 'Coming soon.',
-    logo: '/logos/espressif_icon.svg',
+    logo: ['/logos/espressif_icon.svg', '/logos/nordic_icon.svg'],
     link: '#',
     slug: 'hopshift',
     category: 'HARDWARE_MODULES',
