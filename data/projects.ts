@@ -97,11 +97,11 @@ export const projects: Project[] = [
     year: 2026,
   },
   {
-    title: 'HopShift (Under Development)',
+    title: 'Aether (Under Development)',
     description: 'Coming soon.',
     logo: ['/logos/espressif_icon.svg', '/logos/nordic_icon.svg'],
     link: '#',
-    slug: 'hopshift',
+    slug: 'aether',
     category: 'HARDWARE_MODULES',
     dateRange: 'Apr 2026',
     year: 2026,

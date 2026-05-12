@@ -69,7 +69,7 @@ const papers = [
   },
   {
     id: 'DOC-HPS-008',
-    title: 'HopShift',
+    title: 'Aether',
     type: 'Article',
     date: 'Coming Soon',
     status: 'IN PROGRESS',

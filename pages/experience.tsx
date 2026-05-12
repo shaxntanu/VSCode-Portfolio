@@ -128,7 +128,7 @@ const ExperiencePage = () => {
 ## [UNDER DEVELOPMENT] NOEMA
 **Timeline:** Feb 2026
 
-## [UNDER DEVELOPMENT] HopShift
+## [UNDER DEVELOPMENT] Aether
 **Timeline:** Apr 2026
 
 ---
