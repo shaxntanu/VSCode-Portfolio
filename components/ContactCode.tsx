@@ -54,6 +54,11 @@ const contactCategories = [
         link: 'shaxntanu',
         href: 'https://shaxntanu.medium.com',
       },
+      {
+        social: 'GSSoC',
+        link: 'shaxntanu',
+        href: 'https://gssoc.girlscript.org/profile/57b69c1c-a1c8-454a-a4c5-1e94093eefd7',
+      },
     ],
   },
   {
