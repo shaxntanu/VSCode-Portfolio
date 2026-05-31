@@ -46,7 +46,7 @@ const papers = [
     type: 'TIET Academic Curriculum',
     date: '2026-03-01',
     status: 'PUBLISHED',
-    link: 'https://docs.google.com/document/d/10oCl39Ste8v906QpB7fuZsjLb0rCIReW/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
+    link: 'https://docs.google.com/document/d/1vcZLsgmhocHVnUEXxcNuC6xXWtHzbMsU/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
     icon: 'word',
   },
   {
@@ -134,6 +134,36 @@ const ResearchPage = () => {
         <h2 className={styles.sectionTitle}>Research Papers</h2>
         <div className={styles.comingSoon}>
           <p>Coming Soon</p>
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Personal & Blogs</h2>
+        <div className={styles.grid}>
+          <a
+            href="https://medium.com/@shaxntanu/how-a-robotics-class-shaped-my-engineering-journey-19acd8f99bb4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.card}
+          >
+            <div className={styles.cardIcon}>
+              <SiMedium />
+            </div>
+            <div className={styles.cardContent}>
+              <h3 className={styles.cardTitle}>How a Robotics Class Shaped My Engineering Journey</h3>
+              <div className={styles.cardMeta}>
+                <span className={styles.cardId}>BLG-001</span>
+                <span className={styles.cardType}>Personal Article</span>
+              </div>
+              <div className={styles.cardFooter}>
+                <span className={styles.cardDate}>2024</span>
+                <span className={styles.statusBadge}>PUBLISHED</span>
+              </div>
+            </div>
+            <div className={styles.cardLink}>
+              <VscLinkExternal />
+            </div>
+          </a>
         </div>
       </div>
     </div>

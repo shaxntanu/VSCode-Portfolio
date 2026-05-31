@@ -97,20 +97,6 @@
     opacity: 1;
 }
 
-.minimize {
-    background: #ffff00;
-    position: relative;
-}
-
-.minimize svg {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.minimize:hover svg {
-    opacity: 1;
-}
-
 .maximize {
     background: #00ff00;
     position: relative;
@@ -122,24 +108,6 @@
 }
 
 .maximize:hover svg {
-    opacity: 1;
-}
-
-.close {
-    background: #ff0000;
-    position: relative;
-}
-
-.close:hover {
-    opacity: 1;
-}
-
-.close svg {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.close:hover svg {
     opacity: 1;
 }
 
