@@ -46,7 +46,7 @@ const papers = [
     type: 'TIET Academic Curriculum',
     date: '2026-03-01',
     status: 'PUBLISHED',
-    link: 'https://docs.google.com/document/d/10oCl39Ste8v906QpB7fuZsjLb0rCIReW/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
+    link: 'https://docs.google.com/document/d/1vcZLsgmhocHVnUEXxcNuC6xXWtHzbMsU/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
     icon: 'word',
   },
   {
