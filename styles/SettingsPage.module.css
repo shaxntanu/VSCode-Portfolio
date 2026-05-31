@@ -1,5 +1,5 @@
 .layout {
-    height: calc(100vh - 154px);
+    height: var(--page-height);
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;

@@ -2,7 +2,7 @@
     max-width: 900px;
     width: 100%;
     /* Exact height to fit inside background: 100vh - 90px (bars) - 64px (padding) */
-    height: calc(100vh - 154px);
+    height: var(--page-height);
     padding: 2rem 1.5rem;
     color: var(--text-color);
     overflow-y: auto;

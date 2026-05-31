@@ -21,6 +21,19 @@ export default function Document() {
             `,
           }}
         />
+        <Script
+          id="lite-mode-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+              const savedLiteMode = localStorage.getItem('liteMode');
+              const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+              if (isLiteMode) {
+                document.documentElement.setAttribute('data-lite-mode', 'true');
+              }
+            })();`,
+          }}
+        />
         <Main />
         <NextScript />
       </body>

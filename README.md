@@ -9,7 +9,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)
 
-**My portfolio, but make it look like VS Code**
+**My portfolio, but make it look like the editor I actually use**
 
 [🌐 Live Site](https://shantanu-vsc-portfolio.vercel.app) • [🐛 Found a Bug?](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [💡 Got Ideas?](https://github.com/shaxntanu/VSCode-Portfolio/issues)
 
@@ -21,9 +21,9 @@
 
 I spend most of my time in VS Code building hardware and firmware, so I figured — why not make my portfolio look like it too?
 
-This isn't just a themed website. It actually mimics VS Code's interface with a working file explorer, tabs, sidebar navigation, and even a terminal-style resume viewer. The home page shows Arduino/C++ pseudo-code that describes how I work (spoiler: lots of debugging and coffee).
+This isn't just another themed website. It actually mimics VS Code's interface with a working file explorer, tabs, sidebar navigation, and even a terminal-style resume viewer. The home page shows Arduino/C++ pseudo-code that describes how I work (spoiler: lots of debugging, coffee, and the occasional "why isn't this working?" moment).
 
-Built with Next.js because I wanted something fast and SEO-friendly. The web stuff is mostly AI-assisted since my focus is on embedded systems and IoT hardware.
+Built with Next.js because I wanted something fast and SEO-friendly. The web development part was mostly AI-assisted since my real passion is embedded systems and IoT hardware — I'd rather be soldering than styling CSS.
 
 ## What's Inside
 
@@ -55,13 +55,13 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web stu
 
 ## Why This Exists
 
-I needed a portfolio that actually represents what I do. Most templates felt too corporate or startup-y. Since I live in VS Code anyway, this felt more honest.
+I needed a portfolio that actually represents what I do. Most templates felt too corporate or startup-y for someone who spends their days debugging ESP32 code and designing PCBs. Since I practically live in VS Code anyway, this felt more honest.
 
-The web development part was done with AI assistance (Claude, Copilot, Kiro IDE) because I'd rather spend time on hardware. But the content, structure, and design decisions are all mine.
+The web development part was done with AI assistance (Claude, Copilot, Kiro IDE) because I'd rather spend time figuring out why my sensors aren't talking to each other. But the content, structure, and design decisions? All mine, along with the occasional 3 AM "this would look cool" idea.
 
 ## Resume Auto-Update
 
-The resume page pulls the latest PDF from my [LaTeX Resume repo](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Whenever I update my resume there, it automatically reflects here. No manual uploads needed.
+The resume page pulls the latest PDF from my [LaTeX Resume repo](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Whenever I update my resume there, it automatically reflects here. Because manually uploading files is so 2019.
 
 ## License
 
@@ -71,17 +71,18 @@ See [LICENSE](https://github.com/shaxntanu/VSCode-Portfolio/blob/main/LICENSE) f
 
 ## Credits
 
-- VS Code for the interface inspiration
-- [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/) for icons
-- [Framer Motion](https://www.framer.com/motion/) for smooth animations
-- Coffee for making this possible
+- VS Code for being the editor I can't live without
+- [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/) for making things look pretty
+- [Framer Motion](https://www.framer.com/motion/) for animations that don't make me cringe
+- Coffee, lots of coffee, for making any of this possible
+- Stack Overflow for... well, you know
 
 ---
 
 <div align="center">
 
-**If this helped you, star it. If it didn't, open an issue.**
+**If this helped you, give it a star ⭐ If it broke something, open an issue 🐛**
 
-Built by [Shantanu](https://github.com/shaxntanu) • Deployed on [Vercel](https://vercel.com)
+Built by [Shantanu](https://github.com/shaxntanu) with way too much caffeine • Deployed on [Vercel](https://vercel.com)
 
 </div>

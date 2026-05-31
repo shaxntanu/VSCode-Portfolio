@@ -1,7 +1,7 @@
-import Head from '@/components/Head';
 import styles from '@/styles/ExperiencePage.module.css';
 import RotatingText from '@/components/RotatingText';
-import { JSX } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const ExperiencePage = () => {
   const rotatingTexts = ['LOG', 'Product', 'IoT', 'Embedded', 'Circuits'];
@@ -11,7 +11,12 @@ const ExperiencePage = () => {
     const start = new Date(startDate);
     const end = endDate === 'Present' ? new Date() : new Date(endDate);
     
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return 'N/A';
+    
     const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+    
+    if (months <= 0) return '< 1 mo';
+    
     const years = Math.floor(months / 12);
     const remainingMonths = months % 12;
     
@@ -137,136 +142,53 @@ const ExperiencePage = () => {
 **Degree:** '29 B.E. Electronics and Communication Engineering  
 **Focus:** Embedded Systems, IoT, Circuit Design, Signal Processing`;
 
-  const parseMarkdown = (text: string) => {
-    const lines = text.split('\n');
-    const elements: JSX.Element[] = [];
-    let key = 0;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // H1 Headers
-      if (line.startsWith('# ')) {
-        elements.push(
-          <div key={key++} className={styles.h1Wrapper}>
-            <div className={styles.h1Border}></div>
-            <h1 className={styles.h1}>
-              EXPERIENCE{' '}
-              <RotatingText
-                texts={rotatingTexts}
-                rotationInterval={2000}
-                staggerFrom="last"
-                staggerDuration={0.025}
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '-120%' }}
-                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-                mainClassName={styles.rotatingTextBox}
-                splitLevelClassName={styles.rotatingTextOverflow}
-              />
-            </h1>
-          </div>
-        );
-      }
-      // H2 Headers
-      else if (line.startsWith('## ')) {
-        elements.push(
-          <h2 key={key++} className={styles.h2}>
-            {parseBold(line.substring(3))}
-          </h2>
-        );
-      }
-      // H3 Headers
-      else if (line.startsWith('### ')) {
-        elements.push(
-          <h3 key={key++} className={styles.h3}>
-            {line.substring(4)}
-          </h3>
-        );
-      }
-      // Horizontal Rule
-      else if (line.trim() === '---') {
-        elements.push(<hr key={key++} className={styles.hr} />);
-      }
-      // List Items
-      else if (line.startsWith('*   ')) {
-        elements.push(
-          <li key={key++} className={styles.li}>
-            {parseBold(line.substring(4))}
-          </li>
-        );
-      }
-      // Regular paragraphs with bold
-      else if (line.trim() !== '') {
-        elements.push(
-          <p key={key++} className={styles.p}>
-            {parseBold(line)}
-          </p>
-        );
-      }
-      // Empty lines
-      else {
-        elements.push(<br key={key++} />);
-      }
-    }
-
-    return elements;
-  };
-
-  const parseBold = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/g);
-    return parts.map((part, index) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return (
-          <strong key={index} className={styles.bold}>
-            {part.slice(2, -2)}
-          </strong>
-        );
-      }
-      // Check for "Arceus Labs" and make it a link
-      if (part.includes('Arceus Labs')) {
-        const segments = part.split('Arceus Labs');
-        return (
-          <span key={index}>
-            {segments[0]}
-            <a
-              href="https://arceuslabs.carrd.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              Arceus Labs
-            </a>
-            {segments[1]}
-          </span>
-        );
-      }
-      // Check for "Ragastra" and make it a link
-      if (part.includes('Ragastra')) {
-        const segments = part.split('Ragastra');
-        return (
-          <span key={index}>
-            {segments[0]}
-            <a
-              href="https://github.com/Ragastra"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              Ragastra
-            </a>
-            {segments[1]}
-          </span>
-        );
-      }
-      return part;
-    });
-  };
-
   return (
     <>
-      <Head title="Experience Log" />
-      <div className={styles.content}>{parseMarkdown(markdownContent)}</div>
+      <div className={styles.content}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            h1: () => (
+              <div className={styles.h1Wrapper}>
+                <div className={styles.h1Border}></div>
+                <h1 className={styles.h1}>
+                  EXPERIENCE{' '}
+                  <RotatingText
+                    texts={rotatingTexts}
+                    rotationInterval={2000}
+                    staggerFrom="last"
+                    staggerDuration={0.025}
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '-120%' }}
+                    transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                    mainClassName={styles.rotatingTextBox}
+                    splitLevelClassName={styles.rotatingTextOverflow}
+                  />
+                </h1>
+              </div>
+            ),
+            h2: ({ children }) => <h2 className={styles.h2}>{children}</h2>,
+            h3: ({ children }) => <h3 className={styles.h3}>{children}</h3>,
+            p: ({ children }) => <p className={styles.p}>{children}</p>,
+            li: ({ children }) => <li className={styles.li}>{children}</li>,
+            hr: () => <hr className={styles.hr} />,
+            strong: ({ children }) => <strong className={styles.bold}>{children}</strong>,
+            a: ({ href, children }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {children}
+              </a>
+            ),
+          }}
+        >
+          {markdownContent}
+        </ReactMarkdown>
+      </div>
     </>
   );
 };

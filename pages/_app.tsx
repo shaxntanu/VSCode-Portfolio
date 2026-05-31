@@ -10,7 +10,7 @@ import '@/styles/globals.css';
 import '@/styles/themes.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [liteMode, setLiteMode] = useState(false);
+  const [liteMode, setLiteMode] = useState(true);
 
   useEffect(() => {
     // Set default theme to Ayu Dark

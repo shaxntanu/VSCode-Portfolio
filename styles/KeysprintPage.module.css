@@ -4,7 +4,7 @@
     margin: 0 auto;
     width: 100%;
     align-self: flex-start;
-    height: calc(100vh - 154px);
+    height: var(--page-height);
     overflow-y: auto;
     box-sizing: border-box;
     font-family: 'JetBrains Mono', monospace;

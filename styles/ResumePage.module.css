@@ -3,7 +3,7 @@
     width: 100%;
     margin: 0 auto;
     /* Exact height to fit inside background: 100vh - 90px (bars) - 64px (padding) */
-    height: calc(100vh - 154px);
+    height: var(--page-height);
     overflow-y: auto;
     box-sizing: border-box;
     padding: 2rem 1rem;

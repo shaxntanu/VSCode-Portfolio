@@ -62,15 +62,6 @@ const Titlebar = () => {
     }
   };
 
-  const handleClose = () => {
-    if (confirm('Are you sure you want to close this portfolio?')) {
-      window.close();
-      setTimeout(() => {
-        window.location.href = 'about:blank';
-      }, 100);
-    }
-  };
-
   const handleMenuClick = (menu: string) => {
     switch (menu) {
       case 'File':
@@ -137,16 +128,6 @@ const Titlebar = () => {
         >
           <svg width="10" height="10" viewBox="0 0 10 10">
             <rect x="0" y="0" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1" />
-          </svg>
-        </button>
-        <button 
-          className={styles.close} 
-          onClick={handleClose}
-          title="Close"
-        >
-          <svg width="10" height="10" viewBox="0 0 10 10">
-            <line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" strokeWidth="1" />
-            <line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" strokeWidth="1" />
           </svg>
         </button>
       </div>

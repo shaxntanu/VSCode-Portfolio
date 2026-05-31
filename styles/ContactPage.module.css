@@ -1,7 +1,7 @@
 .layout {
     max-width: 900px;
     margin: 0 auto;
-    height: calc(100vh - 154px);
+    height: var(--page-height);
     overflow-y: auto;
     box-sizing: border-box;
 }

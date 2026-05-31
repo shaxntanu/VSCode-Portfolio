@@ -78,7 +78,6 @@ const skillData: SkillCategory[] = [
 
 const SkillMatrix = () => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
-  const [, setHoveredChartIndex] = useState<number | null>(null);
   const [animatedScores, setAnimatedScores] = useState<{ [key: string]: number }>({});
   const chartRef = useRef<any>(null);
 
@@ -142,7 +141,6 @@ const SkillMatrix = () => {
     onHover: (event: any, activeElements: any[]) => {
       if (activeElements.length > 0 && activeElements[0].element) {
         const index = activeElements[0].index;
-        setHoveredChartIndex(index);
         
         // Find the skill key for this index
         let count = 0;
@@ -156,7 +154,6 @@ const SkillMatrix = () => {
           }
         }
       } else {
-        setHoveredChartIndex(null);
         setHoveredSkill(null);
       }
     },

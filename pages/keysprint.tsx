@@ -1,4 +1,3 @@
-import Head from '@/components/Head';
 import styles from '@/styles/KeysprintPage.module.css';
 import { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
@@ -200,7 +199,6 @@ const KeysprintPage = () => {
 
   return (
     <>
-      <Head title="Keysprint Stats" />
       <div className={styles.container}>
         <div className={styles.header}>
           <h1 className={styles.title}>

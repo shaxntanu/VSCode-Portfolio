@@ -5,7 +5,7 @@
     line-height: 1.8;
     overflow-y: auto;
     /* Exact height to fit inside background: 100vh - 90px (bars) - 64px (padding) */
-    height: calc(100vh - 154px);
+    height: var(--page-height);
     padding: 1rem 2rem;
     box-sizing: border-box;
     /* Left aligned */

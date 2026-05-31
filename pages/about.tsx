@@ -123,6 +123,7 @@ const AboutPage = () => {
                 className={styles.mapFrame}
                 title="World Map"
                 scrolling="no"
+                loading="lazy"
               />
             </div>
             <p className={styles.proudText}>

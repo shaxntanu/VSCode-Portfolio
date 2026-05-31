@@ -1,6 +1,7 @@
 import Tab from '@/components/Tab';
 import { useFolderContext } from '@/contexts/FolderContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { rootFile, portfolioFiles, navFolders } from '@/data/navigation';
 
 import styles from '@/styles/Tabsbar.module.css';
 
@@ -20,175 +21,74 @@ const Tabsbar = () => {
     resumeOpen 
   } = useFolderContext();
 
+  // Get the appropriate open state for each folder
+  const getFolderOpen = (folderId: string) => {
+    switch (folderId) {
+      case 'development':
+        return developmentOpen;
+      case 'skills':
+        return skillsOpen;
+      case 'career':
+        return careerOpen;
+      case 'research':
+        return researchOpen;
+      case 'resume':
+        return resumeOpen;
+      default:
+        return false;
+    }
+  };
+
   return (
     <div className={styles.tabs}>
       {/* Main.cpp always visible */}
       <motion.div
-        key="main-cpp"
+        key={rootFile.name}
         variants={tabVariants}
         initial="initial"
         animate="animate"
         className={styles.tabItem}
       >
-        <Tab icon="/logos/cpp_icon.svg" filename="main.cpp" path="/" />
+        <Tab icon={rootFile.icon} filename={rootFile.name} path={rootFile.path} />
       </motion.div>
 
       {/* Portfolio folder files */}
       <AnimatePresence>
         {portfolioOpen && (
           <>
-            <motion.div
-              key="about-pdf"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/pdf_icon.svg" filename="about_datasheet.pdf" path="/about" />
-            </motion.div>
-            <motion.div
-              key="contact-json"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/json_icon.svg" filename="pinout_socials.json" path="/contact" />
-            </motion.div>
+            {portfolioFiles.map((file) => (
+              <motion.div
+                key={file.name}
+                variants={tabVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className={styles.tabItem}
+              >
+                <Tab icon={file.icon} filename={file.name} path={file.path} />
+              </motion.div>
+            ))}
           </>
         )}
       </AnimatePresence>
 
-      {/* DEVELOPMENT folder files */}
+      {/* Dynamic folder files */}
       <AnimatePresence>
-        {portfolioOpen && developmentOpen && (
-          <>
+        {portfolioOpen && navFolders.map((folder) => {
+          const folderOpen = getFolderOpen(folder.id);
+          return folderOpen ? folder.files.map((file) => (
             <motion.div
-              key="firmware-ino"
+              key={file.name}
               variants={tabVariants}
               initial="initial"
               animate="animate"
               exit="exit"
               className={styles.tabItem}
             >
-              <Tab icon="/logos/arduino_icon.svg" filename="firmware.ino" path="/projects" />
+              <Tab icon={file.icon} filename={file.name} path={file.path} />
             </motion.div>
-            <motion.div
-              key="github-md"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/markdown_icon.svg" filename="github.md" path="/github" />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* SKILLS folder files */}
-      <AnimatePresence>
-        {portfolioOpen && skillsOpen && (
-          <>
-            <motion.div
-              key="techstack-csv"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/csv_icon.svg" filename="sm_techstack.csv" path="/techstack" />
-            </motion.div>
-            <motion.div
-              key="skillmatrix-ipynb"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/jupyter_icon.svg" filename="skillmatrix.ipynb" path="/skillmatrix" />
-            </motion.div>
-            <motion.div
-              key="keysprint-env"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/env_icon.svg" filename="keysprint.env" path="/keysprint" />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* CAREER folder files */}
-      <AnimatePresence>
-        {portfolioOpen && careerOpen && (
-          <>
-            <motion.div
-              key="experience-md"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/markdown_icon.svg" filename="experience_log.md" path="/experience" />
-            </motion.div>
-            <motion.div
-              key="upgrades-yaml"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/yaml_icon.svg" filename="upgrades.yaml" path="/certificates" />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* RESEARCH folder files */}
-      <AnimatePresence>
-        {portfolioOpen && researchOpen && (
-          <>
-            <motion.div
-              key="research-pdf"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/pdf_icon.svg" filename="whitepapers.pdf" path="/research" />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* RESUME folder files */}
-      <AnimatePresence>
-        {portfolioOpen && resumeOpen && (
-          <>
-            <motion.div
-              key="resume-iso"
-              variants={tabVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className={styles.tabItem}
-            >
-              <Tab icon="/logos/iso_icon.svg" filename="sysdrive_cv.iso" path="/resume" />
-            </motion.div>
-          </>
-        )}
+          )) : null;
+        })}
       </AnimatePresence>
     </div>
   );
