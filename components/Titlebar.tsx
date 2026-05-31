@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Maximize, Minimize } from 'lucide-react';
+import { Maximize, Minimize, Minus } from 'lucide-react';
 
 import styles from '@/styles/Titlebar.module.css';
 
@@ -75,6 +75,20 @@ const Titlebar = () => {
     }
   };
 
+  const handleClose = () => {
+    if (confirm('Are you sure you want to close this portfolio?')) {
+      window.close();
+      setTimeout(() => {
+        window.location.href = 'about:blank';
+      }, 100);
+    }
+  };
+
+  const handleMinimize = () => {
+    // Since we can't actually minimize in a browser, we'll just blur the window
+    window.blur();
+  };
+
   const handleMenuClick = (menu: string) => {
     switch (menu) {
       case 'File':
@@ -135,14 +149,31 @@ const Titlebar = () => {
       </p>
       <div className={styles.windowButtons}>
         <button 
+          className={styles.close} 
+          onClick={handleClose}
+          title="Close"
+        >
+          <svg width="8" height="8" viewBox="0 0 8 8">
+            <line x1="0" y1="0" x2="8" y2="8" stroke="currentColor" strokeWidth="1" />
+            <line x1="8" y1="0" x2="0" y2="8" stroke="currentColor" strokeWidth="1" />
+          </svg>
+        </button>
+        <button 
+          className={styles.minimize} 
+          onClick={handleMinimize}
+          title="Minimize"
+        >
+          <Minus size={8} />
+        </button>
+        <button 
           className={styles.maximize} 
           onClick={handleMaximize}
           title={isMaximized ? "Exit Fullscreen" : "Enter Fullscreen"}
         >
           {isMaximized ? (
-            <Minimize size={12} />
+            <Minimize size={8} />
           ) : (
-            <Maximize size={12} />
+            <Maximize size={8} />
           )}
         </button>
       </div>
