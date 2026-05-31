@@ -62,11 +62,4 @@ export const navFolders: NavFolder[] = [
       { name: 'sysdrive_cv.iso', path: '/resume', icon: '/logos/iso_icon.svg' },
     ],
   },
-  {
-    id: 'articles',
-    label: 'ARTICLES',
-    files: [
-      { name: 'blog_posts.md', path: '/articles', icon: '/logos/markdown_icon.svg' },
-    ],
-  },
 ];
