@@ -6,6 +6,13 @@ import DecryptedText from '@/components/DecryptedText';
 
 export default function HomePage() {
   const [activeLineIndex, setActiveLineIndex] = useState(0);
+  const [isLiteMode, setIsLiteMode] = useState(true);
+
+  useEffect(() => {
+    const savedLiteMode = localStorage.getItem('liteMode');
+    const liteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+    setIsLiteMode(liteMode);
+  }, []);
 
   const codeLines = [
     { code: '/*', type: 'comment' },
@@ -255,20 +262,31 @@ export default function HomePage() {
 
         <div className={styles.infoSection}>
           <h1 className={styles.developerName}>
-            <DecryptedText
-              text="Shantanu"
-              speed={50}
-              maxIterations={15}
-              animateOn="view"
-            />{' '}
-            <span className={styles.accentText}>
-              <DecryptedText
-                text="Maratha"
-                speed={50}
-                maxIterations={15}
-                animateOn="view"
-              />
-            </span>
+            {isLiteMode ? (
+              <>
+                Shantanu{' '}
+                <span className={styles.accentText}>
+                  Maratha
+                </span>
+              </>
+            ) : (
+              <>
+                <DecryptedText
+                  text="Shantanu"
+                  speed={50}
+                  maxIterations={15}
+                  animateOn="view"
+                />{' '}
+                <span className={styles.accentText}>
+                  <DecryptedText
+                    text="Maratha"
+                    speed={50}
+                    maxIterations={15}
+                    animateOn="view"
+                  />
+                </span>
+              </>
+            )}
           </h1>
 
           <div className={styles.developerRole}>Embedded Systems & IoT Developer</div>
