@@ -156,7 +156,7 @@ const ResearchPage = () => {
                 <span className={styles.cardType}>Personal Article</span>
               </div>
               <div className={styles.cardFooter}>
-                <span className={styles.cardDate}>2024</span>
+                <span className={styles.cardDate}>2026-05-31</span>
                 <span className={styles.statusBadge}>PUBLISHED</span>
               </div>
             </div>
