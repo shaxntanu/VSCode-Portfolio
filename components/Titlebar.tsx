@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { Maximize, Minimize } from 'lucide-react';
 
 import styles from '@/styles/Titlebar.module.css';
 
@@ -8,6 +9,7 @@ const Titlebar = () => {
   const router = useRouter();
   const [liteMode, setLiteMode] = useState(true);
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
+  const [isMaximized, setIsMaximized] = useState(false);
 
   useEffect(() => {
     const updateThemeAndMode = () => {
@@ -26,6 +28,16 @@ const Titlebar = () => {
       };
       setCurrentTheme(themeNames[theme] || 'Ayu Dark');
     };
+
+    // Check initial fullscreen state
+    setIsMaximized(!!document.fullscreenElement);
+
+    // Listen for fullscreen changes
+    const handleFullscreenChange = () => {
+      setIsMaximized(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
 
     // Initial load
     updateThemeAndMode();
@@ -47,6 +59,7 @@ const Titlebar = () => {
     window.addEventListener('themeChanged', handleCustomUpdate);
 
     return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('themeChanged', handleCustomUpdate);
     };
@@ -124,11 +137,13 @@ const Titlebar = () => {
         <button 
           className={styles.maximize} 
           onClick={handleMaximize}
-          title="Maximize"
+          title={isMaximized ? "Exit Fullscreen" : "Enter Fullscreen"}
         >
-          <svg width="10" height="10" viewBox="0 0 10 10">
-            <rect x="0" y="0" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1" />
-          </svg>
+          {isMaximized ? (
+            <Minimize size={12} />
+          ) : (
+            <Maximize size={12} />
+          )}
         </button>
       </div>
     </section>
