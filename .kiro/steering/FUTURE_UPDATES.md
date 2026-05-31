@@ -2,7 +2,7 @@
 inclusion: manual
 ---
 
-# Future Updates — VS Code Portfolio Features
+# Future Updates - VS Code Portfolio Features
 
 This steering guide details 7 features to implement for the Next.js VS Code portfolio. Each feature is self-contained but builds on existing architecture. Follow the implementation order for optimal workflow.
 
@@ -261,8 +261,8 @@ This steering guide details 7 features to implement for the Next.js VS Code port
      ```
 
 3. **Add ogDescription to page getStaticProps**
-   - `pages/about.tsx`: `'Shantanu Maratha — IoT & Embedded Systems Engineer. Origin story, startup experience at Ragastra and Grosity, and the dream build.'`
-   - `pages/projects.tsx`: `'Hardware modules, IoT systems, and software projects — ESP32, custom PCBs, dashboards, and more.'`
+   - `pages/about.tsx`: `'Shantanu Maratha - IoT & Embedded Systems Engineer. Origin story, startup experience at Ragastra and Grosity, and the dream build.'`
+   - `pages/projects.tsx`: `'Hardware modules, IoT systems, and software projects - ESP32, custom PCBs, dashboards, and more.'`
    - `pages/experience.tsx`: `'Work experience as Core Engineer at Ragastra, Founder of Arceus Labs, and Early-Stage Engineer at Grosity.'`
    - `pages/research.tsx`: `'Technical reports and research papers covering Zephyr Station, Jolt Locator, The Ruin Machine, and more.'`
    - `pages/github.tsx`: `'GitHub stats, contribution graph, and repositories for shaxntanu.'`
@@ -339,7 +339,7 @@ This steering guide details 7 features to implement for the Next.js VS Code port
 1. **Create public/manifest.json**
    ```json
    {
-     "name": "Shantanu Maratha — Portfolio",
+     "name": "Shantanu Maratha - Portfolio",
      "short_name": "Shantanu",
      "description": "IoT & Embedded Systems Engineer building the physical internet",
      "start_url": "/",
@@ -467,13 +467,13 @@ For the minimap background rendering:
 
 ## Implementation Order Recommendation
 
-1. **Feature 1** (Active File Highlight) — Quick, foundational
-2. **Feature 2** (Breadcrumbs) — Builds on Feature 1
-3. **Feature 3** (Command Palette) — Most complex, highest impact
-4. **Feature 4** (OG Images) — Independent, quick
-5. **Feature 5** (Recent Tabs) — Builds on existing Tabsbar
-6. **Feature 6** (PWA Manifest) — Independent, quick
-7. **Feature 7** (Minimap) — Visual polish, last
+1. **Feature 1** (Active File Highlight) - Quick, foundational
+2. **Feature 2** (Breadcrumbs) - Builds on Feature 1
+3. **Feature 3** (Command Palette) - Most complex, highest impact
+4. **Feature 4** (OG Images) - Independent, quick
+5. **Feature 5** (Recent Tabs) - Builds on existing Tabsbar
+6. **Feature 6** (PWA Manifest) - Independent, quick
+7. **Feature 7** (Minimap) - Visual polish, last
 
 ---
 

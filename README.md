@@ -19,11 +19,11 @@
 
 ## What's This?
 
-I spend most of my time in VS Code building hardware and firmware, so I figured — why not make my portfolio look like it too?
+I spend most of my time in VS Code building hardware and firmware, so I figured - why not make my portfolio look like it too?
 
 This isn't just another themed website. It actually mimics VS Code's interface with a working file explorer, tabs, sidebar navigation, and even a terminal-style resume viewer. The home page shows Arduino/C++ pseudo-code that describes how I work (spoiler: lots of debugging, coffee, and the occasional "why isn't this working?" moment).
 
-Built with Next.js because I wanted something fast and SEO-friendly. The web development part was mostly AI-assisted since my real passion is embedded systems and IoT hardware — I'd rather be soldering than styling CSS.
+Built with Next.js because I wanted something fast and SEO-friendly. The web development part was mostly AI-assisted since my real passion is embedded systems and IoT hardware - I'd rather be soldering than styling CSS.
 
 ## What's Inside
 
