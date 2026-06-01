@@ -26,13 +26,6 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   const router = useRouter();
   const [, setScreenKey] = useState(0);
-  const [isLiteMode, setIsLiteMode] = useState(true);
-
-  useEffect(() => {
-    const savedLiteMode = localStorage.getItem('liteMode');
-    const liteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
-    setIsLiteMode(liteMode);
-  }, []);
 
   // Force re-render when screen/DPI changes (e.g., moving window between monitors)
   useEffect(() => {
@@ -81,20 +74,18 @@ const Layout = ({ children }: LayoutProps) => {
       <div className={styles.main} id="window-container">
         <Sidebar />
         <Explorer />
-        <div style={{ flex: 1, minWidth: 0, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, minWidth: 0, position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
           <Tabsbar />
           <Breadcrumbs />
-          <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+          <div style={{ display: 'flex', flex: 1, minHeight: 0, overflow: 'hidden', height: '100%' }}>
             <main id="main-editor" className={styles.content}>
               {children}
-              {!isLiteMode && (
-                <div className={`${styles.jpMatrix} jp-matrix`}>
-                  {Array.from({ length: 700 }).map((_, i) => {
-                    const chars = ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','ユ','ヨ','ラ','リ','ル','レ','ロ','ワ','ヲ','ン','ガ','ギ','グ','ゲ','ゴ','ザ','ジ','ズ','ゼ','ゾ','ダ','ヂ','ヅ','デ','ド','バ','ビ','ブ','ベ','ボ','パ','ピ','プ','ペ','ポ'];
-                    return <span key={i}>{chars[i % chars.length]}</span>;
-                  })}
-                </div>
-              )}
+              <div className={`${styles.jpMatrix} jp-matrix`}>
+                {Array.from({ length: 700 }).map((_, i) => {
+                  const chars = ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','ユ','ヨ','ラ','リ','ル','レ','ロ','ワ','ヲ','ン','ガ','ギ','グ','ゲ','ゴ','ザ','ジ','ズ','ゼ','ゾ','ダ','ヂ','ヅ','デ','ド','バ','ビ','ブ','ベ','ボ','パ','ピ','プ','ペ','ポ'];
+                  return <span key={i}>{chars[i % chars.length]}</span>;
+                })}
+              </div>
             </main>
             <Minimap />
           </div>
