@@ -23,7 +23,9 @@ const csvData = `ID,COMPONENT,CATEGORY,PROFICIENCY,STATUS
 020,HTML / CSS / JavaScript,Web Frontend,Basic,AI-Assisted
 021,React / Tailwind CSS,Web Framework,Basic,AI-Assisted
 022,Firebase,Database,Basic,AI-Assisted
-023,Vercel,Deployment,Advanced,Active`;
+023,Vercel,Deployment,Advanced,Active
+024,SolidWorks,CAD Design,Intermediate,Curriculum
+025,AutoCAD,CAD Design,Intermediate,Curriculum`;
 
 const TechStackPage = () => {
   // Parse CSV
