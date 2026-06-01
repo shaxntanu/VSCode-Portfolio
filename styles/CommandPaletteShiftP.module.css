@@ -1,0 +1,325 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99998;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+    animation: fadeIn 0.1s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.palette {
+    width: 100%;
+    max-width: 650px;
+    background: var(--explorer-bg);
+    border: 1px solid var(--explorer-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    animation: slideDown 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-12px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    border-bottom: 1px solid var(--explorer-border);
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.searchIcon {
+    color: var(--accent-color);
+    font-size: 1.4rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    padding: 1rem 0;
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.escKey {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+}
+
+.results {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.results::-webkit-scrollbar {
+    width: 4px;
+}
+
+.results::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 2px;
+}
+
+.results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.empty {
+    padding: 2rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.categoryGroup {
+    border-bottom: 1px solid var(--explorer-border);
+}
+
+.categoryGroup:last-child {
+    border-bottom: none;
+}
+
+.categoryHeader {
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    gap: 0.75rem;
+    transition: background-color 0.1s ease;
+}
+
+.item:hover,
+.selected {
+    background: var(--explorer-hover-bg);
+}
+
+.selected {
+    border-left: 2px solid var(--accent-color);
+    padding-left: calc(1rem - 2px);
+}
+
+.itemLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.itemIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--accent-color);
+}
+
+.itemContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.itemTitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.itemDesc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.footer {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--explorer-border);
+    background: var(--titlebar-bg);
+    flex-shrink: 0;
+}
+
+.footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.footer kbd {
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Notifications */
+.notificationContainer {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.notification {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideInRight 0.3s ease;
+    pointer-events: auto;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification.success {
+    background: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+.notification.error {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.notification.warning {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #f59e0b;
+}
+
+.notification.info {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+}
+
+.icon {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.message {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 600px) {
+    .overlay {
+        padding-top: 5vh;
+    }
+
+    .palette {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+
+    .itemDesc {
+        display: none;
+    }
+
+    .footer {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .notificationContainer {
+        bottom: 80px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .notification {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.8rem;
+    }
+}
