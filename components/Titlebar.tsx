@@ -75,14 +75,6 @@ const Titlebar = () => {
     }
   };
 
-  const handleOpen = () => {
-    window.dispatchEvent(new KeyboardEvent('keydown', { 
-      key: 'k', 
-      ctrlKey: true, 
-      bubbles: true 
-    }));
-  };
-
   const handleMenuClick = (menu: string) => {
     switch (menu) {
       case 'File':
