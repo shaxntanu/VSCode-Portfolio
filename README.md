@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Portfolio Cover](public/Portfolio%20Cover%20Image.png)
+![Portfolio Cover](public/Portfolio%20Cover%20Image.png?v=2)
 
 ![VS Code Portfolio](https://img.shields.io/badge/VS%20Code-Portfolio-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-15.2.3-black?style=for-the-badge&logo=next.js&logoColor=white)
