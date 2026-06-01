@@ -1,5 +1,6 @@
 import Tab from '@/components/Tab';
 import { useFolderContext } from '@/contexts/FolderContext';
+import { useRecentTabs } from '@/hooks/useRecentTabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { rootFile, portfolioFiles, navFolders } from '@/data/navigation';
 
@@ -20,6 +21,7 @@ const Tabsbar = () => {
     researchOpen, 
     resumeOpen 
   } = useFolderContext();
+  const { tabs, closeTab } = useRecentTabs();
 
   // Get the appropriate open state for each folder
   const getFolderOpen = (folderId: string) => {
@@ -89,6 +91,45 @@ const Tabsbar = () => {
             </motion.div>
           )) : null;
         })}
+      </AnimatePresence>
+
+      {/* Recent tabs */}
+      <AnimatePresence>
+        {tabs.filter(tab => {
+          const alreadyShown = [
+            '/',
+            ...(portfolioOpen ? portfolioFiles.map(f => f.path) : []),
+            ...(portfolioOpen && developmentOpen ? navFolders.find(f => f.id === 'development')?.files.map(f => f.path) ?? [] : []),
+            ...(portfolioOpen && skillsOpen ? navFolders.find(f => f.id === 'skills')?.files.map(f => f.path) ?? [] : []),
+            ...(portfolioOpen && careerOpen ? navFolders.find(f => f.id === 'career')?.files.map(f => f.path) ?? [] : []),
+            ...(portfolioOpen && researchOpen ? navFolders.find(f => f.id === 'research')?.files.map(f => f.path) ?? [] : []),
+            ...(portfolioOpen && resumeOpen ? navFolders.find(f => f.id === 'resume')?.files.map(f => f.path) ?? [] : []),
+          ];
+          return !alreadyShown.includes(tab.path);
+        }).map(tab => (
+          <motion.div
+            key={`recent-${tab.path}`}
+            variants={tabVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className={styles.tabItem}
+          >
+            <div className={styles.recentTab}>
+              <Tab icon={tab.icon} filename={tab.name} path={tab.path} />
+              <button
+                className={styles.closeTab}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeTab(tab.path);
+                }}
+                aria-label={`Close ${tab.name}`}
+              >
+                ×
+              </button>
+            </div>
+          </motion.div>
+        ))}
       </AnimatePresence>
     </div>
   );
