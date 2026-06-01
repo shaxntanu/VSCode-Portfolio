@@ -100,7 +100,7 @@ const Explorer = () => {
       <div className={styles.scrollableContent}>
         {/* main.cpp at root level */}
         <Link href={rootFile.path} prefetch={true} onClick={(e) => handleNavigation(e, rootFile.path)}>
-          <div className={styles.file}>
+          <div className={`${styles.file} ${router.pathname === rootFile.path ? styles.activeFile : ''}`}>
             <Image
               src={rootFile.icon}
               alt={rootFile.name}
@@ -134,7 +134,7 @@ const Explorer = () => {
               {portfolioFiles.map((item) => (
                 <motion.div key={item.name} variants={itemVariants}>
                   <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
-                    <div className={styles.file}>
+                    <div className={`${styles.file} ${router.pathname === item.path ? styles.activeFile : ''}`}>
                       <Image
                         src={item.icon}
                         alt={item.name}
@@ -174,7 +174,7 @@ const Explorer = () => {
                           {folder.files.map((item) => (
                             <motion.div key={item.name} variants={itemVariants}>
                               <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
-                                <div className={styles.file}>
+                                <div className={`${styles.file} ${router.pathname === item.path ? styles.activeFile : ''}`}>
                                   <Image
                                     src={item.icon}
                                     alt={item.name}
