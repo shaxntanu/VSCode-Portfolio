@@ -1,0 +1,44 @@
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 1rem;
+    background: var(--main-bg);
+    border-bottom: 1px solid var(--explorer-border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 28px;
+}
+
+.breadcrumbs::-webkit-scrollbar {
+    display: none;
+}
+
+.segment {
+    color: rgba(255, 255, 255, 0.5);
+    cursor: default;
+}
+
+.separator {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.7rem;
+    padding: 0 0.1rem;
+}
+
+.current {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@media screen and (max-width: 600px) {
+    .breadcrumbs {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.75rem;
+    }
+}

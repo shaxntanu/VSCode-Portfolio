@@ -6,6 +6,7 @@ import Titlebar from '@/components/Titlebar';
 import Sidebar from '@/components/Sidebar';
 import Bottombar from '@/components/Bottombar';
 import Tabsbar from '@/components/Tabsbar';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import MobileNotification from '@/components/MobileNotification';
 import { FolderProvider } from '@/contexts/FolderContext';
 
@@ -80,6 +81,7 @@ const Layout = ({ children }: LayoutProps) => {
         <Explorer />
         <div style={{ flex: 1, minWidth: 0, position: 'relative', display: 'flex', flexDirection: 'column' }}>
           <Tabsbar />
+          <Breadcrumbs />
           <main id="main-editor" className={styles.content}>
             {children}
             {!isLiteMode && (

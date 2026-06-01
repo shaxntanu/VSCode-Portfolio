@@ -9,7 +9,7 @@
 }
 
 :root {
-    --page-height: calc(100vh - 154px);
+    --page-height: calc(100vh - 182px);
 }
 
 /* Make all text unselectable */
