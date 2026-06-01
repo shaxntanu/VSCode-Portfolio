@@ -110,7 +110,11 @@ const CommandPalette = () => {
     const handler = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
-        open ? handleClose() : handleOpen();
+        if (open) {
+          handleClose();
+        } else {
+          handleOpen();
+        }
       }
       if (e.key === 'Escape') handleClose();
     };
@@ -159,7 +163,7 @@ const CommandPalette = () => {
         </div>
         <div className={styles.results}>
           {filtered.length === 0 && (
-            <div className={styles.empty}>No results for "{query}"</div>
+            <div className={styles.empty}>No results for &quot;{query}&quot;</div>
           )}
           {filtered.map((cmd, i) => (
             <div
