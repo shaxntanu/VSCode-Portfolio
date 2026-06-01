@@ -7,12 +7,160 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Minimap.module.css';
-import { analyzePageContent, mergeAdjacentBlocks, MinimapBlock } from '@/utils/minimapContentAnalyzer';
 import { useMinimapScroll } from '@/hooks/useMinimapScroll';
 
 const MINIMAP_PAGES = ['/about', '/experience', '/projects', '/publications', '/certificates'];
 const CANVAS_WIDTH = 80;
 const CANVAS_HEIGHT = 600;
+
+interface MinimapBlock {
+  type: 'heading' | 'paragraph' | 'code' | 'list' | 'card' | 'image' | 'divider' | 'chart';
+  topPercent: number;
+  heightPercent: number;
+  color: string;
+  density: 'high' | 'medium' | 'low';
+  indentLevel: number;
+  label?: string;
+}
+
+const getElementColor = (tagName: string, accentColor: string): string | null => {
+  const tag = tagName.toLowerCase();
+  switch (tag) {
+    case 'h1': return accentColor;
+    case 'h2': return accentColor + 'dd';
+    case 'h3': return accentColor + 'bb';
+    case 'h4':
+    case 'h5':
+    case 'h6': return accentColor + '99';
+    case 'p': return 'rgba(255,255,255,0.45)';
+    case 'li': return 'rgba(255,255,255,0.35)';
+    case 'code':
+    case 'pre': return 'rgba(78, 201, 176, 0.7)';
+    case 'a': return 'rgba(97, 175, 239, 0.6)';
+    case 'strong':
+    case 'b': return 'rgba(255, 198, 109, 0.6)';
+    case 'hr': return 'rgba(255,255,255,0.15)';
+    case 'table': return 'rgba(200, 150, 255, 0.5)';
+    case 'img': return 'rgba(130, 200, 130, 0.5)';
+    default: return null;
+  }
+};
+
+const getDensity = (tag: string): 'high' | 'medium' | 'low' => {
+  if (['pre', 'code'].includes(tag.toLowerCase())) return 'high';
+  if (['p', 'li', 'a'].includes(tag.toLowerCase())) return 'medium';
+  return 'low';
+};
+
+const getIndentLevel = (tag: string): number => {
+  const t = tag.toLowerCase();
+  if (t === 'h1') return 0;
+  if (t === 'h2') return 1;
+  if (t === 'h3') return 2;
+  if (['h4', 'h5', 'h6'].includes(t)) return 3;
+  return 2;
+};
+
+const analyzePageContent = (mainEditor: HTMLElement): MinimapBlock[] => {
+  const accentColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accent-color')
+    .trim() || '#e6b450';
+
+  const scrollHeight = mainEditor.scrollHeight;
+  if (scrollHeight === 0) return [];
+
+  const selector = 'h1, h2, h3, h4, h5, h6, p, li, code, pre, a, strong, hr, table, img, .card, [role="article"]';
+  const domElements = mainEditor.querySelectorAll(selector);
+
+  const blocks: MinimapBlock[] = [];
+  const seen = new Set<Element>();
+
+  const getBlockType = (tag: string): MinimapBlock['type'] => {
+    const t = tag.toLowerCase();
+    if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(t)) return 'heading';
+    if (t === 'hr') return 'divider';
+    if (['code', 'pre'].includes(t)) return 'code';
+    if (t === 'li') return 'list';
+    if (t === 'img') return 'image';
+    if (t === 'table') return 'chart';
+    if (t === 'p' || t === 'a' || t === 'strong') return 'paragraph';
+    return 'paragraph';
+  };
+
+  domElements.forEach((el) => {
+    if (seen.has(el)) return;
+
+    let parent = el.parentElement;
+    let skipDueToParent = false;
+    while (parent && parent !== mainEditor) {
+      if (seen.has(parent)) {
+        skipDueToParent = true;
+        break;
+      }
+      parent = parent.parentElement;
+    }
+    if (skipDueToParent) return;
+
+    const rect = el.getBoundingClientRect();
+    const mainRect = mainEditor.getBoundingClientRect();
+
+    const absoluteTop = mainEditor.scrollTop + (rect.top - mainRect.top);
+    const elHeight = rect.height;
+
+    if (elHeight < 2) return;
+
+    const tag = el.tagName.toLowerCase();
+    const color = getElementColor(tag, accentColor);
+    if (!color) return;
+
+    const topPercent = (absoluteTop / scrollHeight) * 100;
+    const heightPercent = (elHeight / scrollHeight) * 100;
+
+    let label: string | undefined;
+    if (['h1', 'h2', 'h3'].includes(tag)) {
+      label = el.textContent?.substring(0, 20) || undefined;
+    }
+
+    blocks.push({
+      type: getBlockType(tag),
+      topPercent,
+      heightPercent,
+      color,
+      density: getDensity(tag),
+      indentLevel: getIndentLevel(tag),
+      label,
+    });
+
+    seen.add(el);
+  });
+
+  return blocks;
+};
+
+const mergeAdjacentBlocks = (blocks: MinimapBlock[], threshold: number = 2): MinimapBlock[] => {
+  if (blocks.length === 0) return blocks;
+
+  const merged: MinimapBlock[] = [];
+  let current = blocks[0];
+
+  for (let i = 1; i < blocks.length; i++) {
+    const next = blocks[i];
+    const gap = next.topPercent - (current.topPercent + current.heightPercent);
+
+    if (gap < threshold && current.type === next.type && current.color === next.color) {
+      current = {
+        ...current,
+        heightPercent: next.topPercent + next.heightPercent - current.topPercent,
+      };
+    } else {
+      merged.push(current);
+      current = next;
+    }
+  }
+
+  merged.push(current);
+  return merged;
+};
 
 const Minimap = () => {
   const router = useRouter();
