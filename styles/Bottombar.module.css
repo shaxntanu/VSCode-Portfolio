@@ -57,11 +57,13 @@
     display: flex;
 }
 
-/* Priority 7-10: Hide on mobile */
+/* Priority 7-12: Hide on mobile */
 .priority7,
 .priority8,
 .priority9,
-.priority10 {
+.priority10,
+.priority11,
+.priority12 {
     display: flex;
 }
 
@@ -78,7 +80,9 @@
     .priority7,
     .priority8,
     .priority9,
-    .priority10 {
+    .priority10,
+    .priority11,
+    .priority12 {
         display: none;
     }
 }
