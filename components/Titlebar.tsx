@@ -140,9 +140,6 @@ const Titlebar = () => {
         >
           [{liteMode ? 'Lite Mode' : 'Full Mode'}]
         </span>
-        <span className={styles.paletteHint} onClick={handleOpen}>
-          [Ctrl+K]
-        </span>
       </p>
       <div className={styles.windowButtons}>
         <button 

@@ -57,10 +57,11 @@
     display: flex;
 }
 
-/* Priority 7-9: Hide on mobile */
+/* Priority 7-10: Hide on mobile */
 .priority7,
 .priority8,
-.priority9 {
+.priority9,
+.priority10 {
     display: flex;
 }
 
@@ -76,7 +77,8 @@
     /* Hide lower priority items on tablets */
     .priority7,
     .priority8,
-    .priority9 {
+    .priority9,
+    .priority10 {
         display: none;
     }
 }

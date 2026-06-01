@@ -81,4 +81,11 @@ export const statusBarItems: StatusBarItem[] = [
     priority: 9,
     side: 'right',
   },
+  {
+    id: 'shortcuts',
+    text: 'Ctrl+K | Ctrl+Shift+P',
+    tooltip: 'Keyboard Shortcuts',
+    priority: 10,
+    side: 'right',
+  },
 ];
