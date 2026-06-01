@@ -36,7 +36,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const content = (
     <Layout>
-      <Head title={`Shantanu | ${pageProps.title}`} />
+      <Head 
+        title={`Shantanu | ${pageProps.title}`} 
+        ogDescription={pageProps.ogDescription}
+      />
       <Component {...pageProps} />
     </Layout>
   );

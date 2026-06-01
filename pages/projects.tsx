@@ -88,7 +88,10 @@ const ProjectsPage = () => {
 
 export async function getStaticProps() {
   return {
-    props: { title: 'Projects' },
+    props: { 
+      title: 'Projects',
+      ogDescription: 'Hardware modules, IoT systems, and software projects - ESP32, custom PCBs, dashboards, and more.'
+    },
   };
 }
 

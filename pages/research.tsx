@@ -172,7 +172,10 @@ const ResearchPage = () => {
 
 export async function getStaticProps() {
   return {
-    props: { title: 'Research' },
+    props: { 
+      title: 'Research',
+      ogDescription: 'Technical reports and research papers covering Zephyr Station, Jolt Locator, The Ruin Machine, and more.'
+    },
   };
 }
 

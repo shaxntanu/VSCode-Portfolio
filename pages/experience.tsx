@@ -193,4 +193,13 @@ const ExperiencePage = () => {
   );
 };
 
+export async function getStaticProps() {
+  return {
+    props: { 
+      title: 'Experience',
+      ogDescription: 'Work experience as Core Engineer at Ragastra, Founder of Arceus Labs, and Early-Stage Engineer at Grosity.'
+    },
+  };
+}
+
 export default ExperiencePage;

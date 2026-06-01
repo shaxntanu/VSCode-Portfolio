@@ -186,7 +186,8 @@ export async function getStaticProps() {
 
     return {
       props: { 
-        title: 'Github', 
+        title: 'Github',
+        ogDescription: 'GitHub stats, contribution graph, and repositories for shaxntanu.',
         repos: Array.isArray(repos) ? repos.slice(0, 10) : [], 
         user: user?.login ? user : null,
         totalStars,

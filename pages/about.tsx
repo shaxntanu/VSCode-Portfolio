@@ -141,7 +141,10 @@ const AboutPage = () => {
 
 export async function getStaticProps() {
   return {
-    props: { title: 'About' },
+    props: { 
+      title: 'About',
+      ogDescription: 'Shantanu Maratha - IoT & Embedded Systems Engineer. Origin story, startup experience at Ragastra and Grosity, and the dream build.'
+    },
   };
 }
 
