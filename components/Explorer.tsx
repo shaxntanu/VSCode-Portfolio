@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 import { VscChevronRight } from 'react-icons/vsc';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { useFolderContext } from '@/contexts/FolderContext';
@@ -27,11 +26,6 @@ const Explorer = () => {
     setResumeOpen,
   } = useFolderContext();
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
-  }, []);
 
   // Get the appropriate open/set functions for each folder
   const getFolderState = (folderId: string) => {
