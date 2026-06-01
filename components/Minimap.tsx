@@ -1,135 +1,42 @@
+/**
+ * VS Code-Style Minimap Component
+ * Renders a scaled visual representation of page content with interactive navigation
+ * Features: click-to-scroll, drag-to-scroll, real-time viewport tracking, 60fps performance
+ */
+
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Minimap.module.css';
+import { analyzePageContent, mergeAdjacentBlocks, MinimapBlock } from '@/utils/minimapContentAnalyzer';
+import { useMinimapScroll } from '@/hooks/useMinimapScroll';
 
 const MINIMAP_PAGES = ['/about', '/experience', '/projects', '/publications', '/certificates'];
-
-// Maps element tag names to colors for the minimap visualization
-const getElementColor = (tagName: string, accentColor: string): string | null => {
-  const tag = tagName.toLowerCase();
-  switch (tag) {
-    case 'h1': return accentColor;
-    case 'h2': return accentColor + 'cc';
-    case 'h3': return accentColor + '99';
-    case 'h4':
-    case 'h5':
-    case 'h6': return accentColor + '66';
-    case 'p': return 'rgba(255,255,255,0.45)';
-    case 'li': return 'rgba(255,255,255,0.35)';
-    case 'code':
-    case 'pre': return 'rgba(78, 201, 176, 0.7)';
-    case 'a': return 'rgba(97, 175, 239, 0.6)';
-    case 'strong':
-    case 'b': return 'rgba(255, 198, 109, 0.6)';
-    case 'hr': return 'rgba(255,255,255,0.15)';
-    case 'table': return 'rgba(200, 150, 255, 0.5)';
-    case 'img': return 'rgba(130, 200, 130, 0.5)';
-    case 'div': return null;
-    case 'span': return null;
-    default: return null;
-  }
-};
-
-interface ContentElement {
-  tag: string;
-  topPercent: number;
-  heightPercent: number;
-  color: string;
-  indentLevel: number;
-}
-
-interface ScrollState {
-  scrollTop: number;
-  scrollHeight: number;
-  clientHeight: number;
-}
+const CANVAS_WIDTH = 80;
+const CANVAS_HEIGHT = 600;
 
 const Minimap = () => {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  
-  const [elements, setElements] = useState<ContentElement[]>([]);
-  const [scrollState, setScrollState] = useState<ScrollState>({
-    scrollTop: 0,
-    scrollHeight: 0,
-    clientHeight: 0,
-  });
-  
-  const isDraggingRef = useRef(false);
-  const rafRef = useRef<number | null>(null);
-  const lastScrollRef = useRef(0);
 
+  const [blocks, setBlocks] = useState<MinimapBlock[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const { scrollState, scrollToPosition, getViewportMetrics } = useMinimapScroll('main-editor');
   const shouldShow = MINIMAP_PAGES.includes(router.pathname);
 
-  // Scan DOM and extract element positions
+  // Analyze page content and generate minimap blocks
   const scanContent = useCallback(() => {
     const mainEditor = document.getElementById('main-editor');
     if (!mainEditor) return;
 
-    const accentColor = getComputedStyle(document.documentElement)
-      .getPropertyValue('--accent-color')
-      .trim() || '#e6b450';
-
-    const scrollHeight = mainEditor.scrollHeight;
-    if (scrollHeight === 0) return;
-
-    const selector = 'h1, h2, h3, h4, h5, h6, p, li, code, pre, a, strong, hr, table, img';
-    const domElements = mainEditor.querySelectorAll(selector);
-
-    const scanned: ContentElement[] = [];
-    const seen = new Set<Element>();
-
-    domElements.forEach((el) => {
-      if (seen.has(el)) return;
-
-      let parent = el.parentElement;
-      let skipDueToParent = false;
-      while (parent && parent !== mainEditor) {
-        if (seen.has(parent)) {
-          skipDueToParent = true;
-          break;
-        }
-        parent = parent.parentElement;
-      }
-      if (skipDueToParent) return;
-
-      const rect = el.getBoundingClientRect();
-      const mainRect = mainEditor.getBoundingClientRect();
-
-      const absoluteTop = mainEditor.scrollTop + (rect.top - mainRect.top);
-      const elHeight = rect.height;
-
-      if (elHeight < 2) return;
-
-      const color = getElementColor(el.tagName, accentColor);
-      if (!color) return;
-
-      let indentLevel = 0;
-      const tag = el.tagName.toLowerCase();
-      if (tag === 'h1') indentLevel = 0;
-      else if (tag === 'h2') indentLevel = 1;
-      else if (tag === 'h3') indentLevel = 2;
-      else if (['h4', 'h5', 'h6'].includes(tag)) indentLevel = 3;
-      else if (['p', 'li', 'code', 'pre'].includes(tag)) indentLevel = 2;
-      else if (['a', 'strong', 'hr', 'table', 'img'].includes(tag)) indentLevel = 2;
-
-      seen.add(el);
-
-      scanned.push({
-        tag,
-        topPercent: (absoluteTop / scrollHeight) * 100,
-        heightPercent: (elHeight / scrollHeight) * 100,
-        color,
-        indentLevel,
-      });
-    });
-
-    setElements(scanned);
+    const analyzed = analyzePageContent(mainEditor);
+    const merged = mergeAdjacentBlocks(analyzed, 1.5);
+    setBlocks(merged);
   }, []);
 
-  // Draw the minimap canvas
+  // Draw minimap canvas
   const drawMinimap = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -140,40 +47,53 @@ const Minimap = () => {
     const W = canvas.width;
     const H = canvas.height;
 
+    // Clear canvas
     ctx.clearRect(0, 0, W, H);
+
+    // Background
     ctx.fillStyle = 'rgba(255,255,255,0.02)';
     ctx.fillRect(0, 0, W, H);
 
-    elements.forEach((el) => {
-      const y = (el.topPercent / 100) * H;
-      const h = Math.max(1.5, (el.heightPercent / 100) * H);
+    // Draw blocks
+    blocks.forEach((block) => {
+      const y = (block.topPercent / 100) * H;
+      const h = Math.max(1, (block.heightPercent / 100) * H);
 
       const maxWidth = W - 8;
-      const indent = el.indentLevel * 4;
+      const indent = block.indentLevel * 3;
       let width: number;
-      const tag = el.tag;
 
-      if (tag === 'h1') {
+      // Width based on type
+      if (block.type === 'heading') {
         width = maxWidth - indent;
-      } else if (tag === 'h2') {
-        width = (maxWidth - indent) * 0.9;
-      } else if (tag === 'h3') {
-        width = (maxWidth - indent) * 0.8;
-      } else if (tag === 'hr') {
-        width = maxWidth * 0.6;
+      } else if (block.type === 'divider') {
+        width = maxWidth * 0.5;
       } else {
-        const seed = Math.floor(el.topPercent * 7.3) % 10;
-        width = (maxWidth - indent) * (0.5 + (seed / 10) * 0.45);
+        // Vary width for body text
+        const seed = Math.floor(block.topPercent * 7.3) % 10;
+        width = (maxWidth - indent) * (0.45 + (seed / 10) * 0.4);
       }
 
-      ctx.fillStyle = el.color;
+      ctx.fillStyle = block.color;
 
-      if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tag)) {
-        ctx.fillRect(4 + indent, y, width, Math.max(2.5, h));
-      } else if (tag === 'hr') {
+      // Render based on type
+      if (block.type === 'heading') {
+        // Headings: solid bars
+        ctx.fillRect(4 + indent, y, width, Math.max(2, h));
+      } else if (block.type === 'divider') {
+        // Dividers: thin line
         ctx.fillStyle = 'rgba(255,255,255,0.1)';
         ctx.fillRect(4, y, W - 8, 1);
-      } else {
+      } else if (block.density === 'high') {
+        // Code: dense grouped lines
+        const lineHeight = 1.5;
+        const gap = 0.5;
+        const totalLines = Math.max(2, Math.floor(h / (lineHeight + gap)));
+        for (let i = 0; i < totalLines; i++) {
+          ctx.fillRect(4 + indent, y + i * (lineHeight + gap), width, lineHeight);
+        }
+      } else if (block.density === 'medium') {
+        // Paragraphs: medium-density lines
         const lineHeight = 2;
         const gap = 1;
         const totalLines = Math.max(1, Math.floor(h / (lineHeight + gap)));
@@ -182,71 +102,45 @@ const Minimap = () => {
           const lineWidth = isLastLine ? width * 0.6 : width;
           ctx.fillRect(4 + indent, y + i * (lineHeight + gap), lineWidth, lineHeight);
         }
+      } else {
+        // Low density: sparse representation
+        ctx.fillRect(4 + indent, y, width, Math.max(1.5, h * 0.5));
       }
     });
-  }, [elements]);
+  }, [blocks]);
 
-  // Update scroll state using requestAnimationFrame for smooth 60fps sync
-  const updateScrollState = useCallback(() => {
-    const mainEditor = document.getElementById('main-editor');
-    if (!mainEditor) return;
-
-    const newState: ScrollState = {
-      scrollTop: mainEditor.scrollTop,
-      scrollHeight: mainEditor.scrollHeight,
-      clientHeight: mainEditor.clientHeight,
-    };
-
-    setScrollState(newState);
-    lastScrollRef.current = newState.scrollTop;
-  }, []);
-
-  // Scroll handler using RAF for performance
-  const handleScroll = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(updateScrollState);
-  }, [updateScrollState]);
-
-  // Click to scroll - click anywhere on minimap to jump to that location
+  // Click to scroll
   const handleMinimapClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDraggingRef.current) return;
-
-    const mainEditor = document.getElementById('main-editor');
-    if (!mainEditor || !containerRef.current) return;
+    if (isDragging || !containerRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
     const clickY = e.clientY - rect.top;
-    const clickPercent = clickY / rect.height;
+    const clickPercent = (clickY / rect.height) * 100;
 
-    const targetScrollTop = clickPercent * (mainEditor.scrollHeight - mainEditor.clientHeight);
-    mainEditor.scrollTop = Math.max(0, Math.min(targetScrollTop, mainEditor.scrollHeight - mainEditor.clientHeight));
-  }, []);
+    scrollToPosition(clickPercent);
+  }, [isDragging, scrollToPosition]);
 
-  // Drag to scroll - drag the viewport rectangle to scroll
+  // Drag to scroll
   const handleViewportMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    isDraggingRef.current = true;
+    setIsDragging(true);
     e.preventDefault();
   }, []);
 
   useEffect(() => {
-    if (!isDraggingRef.current) return;
-
-    const mainEditor = document.getElementById('main-editor');
-    if (!mainEditor || !containerRef.current) return;
+    if (!isDragging) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = containerRef.current!.getBoundingClientRect();
-      const moveY = e.clientY - rect.top;
-      const movePercent = moveY / rect.height;
+      if (!containerRef.current) return;
 
-      const targetScrollTop = movePercent * (mainEditor.scrollHeight - mainEditor.clientHeight);
-      mainEditor.scrollTop = Math.max(0, Math.min(targetScrollTop, mainEditor.scrollHeight - mainEditor.clientHeight));
+      const rect = containerRef.current.getBoundingClientRect();
+      const moveY = e.clientY - rect.top;
+      const movePercent = (moveY / rect.height) * 100;
+
+      scrollToPosition(movePercent);
     };
 
     const handleMouseUp = () => {
-      isDraggingRef.current = false;
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      setIsDragging(false);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -256,16 +150,7 @@ const Minimap = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, []);
-
-  // Attach scroll listener
-  useEffect(() => {
-    const mainEditor = document.getElementById('main-editor');
-    if (!mainEditor) return;
-
-    mainEditor.addEventListener('scroll', handleScroll, { passive: true });
-    return () => mainEditor.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  }, [isDragging, scrollToPosition]);
 
   // Scan content on route change
   useEffect(() => {
@@ -290,7 +175,7 @@ const Minimap = () => {
     let debounceTimer: NodeJS.Timeout;
     const observer = new MutationObserver(() => {
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => scanContent(), 200);
+      debounceTimer = setTimeout(() => scanContent(), 300);
     });
 
     observer.observe(mainEditor, {
@@ -306,14 +191,10 @@ const Minimap = () => {
     };
   }, [router.pathname, shouldShow, scanContent]);
 
-  // Redraw canvas when elements change
+  // Redraw canvas when blocks change
   useEffect(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(drawMinimap);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [elements, drawMinimap]);
+    drawMinimap();
+  }, [blocks, drawMinimap]);
 
   // Theme change handler
   useEffect(() => {
@@ -327,12 +208,7 @@ const Minimap = () => {
 
   if (!shouldShow) return null;
 
-  const viewportHeightPercent = scrollState.scrollHeight > 0
-    ? (scrollState.clientHeight / scrollState.scrollHeight) * 100
-    : 20;
-  const viewportTopPercent = scrollState.scrollHeight > scrollState.clientHeight
-    ? (scrollState.scrollTop / (scrollState.scrollHeight - scrollState.clientHeight)) * (100 - viewportHeightPercent)
-    : 0;
+  const { heightPercent, topPercent } = getViewportMetrics();
 
   return (
     <div
@@ -342,16 +218,16 @@ const Minimap = () => {
     >
       <canvas
         ref={canvasRef}
-        width={80}
-        height={600}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
         className={styles.canvas}
       />
       <div
         ref={viewportRef}
-        className={styles.viewport}
+        className={`${styles.viewport} ${isDragging ? styles.dragging : ''}`}
         style={{
-          top: `${viewportTopPercent}%`,
-          height: `${Math.min(viewportHeightPercent, 100 - viewportTopPercent)}%`,
+          top: `${topPercent}%`,
+          height: `${heightPercent}%`,
         }}
         onMouseDown={handleViewportMouseDown}
       />
