@@ -5,10 +5,12 @@
     overflow-y: hidden;
     width: 100%;
     flex-shrink: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
 }
 
 .tabs::-webkit-scrollbar {
-    height: 6px;
+    height: 3px;
 }
 
 .tabs::-webkit-scrollbar-track {
@@ -16,12 +18,9 @@
 }
 
 .tabs::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-}
-
-.tabs::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: var(--accent-color);
+    border-radius: 2px;
+    opacity: 0.5;
 }
 
 .tabItem {
@@ -30,27 +29,30 @@
 }
 
 .recentTab {
-    position: relative;
     display: flex;
-    align-items: center;
-    min-height: 100%;
+    align-items: stretch;
+    flex-shrink: 0;
 }
 
 .closeTab {
-    position: absolute;
-    right: 2px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    min-width: 22px;
+    flex-shrink: 0;
+    background: var(--tab-bg);
+    border-top: 1px solid var(--tab-border);
+    border-right: 1px solid var(--tab-border);
+    border-bottom: 1px solid var(--tab-border);
+    border-left: none;
+    color: rgba(255, 255, 255, 0.35);
     cursor: pointer;
     font-size: 1rem;
     line-height: 1;
-    padding: 6px 10px;
-    border-radius: 3px;
+    padding: 0;
     opacity: 0;
-    flex-shrink: 0;
+    transition: opacity 0.12s ease, color 0.12s ease, background 0.12s ease;
 }
 
 .recentTab:hover .closeTab {
@@ -58,6 +60,14 @@
 }
 
 .closeTab:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
     background: rgba(255, 255, 255, 0.1);
+}
+
+/* Reduce right padding of the inner tab div when it has a close button sibling.
+The close button provides the visual right-side spacing instead. */
+.recentTab :global(div[class*="tab"]) {
+    padding-right: 0.6rem;
+    border-right: none;
+    max-width: 160px;
 }
