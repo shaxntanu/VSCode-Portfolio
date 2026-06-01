@@ -35,6 +35,9 @@ export const useRecentTabs = () => {
     const file = allFiles.find(f => f.path === router.pathname);
     if (!file) return;
 
+    // Exclude root file (main.cpp / homepage)
+    if (file.path === '/') return;
+
     setTabs(prev => {
       const exists = prev.find(t => t.path === file.path);
       if (exists) return prev;
@@ -45,7 +48,8 @@ export const useRecentTabs = () => {
         icon: file.icon,
       };
 
-      const updated = [newTab, ...prev].slice(0, MAX_TABS);
+      // Add new tab at the end (chronological order)
+      const updated = [...prev, newTab].slice(-MAX_TABS);
       try {
         sessionStorage.setItem('recentTabs', JSON.stringify(updated));
       } catch {
