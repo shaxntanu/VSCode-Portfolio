@@ -51,18 +51,16 @@ const Explorer = () => {
     }
   };
 
-  // Simplified variants for mobile (no stagger, instant)
+  // No animations - instant open/close
   const containerVariants = {
     open: {
       transition: {
-        staggerChildren: isMobile ? 0 : 0.03,
-        delayChildren: isMobile ? 0 : 0.02,
+        staggerChildren: 0,
       },
     },
     closed: {
       transition: {
-        staggerChildren: isMobile ? 0 : 0.02,
-        staggerDirection: -1,
+        staggerChildren: 0,
       },
     },
   };
@@ -71,12 +69,12 @@ const Explorer = () => {
     open: {
       opacity: 1,
       y: 0,
-      transition: { duration: isMobile ? 0.1 : 0.2 },
+      transition: { duration: 0 },
     },
     closed: {
       opacity: 0,
-      y: isMobile ? 0 : -8,
-      transition: { duration: isMobile ? 0.1 : 0.2 },
+      y: 0,
+      transition: { duration: 0 },
     },
   };
 
