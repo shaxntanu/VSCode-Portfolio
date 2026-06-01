@@ -1,46 +1,49 @@
-import {
-  VscBell,
-  VscCheck,
-  VscError,
-  VscWarning,
-  VscSourceControl,
-} from 'react-icons/vsc';
-import { SiNextdotjs } from 'react-icons/si';
-
+import { statusBarItems } from '@/data/statusbar';
 import styles from '@/styles/Bottombar.module.css';
 
 const Bottombar = () => {
+  const leftItems = statusBarItems.filter(item => item.side === 'left').sort((a, b) => a.priority - b.priority);
+  const rightItems = statusBarItems.filter(item => item.side === 'right').sort((a, b) => a.priority - b.priority);
+
+  const renderItem = (item: typeof statusBarItems[0]) => {
+    const content = (
+      <>
+        {item.icon && <item.icon className={styles.icon} />}
+        <span>{item.text}</span>
+      </>
+    );
+
+    const className = `${styles.section} ${styles[`priority${item.priority}`]}`;
+
+    if (item.link) {
+      return (
+        <a
+          key={item.id}
+          href={item.link}
+          target="_blank"
+          rel="noreferrer noopener"
+          className={className}
+          title={item.tooltip}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    return (
+      <div key={item.id} className={className} title={item.tooltip}>
+        {content}
+      </div>
+    );
+  };
+
   return (
     <footer className={styles.bottomBar}>
       <div className={styles.container}>
-        <a
-          href="https://github.com/shaxntanu/VSCode-Portfolio"
-          target="_blank"
-          rel="noreferrer noopener"
-          className={styles.section}
-        >
-          <VscSourceControl className={styles.icon} />
-          <p>main</p>
-        </a>
-        <div className={styles.section}>
-          <VscError className={styles.icon} />
-          <p className={styles.errorText}>0</p>&nbsp;&nbsp;
-          <VscWarning className={styles.icon} />
-          <p>0</p>
-        </div>
+        {leftItems.map(renderItem)}
       </div>
       <div className={styles.container}>
-        <div className={styles.section}>
-          <SiNextdotjs className={styles.icon} />
-          <p>Powered by Next.js</p>
-        </div>
-        <div className={styles.section}>
-          <VscCheck className={styles.icon} />
-          <p>Prettier</p>
-        </div>
-        <div className={styles.section}>
-          <VscBell />
-        </div>
+        {rightItems.map(renderItem)}
       </div>
     </footer>
   );

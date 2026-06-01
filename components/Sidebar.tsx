@@ -11,6 +11,7 @@ import {
   VscMenu,
 } from 'react-icons/vsc';
 import { useFolderContext } from '@/contexts/FolderContext';
+import { getBadgeForPath } from '@/data/badges';
 
 import styles from '@/styles/Sidebar.module.css';
 
@@ -34,25 +35,31 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarTop}>
-        {sidebarTopItems.map(({ Icon, path }) => (
-          <Link href={path} key={path}>
-            <div
-              className={`${styles.iconContainer} ${
-                router.pathname === path && styles.active
-              }`}
-            >
-              <Icon
-                size={16}
-                fill={
-                  router.pathname === path
-                    ? 'rgb(225, 228, 232)'
-                    : 'rgb(106, 115, 125)'
-                }
-                className={styles.icon}
-              />
-            </div>
-          </Link>
-        ))}
+        {sidebarTopItems.map(({ Icon, path }) => {
+          const badge = getBadgeForPath(path);
+          return (
+            <Link href={path} key={path}>
+              <div
+                className={`${styles.iconContainer} ${
+                  router.pathname === path && styles.active
+                }`}
+              >
+                <Icon
+                  size={16}
+                  fill={
+                    router.pathname === path
+                      ? 'rgb(225, 228, 232)'
+                      : 'rgb(106, 115, 125)'
+                  }
+                  className={styles.icon}
+                />
+                {badge && badge.show && badge.count > 0 && (
+                  <span className={styles.badge}>{badge.count}</span>
+                )}
+              </div>
+            </Link>
+          );
+        })}
         <div className={styles.mobileMenuBtn} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
           <VscMenu
             size={16}

@@ -54,3 +54,20 @@ export interface User {
   following: number;
   created_at: string;
 }
+
+// Status Bar and Activity Badge types
+export interface StatusBarItem {
+  id: string;
+  text: string;
+  icon?: React.ComponentType<any>;
+  tooltip?: string;
+  link?: string;
+  priority: number;
+  side: 'left' | 'right';
+}
+
+export interface ActivityBadge {
+  path: string;
+  count: number;
+  show: boolean;
+}

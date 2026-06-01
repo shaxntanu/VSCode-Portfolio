@@ -13,6 +13,7 @@
 .iconContainer {
     cursor: pointer;
     width: 100%;
+    position: relative;
 }
 
 .iconContainer:hover {
@@ -29,6 +30,39 @@
     padding: 0.65rem 0;
     display: block;
     margin: 0 auto;
+}
+
+.badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: badgeFadeIn 0.3s ease-in-out;
+    font-family: 'Source Sans Pro', sans-serif;
+    line-height: 1;
+}
+
+@keyframes badgeFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @media screen and (min-width: 2000px) {
@@ -64,6 +98,14 @@
         height: 40px;
         width: 40px;
         padding: 0.6rem;
+    }
+
+    .badge {
+        top: 6px;
+        right: 6px;
+        font-size: 8px;
+        min-width: 14px;
+        height: 14px;
     }
 }
 

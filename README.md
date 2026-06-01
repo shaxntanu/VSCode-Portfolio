@@ -42,6 +42,8 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web dev
 - Animated text effects (decryption, rotation, shimmer)
 - Click sparks because they're fun
 - Collapsible file explorer with smooth animations
+- Activity bar badges showing project/publication counts
+- Professional status bar with build info and tech stack
 - Theme switcher (multiple VS Code themes)
 - Lite mode toggle for performance
 - Mobile-friendly (with a notification suggesting desktop for best experience)
@@ -51,6 +53,7 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web dev
 - CSS Modules for styling
 - Framer Motion for animations
 - GitHub API integration for live data
+- Configuration-driven status bar and badges
 - Vercel deployment with auto-updates
 
 ## Why This Exists
