@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { allCommands, searchCommands, setNotificationCallback } from '@/data/commands';
+import { searchCommands, setNotificationCallback } from '@/data/commands';
 import { Command } from '@/types/commands';
 import styles from '@/styles/CommandPaletteShiftP.module.css';
 
