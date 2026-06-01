@@ -11,8 +11,8 @@
     color: var(--text-color);
     font-family: 'JetBrains Mono', monospace;
     flex: 1;
-    /* 100vh - titlebar(30px) - tabsbar(35px) - bottombar(25px) = 100vh - 90px */
-    height: calc(100vh - 90px);
+    /* 100vh - titlebar(30px) - tabsbar(35px) - breadcrumbs(28px) - bottombar(25px) = 100vh - 118px */
+    height: calc(100vh - 118px);
     overflow: auto;
     display: flex;
     justify-content: center;

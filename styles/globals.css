@@ -35,3 +35,8 @@ a {
     animation: none !important;
     transition: none !important;
 }
+
+/* Lite Mode - Keep Japanese matrix background but pause animation */
+[data-lite-mode="true"] .jpMatrix>span {
+    animation: none !important;
+}
