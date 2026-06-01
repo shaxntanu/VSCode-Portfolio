@@ -10,9 +10,8 @@ const certificatesCount = 13; // Total courses across all categories
 // Calculate project count dynamically
 const projectsCount = projects.length;
 
-// GitHub repos count - this will be dynamic from the GitHub API
-// For now, we'll use a placeholder that can be updated
-const githubReposCount = 10;
+// GitHub repos count - default placeholder, will be updated dynamically
+const githubReposCount = 0;
 
 export const activityBadges: ActivityBadge[] = [
   {
@@ -45,4 +44,9 @@ export const activityBadges: ActivityBadge[] = [
 // Helper function to get badge for a specific path
 export const getBadgeForPath = (path: string): ActivityBadge | undefined => {
   return activityBadges.find(badge => badge.path === path);
+};
+
+// Helper function to format badge count (show 99+ if > 100)
+export const formatBadgeCount = (count: number): string => {
+  return count > 100 ? '99+' : count.toString();
 };

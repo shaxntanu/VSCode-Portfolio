@@ -42,7 +42,7 @@
     font-weight: 600;
     min-width: 16px;
     height: 16px;
-    border-radius: 50%;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,6 +51,7 @@
     animation: badgeFadeIn 0.3s ease-in-out;
     font-family: 'Source Sans Pro', sans-serif;
     line-height: 1;
+    white-space: nowrap;
 }
 
 @keyframes badgeFadeIn {
