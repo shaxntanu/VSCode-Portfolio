@@ -40,7 +40,8 @@ const skillData: SkillCategory[] = [
       { name: 'Communication Protocols', tools: 'I2C, SPI, UART', score: 66, categoryColor: '#ff8c50' },
       { name: 'MQTT / IoT Protocols', tools: 'MQTT', score: 66, categoryColor: '#ff8c50' },
       { name: 'Electromagnet', tools: 'Electromagnet', score: 66, categoryColor: '#ff8c50' },
-      { name: 'CAD Design', tools: 'SolidWorks, AutoCAD', score: 66, categoryColor: '#ff8c50' },
+      { name: 'Enclosure Design', tools: 'SolidWorks', score: 66, categoryColor: '#ff8c50' },
+      { name: '2D Drafting', tools: 'AutoCAD', score: 66, categoryColor: '#ff8c50' },
     ],
   },
   {
