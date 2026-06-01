@@ -24,26 +24,42 @@ const getElementColor = (tagName: string, accentColor: string): string | null =>
     case 'hr': return 'rgba(255,255,255,0.15)';
     case 'table': return 'rgba(200, 150, 255, 0.5)';
     case 'img': return 'rgba(130, 200, 130, 0.5)';
-    case 'div': return null; // skip generic divs
-    case 'span': return null; // skip inline spans
+    case 'div': return null;
+    case 'span': return null;
     default: return null;
   }
 };
 
 interface ContentElement {
   tag: string;
-  topPercent: number;     // position as % of total scrollable height
-  heightPercent: number;  // height as % of total scrollable height
+  topPercent: number;
+  heightPercent: number;
   color: string;
-  indentLevel: number;    // 0-4, for visual width variation
+  indentLevel: number;
+}
+
+interface ScrollState {
+  scrollTop: number;
+  scrollHeight: number;
+  clientHeight: number;
 }
 
 const Minimap = () => {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [scrollPercent, setScrollPercent] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  
   const [elements, setElements] = useState<ContentElement[]>([]);
-  const animFrameRef = useRef<number | null>(null);
+  const [scrollState, setScrollState] = useState<ScrollState>({
+    scrollTop: 0,
+    scrollHeight: 0,
+    clientHeight: 0,
+  });
+  
+  const isDraggingRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+  const lastScrollRef = useRef(0);
 
   const shouldShow = MINIMAP_PAGES.includes(router.pathname);
 
@@ -59,8 +75,6 @@ const Minimap = () => {
     const scrollHeight = mainEditor.scrollHeight;
     if (scrollHeight === 0) return;
 
-    // Get all content elements that are direct or shallow children
-    // Avoid deeply nested elements to prevent duplicates
     const selector = 'h1, h2, h3, h4, h5, h6, p, li, code, pre, a, strong, hr, table, img';
     const domElements = mainEditor.querySelectorAll(selector);
 
@@ -70,8 +84,6 @@ const Minimap = () => {
     domElements.forEach((el) => {
       if (seen.has(el)) return;
 
-      // Skip elements that are children of already-processed parents
-      // to avoid deep nesting duplicates (e.g. <strong> inside <p>)
       let parent = el.parentElement;
       let skipDueToParent = false;
       while (parent && parent !== mainEditor) {
@@ -86,16 +98,14 @@ const Minimap = () => {
       const rect = el.getBoundingClientRect();
       const mainRect = mainEditor.getBoundingClientRect();
 
-      // Position relative to the scrollable content, not the viewport
       const absoluteTop = mainEditor.scrollTop + (rect.top - mainRect.top);
       const elHeight = rect.height;
 
-      if (elHeight < 2) return; // skip zero-height elements
+      if (elHeight < 2) return;
 
       const color = getElementColor(el.tagName, accentColor);
       if (!color) return;
 
-      // Calculate indent level from heading hierarchy
       let indentLevel = 0;
       const tag = el.tagName.toLowerCase();
       if (tag === 'h1') indentLevel = 0;
@@ -119,7 +129,7 @@ const Minimap = () => {
     setElements(scanned);
   }, []);
 
-  // Draw the minimap canvas from the scanned elements
+  // Draw the minimap canvas
   const drawMinimap = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -131,8 +141,6 @@ const Minimap = () => {
     const H = canvas.height;
 
     ctx.clearRect(0, 0, W, H);
-
-    // Draw background sections to give depth
     ctx.fillStyle = 'rgba(255,255,255,0.02)';
     ctx.fillRect(0, 0, W, H);
 
@@ -140,7 +148,6 @@ const Minimap = () => {
       const y = (el.topPercent / 100) * H;
       const h = Math.max(1.5, (el.heightPercent / 100) * H);
 
-      // Width and left position based on element type
       const maxWidth = W - 8;
       const indent = el.indentLevel * 4;
       let width: number;
@@ -155,27 +162,22 @@ const Minimap = () => {
       } else if (tag === 'hr') {
         width = maxWidth * 0.6;
       } else {
-        // For body text, vary width naturally to look like real content
-        // Use a deterministic pseudo-random based on position
         const seed = Math.floor(el.topPercent * 7.3) % 10;
         width = (maxWidth - indent) * (0.5 + (seed / 10) * 0.45);
       }
 
       ctx.fillStyle = el.color;
 
-      // Draw heading elements as taller bars
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tag)) {
         ctx.fillRect(4 + indent, y, width, Math.max(2.5, h));
       } else if (tag === 'hr') {
         ctx.fillStyle = 'rgba(255,255,255,0.1)';
         ctx.fillRect(4, y, W - 8, 1);
       } else {
-        // Body text: draw multiple thin lines to simulate paragraph lines
         const lineHeight = 2;
         const gap = 1;
         const totalLines = Math.max(1, Math.floor(h / (lineHeight + gap)));
         for (let i = 0; i < totalLines; i++) {
-          // Last line of paragraph is shorter (like real text)
           const isLastLine = i === totalLines - 1;
           const lineWidth = isLastLine ? width * 0.6 : width;
           ctx.fillRect(4 + indent, y + i * (lineHeight + gap), lineWidth, lineHeight);
@@ -184,35 +186,93 @@ const Minimap = () => {
     });
   }, [elements]);
 
-  // Track scroll position
+  // Update scroll state using requestAnimationFrame for smooth 60fps sync
+  const updateScrollState = useCallback(() => {
+    const mainEditor = document.getElementById('main-editor');
+    if (!mainEditor) return;
+
+    const newState: ScrollState = {
+      scrollTop: mainEditor.scrollTop,
+      scrollHeight: mainEditor.scrollHeight,
+      clientHeight: mainEditor.clientHeight,
+    };
+
+    setScrollState(newState);
+    lastScrollRef.current = newState.scrollTop;
+  }, []);
+
+  // Scroll handler using RAF for performance
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(updateScrollState);
+  }, [updateScrollState]);
+
+  // Click to scroll - click anywhere on minimap to jump to that location
+  const handleMinimapClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDraggingRef.current) return;
+
+    const mainEditor = document.getElementById('main-editor');
+    if (!mainEditor || !containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const clickY = e.clientY - rect.top;
+    const clickPercent = clickY / rect.height;
+
+    const targetScrollTop = clickPercent * (mainEditor.scrollHeight - mainEditor.clientHeight);
+    mainEditor.scrollTop = Math.max(0, Math.min(targetScrollTop, mainEditor.scrollHeight - mainEditor.clientHeight));
+  }, []);
+
+  // Drag to scroll - drag the viewport rectangle to scroll
+  const handleViewportMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    isDraggingRef.current = true;
+    e.preventDefault();
+  }, []);
+
+  useEffect(() => {
+    if (!isDraggingRef.current) return;
+
+    const mainEditor = document.getElementById('main-editor');
+    if (!mainEditor || !containerRef.current) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = containerRef.current!.getBoundingClientRect();
+      const moveY = e.clientY - rect.top;
+      const movePercent = moveY / rect.height;
+
+      const targetScrollTop = movePercent * (mainEditor.scrollHeight - mainEditor.clientHeight);
+      mainEditor.scrollTop = Math.max(0, Math.min(targetScrollTop, mainEditor.scrollHeight - mainEditor.clientHeight));
+    };
+
+    const handleMouseUp = () => {
+      isDraggingRef.current = false;
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
+
+  // Attach scroll listener
   useEffect(() => {
     const mainEditor = document.getElementById('main-editor');
     if (!mainEditor) return;
 
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = mainEditor;
-      const percent =
-        scrollHeight > clientHeight ? scrollTop / (scrollHeight - clientHeight) : 0;
-      setScrollPercent(percent);
-    };
-
     mainEditor.addEventListener('scroll', handleScroll, { passive: true });
     return () => mainEditor.removeEventListener('scroll', handleScroll);
-  }, [router.pathname]);
+  }, [handleScroll]);
 
-  // Scan content when route changes, with a delay to let the page render
+  // Scan content on route change
   useEffect(() => {
     if (!shouldShow) return;
 
-    // Initial scan after a brief render delay
-    const timer = setTimeout(() => {
-      scanContent();
-    }, 150);
-
-    // Re-scan after a longer delay for pages with async data
-    const timerLong = setTimeout(() => {
-      scanContent();
-    }, 800);
+    const timer = setTimeout(() => scanContent(), 150);
+    const timerLong = setTimeout(() => scanContent(), 800);
 
     return () => {
       clearTimeout(timer);
@@ -220,8 +280,7 @@ const Minimap = () => {
     };
   }, [router.pathname, shouldShow, scanContent]);
 
-  // Set up MutationObserver to re-scan when DOM content changes
-  // (covers async loaded content like GitHub data)
+  // MutationObserver for async content
   useEffect(() => {
     if (!shouldShow) return;
 
@@ -231,9 +290,7 @@ const Minimap = () => {
     let debounceTimer: NodeJS.Timeout;
     const observer = new MutationObserver(() => {
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        scanContent();
-      }, 200);
+      debounceTimer = setTimeout(() => scanContent(), 200);
     });
 
     observer.observe(mainEditor, {
@@ -249,16 +306,16 @@ const Minimap = () => {
     };
   }, [router.pathname, shouldShow, scanContent]);
 
-  // Redraw canvas whenever elements change
+  // Redraw canvas when elements change
   useEffect(() => {
-    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    animFrameRef.current = requestAnimationFrame(drawMinimap);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(drawMinimap);
     return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [elements, drawMinimap]);
 
-  // Redraw on theme change (accent color change)
+  // Theme change handler
   useEffect(() => {
     const handleThemeChange = () => {
       setTimeout(scanContent, 50);
@@ -270,17 +327,19 @@ const Minimap = () => {
 
   if (!shouldShow) return null;
 
-  // Calculate viewport indicator height and position
-  // viewportHeight as % of total content = clientHeight / scrollHeight
-  const mainEditor =
-    typeof document !== 'undefined' ? document.getElementById('main-editor') : null;
-  const viewportHeightPercent = mainEditor
-    ? (mainEditor.clientHeight / mainEditor.scrollHeight) * 100
+  const viewportHeightPercent = scrollState.scrollHeight > 0
+    ? (scrollState.clientHeight / scrollState.scrollHeight) * 100
     : 20;
-  const viewportTopPercent = scrollPercent * (100 - viewportHeightPercent);
+  const viewportTopPercent = scrollState.scrollHeight > scrollState.clientHeight
+    ? (scrollState.scrollTop / (scrollState.scrollHeight - scrollState.clientHeight)) * (100 - viewportHeightPercent)
+    : 0;
 
   return (
-    <div className={styles.minimap}>
+    <div
+      ref={containerRef}
+      className={styles.minimap}
+      onClick={handleMinimapClick}
+    >
       <canvas
         ref={canvasRef}
         width={80}
@@ -288,11 +347,13 @@ const Minimap = () => {
         className={styles.canvas}
       />
       <div
+        ref={viewportRef}
         className={styles.viewport}
         style={{
           top: `${viewportTopPercent}%`,
           height: `${Math.min(viewportHeightPercent, 100 - viewportTopPercent)}%`,
         }}
+        onMouseDown={handleViewportMouseDown}
       />
     </div>
   );

@@ -8,6 +8,8 @@
     flex-shrink: 0;
     opacity: 0.6;
     transition: opacity 0.2s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
 .minimap:hover {
@@ -25,13 +27,18 @@
     position: absolute;
     left: 0;
     right: 0;
-    /* height is now set dynamically via inline style */
     min-height: 12px;
     background: rgba(255, 255, 255, 0.08);
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    pointer-events: none;
-    transition: top 0.08s linear;
+    pointer-events: auto;
+    cursor: grab;
+    transition: top 0.05s linear;
+    user-select: none;
+}
+
+.viewport:active {
+    cursor: grabbing;
 }
 
 @media screen and (max-width: 1024px) {
