@@ -1,8 +1,6 @@
 /**
- * Minimap Content Analyzer
- * Renders page content onto canvas in two modes:
- * - Lite: Abstract colored blocks representing DOM structure
- * - Full: Actual miniature text mapped to exact positions
+ * Minimap Content Analyzer - Visual Polish Focus
+ * Creates a clean, authentic VS Code-style minimap
  */
 
 export type MinimapMode = 'lite' | 'full';
@@ -10,158 +8,45 @@ export type MinimapMode = 'lite' | 'full';
 interface ElementInfo {
   top: number;
   height: number;
-  color: string;
-  fontSize: string;
-  fontFamily: string;
-  text: string;
-  tag: string;
+  type: 'heading' | 'paragraph' | 'code' | 'list' | 'card';
+  level: number;
 }
 
-const isElementVisible = (el: Element): boolean => {
-  const style = window.getComputedStyle(el);
-  return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
-};
-
-const getTextElements = (container: HTMLElement): ElementInfo[] => {
+const getCleanElements = (container: HTMLElement): ElementInfo[] => {
   const elements: ElementInfo[] = [];
   const containerRect = container.getBoundingClientRect();
   
-  // Target text-containing elements
-  const selector = 'p, h1, h2, h3, h4, h5, h6, span, code, pre, li, a, strong, em, div';
-  const nodes = container.querySelectorAll(selector);
-
-  nodes.forEach((el) => {
-    if (!isElementVisible(el)) return;
-    
-    const text = el.textContent?.trim();
-    if (!text || text.length === 0) return;
-
-    const rect = el.getBoundingClientRect();
-    const computedStyle = window.getComputedStyle(el);
-    
-    // Calculate position relative to container
-    const top = rect.top - containerRect.top + container.scrollTop;
-    
-    elements.push({
-      top,
-      height: rect.height,
-      color: computedStyle.color,
-      fontSize: computedStyle.fontSize,
-      fontFamily: computedStyle.fontFamily,
-      text,
-      tag: el.tagName.toLowerCase(),
-    });
-  });
-
-  return elements;
-};
-
-const drawLiteMode = (
-  ctx: CanvasRenderingContext2D,
-  elements: ElementInfo[],
-  scaleRatio: number,
-  canvasWidth: number
-) => {
-  elements.forEach((el) => {
-    const y = el.top * scaleRatio;
-    const h = Math.max(1, el.height * scaleRatio);
-    
-    // Determine width based on element type
-    let width = canvasWidth - 8;
-    let indent = 4;
-    
-    if (el.tag.startsWith('h')) {
-      const level = parseInt(el.tag.charAt(1)) || 1;
-      width = (canvasWidth - 8) * (1 - level * 0.1);
-      indent = level * 2;
-    } else if (['code', 'pre'].includes(el.tag)) {
-      width = (canvasWidth - 8) * 0.9;
-      indent = 6;
-    } else if (el.tag === 'li') {
-      width = (canvasWidth - 8) * 0.85;
-      indent = 8;
-    }
-    
-    // Parse color and add opacity for lite mode
-    ctx.fillStyle = el.color.replace('rgb', 'rgba').replace(')', ', 0.6)');
-    
-    // Draw block
-    if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(el.tag)) {
-      // Headings: solid bars
-      ctx.fillRect(indent, y, width, Math.max(2, h));
-    } else if (['code', 'pre'].includes(el.tag)) {
-      // Code: dense lines
-      const lineHeight = 1.5;
-      const gap = 0.5;
-      const lines = Math.max(1, Math.floor(h / (lineHeight + gap)));
-      for (let i = 0; i < lines; i++) {
-        ctx.fillRect(indent, y + i * (lineHeight + gap), width, lineHeight);
-      }
-    } else {
-      // Regular text: medium density lines
-      const lineHeight = 2;
-      const gap = 1;
-      const lines = Math.max(1, Math.floor(h / (lineHeight + gap)));
-      for (let i = 0; i < lines; i++) {
-        const lineWidth = i === lines - 1 ? width * 0.7 : width;
-        ctx.fillRect(indent, y + i * (lineHeight + gap), lineWidth, lineHeight);
-      }
-    }
-  });
-};
-
-const drawFullMode = (
-  ctx: CanvasRenderingContext2D,
-  elements: ElementInfo[],
-  scaleRatio: number,
-  canvasWidth: number
-) => {
-  elements.forEach((el) => {
-    const y = el.top * scaleRatio;
-    const scaledFontSize = Math.max(1, parseFloat(el.fontSize) * scaleRatio);
-    
-    // Set font
-    ctx.font = `${scaledFontSize}px ${el.fontFamily}`;
-    ctx.fillStyle = el.color;
-    ctx.textBaseline = 'top';
-    
-    // Calculate indent based on element type
-    let x = 4;
-    if (el.tag.startsWith('h')) {
-      const level = parseInt(el.tag.charAt(1)) || 1;
-      x = level * 2;
-    } else if (['code', 'pre'].includes(el.tag)) {
-      x = 6;
-    } else if (el.tag === 'li') {
-      x = 8;
-    }
-    
-    // Split text into words and wrap
-    const words = el.text.split(/\s+/);
-    const maxWidth = canvasWidth - x - 4;
-    let currentLine = '';
-    let lineY = y;
-    const lineHeight = scaledFontSize * 1.2;
-    
-    words.forEach((word, index) => {
-      const testLine = currentLine + (currentLine ? ' ' : '') + word;
-      const metrics = ctx.measureText(testLine);
+  // Only target meaningful structural elements
+  const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  const paragraphs = container.querySelectorAll('p');
+  const codeBlocks = container.querySelectorAll('pre, code');
+  const lists = container.querySelectorAll('li');
+  
+  const processElements = (nodes: NodeListOf<Element>, type: ElementInfo['type'], level: number = 0) => {
+    nodes.forEach((el) => {
+      const style = window.getComputedStyle(el);
+      if (style.display === 'none' || style.visibility === 'hidden') return;
       
-      if (metrics.width > maxWidth && currentLine) {
-        // Draw current line
-        ctx.fillText(currentLine, x, lineY);
-        currentLine = word;
-        lineY += lineHeight;
-      } else {
-        currentLine = testLine;
-      }
+      const rect = el.getBoundingClientRect();
+      if (rect.height < 2) return;
       
-      // Draw last line
-      if (index === words.length - 1 && currentLine) {
-        ctx.fillText(currentLine, x, lineY);
-      }
+      const top = rect.top - containerRect.top + container.scrollTop;
+      
+      elements.push({
+        top,
+        height: rect.height,
+        type,
+        level: type === 'heading' ? parseInt(el.tagName.charAt(1)) : level,
+      });
     });
-  });
+  };
+  
+  processElements(headings, 'heading');
+  processElements(paragraphs, 'paragraph');
+  processElements(codeBlocks, 'code');
+  processElements(lists, 'list', 1);
+  
+  return elements.sort((a, b) => a.top - b.top);
 };
 
 export const drawMinimap = (
@@ -169,10 +54,10 @@ export const drawMinimap = (
   container: HTMLElement,
   mode: MinimapMode
 ): void => {
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return;
 
-  // Set canvas resolution to match CSS size for crisp rendering
+  // High-quality rendering setup
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
   
@@ -181,29 +66,110 @@ export const drawMinimap = (
   
   ctx.scale(dpr, dpr);
   
-  const canvasWidth = rect.width;
-  const canvasHeight = rect.height;
+  const W = rect.width;
+  const H = rect.height;
   
-  // Clear canvas
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  // Clear with subtle background
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+  ctx.fillRect(0, 0, W, H);
   
-  // Background
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
-  ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-  
-  // Calculate scale ratio
+  // Calculate scale
   const scrollHeight = container.scrollHeight;
   if (scrollHeight === 0) return;
   
-  const scaleRatio = canvasHeight / scrollHeight;
+  const scale = H / scrollHeight;
+  const elements = getCleanElements(container);
   
-  // Get text elements
-  const elements = getTextElements(container);
+  // Get accent color
+  const accentColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--accent-color')
+    .trim() || '#e6b450';
   
-  // Render based on mode
-  if (mode === 'lite') {
-    drawLiteMode(ctx, elements, scaleRatio, canvasWidth);
-  } else {
-    drawFullMode(ctx, elements, scaleRatio, canvasWidth);
+  // Draw elements with VS Code styling
+  elements.forEach((el) => {
+    const y = el.top * scale;
+    const h = Math.max(1, el.height * scale);
+    
+    let color: string;
+    let width: number;
+    let x: number;
+    let alpha: number;
+    
+    switch (el.type) {
+      case 'heading':
+        // Headings: bright, prominent blocks
+        color = accentColor;
+        alpha = 0.7 - (el.level * 0.08);
+        width = W * (0.95 - el.level * 0.05);
+        x = 2;
+        
+        ctx.fillStyle = color;
+        ctx.globalAlpha = alpha;
+        ctx.fillRect(x, y, width, Math.max(2, Math.min(h, 4)));
+        ctx.globalAlpha = 1;
+        break;
+        
+      case 'code':
+        // Code: dense, grouped appearance
+        color = 'rgba(78, 201, 176, 0.5)';
+        width = W * 0.88;
+        x = 4;
+        
+        ctx.fillStyle = color;
+        
+        // Draw as dense lines
+        const codeLineHeight = 1;
+        const codeGap = 0.5;
+        const codeLines = Math.floor(h / (codeLineHeight + codeGap));
+        
+        for (let i = 0; i < codeLines; i++) {
+          ctx.globalAlpha = 0.4 + Math.random() * 0.2;
+          ctx.fillRect(x, y + i * (codeLineHeight + codeGap), width, codeLineHeight);
+        }
+        ctx.globalAlpha = 1;
+        break;
+        
+      case 'paragraph':
+        // Paragraphs: thin, muted lines
+        color = 'rgba(255, 255, 255, 0.25)';
+        width = W * 0.85;
+        x = 3;
+        
+        ctx.fillStyle = color;
+        
+        // Draw as thin lines with natural variation
+        const lineHeight = 1.5;
+        const gap = 1;
+        const lines = Math.floor(h / (lineHeight + gap));
+        
+        for (let i = 0; i < lines; i++) {
+          const lineWidth = i === lines - 1 ? width * 0.6 : width;
+          ctx.globalAlpha = 0.3;
+          ctx.fillRect(x, y + i * (lineHeight + gap), lineWidth, lineHeight);
+        }
+        ctx.globalAlpha = 1;
+        break;
+        
+      case 'list':
+        // Lists: subtle indented lines
+        color = 'rgba(255, 255, 255, 0.2)';
+        width = W * 0.75;
+        x = 6;
+        
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.25;
+        ctx.fillRect(x, y, width, Math.max(1, h));
+        ctx.globalAlpha = 1;
+        break;
+    }
+  });
+  
+  // Add subtle texture overlay for depth
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.01)';
+  for (let i = 0; i < H; i += 2) {
+    if (Math.random() > 0.5) {
+      ctx.fillRect(0, i, W, 1);
+    }
   }
 };
