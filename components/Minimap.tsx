@@ -23,7 +23,7 @@ const Minimap = () => {
   const [blocks, setBlocks] = useState<MinimapBlock[]>([]);
   const [isDragging, setIsDragging] = useState(false);
 
-  const { scrollState, scrollToPosition, getViewportMetrics } = useMinimapScroll('main-editor');
+  const { scrollToPosition, getViewportMetrics } = useMinimapScroll('main-editor');
   const shouldShow = MINIMAP_PAGES.includes(router.pathname);
 
   // Analyze page content and generate minimap blocks
