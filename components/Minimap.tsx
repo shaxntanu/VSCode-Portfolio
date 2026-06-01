@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Minimap.module.css';
 
-const MINIMAP_PAGES = ['/about', '/experience', '/projects', '/research', '/certificates'];
+const MINIMAP_PAGES = ['/about', '/experience', '/projects', '/publications', '/certificates'];
 
 // Maps element tag names to colors for the minimap visualization
 const getElementColor = (tagName: string, accentColor: string): string | null => {

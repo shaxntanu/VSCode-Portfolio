@@ -20,8 +20,8 @@ const Explorer = () => {
     setSkillsOpen,
     careerOpen,
     setCareerOpen,
-    researchOpen,
-    setResearchOpen,
+    publicationsOpen,
+    setPublicationsOpen,
     resumeOpen,
     setResumeOpen,
   } = useFolderContext();
@@ -36,8 +36,8 @@ const Explorer = () => {
         return { open: skillsOpen, setOpen: setSkillsOpen };
       case 'career':
         return { open: careerOpen, setOpen: setCareerOpen };
-      case 'research':
-        return { open: researchOpen, setOpen: setResearchOpen };
+      case 'publications':
+        return { open: publicationsOpen, setOpen: setPublicationsOpen };
       case 'resume':
         return { open: resumeOpen, setOpen: setResumeOpen };
       default:
@@ -196,20 +196,20 @@ const Explorer = () => {
         <button 
           className={styles.expandButton}
           onClick={() => {
-            const allExpanded = portfolioOpen && developmentOpen && skillsOpen && careerOpen && researchOpen && resumeOpen;
+            const allExpanded = portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && resumeOpen;
             if (allExpanded) {
               setPortfolioOpen(false);
               setDevelopmentOpen(false);
               setSkillsOpen(false);
               setCareerOpen(false);
-              setResearchOpen(false);
+              setPublicationsOpen(false);
               setResumeOpen(false);
             } else {
               setPortfolioOpen(true);
               setDevelopmentOpen(true);
               setSkillsOpen(true);
               setCareerOpen(true);
-              setResearchOpen(true);
+              setPublicationsOpen(true);
               setResumeOpen(true);
             }
           }}
@@ -218,7 +218,7 @@ const Explorer = () => {
           <span className={styles.buttonEdge}></span>
           <div className={styles.buttonFront}>
             <span className={styles.buttonText}>
-              {portfolioOpen && developmentOpen && skillsOpen && careerOpen && researchOpen && resumeOpen 
+              {portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && resumeOpen 
                 ? 'Collapse All' 
                 : 'Expand All'}
             </span>

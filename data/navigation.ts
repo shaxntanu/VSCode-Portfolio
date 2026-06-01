@@ -49,10 +49,10 @@ export const navFolders: NavFolder[] = [
     ],
   },
   {
-    id: 'research',
-    label: 'RESEARCH',
+    id: 'publications',
+    label: 'PUBLICATIONS',
     files: [
-      { name: 'whitepapers.pdf', path: '/research', icon: '/logos/pdf_icon.svg' },
+      { name: 'whitepapers.pdf', path: '/publications', icon: '/logos/pdf_icon.svg' },
     ],
   },
   {

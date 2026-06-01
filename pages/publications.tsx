@@ -78,12 +78,12 @@ const papers = [
   },
 ];
 
-const ResearchPage = () => {
+const PublicationsPage = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.pageTitle}>Reports & Research</h1>
+      <h1 className={styles.pageTitle}>Publications & Technical Writing</h1>
       <p className={styles.pageSubtitle}>
-        Technical documentation and research papers on my engineering projects.
+        Technical documentation, research papers, and engineering articles on my projects and innovations.
       </p>
 
       <div className={styles.section}>
@@ -173,10 +173,10 @@ const ResearchPage = () => {
 export async function getStaticProps() {
   return {
     props: { 
-      title: 'Research',
-      ogDescription: 'Technical reports and research papers covering Zephyr Station, Jolt Locator, The Ruin Machine, and more.'
+      title: 'Publications',
+      ogDescription: 'Technical reports, research papers, and engineering articles covering Zephyr Station, Jolt Locator, The Ruin Machine, and more.'
     },
   };
 }
 
-export default ResearchPage;
+export default PublicationsPage;

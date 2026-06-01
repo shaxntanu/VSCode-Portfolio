@@ -86,7 +86,7 @@ const Titlebar = () => {
   const handleMenuClick = (menu: string) => {
     switch (menu) {
       case 'File':
-        router.push('/research');
+        router.push('/publications');
         break;
       case 'View':
         router.push('/');
