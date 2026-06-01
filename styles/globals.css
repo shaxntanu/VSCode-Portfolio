@@ -30,6 +30,12 @@ a {
     transition: none !important;
 }
 
+[data-lite-mode="true"] *::before,
+[data-lite-mode="true"] *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
 [data-lite-mode="true"] .motion-div,
 [data-lite-mode="true"] [class*="motion"] {
     animation: none !important;
