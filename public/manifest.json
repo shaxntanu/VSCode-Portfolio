@@ -1,0 +1,16 @@
+{
+    "name": "Shantanu Maratha - Portfolio",
+    "short_name": "Shantanu",
+    "description": "IoT & Embedded Systems Engineer building the physical internet",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0e14",
+    "theme_color": "#e6b450",
+    "orientation": "portrait-primary",
+    "icons": [{
+        "src": "/logos/vscode_icon.svg",
+        "sizes": "any",
+        "type": "image/svg+xml",
+        "purpose": "any maskable"
+    }]
+}
