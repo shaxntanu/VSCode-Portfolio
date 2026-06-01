@@ -7,7 +7,7 @@ interface CustomHeadProps {
 }
 
 const CustomHead = ({ title, ogImage, ogDescription }: CustomHeadProps) => {
-  const defaultImage = 'https://vs-code-portfolio-one.vercel.app/og-image.png';
+  const defaultImage = 'https://vs-code-portfolio-one.vercel.app/Portfolio%20Cover%20Image.png';
   const defaultDesc = 'IoT/Embedded Systems Engineer building the physical internet with ESP32, custom PCB design, and end-to-end IoT integration.';
   
   const image = ogImage || defaultImage;

@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Portfolio Cover](public/og-image.png)
+![Portfolio Cover](public/Portfolio%20Cover%20Image.png)
 
 ![VS Code Portfolio](https://img.shields.io/badge/VS%20Code-Portfolio-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-15.2.3-black?style=for-the-badge&logo=next.js&logoColor=white)
@@ -33,7 +33,7 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web dev
 - **Projects** - Hardware modules, IoT systems, and some web dashboards
 - **Resume** - Terminal-style CV that auto-updates from my LaTeX repo on GitHub
 - **Experience** - Work history with Ragastra and Grosity
-- **Research** - Technical reports and articles
+- **Publications** - Technical reports and articles
 - **GitHub** - Live stats pulled from GitHub API
 - **Skills** - Tech stack in CSV format + skill matrix visualization
 - **Contact** - JSON-formatted contact info (keeping the dev theme consistent)
