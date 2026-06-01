@@ -54,6 +54,8 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web dev
 - Framer Motion for animations
 - GitHub API integration for live data
 - Configuration-driven status bar and badges
+- Ctrl+K and Ctrl+Shift+P command palettes
+- Dynamic activity bar badges
 - Vercel deployment with auto-updates
 
 ## Why This Exists
