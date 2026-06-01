@@ -75,6 +75,14 @@ const Titlebar = () => {
     }
   };
 
+  const handleOpen = () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { 
+      key: 'k', 
+      ctrlKey: true, 
+      bubbles: true 
+    }));
+  };
+
   const handleMenuClick = (menu: string) => {
     switch (menu) {
       case 'File':
@@ -131,6 +139,9 @@ const Titlebar = () => {
           onClick={() => router.push('/settings')}
         >
           [{liteMode ? 'Lite Mode' : 'Full Mode'}]
+        </span>
+        <span className={styles.paletteHint} onClick={handleOpen}>
+          [Ctrl+K]
         </span>
       </p>
       <div className={styles.windowButtons}>

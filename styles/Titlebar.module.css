@@ -60,6 +60,18 @@
     opacity: 1;
 }
 
+.paletteHint {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.paletteHint:hover {
+    color: var(--accent-color);
+}
+
 .items>* {
     padding: 0 0.5rem;
     cursor: pointer;
@@ -118,5 +130,9 @@
 
     .title {
         flex: 4;
+    }
+
+    .paletteHint {
+        display: none;
     }
 }
