@@ -1,0 +1,190 @@
+.sourceControl {
+    background: var(--explorer-bg);
+    border: 1px solid var(--explorer-border);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(255, 255, 255, 0.8);
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: var(--titlebar-bg);
+    border-bottom: 1px solid var(--explorer-border);
+}
+
+.title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.closeBtn:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.stats {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--explorer-border);
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 0.85rem;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.label {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.value {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.timeline {
+    padding: 1rem;
+    position: relative;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 1rem;
+    bottom: 1rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-color), transparent);
+}
+
+.commitNode {
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--explorer-bg);
+    border: 3px solid var(--accent-color);
+    z-index: 1;
+}
+
+.commitContent {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.commitContent:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.commitHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.5rem;
+}
+
+.message {
+    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}
+
+.date {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.expandedDetails {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.impact,
+.details {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.impact .label,
+.details .label {
+    color: var(--accent-color);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.impact .text,
+.details .text {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 600px) {
+    .sourceControl {
+        max-height: 400px;
+    }
+
+    .commitHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date {
+        align-self: flex-start;
+    }
+
+    .message {
+        font-size: 0.85rem;
+    }
+}
