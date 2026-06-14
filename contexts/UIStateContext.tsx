@@ -66,6 +66,13 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
       setBottombarVisible(false);
       setTerminalOpen(false);
       setProblemsOpen(false);
+      setSourceControlOpen(false);
+      setExtensionsOpen(false);
+    } else {
+      // Restore UI when exiting zen mode
+      setSidebarVisible(true);
+      setMinimapVisible(true);
+      setBottombarVisible(true);
     }
   }, []);
 

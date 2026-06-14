@@ -6,7 +6,6 @@ import {
   VscMail,
   VscGithubAlt,
   VscSymbolMisc,
-  VscCheck,
   VscRefresh,
 } from 'react-icons/vsc';
 import { MdDownload, MdViewSidebar, MdMap, MdZoomOutMap, MdPalette } from 'react-icons/md';
@@ -181,8 +180,8 @@ const workspaceCommands: Command[] = [
     category: 'workspace',
     keywords: ['focus', 'mode', 'distraction-free'],
     action: () => {
-      window.dispatchEvent(new CustomEvent('focusMode'));
-      notify('✓ Focus mode enabled', 'success');
+      window.dispatchEvent(new CustomEvent('toggleFocusMode'));
+      notify('✓ Focus mode toggled', 'success');
     },
   },
   {
@@ -193,8 +192,8 @@ const workspaceCommands: Command[] = [
     category: 'workspace',
     keywords: ['zen', 'mode', 'distraction-free', 'fullscreen'],
     action: () => {
-      window.dispatchEvent(new CustomEvent('zenMode'));
-      notify('✓ Zen mode enabled', 'success');
+      window.dispatchEvent(new CustomEvent('toggleZenMode'));
+      notify('✓ Zen mode toggled', 'success');
     },
   },
 ];

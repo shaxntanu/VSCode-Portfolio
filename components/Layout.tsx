@@ -79,17 +79,17 @@ const LayoutContent = ({ children }: LayoutProps) => {
 
   // Listen for command palette events
   useEffect(() => {
-    const handleZenMode = () => setZenMode(true);
-    const handleFocusMode = () => setFocusMode(true);
+    const handleToggleZenMode = () => setZenMode(!zenMode);
+    const handleToggleFocusMode = () => setFocusMode(!focusMode);
 
-    window.addEventListener('zenMode', handleZenMode);
-    window.addEventListener('focusMode', handleFocusMode);
+    window.addEventListener('toggleZenMode', handleToggleZenMode);
+    window.addEventListener('toggleFocusMode', handleToggleFocusMode);
 
     return () => {
-      window.removeEventListener('zenMode', handleZenMode);
-      window.removeEventListener('focusMode', handleFocusMode);
+      window.removeEventListener('toggleZenMode', handleToggleZenMode);
+      window.removeEventListener('toggleFocusMode', handleToggleFocusMode);
     };
-  }, [setZenMode, setFocusMode]);
+  }, [zenMode, focusMode, setZenMode, setFocusMode]);
 
   return (
     <>

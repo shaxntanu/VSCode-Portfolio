@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { statusBarItems } from '@/data/statusbar';
+import { useUIState } from '@/contexts/UIStateContext';
+import { MdZoomOutMap } from 'react-icons/md';
+import { BiTargetLock } from 'react-icons/bi';
 import styles from '@/styles/Bottombar.module.css';
 
 const Bottombar = () => {
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
   const [liteMode, setLiteMode] = useState(true);
+  const { zenMode, setZenMode, focusMode, setFocusMode } = useUIState();
 
   useEffect(() => {
     const updateThemeAndMode = () => {
@@ -85,6 +89,22 @@ const Bottombar = () => {
         {leftItems.map(renderItem)}
       </div>
       <div className={styles.container}>
+        <button
+          className={`${styles.section} ${styles.modeButton} ${zenMode ? styles.active : ''}`}
+          onClick={() => setZenMode(!zenMode)}
+          title={zenMode ? 'Exit Zen Mode' : 'Enter Zen Mode (Hides all UI)'}
+        >
+          <MdZoomOutMap className={styles.icon} />
+          <span>Zen</span>
+        </button>
+        <button
+          className={`${styles.section} ${styles.modeButton} ${focusMode ? styles.active : ''}`}
+          onClick={() => setFocusMode(!focusMode)}
+          title={focusMode ? 'Exit Focus Mode' : 'Enter Focus Mode (Dims UI)'}
+        >
+          <BiTargetLock className={styles.icon} />
+          <span>Focus</span>
+        </button>
         <div className={`${styles.section} ${styles.priority11}`} title="Current Theme">
           <span>[{currentTheme}]</span>
         </div>
