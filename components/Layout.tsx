@@ -11,7 +11,10 @@ import CommandPalette from '@/components/CommandPalette';
 import CommandPaletteShiftP from '@/components/CommandPaletteShiftP';
 import Minimap from '@/components/Minimap';
 import MobileNotification from '@/components/MobileNotification';
+import Terminal from '@/components/Terminal/Terminal';
+import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
 import { FolderProvider } from '@/contexts/FolderContext';
+import { UIStateProvider, useUIState } from '@/contexts/UIStateContext';
 
 import styles from '@/styles/Layout.module.css';
 
@@ -24,11 +27,20 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const LayoutContent = ({ children }: LayoutProps) => {
   const router = useRouter();
   const [, setScreenKey] = useState(0);
+  const { 
+    zenMode, 
+    focusMode, 
+    sidebarVisible, 
+    minimapVisible, 
+    bottombarVisible,
+    setZenMode,
+    setFocusMode,
+  } = useUIState();
 
-  // Force re-render when screen/DPI changes (e.g., moving window between monitors)
+  // Force re-render when screen/DPI changes
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -41,7 +53,6 @@ const Layout = ({ children }: LayoutProps) => {
       }
     };
 
-    // Listen for DPI/resolution changes via matchMedia
     const mediaQuery = window.matchMedia(
       `(resolution: ${window.devicePixelRatio}dppx)`
     );
@@ -51,8 +62,6 @@ const Layout = ({ children }: LayoutProps) => {
     };
 
     mediaQuery.addEventListener('change', handleMediaChange);
-
-    // Also check on resize as a fallback
     window.addEventListener('resize', checkScreenChange);
 
     return () => {
@@ -68,13 +77,27 @@ const Layout = ({ children }: LayoutProps) => {
     }
   }, [router.pathname]);
 
+  // Listen for command palette events
+  useEffect(() => {
+    const handleZenMode = () => setZenMode(true);
+    const handleFocusMode = () => setFocusMode(true);
+
+    window.addEventListener('zenMode', handleZenMode);
+    window.addEventListener('focusMode', handleFocusMode);
+
+    return () => {
+      window.removeEventListener('zenMode', handleZenMode);
+      window.removeEventListener('focusMode', handleFocusMode);
+    };
+  }, [setZenMode, setFocusMode]);
+
   return (
-    <FolderProvider>
-      <MobileNotification />
-      <Titlebar />
-      <div className={styles.main} id="window-container">
-        <Sidebar />
-        <Explorer />
+    <>
+      {!zenMode && <MobileNotification />}
+      {!zenMode && <Titlebar />}
+      <div className={`${styles.main} ${zenMode ? styles.zenMode : ''} ${focusMode ? styles.focusMode : ''}`} id="window-container">
+        {sidebarVisible && !zenMode && <Sidebar />}
+        {sidebarVisible && !zenMode && <Explorer />}
         <div style={{ flex: 1, minWidth: 0, position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
           <Tabsbar />
           <Breadcrumbs />
@@ -88,11 +111,13 @@ const Layout = ({ children }: LayoutProps) => {
                 })}
               </div>
             </main>
-            <Minimap />
+            {minimapVisible && !zenMode && !focusMode && <Minimap />}
           </div>
+          <Terminal />
+          <ProblemsPanel />
         </div>
       </div>
-      <Bottombar />
+      {!zenMode && bottombarVisible && <Bottombar />}
       <CommandPalette />
       <CommandPaletteShiftP />
       <div id="dock-icon" className={styles.dockIcon} style={{ display: 'none' }}>
@@ -107,6 +132,16 @@ const Layout = ({ children }: LayoutProps) => {
           </defs>
         </svg>
       </div>
+    </>
+  );
+};
+
+const Layout = ({ children }: LayoutProps) => {
+  return (
+    <FolderProvider>
+      <UIStateProvider>
+        <LayoutContent>{children}</LayoutContent>
+      </UIStateProvider>
     </FolderProvider>
   );
 };
