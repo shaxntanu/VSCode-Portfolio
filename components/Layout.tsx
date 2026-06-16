@@ -13,6 +13,7 @@ import Minimap from '@/components/Minimap';
 import MobileNotification from '@/components/MobileNotification';
 import Terminal from '@/components/Terminal/Terminal';
 import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
+import PortfolioStatsModal from '@/components/PortfolioStatsModal';
 import { FolderProvider } from '@/contexts/FolderContext';
 import { UIStateProvider, useUIState } from '@/contexts/UIStateContext';
 
@@ -38,6 +39,10 @@ const LayoutContent = ({ children }: LayoutProps) => {
     bottombarVisible,
     setZenMode,
     setFocusMode,
+    setSidebarVisible,
+    setMinimapVisible,
+    setStatsModalOpen,
+    statsModalOpen,
   } = useUIState();
 
   // Force re-render when screen/DPI changes
@@ -91,6 +96,22 @@ const LayoutContent = ({ children }: LayoutProps) => {
     };
   }, [zenMode, focusMode, setZenMode, setFocusMode]);
 
+  useEffect(() => {
+    const handleToggleMinimap = () => setMinimapVisible(!minimapVisible);
+    const handleToggleSidebar = () => setSidebarVisible(!sidebarVisible);
+    const handleShowStats = () => setStatsModalOpen(true);
+
+    window.addEventListener('toggleMinimap', handleToggleMinimap);
+    window.addEventListener('toggleSidebar', handleToggleSidebar);
+    window.addEventListener('showPortfolioStats', handleShowStats);
+
+    return () => {
+      window.removeEventListener('toggleMinimap', handleToggleMinimap);
+      window.removeEventListener('toggleSidebar', handleToggleSidebar);
+      window.removeEventListener('showPortfolioStats', handleShowStats);
+    };
+  }, [minimapVisible, sidebarVisible, setMinimapVisible, setSidebarVisible, setStatsModalOpen]);
+
   return (
     <>
       {!zenMode && <MobileNotification />}
@@ -115,6 +136,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
           </div>
           <Terminal />
           <ProblemsPanel />
+          {statsModalOpen && <PortfolioStatsModal />}
         </div>
       </div>
       {!zenMode && bottombarVisible && <Bottombar />}

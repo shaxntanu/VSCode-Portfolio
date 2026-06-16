@@ -211,6 +211,7 @@ const themeCommands: Command[] = [
       document.documentElement.setAttribute('data-theme', 'dark-plus');
       localStorage.setItem('theme', 'dark-plus');
       window.dispatchEvent(new Event('themeChange'));
+      window.dispatchEvent(new Event('themeChanged'));
       notify('✓ Theme changed to Dark+', 'success');
     },
   },
@@ -225,6 +226,7 @@ const themeCommands: Command[] = [
       document.documentElement.setAttribute('data-theme', 'github-dark');
       localStorage.setItem('theme', 'github-dark');
       window.dispatchEvent(new Event('themeChange'));
+      window.dispatchEvent(new Event('themeChanged'));
       notify('✓ Theme changed to GitHub Dark', 'success');
     },
   },
@@ -239,6 +241,7 @@ const themeCommands: Command[] = [
       document.documentElement.setAttribute('data-theme', 'dracula');
       localStorage.setItem('theme', 'dracula');
       window.dispatchEvent(new Event('themeChange'));
+      window.dispatchEvent(new Event('themeChanged'));
       notify('✓ Theme changed to Dracula', 'success');
     },
   },
@@ -253,6 +256,7 @@ const themeCommands: Command[] = [
       document.documentElement.setAttribute('data-theme', 'tokyo-night');
       localStorage.setItem('theme', 'tokyo-night');
       window.dispatchEvent(new Event('themeChange'));
+      window.dispatchEvent(new Event('themeChanged'));
       notify('✓ Theme changed to Tokyo Night', 'success');
     },
   },
@@ -267,6 +271,7 @@ const themeCommands: Command[] = [
       document.documentElement.setAttribute('data-theme', 'catppuccin');
       localStorage.setItem('theme', 'catppuccin');
       window.dispatchEvent(new Event('themeChange'));
+      window.dispatchEvent(new Event('themeChanged'));
       notify('✓ Theme changed to Catppuccin', 'success');
     },
   },

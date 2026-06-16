@@ -380,3 +380,9 @@ const KeysprintPage = () => {
 };
 
 export default KeysprintPage;
+
+export async function getStaticProps() {
+  return {
+    props: { title: 'Keysprint' },
+  };
+}
