@@ -1,6 +1,7 @@
 /**
- * VS Code-Style Minimap Component
- * Proper architecture: analyze once, render many
+ * VS Code-Style Minimap Component with Visual Navigator Mode
+ * Supports both classic (line-based) and visual (layout-based) rendering
+ * Feature flag: MINIMAP_MODE = "classic" | "visual"
  */
 
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -11,6 +12,12 @@ import {
   renderMinimap,
   LineModel,
 } from '@/utils/minimapContentAnalyzer';
+import {
+  analyzeVisualPage,
+  renderVisualMinimap,
+  VisualPageModel,
+} from '@/utils/visualMinimapRenderer';
+import { useMinimapMode } from '@/contexts/MinimapModeContext';
 
 const MINIMAP_PAGES = [
   '/about',
@@ -27,6 +34,7 @@ const Minimap = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement | null>(null);
   const lineModelRef = useRef<LineModel | null>(null);
+  const visualModelRef = useRef<VisualPageModel | null>(null);
   const rafRef = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,6 +47,7 @@ const Minimap = () => {
   const [isDragging, setIsDragging] = useState(false);
 
   const shouldShow = MINIMAP_PAGES.includes(router.pathname);
+  const { minimapMode } = useMinimapMode();
 
   const getAccentColor = useCallback((): string => {
     const computed = getComputedStyle(document.documentElement);
@@ -77,12 +86,18 @@ const Minimap = () => {
     const canvas = canvasRef.current;
     if (!content || !canvas) return;
 
-    const model = analyzeContent(content);
-    lineModelRef.current = model;
-
     const accentColor = getAccentColor();
-    renderMinimap(canvas, model, accentColor);
-  }, [getAccentColor]);
+
+    if (minimapMode === 'classic') {
+      const model = analyzeContent(content);
+      lineModelRef.current = model;
+      renderMinimap(canvas, model, accentColor);
+    } else {
+      const model = analyzeVisualPage(content);
+      visualModelRef.current = model;
+      renderVisualMinimap(canvas, model, accentColor);
+    }
+  }, [getAccentColor, minimapMode]);
 
   const handleResize = useCallback(() => {
     if (resizeTimeoutRef.current) {
@@ -96,12 +111,18 @@ const Minimap = () => {
 
   const handleThemeChange = useCallback(() => {
     const canvas = canvasRef.current;
-    const model = lineModelRef.current;
-    if (!canvas || !model) return;
-
     const accentColor = getAccentColor();
-    renderMinimap(canvas, model, accentColor);
-  }, [getAccentColor]);
+
+    if (minimapMode === 'classic') {
+      const model = lineModelRef.current;
+      if (!canvas || !model) return;
+      renderMinimap(canvas, model, accentColor);
+    } else {
+      const model = visualModelRef.current;
+      if (!canvas || !model) return;
+      renderVisualMinimap(canvas, model, accentColor);
+    }
+  }, [getAccentColor, minimapMode]);
 
   const handleMinimapClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -218,6 +239,20 @@ const Minimap = () => {
     window.addEventListener('themeChanged', handleThemeChange);
     return () => window.removeEventListener('themeChanged', handleThemeChange);
   }, [handleThemeChange]);
+
+  // Keyboard shortcut: Ctrl+Alt+M to toggle minimap mode
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.altKey && e.key === 'm') {
+        e.preventDefault();
+        // This will be handled by Layout component
+        window.dispatchEvent(new CustomEvent('toggleMinimapMode'));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   if (!shouldShow) return null;
 

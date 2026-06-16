@@ -16,6 +16,7 @@ import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
 import PortfolioStatsModal from '@/components/PortfolioStatsModal';
 import { FolderProvider } from '@/contexts/FolderContext';
 import { UIStateProvider, useUIState } from '@/contexts/UIStateContext';
+import { MinimapModeProvider, useMinimapMode } from '@/contexts/MinimapModeContext';
 
 import styles from '@/styles/Layout.module.css';
 
@@ -44,6 +45,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
     setStatsModalOpen,
     statsModalOpen,
   } = useUIState();
+  const { toggleMinimapMode, minimapMode } = useMinimapMode();
 
   // Force re-render when screen/DPI changes
   useEffect(() => {
@@ -100,17 +102,23 @@ const LayoutContent = ({ children }: LayoutProps) => {
     const handleToggleMinimap = () => setMinimapVisible(!minimapVisible);
     const handleToggleSidebar = () => setSidebarVisible(!sidebarVisible);
     const handleShowStats = () => setStatsModalOpen(true);
+    const handleToggleMinimapMode = () => {
+      toggleMinimapMode();
+      console.log(`Minimap mode switched to: ${minimapMode === 'classic' ? 'visual' : 'classic'}`);
+    };
 
     window.addEventListener('toggleMinimap', handleToggleMinimap);
     window.addEventListener('toggleSidebar', handleToggleSidebar);
     window.addEventListener('showPortfolioStats', handleShowStats);
+    window.addEventListener('toggleMinimapMode', handleToggleMinimapMode);
 
     return () => {
       window.removeEventListener('toggleMinimap', handleToggleMinimap);
       window.removeEventListener('toggleSidebar', handleToggleSidebar);
       window.removeEventListener('showPortfolioStats', handleShowStats);
+      window.removeEventListener('toggleMinimapMode', handleToggleMinimapMode);
     };
-  }, [minimapVisible, sidebarVisible, setMinimapVisible, setSidebarVisible, setStatsModalOpen]);
+  }, [minimapVisible, sidebarVisible, setMinimapVisible, setSidebarVisible, setStatsModalOpen, toggleMinimapMode, minimapMode]);
 
   return (
     <>
@@ -162,7 +170,9 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <FolderProvider>
       <UIStateProvider>
-        <LayoutContent>{children}</LayoutContent>
+        <MinimapModeProvider>
+          <LayoutContent>{children}</LayoutContent>
+        </MinimapModeProvider>
       </UIStateProvider>
     </FolderProvider>
   );
