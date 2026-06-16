@@ -1,175 +1,329 @@
 /**
- * Minimap Content Analyzer - Visual Polish Focus
- * Creates a clean, authentic VS Code-style minimap
+ * Minimap Content Analyzer - VS Code Architecture
+ * Separates content analysis from rendering for performance
  */
 
-export type MinimapMode = 'lite' | 'full';
+export type LineType =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'paragraph'
+  | 'code'
+  | 'list-item'
+  | 'blank'
+  | 'card-title'
+  | 'card-body';
 
-interface ElementInfo {
-  top: number;
+export interface MinimapLine {
+  y: number;
   height: number;
-  type: 'heading' | 'paragraph' | 'code' | 'list' | 'card';
-  level: number;
+  type: LineType;
+  indentLevel: number;
+  density: number;
 }
 
-const getCleanElements = (container: HTMLElement): ElementInfo[] => {
-  const elements: ElementInfo[] = [];
-  const containerRect = container.getBoundingClientRect();
-  
-  // Only target meaningful structural elements
-  const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  const paragraphs = container.querySelectorAll('p');
-  const codeBlocks = container.querySelectorAll('pre, code');
-  const lists = container.querySelectorAll('li');
-  
-  const processElements = (nodes: NodeListOf<Element>, type: ElementInfo['type'], level: number = 0) => {
-    nodes.forEach((el) => {
-      const style = window.getComputedStyle(el);
-      if (style.display === 'none' || style.visibility === 'hidden') return;
-      
-      const rect = el.getBoundingClientRect();
-      if (rect.height < 2) return;
-      
-      const top = rect.top - containerRect.top + container.scrollTop;
-      
-      elements.push({
-        top,
-        height: rect.height,
-        type,
-        level: type === 'heading' ? parseInt(el.tagName.charAt(1)) : level,
-      });
-    });
-  };
-  
-  processElements(headings, 'heading');
-  processElements(paragraphs, 'paragraph');
-  processElements(codeBlocks, 'code');
-  processElements(lists, 'list', 1);
-  
-  return elements.sort((a, b) => a.top - b.top);
+export interface LineModel {
+  lines: MinimapLine[];
+  totalHeight: number;
+  generatedAt: number;
+}
+
+const SKIP_SELECTORS = [
+  'nav',
+  'footer',
+  'script',
+  'style',
+  'canvas',
+  '.minimap',
+  '.tabs',
+  '.sidebar',
+  '.bottomBar',
+  '.titlebar',
+  '.breadcrumbs',
+];
+
+const getIndentLevel = (element: Element): number => {
+  let level = 0;
+  let parent = element.parentElement;
+
+  while (parent && parent !== document.body) {
+    if (
+      parent.tagName === 'UL' ||
+      parent.tagName === 'OL' ||
+      parent.tagName === 'LI' ||
+      parent.classList.contains('nested') ||
+      parent.classList.contains('indent')
+    ) {
+      level++;
+    }
+    parent = parent.parentElement;
+  }
+
+  return Math.min(level, 3);
 };
 
-export const drawMinimap = (
+const calculateDensity = (
+  element: Element,
+  rect: DOMRect
+): number => {
+  const text = element.textContent?.trim() || '';
+  const area = rect.width * rect.height;
+  if (area === 0) return 0;
+
+  const density = text.length / (area / 100);
+  return Math.max(0, Math.min(1, density));
+};
+
+const shouldSkipElement = (element: Element): boolean => {
+  for (const selector of SKIP_SELECTORS) {
+    if (selector.startsWith('.')) {
+      if (element.classList.contains(selector.slice(1))) return true;
+    } else if (element.tagName.toLowerCase() === selector) {
+      return true;
+    }
+  }
+
+  const style = window.getComputedStyle(element);
+  if (
+    style.display === 'none' ||
+    style.visibility === 'hidden' ||
+    style.opacity === '0'
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+const getLineType = (element: Element): LineType | null => {
+  const tag = element.tagName.toLowerCase();
+  const isCard = element.closest('[class*="card"]') !== null;
+
+  if (tag === 'h1') return 'h1';
+  if (tag === 'h2') return 'h2';
+  if (tag === 'h3') {
+    if (isCard) return 'card-title';
+    return 'h3';
+  }
+  if (tag === 'h4' || tag === 'h5' || tag === 'h6') return 'h4';
+  if (tag === 'p') {
+    if (isCard) return 'card-body';
+    return 'paragraph';
+  }
+  if (tag === 'pre' || tag === 'code') return 'code';
+  if (tag === 'li') return 'list-item';
+
+  return null;
+};
+
+const splitIntoVisualLines = (
+  rect: DOMRect,
+  lineType: LineType,
+  y: number,
+  indentLevel: number,
+  density: number
+): MinimapLine[] => {
+  const style = window.getComputedStyle(
+    document.elementFromPoint(rect.left + 1, rect.top + 1) || document.body
+  );
+  const computedLineHeight = parseFloat(style.lineHeight);
+  const lineHeight = isNaN(computedLineHeight) ? 20 : computedLineHeight;
+
+  if (rect.height <= lineHeight * 1.5) {
+    return [
+      {
+        y,
+        height: rect.height,
+        type: lineType,
+        indentLevel,
+        density,
+      },
+    ];
+  }
+
+  const lines: MinimapLine[] = [];
+  const numLines = Math.floor(rect.height / lineHeight);
+
+  for (let i = 0; i < numLines; i++) {
+    lines.push({
+      y: y + i * lineHeight,
+      height: lineHeight,
+      type: lineType,
+      indentLevel,
+      density,
+    });
+  }
+
+  return lines;
+};
+
+export function analyzeContent(container: HTMLElement): LineModel {
+  const lines: MinimapLine[] = [];
+  const containerRect = container.getBoundingClientRect();
+
+  const elements = container.querySelectorAll(
+    'h1, h2, h3, h4, h5, h6, p, pre, code, li'
+  );
+
+  elements.forEach((element) => {
+    if (shouldSkipElement(element)) return;
+
+    const lineType = getLineType(element);
+    if (!lineType) return;
+
+    const rect = element.getBoundingClientRect();
+    if (rect.height < 2 || rect.width < 2) return;
+
+    const y = rect.top - containerRect.top + container.scrollTop;
+    const indentLevel = getIndentLevel(element);
+    const density = calculateDensity(element, rect);
+
+    if (lineType === 'paragraph' || lineType === 'card-body') {
+      const visualLines = splitIntoVisualLines(
+        rect,
+        lineType,
+        y,
+        indentLevel,
+        density
+      );
+      lines.push(...visualLines);
+    } else {
+      lines.push({
+        y,
+        height: rect.height,
+        type: lineType,
+        indentLevel,
+        density,
+      });
+    }
+  });
+
+  lines.sort((a, b) => a.y - b.y);
+
+  return {
+    lines,
+    totalHeight: container.scrollHeight,
+    generatedAt: Date.now(),
+  };
+}
+
+export function renderMinimap(
   canvas: HTMLCanvasElement,
-  container: HTMLElement,
-  mode: MinimapMode
-): void => {
+  model: LineModel,
+  accentColor: string
+): void {
   const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return;
 
-  // High-quality rendering setup
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  
+
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
-  
+
   ctx.scale(dpr, dpr);
-  
+
   const W = rect.width;
   const H = rect.height;
-  
-  // Clear with subtle background
+
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
   ctx.fillRect(0, 0, W, H);
-  
-  // Calculate scale
-  const scrollHeight = container.scrollHeight;
-  if (scrollHeight === 0) return;
-  
-  const scale = H / scrollHeight;
-  const elements = getCleanElements(container);
-  
-  // Get accent color
-  const accentColor = getComputedStyle(document.documentElement)
-    .getPropertyValue('--accent-color')
-    .trim() || '#e6b450';
-  
-  // Draw elements with VS Code styling
-  elements.forEach((el) => {
-    const y = el.top * scale;
-    const h = Math.max(1, el.height * scale);
-    
-    let color: string;
-    let width: number;
-    let x: number;
-    let alpha: number;
-    
-    switch (el.type) {
-      case 'heading':
-        // Headings: bright, prominent blocks
-        color = accentColor;
-        alpha = 0.7 - (el.level * 0.08);
-        width = W * (0.95 - el.level * 0.05);
-        x = 2;
-        
-        ctx.fillStyle = color;
-        ctx.globalAlpha = alpha;
-        ctx.fillRect(x, y, width, Math.max(2, Math.min(h, 4)));
-        ctx.globalAlpha = 1;
+
+  if (model.totalHeight === 0) return;
+
+  const scale = H / model.totalHeight;
+
+  model.lines.forEach((line) => {
+    const y = line.y * scale;
+    const h = Math.max(1, line.height * scale);
+
+    ctx.globalAlpha = 1;
+
+    switch (line.type) {
+      case 'h1':
+        ctx.fillStyle = accentColor;
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(2, y, W - 4, Math.max(2.5, h));
         break;
-        
-      case 'code':
-        // Code: dense, grouped appearance
-        color = 'rgba(78, 201, 176, 0.5)';
-        width = W * 0.88;
-        x = 4;
-        
-        ctx.fillStyle = color;
-        
-        // Draw as dense lines
-        const codeLineHeight = 1;
-        const codeGap = 0.5;
-        const codeLines = Math.floor(h / (codeLineHeight + codeGap));
-        
-        for (let i = 0; i < codeLines; i++) {
-          ctx.globalAlpha = 0.4 + Math.random() * 0.2;
-          ctx.fillRect(x, y + i * (codeLineHeight + codeGap), width, codeLineHeight);
-        }
-        ctx.globalAlpha = 1;
+
+      case 'h2':
+        ctx.fillStyle = accentColor;
+        ctx.globalAlpha = 0.65;
+        ctx.fillRect(2, y, W - 6, Math.max(2, h));
         break;
-        
-      case 'paragraph':
-        // Paragraphs: thin, muted lines
-        color = 'rgba(255, 255, 255, 0.25)';
-        width = W * 0.85;
-        x = 3;
-        
-        ctx.fillStyle = color;
-        
-        // Draw as thin lines with natural variation
-        const lineHeight = 1.5;
+
+      case 'h3':
+      case 'h4':
+        ctx.fillStyle = accentColor;
+        ctx.globalAlpha = 0.45;
+        ctx.fillRect(4, y, W - 8, Math.max(1.5, h));
+        break;
+
+      case 'paragraph': {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+        const lineHeight = 1;
         const gap = 1;
-        const lines = Math.floor(h / (lineHeight + gap));
-        
-        for (let i = 0; i < lines; i++) {
-          const lineWidth = i === lines - 1 ? width * 0.6 : width;
-          ctx.globalAlpha = 0.3;
-          ctx.fillRect(x, y + i * (lineHeight + gap), lineWidth, lineHeight);
+        const numSubLines = Math.max(1, Math.floor(h / (lineHeight + gap)));
+
+        for (let i = 0; i < numSubLines; i++) {
+          const isLast = i === numSubLines - 1;
+          const width = isLast ? (W - 6) * 0.6 : W - 6;
+          ctx.fillRect(3, y + i * (lineHeight + gap), width, lineHeight);
         }
-        ctx.globalAlpha = 1;
         break;
-        
-      case 'list':
-        // Lists: subtle indented lines
-        color = 'rgba(255, 255, 255, 0.2)';
-        width = W * 0.75;
-        x = 6;
-        
-        ctx.fillStyle = color;
-        ctx.globalAlpha = 0.25;
-        ctx.fillRect(x, y, width, Math.max(1, h));
-        ctx.globalAlpha = 1;
+      }
+
+      case 'code': {
+        ctx.fillStyle = 'rgba(78, 201, 176, 0.45)';
+        const lineHeight = 1;
+        const gap = 0.5;
+        const numSubLines = Math.max(1, Math.floor(h / (lineHeight + gap)));
+
+        for (let i = 0; i < numSubLines; i++) {
+          const width = W * (0.7 + Math.random() * 0.25);
+          ctx.fillRect(3, y + i * (lineHeight + gap), width, lineHeight);
+        }
+        break;
+      }
+
+      case 'list-item': {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+        const lineHeight = 1;
+        const gap = 1;
+        const numSubLines = Math.max(1, Math.floor(h / (lineHeight + gap)));
+
+        for (let i = 0; i < numSubLines; i++) {
+          ctx.fillRect(7, y + i * (lineHeight + gap), W - 10, lineHeight);
+        }
+        break;
+      }
+
+      case 'card-title':
+        ctx.fillStyle = accentColor;
+        ctx.globalAlpha = 0.4;
+        ctx.fillRect(3, y, W * 0.7, Math.max(1.5, h));
+        break;
+
+      case 'card-body': {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        const lineHeight = 1;
+        const gap = 1;
+        const numSubLines = Math.max(1, Math.floor(h / (lineHeight + gap)));
+
+        for (let i = 0; i < numSubLines; i++) {
+          const isLast = i === numSubLines - 1;
+          const width = isLast ? (W - 6) * 0.6 : W - 6;
+          ctx.fillRect(3, y + i * (lineHeight + gap), width, lineHeight);
+        }
+        break;
+      }
+
+      case 'blank':
         break;
     }
+
+    ctx.globalAlpha = 1;
   });
-  
-  // Add subtle texture overlay for depth
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.01)';
-  for (let i = 0; i < H; i += 2) {
-    if (Math.random() > 0.5) {
-      ctx.fillRect(0, i, W, 1);
-    }
-  }
-};
+}

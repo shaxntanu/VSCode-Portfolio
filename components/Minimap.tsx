@@ -1,103 +1,138 @@
 /**
  * VS Code-Style Minimap Component
- * Toggleable rendering modes: Lite (blocks) and Full (actual text)
- * Features: click-to-scroll, drag-to-scroll, real-time viewport tracking
+ * Proper architecture: analyze once, render many
  */
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Minimap.module.css';
-import { drawMinimap, MinimapMode } from '@/utils/minimapContentAnalyzer';
+import {
+  analyzeContent,
+  renderMinimap,
+  LineModel,
+} from '@/utils/minimapContentAnalyzer';
 
-const MINIMAP_PAGES = ['/about', '/experience', '/projects', '/publications', '/certificates'];
+const MINIMAP_PAGES = [
+  '/about',
+  '/experience',
+  '/projects',
+  '/publications',
+  '/certificates',
+];
 
-interface MinimapProps {
-  mode?: MinimapMode;
-}
-
-const Minimap = ({ mode = 'lite' }: MinimapProps) => {
+const Minimap = () => {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement | null>(null);
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [viewportMetrics, setViewportMetrics] = useState({ top: 0, height: 20 });
-  
+  const lineModelRef = useRef<LineModel | null>(null);
   const rafRef = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [lineModel, setLineModel] = useState<LineModel | null>(null);
+  const [viewportMetrics, setViewportMetrics] = useState({
+    top: 0,
+    height: 20,
+  });
+  const [isDragging, setIsDragging] = useState(false);
 
   const shouldShow = MINIMAP_PAGES.includes(router.pathname);
 
-  // Update viewport position based on scroll
+  const getAccentColor = useCallback((): string => {
+    const computed = getComputedStyle(document.documentElement);
+    return computed.getPropertyValue('--accent-color').trim() || '#e6b450';
+  }, []);
+
   const updateViewport = useCallback(() => {
     const content = contentRef.current;
     if (!content) return;
 
     const { scrollTop, scrollHeight, clientHeight } = content;
-    
+
     if (scrollHeight <= clientHeight) {
       setViewportMetrics({ top: 0, height: 100 });
       return;
     }
 
-    const viewportHeightPercent = (clientHeight / scrollHeight) * 100;
+    const viewportH = (clientHeight / scrollHeight) * 100;
     const maxScroll = scrollHeight - clientHeight;
-    const scrollPercent = scrollTop / maxScroll;
-    const viewportTopPercent = scrollPercent * (100 - viewportHeightPercent);
+    const scrollRatio = scrollTop / maxScroll;
+    const viewportTop = scrollRatio * (100 - viewportH);
 
     setViewportMetrics({
-      top: Math.max(0, Math.min(viewportTopPercent, 100 - viewportHeightPercent)),
-      height: Math.min(viewportHeightPercent, 100),
+      top: Math.max(0, Math.min(viewportTop, 100 - viewportH)),
+      height: Math.min(viewportH, 100),
     });
   }, []);
 
-  // Handle scroll with RAF
   const handleScroll = useCallback(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(updateViewport);
   }, [updateViewport]);
 
-  // Redraw minimap
-  const redrawMinimap = useCallback(() => {
+  const performAnalysis = useCallback(() => {
+    const content = contentRef.current;
     const canvas = canvasRef.current;
-    const content = contentRef.current;
-    
-    if (!canvas || !content) return;
-    
-    drawMinimap(canvas, content, mode);
-  }, [mode]);
+    if (!content || !canvas) return;
 
-  // Debounced redraw
-  const debouncedRedraw = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      setTimeout(redrawMinimap, 100);
-    });
-  }, [redrawMinimap]);
+    const model = analyzeContent(content);
+    lineModelRef.current = model;
+    setLineModel(model);
 
-  // Click to scroll
-  const handleMinimapClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging || !containerRef.current || !contentRef.current) return;
+    const accentColor = getAccentColor();
+    renderMinimap(canvas, model, accentColor);
+  }, [getAccentColor]);
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const clickY = e.clientY - rect.top;
-    const clickPercent = clickY / rect.height;
+  const handleResize = useCallback(() => {
+    if (resizeTimeoutRef.current) {
+      clearTimeout(resizeTimeoutRef.current);
+    }
 
-    const content = contentRef.current;
-    const maxScroll = content.scrollHeight - content.clientHeight;
-    const targetScroll = clickPercent * maxScroll;
+    resizeTimeoutRef.current = setTimeout(() => {
+      performAnalysis();
+    }, 200);
+  }, [performAnalysis]);
 
-    content.scrollTop = Math.max(0, Math.min(targetScroll, maxScroll));
-  }, [isDragging]);
+  const handleThemeChange = useCallback(() => {
+    const canvas = canvasRef.current;
+    const model = lineModelRef.current;
+    if (!canvas || !model) return;
 
-  // Drag to scroll
-  const handleViewportMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    e.preventDefault();
-    e.stopPropagation();
-  }, []);
+    const accentColor = getAccentColor();
+    renderMinimap(canvas, model, accentColor);
+  }, [getAccentColor]);
+
+  const handleMinimapClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (isDragging || !containerRef.current || !contentRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const clickY = e.clientY - rect.top;
+      const clickPct = clickY / rect.height;
+
+      const content = contentRef.current;
+      const maxScroll = content.scrollHeight - content.clientHeight;
+      const targetScroll = clickPct * maxScroll;
+
+      content.scrollTo({
+        top: Math.max(0, Math.min(targetScroll, maxScroll)),
+        behavior: 'smooth',
+      });
+    },
+    [isDragging]
+  );
+
+  const handleViewportMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      setIsDragging(true);
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    []
+  );
 
   useEffect(() => {
     if (!isDragging) return;
@@ -107,11 +142,11 @@ const Minimap = ({ mode = 'lite' }: MinimapProps) => {
 
       const rect = containerRef.current.getBoundingClientRect();
       const moveY = e.clientY - rect.top;
-      const movePercent = moveY / rect.height;
+      const movePct = moveY / rect.height;
 
       const content = contentRef.current;
       const maxScroll = content.scrollHeight - content.clientHeight;
-      const targetScroll = movePercent * maxScroll;
+      const targetScroll = movePct * maxScroll;
 
       content.scrollTop = Math.max(0, Math.min(targetScroll, maxScroll));
     };
@@ -129,17 +164,13 @@ const Minimap = ({ mode = 'lite' }: MinimapProps) => {
     };
   }, [isDragging]);
 
-  // Setup content ref and listeners
   useEffect(() => {
     const content = document.getElementById('main-editor');
     if (!content) return;
 
     contentRef.current = content;
 
-    // Attach scroll listener
     content.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Initial viewport update
     updateViewport();
 
     return () => {
@@ -148,12 +179,11 @@ const Minimap = ({ mode = 'lite' }: MinimapProps) => {
     };
   }, [handleScroll, updateViewport]);
 
-  // ResizeObserver for content changes
   useEffect(() => {
     const content = contentRef.current;
     if (!content) return;
 
-    resizeObserverRef.current = new ResizeObserver(debouncedRedraw);
+    resizeObserverRef.current = new ResizeObserver(handleResize);
     resizeObserverRef.current.observe(content);
 
     return () => {
@@ -161,36 +191,35 @@ const Minimap = ({ mode = 'lite' }: MinimapProps) => {
         resizeObserverRef.current.disconnect();
       }
     };
-  }, [debouncedRedraw]);
+  }, [handleResize]);
 
-  // Redraw on route change or mode change
   useEffect(() => {
     if (!shouldShow) return;
 
-    const timer = setTimeout(redrawMinimap, 200);
-    const timerLong = setTimeout(redrawMinimap, 1000);
+    if (analysisTimeoutRef.current) {
+      clearTimeout(analysisTimeoutRef.current);
+    }
+
+    analysisTimeoutRef.current = setTimeout(() => {
+      performAnalysis();
+    }, 300);
 
     return () => {
-      clearTimeout(timer);
-      clearTimeout(timerLong);
+      if (analysisTimeoutRef.current) {
+        clearTimeout(analysisTimeoutRef.current);
+      }
     };
-  }, [router.pathname, shouldShow, mode, redrawMinimap]);
+  }, [router.pathname, shouldShow, performAnalysis]);
 
-  // Window resize listener
   useEffect(() => {
-    window.addEventListener('resize', debouncedRedraw);
-    return () => window.removeEventListener('resize', debouncedRedraw);
-  }, [debouncedRedraw]);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
 
-  // Theme change handler
   useEffect(() => {
-    const handleThemeChange = () => {
-      setTimeout(redrawMinimap, 50);
-    };
-
     window.addEventListener('themeChanged', handleThemeChange);
     return () => window.removeEventListener('themeChanged', handleThemeChange);
-  }, [redrawMinimap]);
+  }, [handleThemeChange]);
 
   if (!shouldShow) return null;
 
