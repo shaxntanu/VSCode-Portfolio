@@ -107,16 +107,6 @@ export const projects: Project[] = [
     year: 2026,
   },
   {
-    title: 'ZM Dashboard',
-    description: 'Real-time web dashboard for Zephyr Station analytics.',
-    logo: '/logos/vercel_icon.svg',
-    link: 'https://zephyr-station-dashboard.vercel.app',
-    slug: 'zm-dashboard',
-    category: 'SOFTWARE_SYSTEMS',
-    dateRange: 'Aug 2025 - Dec 2025',
-    year: 2025,
-  },
-  {
     title: 'Jolt Locator',
     description: 'Offline GPS navigation device with compass guidance.',
     logo: '/logos/espressif_icon.svg',
@@ -137,16 +127,6 @@ export const projects: Project[] = [
     dateRange: 'Dec 2025 - Jan 2026',
     year: 2025,
     reportLink: 'https://crocus-zenobia-863.notion.site/The-Ruin-Machine-Technical-Report-2dc1ebfe2064806a9625f49a9871aaf3?pvs=73',
-  },
-  {
-    title: 'TRM Dashboard',
-    description: 'Next.js app demonstrating why all betting strategies fail.',
-    logo: '/logos/vercel_icon.svg',
-    link: 'https://the-ruin-machine-web.vercel.app',
-    slug: 'trm-dashboard',
-    category: 'SOFTWARE_SYSTEMS',
-    dateRange: 'Dec 2025 - Jan 2026',
-    year: 2025,
   },
   // 2026
   {

@@ -1,4 +1,4 @@
-import { VscClose, VscInfo } from 'react-icons/vsc';
+import { VscClose, VscFile } from 'react-icons/vsc';
 import styles from '@/styles/SoftwareInfoPopup.module.css';
 
 interface SoftwareInfoPopupProps {
@@ -11,8 +11,8 @@ const SoftwareInfoPopup = ({ onClose }: SoftwareInfoPopupProps) => {
       <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <div className={styles.iconTitle}>
-            <VscInfo className={styles.infoIcon} />
-            <span>Software Projects Info</span>
+            <VscFile className={styles.fileIcon} />
+            <span>README.md</span>
           </div>
           <button className={styles.closeBtn} onClick={onClose} aria-label="Close">
             <VscClose />
@@ -20,17 +20,26 @@ const SoftwareInfoPopup = ({ onClose }: SoftwareInfoPopupProps) => {
         </div>
         
         <div className={styles.content}>
-          <p className={styles.message}>
-            The web applications are made with AI assistance.
+          <h2 className={styles.section}>Why These Projects?</h2>
+          
+          <p className={styles.paragraph}>
+            The projects in this category were selected because they represent complete software systems, engineering milestones, or products that demonstrate architecture, problem-solving, and end-to-end development.
           </p>
-          <p className={styles.submessage}>
-            My primary focus is on electronics and hardware development. I create these web applications for rapid prototyping of IoT dashboards and web interfaces.
+          
+          <p className={styles.paragraph}>
+            While I occasionally build dashboards and monitoring interfaces for IoT deployments, I consider them supporting tools rather than standalone projects. My primary focus is embedded systems, connected devices, electronics, and system-level engineering.
+          </p>
+          
+          <div className={styles.divider}></div>
+          
+          <p className={styles.footnote}>
+            Many internal dashboards and prototype interfaces are intentionally omitted to keep this portfolio focused on projects with broader engineering significance.
           </p>
         </div>
 
         <div className={styles.footer}>
           <button className={styles.okBtn} onClick={onClose}>
-            Got it
+            Close
           </button>
         </div>
       </div>

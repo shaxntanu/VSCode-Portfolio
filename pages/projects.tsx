@@ -60,11 +60,11 @@ const ProjectsPage = () => {
                 <button
                   className={styles.infoButton}
                   onClick={() => setShowSoftwareInfo(true)}
-                  aria-label="Software projects info"
+                  aria-label="Why these projects info"
                   title="Click for more info"
                 >
                   <VscInfo />
-                  <span className={styles.infoText}>AI-Assisted</span>
+                  <span className={styles.infoText}>Why These Projects?</span>
                 </button>
               )}
             </div>
