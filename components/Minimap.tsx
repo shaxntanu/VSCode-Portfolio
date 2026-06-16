@@ -32,7 +32,6 @@ const Minimap = () => {
   const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [lineModel, setLineModel] = useState<LineModel | null>(null);
   const [viewportMetrics, setViewportMetrics] = useState({
     top: 0,
     height: 20,
@@ -80,7 +79,6 @@ const Minimap = () => {
 
     const model = analyzeContent(content);
     lineModelRef.current = model;
-    setLineModel(model);
 
     const accentColor = getAccentColor();
     renderMinimap(canvas, model, accentColor);
