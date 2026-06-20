@@ -116,6 +116,18 @@ const contactCommands: Command[] = [
       notify('✓ GitHub profile opened', 'success');
     },
   },
+  {
+    id: 'contact-circuitlab',
+    title: 'Open CircuitLab',
+    description: 'Visit CircuitLab profile',
+    icon: VscSymbolMisc,
+    category: 'contact',
+    keywords: ['circuitlab', 'circuits', 'electronics', 'schematics'],
+    action: () => {
+      window.open('https://www.circuitlab.com/user/shaxntanu/', '_blank');
+      notify('✓ CircuitLab profile opened', 'success');
+    },
+  },
 ];
 
 // Portfolio Stats Commands

@@ -49,33 +49,6 @@ const papers = [
     link: 'https://docs.google.com/document/d/1vcZLsgmhocHVnUEXxcNuC6xXWtHzbMsU/edit?usp=sharing&ouid=112518546095961555835&rtpof=true&sd=true',
     icon: 'word',
   },
-  {
-    id: 'DOC-ARC-006',
-    title: 'ARC-4',
-    type: 'Article',
-    date: 'Coming Soon',
-    status: 'IN PROGRESS',
-    link: '#',
-    icon: 'medium',
-  },
-  {
-    id: 'DOC-NMA-007',
-    title: 'NOEMA',
-    type: 'Article',
-    date: 'Coming Soon',
-    status: 'IN PROGRESS',
-    link: '#',
-    icon: 'medium',
-  },
-  {
-    id: 'DOC-HPS-008',
-    title: 'Aether',
-    type: 'Article',
-    date: 'Coming Soon',
-    status: 'IN PROGRESS',
-    link: '#',
-    icon: 'medium',
-  },
 ];
 
 const PublicationsPage = () => {
