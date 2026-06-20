@@ -25,6 +25,11 @@ const contactCategories = [
         href: 'https://github.com/shaxntanu',
       },
       {
+        social: 'CircuitLab',
+        link: 'shaxntanu',
+        href: 'https://www.circuitlab.com/user/shaxntanu/',
+      },
+      {
         social: 'Hackaday',
         link: 'shaxntanu',
         href: 'https://hackaday.io/shaxntanu',
