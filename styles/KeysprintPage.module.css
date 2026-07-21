@@ -161,8 +161,25 @@
 
 /* Chart Container */
 .chartContainer {
+    height: 350px;
+    width: 100%;
+    position: relative;
+}
+
+/* Doughnut Chart Container */
+.doughnutContainer {
     height: 300px;
     width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Charts Row for side-by-side layouts */
+.chartsRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
 }
 
 /* Stats Grid */
@@ -281,7 +298,15 @@
     }
 
     .chartContainer {
+        height: 300px;
+    }
+
+    .doughnutContainer {
         height: 250px;
+    }
+
+    .chartsRow {
+        grid-template-columns: 1fr;
     }
 
     .statsGrid {
@@ -303,7 +328,11 @@
     }
 
     .chartContainer {
-        height: 200px;
+        height: 250px;
+    }
+
+    .doughnutContainer {
+        height: 220px;
     }
 
     .statsGrid {

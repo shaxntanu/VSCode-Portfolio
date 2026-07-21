@@ -1,6 +1,6 @@
 import styles from '@/styles/KeysprintPage.module.css';
 import { useState, useEffect } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Radar, Doughnut, Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +9,26 @@ import {
   Title,
   Tooltip,
   Legend,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  ArcElement,
 } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  ArcElement
+);
 
 interface PersonalBest {
   wpm: number;
@@ -123,8 +140,206 @@ const KeysprintPage = () => {
     return tests.reduce((best, test) => (test.wpm > best.wpm ? test : best), tests[0]);
   };
 
-  // Get all personal bests for the chart
-  const getChartData = () => {
+  // Get all personal bests for the Radar chart (Performance Overview)
+  const getRadarChartData = () => {
+    const modes = ['15', '30', '60', '120'];
+    const wpmData = modes.map((mode) => {
+      const best = getBestWpm(mode);
+      return best?.wpm || 0;
+    });
+
+    const accData = modes.map((mode) => {
+      const best = getBestWpm(mode);
+      return best?.acc || 0;
+    });
+
+    const consistencyData = modes.map((mode) => {
+      const best = getBestWpm(mode);
+      return best?.consistency || 0;
+    });
+
+    return {
+      labels: modes.map((m) => `${m}s Mode`),
+      datasets: [
+        {
+          label: 'WPM',
+          data: wpmData,
+          backgroundColor: 'rgba(0, 212, 255, 0.2)',
+          borderColor: 'rgba(0, 212, 255, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(0, 212, 255, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(0, 212, 255, 1)',
+          pointRadius: 4,
+          pointHoverRadius: 6,
+        },
+        {
+          label: 'Accuracy %',
+          data: accData,
+          backgroundColor: 'rgba(0, 255, 127, 0.2)',
+          borderColor: 'rgba(0, 255, 127, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(0, 255, 127, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(0, 255, 127, 1)',
+          pointRadius: 4,
+          pointHoverRadius: 6,
+        },
+        {
+          label: 'Consistency %',
+          data: consistencyData,
+          backgroundColor: 'rgba(255, 165, 0, 0.2)',
+          borderColor: 'rgba(255, 165, 0, 1)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(255, 165, 0, 1)',
+          pointRadius: 4,
+          pointHoverRadius: 6,
+        },
+      ],
+    };
+  };
+
+  const radarOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top' as const,
+        labels: {
+          color: 'rgba(255, 255, 255, 0.8)',
+          font: {
+            family: 'JetBrains Mono',
+            size: 12,
+          },
+          padding: 15,
+          usePointStyle: true,
+          pointStyle: 'circle',
+        },
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        titleColor: '#fff',
+        bodyColor: '#00d4ff',
+        borderColor: 'rgba(0, 212, 255, 0.5)',
+        borderWidth: 1,
+        padding: 12,
+        displayColors: true,
+        callbacks: {
+          label: (context: any) => {
+            const label = context.dataset.label || '';
+            const value = context.parsed.r;
+            if (label === 'WPM') {
+              return `${label}: ${value.toFixed(0)} WPM`;
+            }
+            return `${label}: ${value.toFixed(1)}%`;
+          },
+        },
+      },
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          stepSize: 20,
+          color: 'rgba(255, 255, 255, 0.5)',
+          backdropColor: 'transparent',
+          font: {
+            family: 'JetBrains Mono',
+            size: 10,
+          },
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
+          circular: true,
+        },
+        angleLines: {
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+        pointLabels: {
+          color: 'rgba(255, 255, 255, 0.7)',
+          font: {
+            family: 'JetBrains Mono',
+            size: 12,
+          },
+        },
+      },
+    },
+  };
+
+  // Get completion rate doughnut chart data
+  const getCompletionChartData = () => {
+    const stats = getTypingStats();
+    if (!stats) return null;
+
+    const completed = stats.completedTests;
+    const incomplete = stats.startedTests - stats.completedTests;
+
+    return {
+      labels: ['Completed', 'Incomplete'],
+      datasets: [
+        {
+          data: [completed, incomplete],
+          backgroundColor: [
+            'rgba(0, 255, 127, 0.8)',
+            'rgba(255, 99, 132, 0.8)',
+          ],
+          borderColor: [
+            'rgba(0, 255, 127, 1)',
+            'rgba(255, 99, 132, 1)',
+          ],
+          borderWidth: 2,
+          hoverOffset: 4,
+        },
+      ],
+    };
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom' as const,
+        labels: {
+          color: 'rgba(255, 255, 255, 0.8)',
+          font: {
+            family: 'JetBrains Mono',
+            size: 12,
+          },
+          padding: 15,
+          usePointStyle: true,
+        },
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        titleColor: '#fff',
+        bodyColor: '#00d4ff',
+        borderColor: 'rgba(0, 212, 255, 0.5)',
+        borderWidth: 1,
+        padding: 12,
+        callbacks: {
+          label: (context: any) => {
+            const label = context.label || '';
+            const value = context.parsed;
+            const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
+            const percentage = ((value / total) * 100).toFixed(1);
+            return `${label}: ${value.toLocaleString()} (${percentage}%)`;
+          },
+        },
+      },
+    },
+  };
+
+  // Get WPM progression line chart (if we have time-based data)
+  const getProgressionChartData = () => {
     const modes = ['15', '30', '60', '120'];
     const wpmData = modes.map((mode) => {
       const best = getBestWpm(mode);
@@ -135,18 +350,30 @@ const KeysprintPage = () => {
       labels: modes.map((m) => `${m}s`),
       datasets: [
         {
-          label: 'WPM',
+          label: 'WPM Performance',
           data: wpmData,
-          backgroundColor: 'rgba(0, 212, 255, 0.6)',
+          fill: true,
+          backgroundColor: (context: any) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(0, 212, 255, 0.4)');
+            gradient.addColorStop(1, 'rgba(0, 212, 255, 0)');
+            return gradient;
+          },
           borderColor: 'rgba(0, 212, 255, 1)',
-          borderWidth: 1,
-          borderRadius: 4,
+          borderWidth: 3,
+          pointBackgroundColor: 'rgba(0, 212, 255, 1)',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          tension: 0.4,
         },
       ],
     };
   };
 
-  const chartOptions = {
+  const lineOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -154,10 +381,10 @@ const KeysprintPage = () => {
         display: false,
       },
       tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
         titleColor: '#fff',
         bodyColor: '#00d4ff',
-        borderColor: 'rgba(0, 212, 255, 0.3)',
+        borderColor: 'rgba(0, 212, 255, 0.5)',
         borderWidth: 1,
         padding: 12,
         displayColors: false,
@@ -241,14 +468,39 @@ const KeysprintPage = () => {
               </div>
             )}
 
-            {/* WPM Chart Section */}
+            {/* Radar Chart - Performance Overview */}
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>
-                <span className={styles.keyword}>graph</span> WPM_BY_DURATION
+                <span className={styles.keyword}>radar</span> PERFORMANCE_OVERVIEW
               </h2>
               <div className={styles.chartContainer}>
-                <Bar data={getChartData()} options={chartOptions} />
+                <Radar data={getRadarChartData()} options={radarOptions} />
               </div>
+            </div>
+
+            {/* Line Chart - WPM Progression */}
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                <span className={styles.keyword}>graph</span> WPM_PROGRESSION
+              </h2>
+              <div className={styles.chartContainer}>
+                <Line data={getProgressionChartData()} options={lineOptions} />
+              </div>
+            </div>
+
+            {/* Stats Grid with Doughnut Chart */}
+            <div className={styles.chartsRow}>
+              {/* Completion Rate Doughnut */}
+              {typingStats && getCompletionChartData() && (
+                <div className={styles.section}>
+                  <h2 className={styles.sectionTitle}>
+                    <span className={styles.keyword}>chart</span> TEST_COMPLETION
+                  </h2>
+                  <div className={styles.doughnutContainer}>
+                    <Doughnut data={getCompletionChartData()!} options={doughnutOptions} />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Personal Bests Cards */}
