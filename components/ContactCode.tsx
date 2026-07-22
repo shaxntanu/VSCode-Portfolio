@@ -6,8 +6,8 @@ const contactCategories = [
     items: [
       {
         social: 'E-Mail',
-        link: 'i.am.shantanu07@gmail.com',
-        href: 'mailto:i.am.shantanu07@gmail.com',
+        link: 'shaxntanu@gmail.com',
+        href: 'mailto:shaxntanu@gmail.com',
       },
       {
         social: 'LinkedIn',
