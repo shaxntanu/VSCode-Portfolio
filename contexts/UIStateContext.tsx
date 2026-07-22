@@ -63,6 +63,17 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
       setProblemsOpen(false);
       setSourceControlOpen(false);
       setExtensionsOpen(false);
+      
+      // Scroll to bottom to show the exit zen button after a short delay
+      setTimeout(() => {
+        const mainEditor = document.getElementById('main-editor');
+        if (mainEditor) {
+          mainEditor.scrollTo({
+            top: mainEditor.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
     } else {
       // Restore UI when exiting zen mode
       setSidebarVisible(true);

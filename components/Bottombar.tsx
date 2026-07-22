@@ -119,6 +119,9 @@ const Bottombar = () => {
     return (
       <footer className={styles.bottomBar}>
         <div className={styles.container}>
+          {leftItems.map(renderItem)}
+        </div>
+        <div className={styles.container}>
           <button
             className={`${styles.section} ${styles.modeButton} ${styles.active}`}
             onClick={() => setZenMode(!zenMode)}
@@ -127,6 +130,7 @@ const Bottombar = () => {
             <MdZoomOutMap className={styles.icon} />
             <span>Zen</span>
           </button>
+          {rightItems.map(renderItem)}
         </div>
       </footer>
     );
@@ -146,20 +150,22 @@ const Bottombar = () => {
           <MdZoomOutMap className={styles.icon} />
           <span>Zen</span>
         </button>
-        <button
+        <div
           className={`${styles.section} ${styles.priority11}`}
           onClick={() => router.push('/settings')}
           title="Click to open Settings"
+          style={{ cursor: 'pointer' }}
         >
           <span>[{currentTheme}]</span>
-        </button>
-        <button
+        </div>
+        <div
           className={`${styles.section} ${styles.priority12}`}
           onClick={() => router.push('/settings')}
           title="Click to open Settings"
+          style={{ cursor: 'pointer' }}
         >
           <span>[{liteMode ? 'Lite Mode' : 'Full Mode'}]</span>
-        </button>
+        </div>
         {rightItems.map(renderItem)}
       </div>
     </footer>
