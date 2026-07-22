@@ -255,10 +255,10 @@ export class LayoutCompiler {
   /**
    * Recompile layout with new config
    */
-  recompile(layout: LayoutModel, config: Partial<CompilerConfig>): LayoutModel {
+  recompile(_layout: LayoutModel, _config: Partial<CompilerConfig>): LayoutModel {
     // This would require storing the original content
     // For now, return the layout as-is
-    return layout;
+    return _layout;
   }
 }
 

@@ -4,7 +4,7 @@
  */
 
 import { createPortfolioContent } from '../PortfolioContentModel';
-import { HeadingNode, ParagraphNode, CertificateCardNode, SectionNode } from '../../types/layout';
+import { HeadingNode, ParagraphNode, SectionNode } from '../../types/layout';
 
 /**
  * Generate the structured content model for the certificates page

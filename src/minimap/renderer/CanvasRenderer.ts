@@ -134,7 +134,7 @@ export class CanvasRenderer {
   /**
    * Render a paragraph node
    */
-  private renderParagraph(node: LayoutNode, context: RenderContext, y: number, h: number): void {
+  private renderParagraph(node: LayoutNode, context: RenderContext, y: number, _h: number): void {
     if (!this.ctx) return;
 
     const { width } = context;
@@ -266,7 +266,7 @@ export class CanvasRenderer {
   /**
    * Render an image block node
    */
-  private renderImageBlock(node: LayoutNode, context: RenderContext, y: number, h: number): void {
+  private renderImageBlock(node: LayoutNode, context: RenderContext, y: number, _h: number): void {
     if (!this.ctx) return;
 
     const { width } = context;
@@ -281,7 +281,7 @@ export class CanvasRenderer {
   /**
    * Render a code block node
    */
-  private renderCodeBlock(node: LayoutNode, context: RenderContext, y: number, h: number): void {
+  private renderCodeBlock(node: LayoutNode, context: RenderContext, y: number, _h: number): void {
     if (!this.ctx) return;
 
     const { width } = context;
@@ -437,7 +437,7 @@ export class CanvasRenderer {
   /**
    * Render a spacer node (no-op)
    */
-  private renderSpacer(node: LayoutNode, context: RenderContext, y: number, h: number): void {
+  private renderSpacer(_node: LayoutNode, _context: RenderContext, _y: number, _h: number): void {
     // Spacer nodes are invisible
   }
 

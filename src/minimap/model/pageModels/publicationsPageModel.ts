@@ -4,7 +4,7 @@
  */
 
 import { createPortfolioContent } from '../PortfolioContentModel';
-import { HeadingNode, ParagraphNode, ResearchCardNode, SectionNode } from '../../types/layout';
+import { HeadingNode, ParagraphNode, SectionNode } from '../../types/layout';
 
 /**
  * Generate the structured content model for the publications page

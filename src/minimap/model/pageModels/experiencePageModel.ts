@@ -4,7 +4,7 @@
  */
 
 import { createPortfolioContent } from '../PortfolioContentModel';
-import { HeadingNode, ParagraphNode, ListItemNode, DividerNode, SectionNode, LayoutNode } from '../../types/layout';
+import { HeadingNode, SectionNode } from '../../types/layout';
 
 /**
  * Generate the structured content model for the experience page
