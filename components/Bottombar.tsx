@@ -120,12 +120,12 @@ const Bottombar = () => {
       <footer className={styles.bottomBar}>
         <div className={styles.container}>
           <button
-            className={`${styles.section} ${styles.modeButton} ${styles.zenExitButton}`}
+            className={`${styles.section} ${styles.modeButton} ${styles.active}`}
             onClick={() => setZenMode(!zenMode)}
             title="Exit Zen Mode"
           >
             <MdZoomOutMap className={styles.icon} />
-            <span>Exit Zen</span>
+            <span>Zen</span>
           </button>
         </div>
       </footer>
