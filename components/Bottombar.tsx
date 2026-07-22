@@ -123,7 +123,7 @@ const Bottombar = () => {
         </div>
         <div className={styles.container}>
           <button
-            className={`${styles.section} ${styles.modeButton} ${styles.active}`}
+            className={`${styles.section} ${styles.modeButton}`}
             onClick={() => setZenMode(!zenMode)}
             title="Exit Zen Mode"
           >
