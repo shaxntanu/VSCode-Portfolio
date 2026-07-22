@@ -134,7 +134,7 @@ export class CanvasRenderer {
   /**
    * Render a paragraph node
    */
-  private renderParagraph(node: LayoutNode, context: RenderContext, y: number, _h: number): void {
+  private renderParagraph(node: LayoutNode, context: RenderContext, y: number): void {
     if (!this.ctx) return;
 
     const { width } = context;
@@ -154,12 +154,13 @@ export class CanvasRenderer {
   /**
    * Render a project card node
    */
-  private renderProjectCard(node: LayoutNode, context: RenderContext, y: number, h: number): void {
+  private renderProjectCard(node: LayoutNode, context: RenderContext, y: number): void {
     if (!this.ctx) return;
 
     const { width, accentColor } = context;
     const hasThumbnail = (node as any).hasThumbnail || false;
     const hasDescription = (node as any).hasDescription || false;
+    const h = (node as any).height || 100;
 
     // Draw card outline
     this.ctx.strokeStyle = accentColor;
@@ -266,7 +267,7 @@ export class CanvasRenderer {
   /**
    * Render an image block node
    */
-  private renderImageBlock(node: LayoutNode, context: RenderContext, y: number, _h: number): void {
+  private renderImageBlock(node: LayoutNode, context: RenderContext, y: number): void {
     if (!this.ctx) return;
 
     const { width } = context;
@@ -281,7 +282,7 @@ export class CanvasRenderer {
   /**
    * Render a code block node
    */
-  private renderCodeBlock(node: LayoutNode, context: RenderContext, y: number, _h: number): void {
+  private renderCodeBlock(node: LayoutNode, context: RenderContext, y: number): void {
     if (!this.ctx) return;
 
     const { width } = context;
@@ -437,7 +438,7 @@ export class CanvasRenderer {
   /**
    * Render a spacer node (no-op)
    */
-  private renderSpacer(_node: LayoutNode, _context: RenderContext, _y: number, _h: number): void {
+  private renderSpacer(): void {
     // Spacer nodes are invisible
   }
 
@@ -459,11 +460,11 @@ export class CanvasRenderer {
         break;
 
       case 'paragraph':
-        this.renderParagraph(node, context, y, h);
+        this.renderParagraph(node, context, y);
         break;
 
       case 'project-card':
-        this.renderProjectCard(node, context, y, h);
+        this.renderProjectCard(node, context, y);
         break;
 
       case 'experience-card':
@@ -483,11 +484,11 @@ export class CanvasRenderer {
         break;
 
       case 'image-block':
-        this.renderImageBlock(node, context, y, h);
+        this.renderImageBlock(node, context, y);
         break;
 
       case 'code-block':
-        this.renderCodeBlock(node, context, y, h);
+        this.renderCodeBlock(node, context, y);
         break;
 
       case 'list-item':
@@ -523,7 +524,7 @@ export class CanvasRenderer {
         break;
 
       case 'spacer':
-        this.renderSpacer(node, context, y, h);
+        this.renderSpacer();
         break;
 
       case 'section':
