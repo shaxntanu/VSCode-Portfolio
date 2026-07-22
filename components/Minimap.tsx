@@ -1,23 +1,24 @@
 /**
- * VS Code-Style Minimap Component with Visual Navigator Mode
- * Supports both classic (line-based) and visual (layout-based) rendering
- * Feature flag: MINIMAP_MODE = "classic" | "visual"
+ * VS Code-Style Minimap Component - New Architecture
+ * Uses shared content model instead of DOM inspection
+ * Architecture: Model -> Compiler -> Renderer -> Viewport
  */
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Minimap.module.css';
-import {
-  analyzeContent,
-  renderMinimap,
-  LineModel,
-} from '@/utils/minimapContentAnalyzer';
-import {
-  analyzeVisualPage,
-  renderVisualMinimap,
-  VisualPageModel,
-} from '@/utils/visualMinimapRenderer';
-import { useMinimapMode } from '@/contexts/MinimapModeContext';
+
+// New architecture imports
+import { compileLayout } from '@/src/minimap/compiler/LayoutCompiler';
+import { renderMinimap } from '@/src/minimap/renderer/CanvasRenderer';
+import { createViewportRenderer } from '@/src/minimap/renderer/ViewportRenderer';
+import { createInteractionController } from '@/src/minimap/interaction/InteractionController';
+import { getAboutPageContent } from '@/src/minimap/model/pageModels/aboutPageModel';
+import { getExperiencePageContent } from '@/src/minimap/model/pageModels/experiencePageModel';
+import { getProjectsPageContent } from '@/src/minimap/model/pageModels/projectsPageModel';
+import { getPublicationsPageContent } from '@/src/minimap/model/pageModels/publicationsPageModel';
+import { getCertificatesPageContent } from '@/src/minimap/model/pageModels/certificatesPageModel';
+import { LayoutModel } from '@/src/minimap/types/layout';
 
 const MINIMAP_PAGES = [
   '/about',
@@ -27,151 +28,183 @@ const MINIMAP_PAGES = [
   '/certificates',
 ];
 
+// Page model registry - maps routes to their content models
+const PAGE_MODELS: Record<string, () => any> = {
+  '/about': getAboutPageContent,
+  '/experience': getExperiencePageContent,
+  '/projects': getProjectsPageContent,
+  '/publications': getPublicationsPageContent,
+  '/certificates': getCertificatesPageContent,
+};
+
 const Minimap = () => {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLElement | null>(null);
-  const lineModelRef = useRef<LineModel | null>(null);
-  const visualModelRef = useRef<VisualPageModel | null>(null);
+  const viewportRendererRef = useRef<ReturnType<typeof createViewportRenderer> | null>(null);
+  const interactionControllerRef = useRef<ReturnType<typeof createInteractionController> | null>(null);
+  const layoutModelRef = useRef<LayoutModel | null>(null);
   const rafRef = useRef<number | null>(null);
-  const resizeObserverRef = useRef<ResizeObserver | null>(null);
-  const analysisTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const recompileTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [viewportMetrics, setViewportMetrics] = useState({
     top: 0,
     height: 20,
   });
-  const [isDragging, setIsDragging] = useState(false);
 
-  const shouldShow = MINIMAP_PAGES.includes(router.pathname);
-  const { minimapMode } = useMinimapMode();
+  const shouldShow = MINIMAP_PAGES.includes(router.pathname) && !!PAGE_MODELS[router.pathname];
 
-  const getAccentColor = useCallback((): string => {
-    const computed = getComputedStyle(document.documentElement);
-    return computed.getPropertyValue('--accent-color').trim() || '#e6b450';
+  // Initialize viewport renderer
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const viewportRenderer = createViewportRenderer();
+    const viewportElement = viewportRenderer.init(containerRef.current);
+    viewportRendererRef.current = viewportRenderer;
+
+    // Initialize interaction controller
+    const interactionController = createInteractionController();
+    interactionControllerRef.current = interactionController;
+
+    // Wire up viewport interactions
+    viewportElement.addEventListener('mousedown', (e) => {
+      interactionController.handleDragStart();
+      viewportRenderer.setDragging(true);
+      e.preventDefault();
+    });
+
+    return () => {
+      viewportRenderer.destroy();
+      interactionController.destroy();
+    };
   }, []);
 
-  const updateViewport = useCallback(() => {
-    const content = contentRef.current;
+  // Compile layout when page changes
+  useEffect(() => {
+    if (!shouldShow) return;
+
+    const pageModel = PAGE_MODELS[router.pathname];
+    if (!pageModel) return;
+
+    // Get content model
+    const content = pageModel();
+    
+    // Compile layout
+    const layout = compileLayout(content);
+    layoutModelRef.current = layout;
+
+    // Render to canvas
+    if (canvasRef.current) {
+      renderMinimap(canvasRef.current, layout);
+    }
+
+    // Update viewport
+    if (viewportRendererRef.current && interactionControllerRef.current) {
+      const metrics = interactionControllerRef.current.calculateViewportMetrics();
+      setViewportMetrics(metrics);
+      viewportRendererRef.current.update(metrics);
+    }
+  }, [router.pathname, shouldShow]);
+
+  // Handle scroll events
+  useEffect(() => {
+    const interactionController = interactionControllerRef.current;
+    const viewportRenderer = viewportRendererRef.current;
+    if (!interactionController || !viewportRenderer) return;
+
+    const handleScroll = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        const metrics = interactionController.calculateViewportMetrics();
+        setViewportMetrics(metrics);
+        viewportRenderer.update(metrics);
+      });
+    };
+
+    const content = document.getElementById('main-editor');
     if (!content) return;
 
-    const { scrollTop, scrollHeight, clientHeight } = content;
+    content.addEventListener('scroll', handleScroll, { passive: true });
 
-    if (scrollHeight <= clientHeight) {
-      setViewportMetrics({ top: 0, height: 100 });
-      return;
-    }
-
-    const viewportH = (clientHeight / scrollHeight) * 100;
-    const maxScroll = scrollHeight - clientHeight;
-    const scrollRatio = scrollTop / maxScroll;
-    const viewportTop = scrollRatio * (100 - viewportH);
-
-    setViewportMetrics({
-      top: Math.max(0, Math.min(viewportTop, 100 - viewportH)),
-      height: Math.min(viewportH, 100),
-    });
+    return () => {
+      content.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
-  const handleScroll = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(updateViewport);
-  }, [updateViewport]);
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (recompileTimeoutRef.current) {
+        clearTimeout(recompileTimeoutRef.current);
+      }
 
-  const performAnalysis = useCallback(() => {
-    const content = contentRef.current;
-    const canvas = canvasRef.current;
-    if (!content || !canvas) return;
+      recompileTimeoutRef.current = setTimeout(() => {
+        const pageModel = PAGE_MODELS[router.pathname];
+        if (pageModel && layoutModelRef.current) {
+          const content = pageModel();
+          const layout = compileLayout(content);
+          layoutModelRef.current = layout;
 
-    const accentColor = getAccentColor();
+          if (canvasRef.current) {
+            renderMinimap(canvasRef.current, layout);
+          }
+        }
+      }, 200);
+    };
 
-    if (minimapMode === 'classic') {
-      const model = analyzeContent(content);
-      lineModelRef.current = model;
-      renderMinimap(canvas, model, accentColor);
-    } else {
-      const model = analyzeVisualPage(content);
-      visualModelRef.current = model;
-      renderVisualMinimap(canvas, model, accentColor);
-    }
-  }, [getAccentColor, minimapMode]);
+    window.addEventListener('resize', handleResize);
 
-  const handleResize = useCallback(() => {
-    if (resizeTimeoutRef.current) {
-      clearTimeout(resizeTimeoutRef.current);
-    }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (recompileTimeoutRef.current) {
+        clearTimeout(recompileTimeoutRef.current);
+      }
+    };
+  }, [router.pathname]);
 
-    resizeTimeoutRef.current = setTimeout(() => {
-      performAnalysis();
-    }, 200);
-  }, [performAnalysis]);
+  // Handle theme changes
+  useEffect(() => {
+    const handleThemeChange = () => {
+      if (canvasRef.current && layoutModelRef.current) {
+        renderMinimap(canvasRef.current, layoutModelRef.current);
+      }
+    };
 
-  const handleThemeChange = useCallback(() => {
-    const canvas = canvasRef.current;
-    const accentColor = getAccentColor();
+    window.addEventListener('themeChanged', handleThemeChange);
 
-    if (minimapMode === 'classic') {
-      const model = lineModelRef.current;
-      if (!canvas || !model) return;
-      renderMinimap(canvas, model, accentColor);
-    } else {
-      const model = visualModelRef.current;
-      if (!canvas || !model) return;
-      renderVisualMinimap(canvas, model, accentColor);
-    }
-  }, [getAccentColor, minimapMode]);
+    return () => {
+      window.removeEventListener('themeChanged', handleThemeChange);
+    };
+  }, []);
 
+  // Handle minimap click
   const handleMinimapClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isDragging || !containerRef.current || !contentRef.current) return;
+      if (!containerRef.current || !interactionControllerRef.current) return;
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const clickY = e.clientY - rect.top;
-      const clickPct = clickY / rect.height;
-
-      const content = contentRef.current;
-      const maxScroll = content.scrollHeight - content.clientHeight;
-      const targetScroll = clickPct * maxScroll;
-
-      content.scrollTo({
-        top: Math.max(0, Math.min(targetScroll, maxScroll)),
-        behavior: 'smooth',
-      });
-    },
-    [isDragging]
-  );
-
-  const handleViewportMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      setIsDragging(true);
-      e.preventDefault();
-      e.stopPropagation();
+      interactionControllerRef.current.handleClick(
+        containerRef.current,
+        e.clientY
+      );
     },
     []
   );
 
+  // Handle viewport drag
   useEffect(() => {
-    if (!isDragging) return;
+    const interactionController = interactionControllerRef.current;
+    const viewportRenderer = viewportRendererRef.current;
+    if (!interactionController || !viewportRenderer) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current || !contentRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const moveY = e.clientY - rect.top;
-      const movePct = moveY / rect.height;
-
-      const content = contentRef.current;
-      const maxScroll = content.scrollHeight - content.clientHeight;
-      const targetScroll = movePct * maxScroll;
-
-      content.scrollTop = Math.max(0, Math.min(targetScroll, maxScroll));
+      if (!containerRef.current) return;
+      interactionController.handleDragMove(containerRef.current, e.clientY);
     };
 
     const handleMouseUp = () => {
-      setIsDragging(false);
+      interactionController.handleDragEnd();
+      viewportRenderer.setDragging(false);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -181,78 +214,14 @@ const Minimap = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging]);
-
-  useEffect(() => {
-    const content = document.getElementById('main-editor');
-    if (!content) return;
-
-    contentRef.current = content;
-
-    content.addEventListener('scroll', handleScroll, { passive: true });
-    updateViewport();
-
-    return () => {
-      content.removeEventListener('scroll', handleScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [handleScroll, updateViewport]);
-
-  useEffect(() => {
-    const content = contentRef.current;
-    if (!content) return;
-
-    resizeObserverRef.current = new ResizeObserver(handleResize);
-    resizeObserverRef.current.observe(content);
-
-    return () => {
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.disconnect();
-      }
-    };
-  }, [handleResize]);
-
-  useEffect(() => {
-    if (!shouldShow) return;
-
-    if (analysisTimeoutRef.current) {
-      clearTimeout(analysisTimeoutRef.current);
-    }
-
-    analysisTimeoutRef.current = setTimeout(() => {
-      performAnalysis();
-    }, 300);
-
-    return () => {
-      if (analysisTimeoutRef.current) {
-        clearTimeout(analysisTimeoutRef.current);
-      }
-    };
-  }, [router.pathname, shouldShow, performAnalysis]);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
-
-  useEffect(() => {
-    window.addEventListener('themeChanged', handleThemeChange);
-    return () => window.removeEventListener('themeChanged', handleThemeChange);
-  }, [handleThemeChange]);
-
-  // Keyboard shortcut: Ctrl+Alt+M to toggle minimap mode
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.altKey && e.key === 'm') {
-        e.preventDefault();
-        // This will be handled by Layout component
-        window.dispatchEvent(new CustomEvent('toggleMinimapMode'));
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Update viewport when metrics change
+  useEffect(() => {
+    if (viewportRendererRef.current) {
+      viewportRendererRef.current.update(viewportMetrics);
+    }
+  }, [viewportMetrics]);
 
   if (!shouldShow) return null;
 
@@ -267,15 +236,6 @@ const Minimap = () => {
         width={80}
         height={600}
         className={styles.canvas}
-      />
-      <div
-        ref={viewportRef}
-        className={`${styles.viewport} ${isDragging ? styles.dragging : ''}`}
-        style={{
-          top: `${viewportMetrics.top}%`,
-          height: `${viewportMetrics.height}%`,
-        }}
-        onMouseDown={handleViewportMouseDown}
       />
     </div>
   );
