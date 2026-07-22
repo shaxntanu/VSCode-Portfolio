@@ -31,6 +31,7 @@ interface LayoutProps {
 const LayoutContent = ({ children }: LayoutProps) => {
   const router = useRouter();
   const [, setScreenKey] = useState(0);
+  const [isLiteMode, setIsLiteMode] = useState(true);
   const { 
     zenMode, 
     focusMode, 
@@ -44,6 +45,33 @@ const LayoutContent = ({ children }: LayoutProps) => {
     setStatsModalOpen,
     statsModalOpen,
   } = useUIState();
+
+  // Check lite mode on mount and listen for changes
+  useEffect(() => {
+    const updateLiteMode = () => {
+      const savedLiteMode = localStorage.getItem('liteMode');
+      const liteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+      setIsLiteMode(liteMode);
+      
+      // Disable minimap in lite mode
+      if (liteMode && minimapVisible) {
+        setMinimapVisible(false);
+      }
+    };
+
+    updateLiteMode();
+    
+    // Listen for lite mode changes
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'liteMode') {
+        updateLiteMode();
+      }
+    });
+
+    return () => {
+      window.removeEventListener('storage', updateLiteMode);
+    };
+  }, [minimapVisible, setMinimapVisible]);
 
   // Force re-render when screen/DPI changes
   useEffect(() => {
@@ -132,7 +160,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
                 })}
               </div>
             </main>
-            {minimapVisible && !zenMode && !focusMode && <Minimap />}
+            {minimapVisible && !zenMode && !focusMode && !isLiteMode && <Minimap />}
           </div>
           <Terminal />
           <ProblemsPanel />
