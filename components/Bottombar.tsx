@@ -114,6 +114,24 @@ const Bottombar = () => {
     );
   };
 
+  // When in zen mode, show only the exit button
+  if (zenMode) {
+    return (
+      <footer className={styles.bottomBar}>
+        <div className={styles.container}>
+          <button
+            className={`${styles.section} ${styles.modeButton} ${styles.zenExitButton}`}
+            onClick={() => setZenMode(!zenMode)}
+            title="Exit Zen Mode"
+          >
+            <MdZoomOutMap className={styles.icon} />
+            <span>Exit Zen</span>
+          </button>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className={styles.bottomBar}>
       <div className={styles.container}>

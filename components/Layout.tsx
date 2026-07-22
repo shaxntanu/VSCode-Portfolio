@@ -157,14 +157,14 @@ const LayoutContent = ({ children }: LayoutProps) => {
             </main>
             {minimapVisible && !zenMode && !isLiteMode && <Minimap />}
           </div>
-          <Terminal />
-          <ProblemsPanel />
+          {!zenMode && <Terminal />}
+          {!zenMode && <ProblemsPanel />}
           {statsModalOpen && <PortfolioStatsModal />}
         </div>
       </div>
-      {!zenMode && bottombarVisible && <Bottombar />}
-      <CommandPalette />
-      <CommandPaletteShiftP />
+      <Bottombar />
+      {!zenMode && <CommandPalette />}
+      {!zenMode && <CommandPaletteShiftP />}
       <div id="dock-icon" className={styles.dockIcon} style={{ display: 'none' }}>
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="8" fill="url(#gradient)" />

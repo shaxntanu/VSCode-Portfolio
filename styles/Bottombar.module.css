@@ -70,6 +70,17 @@
     background: rgb(50, 140, 220);
 }
 
+.zenExitButton {
+    background: rgb(200, 50, 50);
+    color: rgb(255, 255, 255);
+    margin: 0 auto;
+}
+
+.zenExitButton:hover {
+    background: rgb(220, 70, 70);
+    color: rgb(255, 255, 255);
+}
+
 /* Priority-based responsive hiding */
 /* Priority 1-3: Always visible (critical items) */
 .priority1,
