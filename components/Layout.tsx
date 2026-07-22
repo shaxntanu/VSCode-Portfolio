@@ -36,7 +36,6 @@ const LayoutContent = ({ children }: LayoutProps) => {
     zenMode, 
     sidebarVisible, 
     minimapVisible, 
-    bottombarVisible,
     setZenMode,
     setSidebarVisible,
     setMinimapVisible,
