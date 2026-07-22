@@ -74,6 +74,11 @@ const contactCategories = [
         link: 'shaxntanu',
         href: 'https://monkeytype.com/profile/shaxntanu',
       },
+      {
+        social: 'VSCO',
+        link: 'shaxntanu',
+        href: 'https://vsco.co/shaxntanu',
+      },
     ],
   },
 ];
