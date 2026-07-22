@@ -1,13 +1,9 @@
-import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface UIStateContextType {
   // Zen Mode
   zenMode: boolean;
   setZenMode: (enabled: boolean) => void;
-
-  // Focus Mode
-  focusMode: boolean;
-  setFocusMode: (enabled: boolean) => void;
 
   // Terminal
   terminalOpen: boolean;
@@ -46,7 +42,6 @@ const UIStateContext = createContext<UIStateContextType | undefined>(undefined);
 
 export const UIStateProvider = ({ children }: { children: ReactNode }) => {
   const [zenMode, setZenMode] = useState(false);
-  const [focusMode, setFocusMode] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [terminalHeight, setTerminalHeight] = useState(250);
   const [problemsOpen, setProblemsOpen] = useState(false);
@@ -58,7 +53,7 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
   const [bottombarVisible, setBottombarVisible] = useState(true);
 
   // When zen mode is enabled, hide all UI chrome
-  const handleZenMode = useCallback((enabled: boolean) => {
+  const handleZenMode = (enabled: boolean) => {
     setZenMode(enabled);
     if (enabled) {
       setSidebarVisible(false);
@@ -74,26 +69,13 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
       setMinimapVisible(true);
       setBottombarVisible(true);
     }
-  }, []);
-
-  // When focus mode is enabled, dim UI chrome but keep tabs
-  const handleFocusMode = useCallback((enabled: boolean) => {
-    setFocusMode(enabled);
-    if (enabled) {
-      setTerminalOpen(false);
-      setProblemsOpen(false);
-      setSourceControlOpen(false);
-      setExtensionsOpen(false);
-    }
-  }, []);
+  };
 
   return (
     <UIStateContext.Provider
       value={{
         zenMode,
         setZenMode: handleZenMode,
-        focusMode,
-        setFocusMode: handleFocusMode,
         terminalOpen,
         setTerminalOpen,
         terminalHeight,

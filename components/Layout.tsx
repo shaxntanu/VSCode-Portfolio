@@ -34,12 +34,10 @@ const LayoutContent = ({ children }: LayoutProps) => {
   const [isLiteMode, setIsLiteMode] = useState(true);
   const { 
     zenMode, 
-    focusMode, 
     sidebarVisible, 
     minimapVisible, 
     bottombarVisible,
     setZenMode,
-    setFocusMode,
     setSidebarVisible,
     setMinimapVisible,
     setStatsModalOpen,
@@ -113,16 +111,13 @@ const LayoutContent = ({ children }: LayoutProps) => {
   // Listen for command palette events
   useEffect(() => {
     const handleToggleZenMode = () => setZenMode(!zenMode);
-    const handleToggleFocusMode = () => setFocusMode(!focusMode);
 
     window.addEventListener('toggleZenMode', handleToggleZenMode);
-    window.addEventListener('toggleFocusMode', handleToggleFocusMode);
 
     return () => {
       window.removeEventListener('toggleZenMode', handleToggleZenMode);
-      window.removeEventListener('toggleFocusMode', handleToggleFocusMode);
     };
-  }, [zenMode, focusMode, setZenMode, setFocusMode]);
+  }, [zenMode, setZenMode]);
 
   useEffect(() => {
     const handleToggleMinimap = () => setMinimapVisible(!minimapVisible);
@@ -144,7 +139,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
     <>
       {!zenMode && <MobileNotification />}
       {!zenMode && <Titlebar />}
-      <div className={`${styles.main} ${zenMode ? styles.zenMode : ''} ${focusMode ? styles.focusMode : ''}`} id="window-container">
+      <div className={`${styles.main} ${zenMode ? styles.zenMode : ''}`} id="window-container">
         {sidebarVisible && !zenMode && <Sidebar />}
         {sidebarVisible && !zenMode && <Explorer />}
         <div style={{ flex: 1, minWidth: 0, position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
@@ -160,7 +155,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
                 })}
               </div>
             </main>
-            {minimapVisible && !zenMode && !focusMode && !isLiteMode && <Minimap />}
+            {minimapVisible && !zenMode && !isLiteMode && <Minimap />}
           </div>
           <Terminal />
           <ProblemsPanel />

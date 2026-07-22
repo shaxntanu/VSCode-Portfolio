@@ -2,6 +2,11 @@ import { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 
 export default function Document() {
+  // Get current date in format "Mon YYYY"
+  const currentDate = new Date();
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const buildDate = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
   return (
     <Html lang="en">
       <Head>
@@ -11,6 +16,7 @@ export default function Document() {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Shantanu" />
+        <meta name="build-date" content={buildDate} />
         <link rel="apple-touch-icon" href="/logos/vscode_icon.svg" />
       </Head>
       <body>

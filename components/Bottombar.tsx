@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { statusBarItems } from '@/data/statusbar';
 import { useUIState } from '@/contexts/UIStateContext';
 import { MdZoomOutMap } from 'react-icons/md';
-import { BiTargetLock } from 'react-icons/bi';
 import styles from '@/styles/Bottombar.module.css';
 
 const Bottombar = () => {
+  const router = useRouter();
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
   const [liteMode, setLiteMode] = useState(true);
-  const { zenMode, setZenMode, focusMode, setFocusMode } = useUIState();
+  const [buildDate, setBuildDate] = useState('Jun 2026');
+  const { zenMode, setZenMode } = useUIState();
 
   useEffect(() => {
     const updateThemeAndMode = () => {
@@ -48,6 +50,27 @@ const Bottombar = () => {
     };
   }, []);
 
+  // Update build date dynamically
+  useEffect(() => {
+    const updateBuildDate = () => {
+      const buildDateMeta = document.querySelector('meta[name="build-date"]');
+      if (buildDateMeta) {
+        const date = buildDateMeta.getAttribute('content');
+        if (date) {
+          setBuildDate(`Updated: ${date}`);
+        }
+      }
+    };
+
+    // Check immediately
+    updateBuildDate();
+
+    // Check periodically for updates
+    const interval = setInterval(updateBuildDate, 60000); // Check every minute
+
+    return () => clearInterval(interval);
+  }, []);
+
   const leftItems = statusBarItems.filter(item => item.side === 'left').sort((a, b) => a.priority - b.priority);
   const rightItems = statusBarItems.filter(item => item.side === 'right').sort((a, b) => a.priority - b.priority);
 
@@ -60,6 +83,14 @@ const Bottombar = () => {
     );
 
     const className = `${styles.section} ${styles[`priority${item.priority}`]}`;
+
+    if (item.id === 'last-updated') {
+      return (
+        <div key={item.id} className={className} title={item.tooltip}>
+          <span>{buildDate}</span>
+        </div>
+      );
+    }
 
     if (item.link) {
       return (
@@ -98,19 +129,19 @@ const Bottombar = () => {
           <span>Zen</span>
         </button>
         <button
-          className={`${styles.section} ${styles.modeButton} ${focusMode ? styles.active : ''}`}
-          onClick={() => setFocusMode(!focusMode)}
-          title={focusMode ? 'Exit Focus Mode' : 'Enter Focus Mode (Dims UI)'}
+          className={`${styles.section} ${styles.priority11}`}
+          onClick={() => router.push('/settings')}
+          title="Click to open Settings"
         >
-          <BiTargetLock className={styles.icon} />
-          <span>Focus</span>
-        </button>
-        <div className={`${styles.section} ${styles.priority11}`} title="Current Theme">
           <span>[{currentTheme}]</span>
-        </div>
-        <div className={`${styles.section} ${styles.priority12}`} title="Current Mode">
+        </button>
+        <button
+          className={`${styles.section} ${styles.priority12}`}
+          onClick={() => router.push('/settings')}
+          title="Click to open Settings"
+        >
           <span>[{liteMode ? 'Lite Mode' : 'Full Mode'}]</span>
-        </div>
+        </button>
         {rightItems.map(renderItem)}
       </div>
     </footer>
