@@ -30,6 +30,11 @@ const contactCategories = [
         href: 'https://www.circuitlab.com/user/shaxntanu/',
       },
       {
+        social: 'Tinkercad',
+        link: 'shaxntanu',
+        href: 'https://www.tinkercad.com/users/hhBNMRS8o1o?type=circuits',
+      },
+      {
         social: 'Hackaday',
         link: 'shaxntanu',
         href: 'https://hackaday.io/shaxntanu',
