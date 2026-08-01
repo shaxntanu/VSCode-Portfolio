@@ -4,7 +4,8 @@
  * VS Code Explorer-style interface
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Component } from '@/types';
 import { VscCircuitBoard, VscInfo } from 'react-icons/vsc';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -202,86 +203,125 @@ const ContentArea = ({
         )}
       </div>
 
-      {/* Component Detail Drawer with Backdrop */}
-      <AnimatePresence>
-        {selectedComponent && (
-          <>
-            {/* Subtle backdrop overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className={styles.drawerBackdrop}
-              onClick={() => setSelectedComponent(null)}
-            />
-            
-            {/* Glass drawer */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 40 }}
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-              className={styles.detailDrawer}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className={styles.drawerHeader}>
-                <h3>{selectedComponent.name}</h3>
-                <button
-                  className={styles.closeDrawer}
-                  onClick={() => setSelectedComponent(null)}
-                >
-                  ×
-                </button>
-              </div>
-              <div className={styles.drawerContent}>
-                <div className={styles.detailRow}>
-                  <span className={styles.detailLabel}>Role:</span>
-                  <span className={styles.detailValue}>
-                    {selectedComponent.role}
-                  </span>
-                </div>
-                <div className={styles.detailRow}>
-                  <span className={styles.detailLabel}>Interface:</span>
-                  <span className={styles.detailValue}>
-                    {selectedComponent.interface}
-                  </span>
-                </div>
-                <div className={styles.detailRow}>
-                  <span className={styles.detailLabel}>Voltage:</span>
-                  <span className={styles.detailValue}>
-                    {selectedComponent.voltage}
-                  </span>
-                </div>
-                <div className={styles.detailRow}>
-                  <span className={styles.detailLabel}>Quantity:</span>
-                  <span className={styles.detailValue}>
-                    {selectedComponent.quantity}
-                  </span>
-                </div>
-                {selectedComponent.price && (
-                  <div className={styles.detailRow}>
-                    <span className={styles.detailLabel}>Price:</span>
-                    <span className={styles.detailValue}>
-                      {selectedComponent.price}
-                    </span>
-                  </div>
-                )}
-                {selectedComponent.notes && (
-                  <div className={styles.detailRow}>
-                    <span className={styles.detailLabel}>Notes:</span>
-                    <span className={styles.detailValue}>
-                      {selectedComponent.notes}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Component Detail Drawer - Rendered via Portal */}
+      <ComponentDetailDrawer 
+        selectedComponent={selectedComponent}
+        onClose={() => setSelectedComponent(null)}
+      />
     </>
   );
+};
+
+// Component Detail Drawer - Rendered via Portal to escape stacking contexts
+const ComponentDetailDrawer = ({
+  selectedComponent,
+  onClose
+}: {
+  selectedComponent: Component | null;
+  onClose: () => void;
+}) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedComponent) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [selectedComponent, onClose]);
+
+  if (!mounted) return null;
+
+  const drawerContent = (
+    <AnimatePresence>
+      {selectedComponent && (
+        <>
+          {/* Backdrop overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className={styles.drawerBackdrop}
+            onClick={onClose}
+          />
+          
+          {/* Drawer panel */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 40 }}
+            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+            className={styles.detailDrawer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.drawerHeader}>
+              <h3>{selectedComponent.name}</h3>
+              <button
+                className={styles.closeDrawer}
+                onClick={onClose}
+                aria-label="Close drawer"
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.drawerContent}>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Role:</span>
+                <span className={styles.detailValue}>
+                  {selectedComponent.role}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Interface:</span>
+                <span className={styles.detailValue}>
+                  {selectedComponent.interface}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Voltage:</span>
+                <span className={styles.detailValue}>
+                  {selectedComponent.voltage}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Quantity:</span>
+                <span className={styles.detailValue}>
+                  {selectedComponent.quantity}
+                </span>
+              </div>
+              {selectedComponent.price && (
+                <div className={styles.detailRow}>
+                  <span className={styles.detailLabel}>Price:</span>
+                  <span className={styles.detailValue}>
+                    {selectedComponent.price}
+                  </span>
+                </div>
+              )}
+              {selectedComponent.notes && (
+                <div className={styles.detailRow}>
+                  <span className={styles.detailLabel}>Notes:</span>
+                  <span className={styles.detailValue}>
+                    {selectedComponent.notes}
+                  </span>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+
+  return createPortal(drawerContent, document.body);
 };
 
 export default BOMViewer;
