@@ -73,16 +73,26 @@
 /* Telemetry display with smooth animations */
 .telemetry {
     position: relative;
-    min-width: 120px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    height: 24px;
     justify-content: center;
     background: rgba(100, 200, 255, 0.1);
     border-left: 2px solid var(--accent-color);
     color: rgb(100, 200, 255);
     font-weight: 500;
+    overflow: hidden;
 }
 
 .telemetry:hover {
     background: rgba(100, 200, 255, 0.15);
+}
+
+/* Ensure smooth transitions without layout shift */
+.telemetry span {
+    display: block;
+    white-space: nowrap;
 }
 
 /* Priority-based responsive hiding */

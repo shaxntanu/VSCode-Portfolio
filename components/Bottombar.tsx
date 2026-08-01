@@ -160,13 +160,14 @@ const Bottombar = () => {
           className={`${styles.section} ${styles.telemetry}`}
           title="Portfolio telemetry - Auto-generated from project data"
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.span
               key={currentMetricIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              style={{ position: 'absolute', width: '100%', textAlign: 'center' }}
             >
               {telemetryMetrics[currentMetricIndex]}
             </motion.span>
