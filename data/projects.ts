@@ -518,7 +518,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: 'Receives Bluetooth commands and controls servos',
-        price: '$4.00'
+        price: '₹380'
       },
       {
         name: 'HC-06 Bluetooth Module',
@@ -527,7 +527,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: 'Bluetooth serial interface for remote control',
-        price: '$3.00'
+        price: '₹285'
       },
       {
         name: 'SG90/MG90S Servo Motors',
@@ -536,7 +536,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 2,
         notes: 'Physical switch togglers on GPIO14/12 (D5/D6)',
-        price: '$4.00'
+        price: '₹380'
       },
       {
         name: '5V External Power Supply',
@@ -545,7 +545,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 1,
         notes: 'Powers servos independently from ESP',
-        price: '$5.00'
+        price: '₹475'
       },
       {
         name: 'Breadboard & Wires',
@@ -554,11 +554,11 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 1,
         notes: 'For circuit connections',
-        price: '$3.00'
+        price: '₹285'
       },
     ],
     architecture: 'Bluetooth App → [HC-06] → [UART: ESP8266] → [PWM GPIO14/12: Servos] → Physical switch toggle',
-    totalCost: '$19.00'
+    totalCost: '₹1,805'
   },
   {
     title: 'RFID Attendance System',
@@ -577,7 +577,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 1,
         notes: 'Handles RFID reading and timekeeping',
-        price: '$10.00'
+        price: '₹950'
       },
       {
         name: 'ESP32 Development Board',
@@ -586,7 +586,7 @@ export const projects: Project[] = [
         voltage: '3.3V/5V',
         quantity: 1,
         notes: 'Manages OLED, SD card, and attendance logic',
-        price: '$5.00'
+        price: '₹475'
       },
       {
         name: 'MFRC522 RFID Reader',
@@ -595,7 +595,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: 'Reads RFID cards on Arduino SPI pins',
-        price: '$3.00'
+        price: '₹285'
       },
       {
         name: 'DS3231 RTC Module',
@@ -604,7 +604,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 1,
         notes: 'Accurate timestamps with battery backup',
-        price: '$2.00'
+        price: '₹190'
       },
       {
         name: 'SSD1306 OLED Display',
@@ -613,7 +613,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: '128x64 display on ESP32 GPIO21/22',
-        price: '$4.00'
+        price: '₹380'
       },
       {
         name: 'SD Card Module',
@@ -622,7 +622,7 @@ export const projects: Project[] = [
         voltage: '3.3V-5V',
         quantity: 1,
         notes: 'Stores student and attendance CSV files',
-        price: '$2.00'
+        price: '₹190'
       },
       {
         name: 'RGB LED (Common Cathode)',
@@ -631,7 +631,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: 'Visual feedback on ESP32 GPIO25/26/27',
-        price: '$0.50'
+        price: '₹48'
       },
       {
         name: 'Active Buzzer',
@@ -640,7 +640,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 1,
         notes: 'Attendance confirmation on ESP32 GPIO33',
-        price: '$0.50'
+        price: '₹48'
       },
       {
         name: '6mm Tactile Button',
@@ -649,7 +649,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: 'Add user & reset functions on ESP32 GPIO14',
-        price: '$0.10'
+        price: '₹10'
       },
       {
         name: 'Resistors (330Ω, 10kΩ)',
@@ -658,7 +658,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 5,
         notes: 'For LED protection and button pull-ups',
-        price: '$0.20'
+        price: '₹19'
       },
       {
         name: 'Breadboard & Wires',
@@ -667,7 +667,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 1,
         notes: 'For circuit connections',
-        price: '$5.00'
+        price: '₹475'
       },
       {
         name: 'RFID Cards',
@@ -676,7 +676,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 10,
         notes: 'For attendance tracking',
-        price: '$5.00'
+        price: '₹475'
       },
       {
         name: 'MicroSD Card',
@@ -685,11 +685,11 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 1,
         notes: 'Stores CSV data files',
-        price: '$3.00'
+        price: '₹285'
       },
     ],
     architecture: 'Arduino Nano [MFRC522 RFID + DS3231 RTC] → [UART: ESP32] → [I2C: OLED] → [SPI: SD Card] → [GPIO: RGB LED + Buzzer + Button] → Attendance logging',
-    totalCost: '$40.30'
+    totalCost: '₹3,829'
   },
   {
     title: 'Shape Detection System',
