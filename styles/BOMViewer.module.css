@@ -135,7 +135,7 @@
     cursor: pointer;
     outline: none;
     transition: all 0.2s ease;
-    display: none; /* Hidden - replaced with custom dropdown */
+    min-width: 160px;
 }
 
 .sortSelect:hover {

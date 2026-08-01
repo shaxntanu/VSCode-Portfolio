@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { VscGithubInverted, VscCircuitBoard } from 'react-icons/vsc';
+import { VscGithubInverted } from 'react-icons/vsc';
 import { SiVercel, SiNotion } from 'react-icons/si';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -14,7 +14,6 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
-  const [bomOpen, setBomOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
   
@@ -69,7 +68,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
         
-        {(linkIcon || reportIcon || (project.components && project.components.length > 0)) && (
+        {(linkIcon || reportIcon) && (
           <div className={styles.linkIcons}>
             {linkIcon && (
               <a
@@ -95,32 +94,11 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
                 {reportIcon}
               </a>
             )}
-            {project.components && project.components.length > 0 && (
-              <>
-                <button
-                  onClick={() => setBomOpen(!bomOpen)}
-                  className={`${styles.iconLink} ${styles.bomButton}`}
-                  style={{ color: bomOpen ? categoryConfig.color : 'rgba(255, 255, 255, 0.6)' }}
-                  title="View Bill of Materials"
-                >
-                  <VscCircuitBoard />
-                </button>
-                
-                {/* Sort Dropdown - Custom component matching GithubPage pattern */}
-                <div className={styles.sortDropdownContainer} style={{ '--sort-accent': categoryConfig.color } as React.CSSProperties}>
-                  <SortDropdown 
-                    sortBy={sortBy} 
-                    setSortBy={setSortBy}
-                    accentColor={categoryConfig.color}
-                  />
-                </div>
-              </>
-            )}
           </div>
         )}
 
-        {/* BOM Dropdown - rendered inline inside card */}
-        {project.components && project.components.length > 0 && bomOpen && (
+        {/* BOM Dropdown - always shown when components exist */}
+        {project.components && project.components.length > 0 && (
           <BOMViewer 
             components={project.components} 
             architecture={project.architecture}
@@ -136,54 +114,3 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
 };
 
 export default ProjectCard;
-
-// Custom Sort Dropdown Component for use in ProjectCard
-const SortDropdown = ({ 
-  sortBy, 
-  setSortBy,
-  accentColor
-}: { 
-  sortBy: 'name' | 'interface' | 'voltage';
-  setSortBy: (sort: 'name' | 'interface' | 'voltage') => void;
-  accentColor?: string;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  const sortOptions = [
-    { value: 'name', label: 'Name' },
-    { value: 'interface', label: 'Interface' },
-    { value: 'voltage', label: 'Voltage' },
-  ];
-
-  const handleSelect = (value: 'name' | 'interface' | 'voltage') => {
-    setSortBy(value);
-    setIsOpen(false);
-  };
-
-  return (
-    <div className={styles.cardSortDropdown}>
-      <button
-        className={styles.cardSortButton}
-        onClick={() => setIsOpen(!isOpen)}
-        style={isOpen || sortBy !== 'name' ? { color: accentColor } : { color: 'rgba(255, 255, 255, 0.6)' }}
-      >
-        ⇅
-      </button>
-      
-      {isOpen && (
-        <div className={styles.cardSortMenu}>
-          {sortOptions.map((option) => (
-            <button
-              key={option.value}
-              className={`${styles.cardSortOption} ${sortBy === option.value ? styles.cardSortSelected : ''}`}
-              onClick={() => handleSelect(option.value as any)}
-              style={sortBy === option.value ? { color: accentColor } : {}}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};

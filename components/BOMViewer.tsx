@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import { Component } from '@/types';
-import { VscChevronRight, VscCircuitBoard, VscInfo } from 'react-icons/vsc';
+import { VscCircuitBoard, VscInfo } from 'react-icons/vsc';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from '@/styles/BOMViewer.module.css';
 
@@ -14,8 +14,6 @@ interface BOMViewerProps {
   components: Component[];
   architecture?: string;
   totalCost?: string;
-  isOpen?: boolean;
-  onToggle?: (open: boolean) => void;
   isInline?: boolean;
   sortBy?: 'name' | 'interface' | 'voltage';
   setSortBy?: (sort: 'name' | 'interface' | 'voltage') => void;
@@ -25,24 +23,19 @@ const BOMViewer = ({
   components, 
   architecture, 
   totalCost, 
-  isOpen: externalIsOpen, 
-  onToggle, 
   isInline,
-  sortBy: externalSortBy
+  sortBy: externalSortBy,
+  setSortBy: externalSetSortBy
 }: BOMViewerProps) => {
-  const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
-  const setIsOpen = onToggle || setInternalIsOpen;
-  
-  const [internalSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
+  const [internalSortBy, setInternalSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const sortBy = externalSortBy !== undefined ? externalSortBy : internalSortBy;
-  // setSortBy not needed - controlled by parent ProjectCard
+  const setSortBy = externalSetSortBy || setInternalSortBy;
   
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   // If inline mode, render content directly inside card
-  if (isInline && isOpen) {
+  if (isInline) {
     return (
       <motion.div
         initial={{ opacity: 0, height: 0 }}
@@ -57,6 +50,7 @@ const BOMViewer = ({
           selectedComponent={selectedComponent}
           setSelectedComponent={setSelectedComponent}
           sortBy={sortBy}
+          setSortBy={setSortBy}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />
@@ -64,51 +58,30 @@ const BOMViewer = ({
     );
   }
 
+  // Default standalone mode - always show content
   return (
-    <>
-      {/* Only render header if NOT controlled by parent button */}
-      {externalIsOpen === undefined && (
-        <div className={styles.bomContainer}>
-          <div
-            className={styles.bomHeader}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <VscChevronRight
-              className={styles.chevron}
-              style={isOpen ? { transform: 'rotate(90deg)' } : {}}
-            />
-            <VscCircuitBoard className={styles.icon} />
-            <span className={styles.title}>
-              Bill of Materials ({components.length} Components)
-              {totalCost && <span className={styles.totalCost}> • Total: {totalCost}</span>}
-            </span>
-          </div>
+    <div className={styles.bomContainer}>
+      <div className={styles.bomHeader}>
+        <VscCircuitBoard className={styles.icon} />
+        <span className={styles.title}>
+          Bill of Materials ({components.length} Components)
+          {totalCost && <span className={styles.totalCost}> • Total: {totalCost}</span>}
+        </span>
+      </div>
 
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className={styles.bomContent}
-                style={{ overflow: 'visible' }}
-              >
-                <ContentArea 
-                  components={components}
-                  architecture={architecture}
-                  selectedComponent={selectedComponent}
-                  setSelectedComponent={setSelectedComponent}
-                  sortBy={sortBy}
-                  searchQuery={searchQuery}
-                  setSearchQuery={setSearchQuery}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )}
-    </>
+      <div className={styles.bomContent} style={{ overflow: 'visible' }}>
+        <ContentArea 
+          components={components}
+          architecture={architecture}
+          selectedComponent={selectedComponent}
+          setSelectedComponent={setSelectedComponent}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+      </div>
+    </div>
   );
 };
 
@@ -119,6 +92,7 @@ const ContentArea = ({
   selectedComponent, 
   setSelectedComponent,
   sortBy,
+  setSortBy,
   searchQuery,
   setSearchQuery
 }: any) => {
@@ -160,6 +134,15 @@ const ContentArea = ({
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchInput}
         />
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as 'name' | 'interface' | 'voltage')}
+          className={styles.sortSelect}
+        >
+          <option value="name">Sort by Name</option>
+          <option value="interface">Sort by Protocol</option>
+          <option value="voltage">Sort by Voltage</option>
+        </select>
       </div>
 
       {/* BOM Table */}
