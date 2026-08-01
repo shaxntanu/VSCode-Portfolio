@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import Image from 'next/image';
-import { VscGithubInverted } from 'react-icons/vsc';
+import { VscGithubInverted, VscCircuitBoard } from 'react-icons/vsc';
 import { SiVercel, SiNotion } from 'react-icons/si';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -13,6 +14,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
+  const [bomOpen, setBomOpen] = useState(false);
   const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
   
   // Determine which icon to show based on the link
@@ -34,6 +36,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
   const reportIcon = getReportIcon();
   
   return (
+    <>
     <div
       className={styles.card}
       style={{
@@ -66,16 +69,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
         
-        {/* BOM Viewer - only show if components exist */}
-        {project.components && project.components.length > 0 && (
-          <BOMViewer 
-            components={project.components} 
-            architecture={project.architecture}
-            totalCost={project.totalCost}
-          />
-        )}
-        
-        {(linkIcon || reportIcon) && (
+        {(linkIcon || reportIcon || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
             {linkIcon && (
               <a
@@ -101,10 +95,32 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
                 {reportIcon}
               </a>
             )}
+            {project.components && project.components.length > 0 && (
+              <button
+                onClick={() => setBomOpen(!bomOpen)}
+                className={`${styles.iconLink} ${styles.bomButton}`}
+                style={{ color: bomOpen ? categoryConfig.color : 'rgba(255, 255, 255, 0.6)' }}
+                title="View Bill of Materials"
+              >
+                <VscCircuitBoard />
+              </button>
+            )}
           </div>
         )}
       </div>
     </div>
+
+    {/* BOM Dropdown - rendered as overlay */}
+    {project.components && project.components.length > 0 && (
+      <BOMViewer 
+        components={project.components} 
+        architecture={project.architecture}
+        totalCost={project.totalCost}
+        isOpen={bomOpen}
+        onToggle={setBomOpen}
+      />
+    )}
+    </>
   );
 };
 

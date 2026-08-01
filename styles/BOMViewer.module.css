@@ -6,6 +6,23 @@
     overflow: hidden;
 }
 
+.dropdownOverlay {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    width: 600px;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 140px);
+    background: var(--explorer-bg);
+    border: 1px solid var(--explorer-border);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 500;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
 .bomHeader {
     display: flex;
     align-items: center;
