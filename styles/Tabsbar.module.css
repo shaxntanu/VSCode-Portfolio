@@ -1,10 +1,19 @@
+.tabsContainer {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    background: var(--tabs-bg);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
 .tabs {
     display: flex;
-    background: var(--tabs-bg);
+    flex: 1;
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
-    flex-shrink: 0;
+    scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-color) transparent;
 }
@@ -70,4 +79,88 @@ The close button provides the visual right-side spacing instead. */
     padding-right: 0.6rem;
     border-right: none;
     max-width: 160px;
+}
+
+
+/* Scroll Buttons */
+.scrollButton {
+    width: 28px;
+    min-width: 28px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--tabs-bg);
+    border: none;
+    border-bottom: 1px solid var(--tab-border);
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+}
+
+.scrollButton:hover:not(:disabled) {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.scrollButton:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.scrollButtonLeft {
+    border-right: 1px solid var(--tab-border);
+}
+
+.scrollButtonRight {
+    border-left: 1px solid var(--tab-border);
+}
+
+/* Scroll Shadows */
+.leftShadow,
+.rightShadow {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 30px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.leftShadow {
+    left: 28px;
+    background: linear-gradient(to right, var(--tabs-bg) 0%, transparent 100%);
+}
+
+.rightShadow {
+    right: 28px;
+    background: linear-gradient(to left, var(--tabs-bg) 0%, transparent 100%);
+}
+
+.leftShadow.visible,
+.rightShadow.visible {
+    opacity: 1;
+}
+
+/* Responsive: Hide buttons on very small screens */
+@media screen and (max-width: 480px) {
+    .scrollButton {
+        width: 24px;
+        min-width: 24px;
+        font-size: 0.75rem;
+    }
+    
+    .leftShadow {
+        left: 24px;
+        width: 20px;
+    }
+    
+    .rightShadow {
+        right: 24px;
+        width: 20px;
+    }
 }
