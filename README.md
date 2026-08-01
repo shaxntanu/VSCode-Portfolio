@@ -30,7 +30,7 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web dev
 **Pages:**
 - **Home** - Pseudo-code that won't compile but tells you how I think
 - **About** - Who I am, what I build, and why (with a world map because why not)
-- **Projects** - Hardware modules, IoT systems, and some web dashboards
+- **Projects** - Hardware modules, IoT systems, and some web dashboards with integrated BOM viewer
 - **Resume** - Terminal-style CV that auto-updates from my LaTeX repo on GitHub
 - **Experience** - Work history with Ragastra and Grosity
 - **Publications** - Technical reports and articles
@@ -39,6 +39,7 @@ Built with Next.js because I wanted something fast and SEO-friendly. The web dev
 - **Contact** - JSON-formatted contact info (keeping the dev theme consistent)
 
 **Cool Stuff:**
+- Bill of Materials (BOM) viewer for hardware projects with searchable component tables
 - Animated text effects (decryption, rotation, shimmer)
 - Click sparks because they're fun
 - Collapsible file explorer with smooth animations
