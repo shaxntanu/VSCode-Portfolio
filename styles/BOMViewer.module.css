@@ -253,20 +253,35 @@
     font-size: 0.9rem;
 }
 
-/* Detail Drawer */
+/* Detail Drawer Backdrop - Subtle de-emphasis */
+.drawerBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 9998;
+    cursor: pointer;
+}
+
+/* Detail Drawer - Glass Effect */
 .detailDrawer {
     position: fixed;
     top: 0;
     right: 0;
-    width: 400px;
+    width: 420px;
     max-width: 90vw;
     height: 100vh;
-    background: #1e1e1e;
-    border-left: 1px solid var(--explorer-border);
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.8);
+    background: rgba(24, 24, 28, 0.65);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4), 
+                -2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 9999;
     display: flex;
     flex-direction: column;
+    will-change: transform;
 }
 
 .drawerHeader {
@@ -274,8 +289,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background: #2d2d30;
-    border-bottom: 2px solid var(--accent-color);
+    background: rgba(45, 45, 48, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(100, 200, 255, 0.3);
+    box-shadow: 0 1px 0 rgba(100, 200, 255, 0.1);
 }
 
 .drawerHeader h3 {
@@ -286,12 +304,13 @@
 }
 
 .closeDrawer {
-    background: transparent;
-    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
     color: rgba(255, 255, 255, 0.7);
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
     line-height: 1;
     padding: 0;
     width: 32px;
@@ -302,25 +321,54 @@
 }
 
 .closeDrawer:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
     color: white;
+    transform: scale(1.05);
 }
 
 .drawerContent {
     flex: 1;
     padding: 1.5rem;
     overflow-y: auto;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.drawerContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+.drawerContent::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.drawerContent::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.drawerContent::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .detailRow {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.detailRow:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .detailRow:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .detailLabel {
