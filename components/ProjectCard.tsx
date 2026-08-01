@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { VscGithubInverted } from 'react-icons/vsc';
+import { VscGithubInverted, VscCircuitBoard } from 'react-icons/vsc';
 import { SiVercel, SiNotion } from 'react-icons/si';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -14,6 +14,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
+  const [bomOpen, setBomOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
   
@@ -68,7 +69,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
         
-        {(linkIcon || reportIcon) && (
+        {(linkIcon || reportIcon || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
             {linkIcon && (
               <a
@@ -94,11 +95,21 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
                 {reportIcon}
               </a>
             )}
+            {project.components && project.components.length > 0 && (
+              <button
+                onClick={() => setBomOpen(!bomOpen)}
+                className={`${styles.iconLink} ${styles.bomButton}`}
+                style={{ color: bomOpen ? categoryConfig.color : 'rgba(255, 255, 255, 0.6)' }}
+                title="View Bill of Materials"
+              >
+                <VscCircuitBoard />
+              </button>
+            )}
           </div>
         )}
 
-        {/* BOM Dropdown - always shown when components exist */}
-        {project.components && project.components.length > 0 && (
+        {/* BOM Dropdown - toggled by button */}
+        {project.components && project.components.length > 0 && bomOpen && (
           <BOMViewer 
             components={project.components} 
             architecture={project.architecture}

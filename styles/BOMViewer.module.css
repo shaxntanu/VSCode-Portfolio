@@ -261,9 +261,9 @@
     width: 400px;
     max-width: 90vw;
     height: 100vh;
-    background: var(--explorer-bg);
+    background: #1e1e1e;
     border-left: 1px solid var(--explorer-border);
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -274,7 +274,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    background: rgba(100, 200, 255, 0.1);
+    background: #2d2d30;
     border-bottom: 2px solid var(--accent-color);
 }
 
