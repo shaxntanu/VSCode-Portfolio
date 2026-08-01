@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { motion, AnimatePresence } from 'framer-motion';
 import { statusBarItems } from '@/data/statusbar';
+import { getStatusBarMetrics } from '@/data/telemetry';
 import { useUIState } from '@/contexts/UIStateContext';
 import { MdZoomOutMap } from 'react-icons/md';
 import styles from '@/styles/Bottombar.module.css';
@@ -11,6 +13,10 @@ const Bottombar = () => {
   const [liteMode, setLiteMode] = useState(true);
   const [buildDate, setBuildDate] = useState('Jun 2026');
   const { zenMode, setZenMode } = useUIState();
+  
+  // Telemetry rotation state
+  const [telemetryMetrics] = useState(() => getStatusBarMetrics());
+  const [currentMetricIndex, setCurrentMetricIndex] = useState(0);
 
   useEffect(() => {
     const updateThemeAndMode = () => {
@@ -70,6 +76,15 @@ const Bottombar = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Rotate telemetry metrics every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMetricIndex((prev) => (prev + 1) % telemetryMetrics.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [telemetryMetrics.length]);
 
   const leftItems = statusBarItems.filter(item => item.side === 'left').sort((a, b) => a.priority - b.priority);
   const rightItems = statusBarItems.filter(item => item.side === 'right').sort((a, b) => a.priority - b.priority);
@@ -140,6 +155,23 @@ const Bottombar = () => {
     <footer className={styles.bottomBar}>
       <div className={styles.container}>
         {leftItems.map(renderItem)}
+        {/* Telemetry metrics with smooth rotation */}
+        <div 
+          className={`${styles.section} ${styles.telemetry}`}
+          title="Portfolio telemetry - Auto-generated from project data"
+        >
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={currentMetricIndex}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              {telemetryMetrics[currentMetricIndex]}
+            </motion.span>
+          </AnimatePresence>
+        </div>
       </div>
       <div className={styles.container}>
         <button
