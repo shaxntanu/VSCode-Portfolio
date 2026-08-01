@@ -171,7 +171,7 @@
 
 .bomTable th {
     padding: 0.5rem 0.75rem;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.65rem;
@@ -195,6 +195,7 @@
     padding: 0.5rem 0.75rem;
     color: rgba(255, 255, 255, 0.8);
     font-family: 'Fira Code', 'Consolas', monospace;
+    text-align: center;
 }
 
 .componentName {
@@ -215,13 +216,11 @@
 .quantity {
     font-weight: 600;
     color: rgba(255, 255, 255, 0.9);
-    text-align: center;
 }
 
 .price {
     font-weight: 600;
     color: rgb(100, 255, 150);
-    text-align: right;
 }
 
 .totalCost {
