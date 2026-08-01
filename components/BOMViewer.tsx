@@ -60,10 +60,8 @@ const BOMViewer = ({
           selectedComponent={selectedComponent}
           setSelectedComponent={setSelectedComponent}
           sortBy={sortBy}
-          setSortBy={setSortBy}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          accentColor={accentColor}
         />
       </motion.div>
     );
@@ -105,10 +103,8 @@ const BOMViewer = ({
                   selectedComponent={selectedComponent}
                   setSelectedComponent={setSelectedComponent}
                   sortBy={sortBy}
-                  setSortBy={setSortBy}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
-                  accentColor={accentColor}
                 />
               </motion.div>
             )}
@@ -126,10 +122,8 @@ const ContentArea = ({
   selectedComponent, 
   setSelectedComponent,
   sortBy,
-  setSortBy,
   searchQuery,
-  setSearchQuery,
-  accentColor
+  setSearchQuery
 }: any) => {
   const sortedComponents = [...components].sort((a, b) => {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
