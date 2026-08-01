@@ -28,14 +28,13 @@ const BOMViewer = ({
   isOpen: externalIsOpen, 
   onToggle, 
   isInline,
-  sortBy: externalSortBy,
-  setSortBy: externalSetSortBy
+  sortBy: externalSortBy
 }: BOMViewerProps) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
   const setIsOpen = onToggle || setInternalIsOpen;
   
-  const [internalSortBy, setInternalSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
+  const [internalSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const sortBy = externalSortBy !== undefined ? externalSortBy : internalSortBy;
   // setSortBy not needed - controlled by parent ProjectCard
   
