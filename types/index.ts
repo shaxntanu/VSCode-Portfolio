@@ -11,6 +11,15 @@ export interface Article {
 
 export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT';
 
+export interface Component {
+  name: string;
+  role: string;
+  interface: string;
+  voltage?: string;
+  quantity: number;
+  notes?: string;
+}
+
 export interface Project {
   title: string;
   description: string;
@@ -22,6 +31,8 @@ export interface Project {
   year: number;
   background?: string;
   reportLink?: string; // Optional link to technical report/article
+  components?: Component[]; // BOM - Bill of Materials
+  architecture?: string[]; // Component relationship tree
 }
 
 export interface CategoryConfig {
