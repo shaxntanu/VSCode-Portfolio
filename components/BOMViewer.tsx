@@ -55,14 +55,15 @@ const BOMViewer = ({ components, architecture, totalCost }: BOMViewerProps) => {
         </span>
       </div>
 
-      <AnimatePresence initial={false}>
+      <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
             className={styles.bomContent}
+            style={{ overflow: 'visible' }}
           >
             {/* Architecture Diagram */}
             {architecture && (

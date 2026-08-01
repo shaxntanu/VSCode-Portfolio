@@ -42,8 +42,9 @@
 }
 
 .bomContent {
-    overflow: hidden;
+    overflow: visible;
     border-top: 1px solid var(--explorer-border);
+    padding-bottom: 1rem;
 }
 
 /* Architecture Section */
