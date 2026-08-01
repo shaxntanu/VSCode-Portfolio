@@ -291,8 +291,7 @@ export const projects: Project[] = [
       },
     ],
     architecture: 'ESP32 → [UART2: NEO-6M GPS] → [I2C: QMC5883L + OLED] → [GPIO: RGB LED + Buttons] → Display coordinates & heading',
-    totalCost: '$26.00',
-    fundedPrototype: true
+    totalCost: '$26.00'
   },
   {
     title: 'The Ruin Machine',
@@ -499,8 +498,7 @@ export const projects: Project[] = [
       },
     ],
     architecture: 'ESP8266 [GPIO D5] → [Fixed Resistor + Potentiometer] → [Inductor] → GND; A0 measures voltage rise → Calculate τ → Display L = R×τ',
-    totalCost: '$11.60',
-    fundedPrototype: true
+    totalCost: '$11.60'
   },
   {
     title: 'Servo Light Switch',
@@ -690,8 +688,7 @@ export const projects: Project[] = [
       },
     ],
     architecture: 'Arduino Nano [MFRC522 RFID + DS3231 RTC] → [UART: ESP32] → [I2C: OLED] → [SPI: SD Card] → [GPIO: RGB LED + Buzzer + Button] → Attendance logging',
-    totalCost: '$40.30',
-    fundedPrototype: true
+    totalCost: '$40.30'
   },
   {
     title: 'Shape Detection System',
