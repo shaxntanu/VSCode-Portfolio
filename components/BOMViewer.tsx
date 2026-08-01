@@ -17,7 +17,6 @@ interface BOMViewerProps {
   isOpen?: boolean;
   onToggle?: (open: boolean) => void;
   isInline?: boolean;
-  accentColor?: string;
   sortBy?: 'name' | 'interface' | 'voltage';
   setSortBy?: (sort: 'name' | 'interface' | 'voltage') => void;
 }
@@ -28,8 +27,7 @@ const BOMViewer = ({
   totalCost, 
   isOpen: externalIsOpen, 
   onToggle, 
-  isInline, 
-  accentColor,
+  isInline,
   sortBy: externalSortBy,
   setSortBy: externalSetSortBy
 }: BOMViewerProps) => {
@@ -39,7 +37,7 @@ const BOMViewer = ({
   
   const [internalSortBy, setInternalSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const sortBy = externalSortBy !== undefined ? externalSortBy : internalSortBy;
-  const setSortBy = externalSetSortBy || setInternalSortBy;
+  // setSortBy not needed - controlled by parent ProjectCard
   
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const [searchQuery, setSearchQuery] = useState('');

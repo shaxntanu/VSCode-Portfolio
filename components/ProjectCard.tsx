@@ -126,7 +126,6 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
             architecture={project.architecture}
             totalCost={project.totalCost}
             isInline={true}
-            accentColor={categoryConfig.color}
             sortBy={sortBy}
             setSortBy={setSortBy}
           />
