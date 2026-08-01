@@ -198,7 +198,7 @@ export const projects: Project[] = [
         voltage: '3.3V/5V',
         quantity: 1,
         notes: 'Dual-core processor with WiFi/Bluetooth',
-        price: '$5.00'
+        price: '₹425'
       },
       {
         name: 'NEO-6M GPS Module',
@@ -207,7 +207,7 @@ export const projects: Project[] = [
         voltage: '3.3V-5V',
         quantity: 1,
         notes: 'GPS receiver on GPIO 16/17',
-        price: '$8.00'
+        price: '₹680'
       },
       {
         name: 'QMC5883L Magnetometer',
@@ -216,7 +216,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: '3-axis magnetic sensor for heading',
-        price: '$2.50'
+        price: '₹213'
       },
       {
         name: 'SSD1306 OLED Display',
@@ -225,7 +225,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: '0.96" 128x64 monochrome display',
-        price: '$4.00'
+        price: '₹340'
       },
       {
         name: 'RGB LED (Common Cathode)',
@@ -234,7 +234,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: 'GPS lock & movement status on GPIO 25/26/27',
-        price: '$0.50'
+        price: '₹43'
       },
       {
         name: '6mm Tactile Buttons',
@@ -243,7 +243,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 2,
         notes: 'Mode switch & calibration on GPIO 32/33',
-        price: '$0.20'
+        price: '₹17'
       },
       {
         name: '330Ω Resistor',
@@ -252,7 +252,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 3,
         notes: 'For RGB LED protection',
-        price: '$0.10'
+        price: '₹9'
       },
       {
         name: '4.7kΩ Resistor',
@@ -261,7 +261,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 2,
         notes: 'Pull-up resistors for I2C bus',
-        price: '$0.05'
+        price: '₹4'
       },
       {
         name: '100nF Capacitor',
@@ -270,7 +270,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 3,
         notes: 'Power supply filtering',
-        price: '$0.10'
+        price: '₹9'
       },
       {
         name: '10µF Capacitor',
@@ -279,7 +279,7 @@ export const projects: Project[] = [
         voltage: '16V',
         quantity: 1,
         notes: 'Main power supply smoothing',
-        price: '$0.05'
+        price: '₹4'
       },
       {
         name: 'Breadboard & Wires',
@@ -288,11 +288,11 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 1,
         notes: 'For circuit connections',
-        price: '$5.00'
+        price: '₹425'
       },
     ],
     architecture: 'ESP32 → [UART2: NEO-6M GPS] → [I2C: QMC5883L + OLED] → [GPIO: RGB LED + Buttons] → Display coordinates & heading',
-    totalCost: '$26.00'
+    totalCost: '₹2,210'
   },
   {
     title: 'The Ruin Machine',
@@ -312,7 +312,7 @@ export const projects: Project[] = [
         voltage: '3.3V/5V',
         quantity: 1,
         notes: 'Hardware random number generator for true randomness',
-        price: '$5.00'
+        price: '₹425'
       },
       {
         name: 'SSD1306 OLED Display',
@@ -321,7 +321,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 1,
         notes: '0.96" 128x64 display on GPIO 21/22',
-        price: '$4.00'
+        price: '₹340'
       },
       {
         name: 'Active Buzzer 5V',
@@ -330,7 +330,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 1,
         notes: 'Win/loss alerts on GPIO 4',
-        price: '$0.50'
+        price: '₹43'
       },
       {
         name: '6mm Tactile Buttons',
@@ -339,7 +339,7 @@ export const projects: Project[] = [
         voltage: '3.3V',
         quantity: 2,
         notes: 'BET button (GPIO 13) & MODE button (GPIO 12)',
-        price: '$0.20'
+        price: '₹17'
       },
       {
         name: '10kΩ Resistor',
@@ -348,7 +348,7 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 2,
         notes: 'Optional external pull-ups for buttons',
-        price: '$0.05'
+        price: '₹4'
       },
       {
         name: 'Breadboard & Wires',
@@ -357,11 +357,11 @@ export const projects: Project[] = [
         voltage: 'N/A',
         quantity: 1,
         notes: 'For circuit connections',
-        price: '$3.00'
+        price: '₹255'
       },
     ],
     architecture: 'ESP32 [Hardware RNG] → [I2C: OLED] → [GPIO: Buzzer + Buttons] → Gambling simulation & statistics display',
-    totalCost: '$13.00'
+    totalCost: '₹1,105'
   },
   // 2026
   {
@@ -381,7 +381,7 @@ export const projects: Project[] = [
         voltage: '5V',
         quantity: 1,
         notes: 'Controls stepper motor drivers',
-        price: '$20.00'
+        price: '₹1,700'
       },
       {
         name: 'CNC Shield V3',
@@ -390,7 +390,7 @@ export const projects: Project[] = [
         voltage: '12V-24V',
         quantity: 1,
         notes: 'Shields for easy stepper connection',
-        price: '$5.00'
+        price: '₹425'
       },
       {
         name: 'A4988/DRV8825 Stepper Drivers',
@@ -399,7 +399,7 @@ export const projects: Project[] = [
         voltage: '12V-24V',
         quantity: 2,
         notes: 'X-axis and Y-axis motor drivers',
-        price: '$4.00'
+        price: '₹340'
       },
       {
         name: 'Stepper Motors',
@@ -408,7 +408,7 @@ export const projects: Project[] = [
         voltage: '12V',
         quantity: 2,
         notes: 'Synchronous rotation for even coil winding',
-        price: '$20.00'
+        price: '₹1,700'
       },
       {
         name: 'Power Supply 12V-24V',
@@ -417,11 +417,11 @@ export const projects: Project[] = [
         voltage: '12V-24V',
         quantity: 1,
         notes: 'Powers stepper drivers and motors',
-        price: '$15.00'
+        price: '₹1,275'
       },
     ],
     architecture: 'Arduino UNO → [CNC Shield V3] → [Step/Dir: A4988 Drivers] → [Stepper Motors X & Y] → Synchronous coil winding',
-    totalCost: '$64.00',
+    totalCost: '₹5,440',
     fundedPrototype: true
   },
   {
