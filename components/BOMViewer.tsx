@@ -159,7 +159,7 @@ const ContentArea = ({
               <th>Protocol</th>
               <th>Voltage</th>
               <th>Qty</th>
-              <th>Price</th>
+              <th>PRICE (aprx.)</th>
               <th>Details</th>
             </tr>
           </thead>
