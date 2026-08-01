@@ -328,9 +328,10 @@ MIT License - Feel free to use this feature in your own projects!
 ## 👨‍💻 Author
 
 **Shantanu**  
-Portfolio: [VSCode Portfolio](https://vs-code-portfolio-one.vercel.app)  
+Portfolio: [VSCode Portfolio](https://shantanu-vsc-portfolio.vercel.app)  
 GitHub: [@shaxntanu](https://github.com/shaxntanu)
 
 ---
 
 *Last Updated: February 2026*
+
