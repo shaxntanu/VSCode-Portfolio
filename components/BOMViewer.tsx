@@ -27,22 +27,6 @@ const BOMViewer = ({ components, architecture, totalCost, isOpen: externalIsOpen
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Sort components
-  const sortedComponents = [...components].sort((a, b) => {
-    if (sortBy === 'name') return a.name.localeCompare(b.name);
-    if (sortBy === 'interface') return a.interface.localeCompare(b.interface);
-    if (sortBy === 'voltage') return a.voltage.localeCompare(b.voltage);
-    return 0;
-  });
-
-  // Filter components based on search
-  const filteredComponents = sortedComponents.filter(
-    (comp) =>
-      comp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      comp.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      comp.interface.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <>
       {/* Only render header if NOT controlled by parent button */}
