@@ -35,6 +35,7 @@ export interface Project {
   components?: Component[]; // BOM components
   architecture?: string; // Architecture description
   totalCost?: string; // Total project cost
+  fundedPrototype?: boolean; // Whether this is a funded prototype
 }
 
 export interface CategoryConfig {

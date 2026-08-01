@@ -122,6 +122,13 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
             />
           )}
         </AnimatePresence>
+
+        {/* Funded Prototype Badge */}
+        {project.fundedPrototype && (
+          <div className={styles.fundedBadge}>
+            <span className={styles.fundedBadgeText}>Funded Prototype</span>
+          </div>
+        )}
       </div>
     </div>
   );
