@@ -31,9 +31,6 @@ export interface UIStateContextType {
   sidebarVisible: boolean;
   setSidebarVisible: (visible: boolean) => void;
 
-  minimapVisible: boolean;
-  setMinimapVisible: (visible: boolean) => void;
-
   bottombarVisible: boolean;
   setBottombarVisible: (visible: boolean) => void;
 }
@@ -49,7 +46,6 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
   const [extensionsOpen, setExtensionsOpen] = useState(false);
   const [statsModalOpen, setStatsModalOpen] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(true);
-  const [minimapVisible, setMinimapVisible] = useState(true);
   const [bottombarVisible, setBottombarVisible] = useState(true);
 
   // When zen mode is enabled, hide all UI chrome
@@ -57,7 +53,6 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
     setZenMode(enabled);
     if (enabled) {
       setSidebarVisible(false);
-      setMinimapVisible(false);
       setBottombarVisible(false);
       setTerminalOpen(false);
       setProblemsOpen(false);
@@ -77,7 +72,6 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
     } else {
       // Restore UI when exiting zen mode
       setSidebarVisible(true);
-      setMinimapVisible(true);
       setBottombarVisible(true);
     }
   };
@@ -101,8 +95,6 @@ export const UIStateProvider = ({ children }: { children: ReactNode }) => {
         setStatsModalOpen,
         sidebarVisible,
         setSidebarVisible,
-        minimapVisible,
-        setMinimapVisible,
         bottombarVisible,
         setBottombarVisible,
       }}

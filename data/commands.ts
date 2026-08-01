@@ -8,7 +8,7 @@ import {
   VscSymbolMisc,
   VscRefresh,
 } from 'react-icons/vsc';
-import { MdDownload, MdViewSidebar, MdMap, MdZoomOutMap, MdPalette } from 'react-icons/md';
+import { MdDownload, MdViewSidebar, MdZoomOutMap, MdPalette } from 'react-icons/md';
 import { BiTargetLock } from 'react-icons/bi';
 
 // Helper to show notifications
@@ -170,18 +170,6 @@ const workspaceCommands: Command[] = [
     action: () => {
       window.dispatchEvent(new CustomEvent('toggleSidebar'));
       notify('✓ Sidebar toggled', 'success');
-    },
-  },
-  {
-    id: 'workspace-toggle-minimap',
-    title: 'Toggle Minimap',
-    description: 'Show or hide the minimap',
-    icon: MdMap,
-    category: 'workspace',
-    keywords: ['minimap', 'toggle', 'map'],
-    action: () => {
-      window.dispatchEvent(new CustomEvent('toggleMinimap'));
-      notify('✓ Minimap toggled', 'success');
     },
   },
   {

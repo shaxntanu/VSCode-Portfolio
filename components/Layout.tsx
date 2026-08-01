@@ -9,7 +9,6 @@ import Tabsbar from '@/components/Tabsbar';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CommandPalette from '@/components/CommandPalette';
 import CommandPaletteShiftP from '@/components/CommandPaletteShiftP';
-import Minimap from '@/components/Minimap';
 import MobileNotification from '@/components/MobileNotification';
 import Terminal from '@/components/Terminal/Terminal';
 import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
@@ -35,10 +34,8 @@ const LayoutContent = ({ children }: LayoutProps) => {
   const { 
     zenMode, 
     sidebarVisible, 
-    minimapVisible, 
     setZenMode,
     setSidebarVisible,
-    setMinimapVisible,
     setStatsModalOpen,
     statsModalOpen,
   } = useUIState();
@@ -49,11 +46,6 @@ const LayoutContent = ({ children }: LayoutProps) => {
       const savedLiteMode = localStorage.getItem('liteMode');
       const liteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
       setIsLiteMode(liteMode);
-      
-      // Disable minimap in lite mode
-      if (liteMode && minimapVisible) {
-        setMinimapVisible(false);
-      }
     };
 
     updateLiteMode();
@@ -68,7 +60,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
     return () => {
       window.removeEventListener('storage', updateLiteMode);
     };
-  }, [minimapVisible, setMinimapVisible]);
+  }, []);
 
   // Force re-render when screen/DPI changes
   useEffect(() => {
@@ -119,20 +111,17 @@ const LayoutContent = ({ children }: LayoutProps) => {
   }, [zenMode, setZenMode]);
 
   useEffect(() => {
-    const handleToggleMinimap = () => setMinimapVisible(!minimapVisible);
     const handleToggleSidebar = () => setSidebarVisible(!sidebarVisible);
     const handleShowStats = () => setStatsModalOpen(true);
 
-    window.addEventListener('toggleMinimap', handleToggleMinimap);
     window.addEventListener('toggleSidebar', handleToggleSidebar);
     window.addEventListener('showPortfolioStats', handleShowStats);
 
     return () => {
-      window.removeEventListener('toggleMinimap', handleToggleMinimap);
       window.removeEventListener('toggleSidebar', handleToggleSidebar);
       window.removeEventListener('showPortfolioStats', handleShowStats);
     };
-  }, [minimapVisible, sidebarVisible, setMinimapVisible, setSidebarVisible, setStatsModalOpen]);
+  }, [sidebarVisible, setSidebarVisible, setStatsModalOpen]);
 
   return (
     <>
@@ -154,7 +143,6 @@ const LayoutContent = ({ children }: LayoutProps) => {
                 })}
               </div>
             </main>
-            {minimapVisible && !zenMode && !isLiteMode && <Minimap />}
           </div>
           {!zenMode && <Terminal />}
           {!zenMode && <ProblemsPanel />}
