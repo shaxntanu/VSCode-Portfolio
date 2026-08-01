@@ -154,6 +154,18 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.bomButton {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bomButton:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
 .link {
     display: inline-flex;
     align-items: center;
