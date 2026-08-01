@@ -18,6 +18,7 @@ export interface Component {
   voltage: string;
   quantity: number;
   notes?: string;
+  price?: string; // Component price
 }
 
 export interface Project {
@@ -33,6 +34,7 @@ export interface Project {
   reportLink?: string; // Optional link to technical report/article
   components?: Component[]; // BOM components
   architecture?: string; // Architecture description
+  totalCost?: string; // Total project cost
 }
 
 export interface CategoryConfig {

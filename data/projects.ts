@@ -77,31 +77,107 @@ export const projects: Project[] = [
     reportLink: 'https://crocus-zenobia-863.notion.site/Zephyr-Station-Technical-Report-de41e9c0afd3444195afbac904fe2edc',
     components: [
       {
-        name: 'ESP32 DevKit',
-        role: 'Main Controller',
+        name: 'ESP32 DevKit V1',
+        role: 'Main Controller & WiFi',
         interface: 'WiFi/Bluetooth',
+        voltage: '3.3V/5V',
+        quantity: 1,
+        notes: 'Dual-core Xtensa processor, built-in WiFi and Bluetooth',
+        price: '₹300'
+      },
+      {
+        name: 'SSD1306 OLED Display',
+        role: 'Real-time Visualization',
+        interface: 'I2C (0x3C)',
         voltage: '3.3V',
         quantity: 1,
-        notes: 'Dual-core processor with built-in WiFi and Bluetooth',
+        notes: '0.96" 128x64 monochrome display on I2C Bus 0',
+        price: '₹150'
       },
       {
         name: 'BME280',
-        role: 'Temperature & Humidity Sensor',
-        interface: 'I2C',
+        role: 'Environmental Sensor',
+        interface: 'I2C (0x76/0x77)',
         voltage: '3.3V',
         quantity: 1,
-        notes: 'High precision environmental sensor',
+        notes: 'Temperature, humidity & pressure sensor on I2C Bus 1',
+        price: '₹200'
       },
       {
-        name: 'SSD1306 OLED',
-        role: 'Display',
-        interface: 'I2C',
-        voltage: '3.3V',
+        name: 'DS18B20',
+        role: 'Backup Temperature Sensor',
+        interface: '1-Wire',
+        voltage: '3.3V-5V',
         quantity: 1,
-        notes: '0.96" 128x64 monochrome display',
+        notes: 'Waterproof digital temperature sensor with 4.7kΩ pull-up',
+        price: '₹120'
+      },
+      {
+        name: 'DS3231 RTC Module',
+        role: 'Real-Time Clock',
+        interface: 'I2C',
+        voltage: '3.3V-5V',
+        quantity: 1,
+        notes: 'High precision RTC with battery backup on I2C Bus 2',
+        price: '₹80'
+      },
+      {
+        name: 'MicroSD Card Module',
+        role: 'Data Logging Storage',
+        interface: 'SPI',
+        voltage: '3.3V-5V',
+        quantity: 1,
+        notes: 'SD card reader for CSV data logging via SPI interface',
+        price: '₹50'
+      },
+      {
+        name: 'MQ-135 Gas Sensor',
+        role: 'Air Quality Monitor',
+        interface: 'Analog',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Detects NH3, NOx, alcohol, benzene, smoke, CO2',
+        price: '₹100'
+      },
+      {
+        name: 'Active Buzzer 5V',
+        role: 'Audio Alerts',
+        interface: 'Digital Output',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Alert buzzer for threshold violations',
+        price: '₹20'
+      },
+      {
+        name: '4.7kΩ Resistor',
+        role: 'DS18B20 Pull-up',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Pull-up resistor for 1-Wire communication',
+        price: '₹2'
+      },
+      {
+        name: 'Breadboard & Jumper Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+      {
+        name: '5V 2A USB Power Supply',
+        role: 'System Power',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Powers ESP32 and all peripherals',
+        price: '₹100'
       },
     ],
-    architecture: 'ESP32 → BME280 (I2C) → OLED Display (I2C) → WiFi Cloud Upload',
+    architecture: 'ESP32 → [I2C Bus 0: OLED] → [I2C Bus 1: BME280] → [I2C Bus 2: RTC] → [SPI: SD Card] → [1-Wire: DS18B20] → [Analog: MQ-135] → [Digital: Buzzer] → WiFi Cloud Upload',
+    totalCost: '₹1,202'
   },
   {
     title: 'Jolt Locator',

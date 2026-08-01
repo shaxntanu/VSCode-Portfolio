@@ -182,6 +182,18 @@
     text-align: center;
 }
 
+.price {
+    font-weight: 600;
+    color: rgb(100, 255, 150);
+    text-align: right;
+}
+
+.totalCost {
+    color: rgb(100, 255, 150);
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+
 .detailsButton {
     padding: 0.35rem 0.75rem;
     background: transparent;

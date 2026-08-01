@@ -13,9 +13,10 @@ import styles from '@/styles/BOMViewer.module.css';
 interface BOMViewerProps {
   components: Component[];
   architecture?: string;
+  totalCost?: string;
 }
 
-const BOMViewer = ({ components, architecture }: BOMViewerProps) => {
+const BOMViewer = ({ components, architecture, totalCost }: BOMViewerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
@@ -50,6 +51,7 @@ const BOMViewer = ({ components, architecture }: BOMViewerProps) => {
         <VscCircuitBoard className={styles.icon} />
         <span className={styles.title}>
           Bill of Materials ({components.length} Components)
+          {totalCost && <span className={styles.totalCost}> • Total: {totalCost}</span>}
         </span>
       </div>
 
@@ -105,6 +107,7 @@ const BOMViewer = ({ components, architecture }: BOMViewerProps) => {
                     <th>Protocol</th>
                     <th>Voltage</th>
                     <th>Qty</th>
+                    <th>Price</th>
                     <th>Details</th>
                   </tr>
                 </thead>
@@ -124,6 +127,7 @@ const BOMViewer = ({ components, architecture }: BOMViewerProps) => {
                       </td>
                       <td>{comp.voltage}</td>
                       <td className={styles.quantity}>{comp.quantity}</td>
+                      <td className={styles.price}>{comp.price || 'TBD'}</td>
                       <td>
                         <button
                           className={styles.detailsButton}
@@ -191,6 +195,14 @@ const BOMViewer = ({ components, architecture }: BOMViewerProps) => {
                         {selectedComponent.quantity}
                       </span>
                     </div>
+                    {selectedComponent.price && (
+                      <div className={styles.detailRow}>
+                        <span className={styles.detailLabel}>Price:</span>
+                        <span className={styles.detailValue}>
+                          {selectedComponent.price}
+                        </span>
+                      </div>
+                    )}
                     {selectedComponent.notes && (
                       <div className={styles.detailRow}>
                         <span className={styles.detailLabel}>Notes:</span>

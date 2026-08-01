@@ -71,6 +71,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
           <BOMViewer 
             components={project.components} 
             architecture={project.architecture}
+            totalCost={project.totalCost}
           />
         )}
         
