@@ -43,6 +43,7 @@ export const projects: Project[] = [
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Jul 2018 - Aug 2018',
     year: 2018,
+    fundedPrototype: true
   },
   // 2025
   {
