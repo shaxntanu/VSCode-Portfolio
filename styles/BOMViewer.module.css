@@ -6,21 +6,13 @@
     overflow: hidden;
 }
 
-.dropdownOverlay {
-    position: fixed;
-    top: 120px;
-    right: 20px;
-    width: 600px;
-    max-width: calc(100vw - 40px);
-    max-height: calc(100vh - 140px);
-    background: var(--explorer-bg);
-    border: 1px solid var(--explorer-border);
+.inlineContainer {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    z-index: 500;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+    overflow: visible;
 }
 
 .bomHeader {
@@ -66,42 +58,48 @@
 
 /* Architecture Section */
 .architectureSection {
-    padding: 1rem;
-    background: rgba(100, 200, 255, 0.05);
-    border-bottom: 1px solid var(--explorer-border);
+    padding: 0.75rem;
+    background: rgba(100, 200, 255, 0.03);
+    border: 1px solid rgba(100, 200, 255, 0.2);
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
 
 .sectionTitle {
     display: flex;
     align-items: center;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: rgb(100, 200, 255);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Fira Code', 'Consolas', monospace;
 }
 
 .sectionIcon {
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
+    font-size: 0.9rem;
 }
 
 .architectureDiagram {
-    padding: 0.75rem;
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 3px solid var(--accent-color);
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 2px solid var(--accent-color);
     font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.6;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 /* Controls */
 .controls {
     display: flex;
     gap: 1rem;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    padding: 0.75rem 0;
+    background: transparent;
 }
 
 .searchInput {
@@ -111,9 +109,14 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     color: white;
-    font-size: 0.85rem;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
     outline: none;
     transition: all 0.2s ease;
+}
+
+.searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .searchInput:focus {
@@ -127,18 +130,31 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     color: white;
-    font-size: 0.85rem;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
     cursor: pointer;
     outline: none;
+    transition: all 0.2s ease;
+    display: none; /* Hidden - replaced with custom dropdown */
 }
 
 .sortSelect:hover {
     background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sortSelect:focus {
+    border-color: var(--accent-color);
+}
+
+.sortSelect option {
+    background: var(--explorer-bg);
+    color: white;
 }
 
 /* Table */
 .tableContainer {
-    padding: 1rem;
+    padding: 0.75rem 0;
     overflow-x: auto;
     position: relative;
 }
@@ -146,22 +162,23 @@
 .bomTable {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
 
 .bomTable thead {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .bomTable th {
-    padding: 0.75rem;
+    padding: 0.5rem 0.75rem;
     text-align: left;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 0.7);
-    border-bottom: 2px solid var(--accent-color);
+    color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Fira Code', 'Consolas', monospace;
 }
 
 .tableRow {
@@ -175,8 +192,9 @@
 }
 
 .bomTable td {
-    padding: 0.75rem;
-    color: rgba(255, 255, 255, 0.85);
+    padding: 0.5rem 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Fira Code', 'Consolas', monospace;
 }
 
 .componentName {
@@ -342,4 +360,68 @@
     .detailDrawer {
         width: 100vw;
     }
+}
+
+
+/* Custom Sort Dropdown - For BOM Content Area */
+.sortDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.sortDropdownButton {
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.sortDropdownButton:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sortDropdownMenu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: var(--explorer-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.sortDropdownOption {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.sortDropdownOption:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sortOptionSelected {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
 }

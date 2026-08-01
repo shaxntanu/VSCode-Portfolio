@@ -46,6 +46,7 @@
     position: relative;
     z-index: 1;
     overflow: visible;
+    height: auto;
 }
 
 .logoWrapper {
@@ -223,4 +224,76 @@
 
 .underline:hover {
     background-size: 100% 88%;
+}
+
+
+/* Sort Dropdown Container in Link Icons */
+.sortDropdownContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cardSortDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.cardSortButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.cardSortButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: currentColor;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cardSortMenu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--article-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.cardSortOption {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.cardSortOption:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cardSortSelected {
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
 }

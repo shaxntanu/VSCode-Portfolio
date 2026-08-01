@@ -16,16 +16,58 @@ interface BOMViewerProps {
   totalCost?: string;
   isOpen?: boolean;
   onToggle?: (open: boolean) => void;
+  isInline?: boolean;
+  accentColor?: string;
+  sortBy?: 'name' | 'interface' | 'voltage';
+  setSortBy?: (sort: 'name' | 'interface' | 'voltage') => void;
 }
 
-const BOMViewer = ({ components, architecture, totalCost, isOpen: externalIsOpen, onToggle }: BOMViewerProps) => {
+const BOMViewer = ({ 
+  components, 
+  architecture, 
+  totalCost, 
+  isOpen: externalIsOpen, 
+  onToggle, 
+  isInline, 
+  accentColor,
+  sortBy: externalSortBy,
+  setSortBy: externalSetSortBy
+}: BOMViewerProps) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
   const setIsOpen = onToggle || setInternalIsOpen;
   
+  const [internalSortBy, setInternalSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
+  const sortBy = externalSortBy !== undefined ? externalSortBy : internalSortBy;
+  const setSortBy = externalSetSortBy || setInternalSortBy;
+  
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
-  const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // If inline mode, render content directly inside card
+  if (isInline && isOpen) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: 'auto' }}
+        exit={{ opacity: 0, height: 0 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className={styles.inlineContainer}
+      >
+        <ContentArea 
+          components={components}
+          architecture={architecture}
+          selectedComponent={selectedComponent}
+          setSelectedComponent={setSelectedComponent}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          accentColor={accentColor}
+        />
+      </motion.div>
+    );
+  }
 
   return (
     <>
@@ -66,33 +108,12 @@ const BOMViewer = ({ components, architecture, totalCost, isOpen: externalIsOpen
                   setSortBy={setSortBy}
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
+                  accentColor={accentColor}
                 />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-      )}
-
-      {/* When controlled by parent button, render dropdown overlay */}
-      {externalIsOpen !== undefined && isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-          className={styles.dropdownOverlay}
-        >
-          <ContentArea 
-            components={components}
-            architecture={architecture}
-            selectedComponent={selectedComponent}
-            setSelectedComponent={setSelectedComponent}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
-        </motion.div>
       )}
     </>
   );
@@ -107,7 +128,8 @@ const ContentArea = ({
   sortBy,
   setSortBy,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  accentColor
 }: any) => {
   const sortedComponents = [...components].sort((a, b) => {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
@@ -147,15 +169,6 @@ const ContentArea = ({
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchInput}
         />
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as any)}
-          className={styles.sortSelect}
-        >
-          <option value="name">Sort by Name</option>
-          <option value="interface">Sort by Interface</option>
-          <option value="voltage">Sort by Voltage</option>
-        </select>
       </div>
 
       {/* BOM Table */}
