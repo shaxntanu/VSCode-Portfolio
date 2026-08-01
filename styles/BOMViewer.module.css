@@ -1,0 +1,315 @@
+.bomContainer {
+    margin: 2rem 0;
+    background: var(--explorer-bg);
+    border: 1px solid var(--explorer-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bomHeader {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 0.2s ease;
+}
+
+.bomHeader:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.chevron {
+    transition: transform 0.2s;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.icon {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    color: var(--accent-color);
+}
+
+.title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.bomContent {
+    overflow: hidden;
+    border-top: 1px solid var(--explorer-border);
+}
+
+/* Architecture Section */
+.architectureSection {
+    padding: 1rem;
+    background: rgba(100, 200, 255, 0.05);
+    border-bottom: 1px solid var(--explorer-border);
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgb(100, 200, 255);
+    margin-bottom: 0.75rem;
+}
+
+.sectionIcon {
+    margin-right: 0.5rem;
+}
+
+.architectureDiagram {
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--accent-color);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.searchInput {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: white;
+    font-size: 0.85rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+}
+
+.sortSelect {
+    padding: 0.5rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.sortSelect:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Table */
+.tableContainer {
+    padding: 1rem;
+    overflow-x: auto;
+    position: relative;
+}
+
+.bomTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.bomTable thead {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.bomTable th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.7);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.tableRow {
+    cursor: pointer;
+    transition: background 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tableRow:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.bomTable td {
+    padding: 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.componentName {
+    font-weight: 600;
+    color: rgb(100, 200, 255);
+}
+
+.protocolBadge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: rgba(100, 200, 255, 0.2);
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgb(100, 200, 255);
+}
+
+.quantity {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+.detailsButton {
+    padding: 0.35rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    border-radius: 3px;
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.detailsButton:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+.noResults {
+    padding: 2rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+/* Detail Drawer */
+.detailDrawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    max-width: 90vw;
+    height: 100vh;
+    background: var(--explorer-bg);
+    border-left: 1px solid var(--explorer-border);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawerHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(100, 200, 255, 0.1);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.drawerHeader h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgb(100, 200, 255);
+    margin: 0;
+}
+
+.closeDrawer {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeDrawer:hover {
+    color: white;
+}
+
+.drawerContent {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.detailRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detailRow:last-child {
+    border-bottom: none;
+}
+
+.detailLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+.detailValue {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+    }
+
+    .tableContainer {
+        padding: 0.5rem;
+    }
+
+    .bomTable {
+        font-size: 0.75rem;
+    }
+
+    .bomTable th,
+    .bomTable td {
+        padding: 0.5rem;
+    }
+
+    .detailDrawer {
+        width: 100vw;
+    }
+}

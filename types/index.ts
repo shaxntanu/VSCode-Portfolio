@@ -15,7 +15,7 @@ export interface Component {
   name: string;
   role: string;
   interface: string;
-  voltage?: string;
+  voltage: string;
   quantity: number;
   notes?: string;
 }
@@ -31,8 +31,8 @@ export interface Project {
   year: number;
   background?: string;
   reportLink?: string; // Optional link to technical report/article
-  components?: Component[]; // BOM - Bill of Materials
-  architecture?: string[]; // Component relationship tree
+  components?: Component[]; // BOM components
+  architecture?: string; // Architecture description
 }
 
 export interface CategoryConfig {

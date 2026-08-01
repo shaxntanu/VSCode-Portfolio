@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { VscGithubInverted } from 'react-icons/vsc';
 import { SiVercel, SiNotion } from 'react-icons/si';
+import BOMViewer from '@/components/BOMViewer';
 
 import { Project, CategoryConfig } from '@/types';
 
@@ -64,6 +65,14 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         </h3>
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
+        
+        {/* BOM Viewer - only show if components exist */}
+        {project.components && project.components.length > 0 && (
+          <BOMViewer 
+            components={project.components} 
+            architecture={project.architecture}
+          />
+        )}
         
         {(linkIcon || reportIcon) && (
           <div className={styles.linkIcons}>

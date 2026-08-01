@@ -75,6 +75,33 @@ export const projects: Project[] = [
     dateRange: 'Aug 2025 - Nov 2025',
     year: 2025,
     reportLink: 'https://crocus-zenobia-863.notion.site/Zephyr-Station-Technical-Report-de41e9c0afd3444195afbac904fe2edc',
+    components: [
+      {
+        name: 'ESP32 DevKit',
+        role: 'Main Controller',
+        interface: 'WiFi/Bluetooth',
+        voltage: '3.3V',
+        quantity: 1,
+        notes: 'Dual-core processor with built-in WiFi and Bluetooth',
+      },
+      {
+        name: 'BME280',
+        role: 'Temperature & Humidity Sensor',
+        interface: 'I2C',
+        voltage: '3.3V',
+        quantity: 1,
+        notes: 'High precision environmental sensor',
+      },
+      {
+        name: 'SSD1306 OLED',
+        role: 'Display',
+        interface: 'I2C',
+        voltage: '3.3V',
+        quantity: 1,
+        notes: '0.96" 128x64 monochrome display',
+      },
+    ],
+    architecture: 'ESP32 → BME280 (I2C) → OLED Display (I2C) → WiFi Cloud Upload',
   },
   {
     title: 'Jolt Locator',
