@@ -33,16 +33,6 @@ const ProjectsPage = () => {
         A collection of hardware and software projects spanning embedded systems, IoT devices, and intelligent applications. From environmental monitoring stations and navigation systems to AI-powered chatbots and web dashboards, each project represents hands-on engineering work across the full technology stack.
       </p>
 
-      {/* BOM Summary Section */}
-      <div className={styles.bomSummarySection}>
-        <div className={styles.bomSummaryContent}>
-          <h2 className={styles.bomSummaryTitle}>Bill of Materials</h2>
-          <p className={styles.bomSummaryDescription}>
-            Explore detailed hardware specifications, component lists, and system architecture for each project. Click on any project card to expand its BOM viewer and discover the engineering behind each system.
-          </p>
-        </div>
-      </div>
-
       {categoryOrder.map((category) => {
         const categoryProjects = groupedProjects[category];
         if (!categoryProjects || categoryProjects.length === 0) return null;

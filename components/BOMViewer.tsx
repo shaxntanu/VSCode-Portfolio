@@ -34,27 +34,30 @@ const BOMViewer = ({
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // If inline mode, render content directly inside card
+  // If inline mode, render content directly inside card with AnimatePresence
   if (isInline) {
     return (
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: 'auto' }}
-        exit={{ opacity: 0, height: 0 }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className={styles.inlineContainer}
-      >
-        <ContentArea 
-          components={components}
-          architecture={architecture}
-          selectedComponent={selectedComponent}
-          setSelectedComponent={setSelectedComponent}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        />
-      </motion.div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="bom-inline"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className={styles.inlineContainer}
+        >
+          <ContentArea 
+            components={components}
+            architecture={architecture}
+            selectedComponent={selectedComponent}
+            setSelectedComponent={setSelectedComponent}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 

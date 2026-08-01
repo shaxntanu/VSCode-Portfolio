@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { VscGithubInverted, VscCircuitBoard } from 'react-icons/vsc';
 import { SiVercel, SiNotion } from 'react-icons/si';
+import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
 
 import { Project, CategoryConfig } from '@/types';
@@ -108,17 +109,19 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
           </div>
         )}
 
-        {/* BOM Dropdown - toggled by button */}
-        {project.components && project.components.length > 0 && bomOpen && (
-          <BOMViewer 
-            components={project.components} 
-            architecture={project.architecture}
-            totalCost={project.totalCost}
-            isInline={true}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-          />
-        )}
+        {/* BOM Dropdown - toggled by button with closing animation */}
+        <AnimatePresence mode="wait">
+          {project.components && project.components.length > 0 && bomOpen && (
+            <BOMViewer 
+              components={project.components} 
+              architecture={project.architecture}
+              totalCost={project.totalCost}
+              isInline={true}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
