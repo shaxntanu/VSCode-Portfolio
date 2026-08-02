@@ -21,6 +21,12 @@ const certificateData: CertificateCategory[] = [
     category: "Technical Skills",
     certificates: [
       {
+        provider: "ELC Thapar",
+        courses: [
+          { name: "Geometrical Shape Detection Using Python", url: "https://drive.google.com/file/d/1REfRVbNwPe1F2IFPOBTny1fCYRTbOdnq/view?usp=sharing", tags: ["#ComputerVision", "#OpenCV", "#ImageProcessing"] }
+        ]
+      },
+      {
         provider: "MIT x Santander",
         courses: [
           { name: "Generative AI", url: "https://drive.google.com/file/d/1ZVLtjz0xh-Yxdh__egPgba0zjxqEiLeF/view?usp=sharing", tags: ["#GenerativeAI", "#AIFoundations", "#MLBasics"] },

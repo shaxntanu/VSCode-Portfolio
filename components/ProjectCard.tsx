@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { VscGithubInverted, VscCircuitBoard } from 'react-icons/vsc';
+import { VscGithubInverted, VscCircuitBoard, VscMortarBoard } from 'react-icons/vsc';
 import { SiVercel, SiNotion } from 'react-icons/si';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
@@ -34,8 +34,14 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
     return <SiNotion />; // default to Notion
   };
 
+  const getCertificateIcon = () => {
+    if (!project.certificateLink) return null;
+    return <VscMortarBoard />; // Graduation cap icon for certificate
+  };
+
   const linkIcon = getLinkIcon();
   const reportIcon = getReportIcon();
+  const certificateIcon = getCertificateIcon();
   
   return (
     <div
@@ -70,7 +76,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
         
-        {(linkIcon || reportIcon || (project.components && project.components.length > 0)) && (
+        {(linkIcon || reportIcon || certificateIcon || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
             {linkIcon && (
               <a
@@ -94,6 +100,18 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
                 title="View Technical Report"
               >
                 {reportIcon}
+              </a>
+            )}
+            {certificateIcon && (
+              <a
+                href={project.certificateLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+                title="View Certificate"
+              >
+                {certificateIcon}
               </a>
             )}
             {project.components && project.components.length > 0 && (

@@ -32,6 +32,7 @@ export interface Project {
   year: number;
   background?: string;
   reportLink?: string; // Optional link to technical report/article
+  certificateLink?: string; // Optional link to certificate
   components?: Component[]; // BOM components
   architecture?: string; // Architecture description
   totalCost?: string; // Total project cost

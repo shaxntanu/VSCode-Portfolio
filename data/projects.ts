@@ -703,6 +703,7 @@ export const projects: Project[] = [
     dateRange: 'Feb 2026 - Feb 2026',
     year: 2026,
     fundedPrototype: true,
-    badgeType: 'college'
+    badgeType: 'college',
+    certificateLink: 'https://drive.google.com/file/d/1REfRVbNwPe1F2IFPOBTny1fCYRTbOdnq/view?usp=sharing'
   },
 ];
