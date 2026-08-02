@@ -9,7 +9,13 @@ import { createPortal } from 'react-dom';
 import { Component } from '@/types';
 import { VscCircuitBoard, VscInfo } from 'react-icons/vsc';
 import { motion, AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import styles from '@/styles/BOMViewer.module.css';
+
+// Dynamically import ParticlesBackground to avoid SSR issues
+const ParticlesBackground = dynamic(() => import('@/components/ParticlesBackground'), {
+  ssr: false,
+});
 
 interface BOMViewerProps {
   components: Component[];
@@ -263,6 +269,9 @@ const ComponentDetailDrawer = ({
             className={styles.detailDrawer}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Particles Background */}
+            <ParticlesBackground />
+            
             <div className={styles.drawerHeader}>
               <h3>{selectedComponent.name}</h3>
               <button

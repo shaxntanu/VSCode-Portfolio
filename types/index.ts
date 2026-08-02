@@ -36,6 +36,7 @@ export interface Project {
   architecture?: string; // Architecture description
   totalCost?: string; // Total project cost
   fundedPrototype?: boolean; // Whether this is a funded prototype
+  badgeType?: 'funded' | 'college'; // Type of badge to display
 }
 
 export interface CategoryConfig {

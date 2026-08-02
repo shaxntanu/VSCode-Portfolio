@@ -43,7 +43,8 @@ export const projects: Project[] = [
     category: 'COMMUNITY_PROJECT',
     dateRange: 'Jul 2018 - Aug 2018',
     year: 2018,
-    fundedPrototype: true
+    fundedPrototype: true,
+    badgeType: 'funded'
   },
   // 2025
   {
@@ -422,7 +423,8 @@ export const projects: Project[] = [
     ],
     architecture: 'Arduino UNO → [CNC Shield V3] → [Step/Dir: A4988 Drivers] → [Stepper Motors X & Y] → Synchronous coil winding',
     totalCost: '₹6,080',
-    fundedPrototype: true
+    fundedPrototype: true,
+    badgeType: 'funded'
   },
   {
     title: 'Inductance Meter',
@@ -700,6 +702,7 @@ export const projects: Project[] = [
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Feb 2026 - Feb 2026',
     year: 2026,
-    fundedPrototype: true
+    fundedPrototype: true,
+    badgeType: 'college'
   },
 ];
