@@ -282,6 +282,33 @@
     display: flex;
     flex-direction: column;
     will-change: transform;
+    overflow: hidden;
+}
+
+/* Animated Grid Background */
+.detailDrawer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(3, 233, 244, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(3, 233, 244, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(217, 3, 244, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 3, 244, 0.025) 1px, transparent 1px);
+    background-size: 60px 60px, 60px 60px, 20px 20px, 20px 20px;
+    animation: cyberGridMove 10s linear infinite;
+}
+
+@keyframes cyberGridMove {
+    0% {
+        background-position: 0 0, 0 0, 0 0, 0 0;
+    }
+
+    100% {
+        background-position: 60px 60px, 60px 60px, 40px 40px, 40px 40px;
+    }
 }
 
 .drawerHeader {
@@ -295,6 +322,8 @@
     border-bottom: 1px solid rgba(100, 200, 255, 0.25);
     box-shadow: 0 1px 0 rgba(100, 200, 255, 0.08),
                 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
 }
 
 .drawerHeader h3 {
@@ -333,6 +362,8 @@
     padding: 1.5rem;
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
 }
 
 .drawerContent::-webkit-scrollbar {
