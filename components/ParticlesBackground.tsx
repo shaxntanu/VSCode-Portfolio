@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Particles, { ParticlesProvider } from "@tsparticles/react";
 import type { Engine } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
@@ -8,6 +8,14 @@ const particlesInit = async (engine: Engine) => {
 };
 
 const ParticlesBackground = () => {
+  const [isLiteMode, setIsLiteMode] = useState(true);
+
+  useEffect(() => {
+    const savedLiteMode = localStorage.getItem('liteMode');
+    const liteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+    setIsLiteMode(liteMode);
+  }, []);
+
   const particlesLoaded = useCallback(async (container: any) => {
     console.log("Particles container loaded", container);
   }, []);
@@ -48,7 +56,7 @@ const ParticlesBackground = () => {
             },
             move: {
               direction: "none",
-              enable: true,
+              enable: !isLiteMode, // Disable movement in lite mode
               outModes: {
                 default: "bounce",
               },
