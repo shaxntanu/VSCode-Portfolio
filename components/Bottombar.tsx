@@ -248,7 +248,7 @@ const Bottombar = () => {
                 <div className={styles.buildInfoRow}>
                   <span className={styles.buildLabel}>Deployment Date:</span>
                   <span className={styles.buildValue}>
-                    {new Date().toLocaleDateString('en-US', {
+                    {process.env.NEXT_PUBLIC_BUILD_DATE || new Date().toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
@@ -258,7 +258,7 @@ const Bottombar = () => {
                 <div className={styles.buildInfoRow}>
                   <span className={styles.buildLabel}>Deployment Time:</span>
                   <span className={styles.buildValue}>
-                    {new Date().toLocaleTimeString('en-US', {
+                    {process.env.NEXT_PUBLIC_BUILD_TIME || new Date().toLocaleTimeString('en-US', {
                       hour: '2-digit',
                       minute: '2-digit',
                       second: '2-digit',
