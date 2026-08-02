@@ -1,18 +1,20 @@
 import type { NextConfig } from 'next';
 
-// Generate build timestamp at build time
-const buildDate = new Date().toLocaleDateString('en-US', {
+// Generate build timestamp at build time in IST (Indian Standard Time)
+const buildDate = new Date().toLocaleDateString('en-IN', {
   year: 'numeric',
   month: 'long',
-  day: 'numeric'
+  day: 'numeric',
+  timeZone: 'Asia/Kolkata'
 });
 
-const buildTime = new Date().toLocaleTimeString('en-US', {
+const buildTime = new Date().toLocaleTimeString('en-IN', {
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
-  hour12: true
-});
+  hour12: true,
+  timeZone: 'Asia/Kolkata'
+}) + ' IST';
 
 const nextConfig: NextConfig = {
   env: {

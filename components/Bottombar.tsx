@@ -256,14 +256,15 @@ const Bottombar = () => {
                   </span>
                 </div>
                 <div className={styles.buildInfoRow}>
-                  <span className={styles.buildLabel}>Deployment Time:</span>
+                  <span className={styles.buildLabel}>Deployment Time (IST):</span>
                   <span className={styles.buildValue}>
-                    {process.env.NEXT_PUBLIC_BUILD_TIME || new Date().toLocaleTimeString('en-US', {
+                    {process.env.NEXT_PUBLIC_BUILD_TIME || new Date().toLocaleTimeString('en-IN', {
                       hour: '2-digit',
                       minute: '2-digit',
                       second: '2-digit',
-                      hour12: true
-                    })}
+                      hour12: true,
+                      timeZone: 'Asia/Kolkata'
+                    }) + ' IST'}
                   </span>
                 </div>
                 <div className={styles.buildInfoRow}>
