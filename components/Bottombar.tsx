@@ -12,6 +12,7 @@ const Bottombar = () => {
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
   const [liteMode, setLiteMode] = useState(true);
   const [buildDate, setBuildDate] = useState('Jun 2026');
+  const [showBuildInfo, setShowBuildInfo] = useState(false);
   const { zenMode, setZenMode } = useUIState();
   
   // Telemetry rotation state
@@ -101,7 +102,13 @@ const Bottombar = () => {
 
     if (item.id === 'last-updated') {
       return (
-        <div key={item.id} className={className} title={item.tooltip}>
+        <div 
+          key={item.id} 
+          className={className} 
+          title={item.tooltip}
+          onClick={() => setShowBuildInfo(true)}
+          style={{ cursor: 'pointer' }}
+        >
           <span>{buildDate}</span>
         </div>
       );
@@ -152,56 +159,131 @@ const Bottombar = () => {
   }
 
   return (
-    <footer className={styles.bottomBar}>
-      <div className={styles.container}>
-        {leftItems.map(renderItem)}
-        {/* Telemetry metrics with smooth rotation */}
-        <div 
-          className={`${styles.section} ${styles.telemetry}`}
-          title="Portfolio telemetry - Auto-generated from project data"
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={currentMetricIndex}
+    <>
+      <footer className={styles.bottomBar}>
+        <div className={styles.container}>
+          {leftItems.map(renderItem)}
+          {/* Telemetry metrics with smooth rotation */}
+          <div 
+            className={`${styles.section} ${styles.telemetry}`}
+            title="Portfolio telemetry - Auto-generated from project data"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={currentMetricIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                style={{ position: 'absolute', width: '100%', textAlign: 'center' }}
+              >
+                {telemetryMetrics[currentMetricIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </div>
+        <div className={styles.container}>
+          <button
+            className={`${styles.section} ${styles.modeButton} ${zenMode ? styles.active : ''}`}
+            onClick={() => setZenMode(!zenMode)}
+            title={zenMode ? 'Exit Zen Mode' : 'Enter Zen Mode (Hides all UI)'}
+          >
+            <MdZoomOutMap className={styles.icon} />
+            <span>Zen</span>
+          </button>
+          <div
+            className={`${styles.section} ${styles.priority11}`}
+            onClick={() => router.push('/settings')}
+            title="Click to open Settings"
+            style={{ cursor: 'pointer' }}
+          >
+            <span>[{currentTheme}]</span>
+          </div>
+          <div
+            className={`${styles.section} ${styles.priority12}`}
+            onClick={() => router.push('/settings')}
+            title="Click to open Settings"
+            style={{ cursor: 'pointer' }}
+          >
+            <span>[{liteMode ? 'Lite Mode' : 'Full Mode'}]</span>
+          </div>
+          {rightItems.map(renderItem)}
+        </div>
+      </footer>
+
+      {/* Build Info Modal */}
+      <AnimatePresence>
+        {showBuildInfo && (
+          <>
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              className={styles.modalBackdrop}
+              onClick={() => setShowBuildInfo(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.2 }}
-              style={{ position: 'absolute', width: '100%', textAlign: 'center' }}
+              className={styles.buildInfoModal}
+              onClick={(e) => e.stopPropagation()}
             >
-              {telemetryMetrics[currentMetricIndex]}
-            </motion.span>
-          </AnimatePresence>
-        </div>
-      </div>
-      <div className={styles.container}>
-        <button
-          className={`${styles.section} ${styles.modeButton} ${zenMode ? styles.active : ''}`}
-          onClick={() => setZenMode(!zenMode)}
-          title={zenMode ? 'Exit Zen Mode' : 'Enter Zen Mode (Hides all UI)'}
-        >
-          <MdZoomOutMap className={styles.icon} />
-          <span>Zen</span>
-        </button>
-        <div
-          className={`${styles.section} ${styles.priority11}`}
-          onClick={() => router.push('/settings')}
-          title="Click to open Settings"
-          style={{ cursor: 'pointer' }}
-        >
-          <span>[{currentTheme}]</span>
-        </div>
-        <div
-          className={`${styles.section} ${styles.priority12}`}
-          onClick={() => router.push('/settings')}
-          title="Click to open Settings"
-          style={{ cursor: 'pointer' }}
-        >
-          <span>[{liteMode ? 'Lite Mode' : 'Full Mode'}]</span>
-        </div>
-        {rightItems.map(renderItem)}
-      </div>
-    </footer>
+              <div className={styles.modalHeader}>
+                <h3>Build Information</h3>
+                <button
+                  className={styles.modalClose}
+                  onClick={() => setShowBuildInfo(false)}
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+              </div>
+              <div className={styles.modalContent}>
+                <div className={styles.buildInfoRow}>
+                  <span className={styles.buildLabel}>Last Updated:</span>
+                  <span className={styles.buildValue}>{buildDate.replace('Updated: ', '')}</span>
+                </div>
+                <div className={styles.buildInfoRow}>
+                  <span className={styles.buildLabel}>Deployment Date:</span>
+                  <span className={styles.buildValue}>
+                    {new Date().toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+                <div className={styles.buildInfoRow}>
+                  <span className={styles.buildLabel}>Deployment Time:</span>
+                  <span className={styles.buildValue}>
+                    {new Date().toLocaleTimeString('en-US', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit',
+                      hour12: true
+                    })}
+                  </span>
+                </div>
+                <div className={styles.buildInfoRow}>
+                  <span className={styles.buildLabel}>Version:</span>
+                  <span className={styles.buildValue}>v2.0</span>
+                </div>
+                <div className={styles.buildInfoRow}>
+                  <span className={styles.buildLabel}>Framework:</span>
+                  <span className={styles.buildValue}>Next.js 15</span>
+                </div>
+                <div className={styles.buildInfoRow}>
+                  <span className={styles.buildLabel}>Status:</span>
+                  <span className={styles.buildValue}>✓ Build Successful</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
