@@ -22,10 +22,10 @@ Specialization:
   • 3D CAD Design (SolidWorks, AutoCAD)
 
 Current Projects:
-  • ARC-4 - Advanced IoT Platform
-  • NOEMA - Neural Optimization Engine
-  • Aether - Multi-band Communication System
   • Zephyr Station - Environmental Monitoring
+  • Jolt Locator - GPS Navigation System
+  • The Ruin Machine - Probability Simulator
+  • RFID Attendance System - Smart Tracking
 
 Philosophy:
   "Build, Break, Learn, Iterate"`;
@@ -119,7 +119,7 @@ export const terminalCommands: Record<string, TerminalCommand> = {
   whoami: {
     name: 'whoami',
     description: 'Display user information',
-    execute: () => 'Embedded Systems Engineer | IoT Developer | ECE Student | Builder of Aether, Zephyr Station, ARC-4',
+    execute: () => 'Embedded Systems Engineer | IoT Developer | ECE Student | Builder at Arceus Labs & Ragastra',
   },
   help: {
     name: 'help',

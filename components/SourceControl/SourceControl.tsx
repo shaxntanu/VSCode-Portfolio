@@ -24,15 +24,6 @@ const commits: Commit[] = [
   },
   {
     id: 'commit-2',
-    message: 'feat: built ARC-4',
-    author: 'Shantanu',
-    date: new Date('2024-06-20'),
-    tags: ['hardware', 'major'],
-    impact: 'Advanced IoT platform with real-time capabilities',
-    details: 'Developed ARC-4: A comprehensive IoT platform supporting multiple protocols.',
-  },
-  {
-    id: 'commit-3',
     message: 'feat: launched Zephyr Station',
     author: 'Shantanu',
     date: new Date('2024-09-10'),
@@ -41,16 +32,7 @@ const commits: Commit[] = [
     details: 'Zephyr Station monitors multiple environmental sensors with real-time data streaming.',
   },
   {
-    id: 'commit-4',
-    message: 'feat: created Aether',
-    author: 'Shantanu',
-    date: new Date('2025-01-05'),
-    tags: ['communication', 'advanced'],
-    impact: 'Multi-band communication system with protocol flexibility',
-    details: 'Aether enables seamless communication across multiple wireless protocols.',
-  },
-  {
-    id: 'commit-5',
+    id: 'commit-3',
     message: 'feat: published research work',
     author: 'Shantanu',
     date: new Date('2025-02-14'),
@@ -59,7 +41,7 @@ const commits: Commit[] = [
     details: 'Published comprehensive technical documentation on IoT implementations.',
   },
   {
-    id: 'commit-6',
+    id: 'commit-4',
     message: 'feat: joined engineering projects',
     author: 'Shantanu',
     date: new Date('2025-03-01'),
@@ -94,7 +76,7 @@ const SourceControl = ({ onClose }: SourceControlProps) => {
         </div>
         <div className={styles.stat}>
           <span className={styles.label}>Milestones</span>
-          <span className={styles.value}>6</span>
+          <span className={styles.value}>4</span>
         </div>
       </div>
 
