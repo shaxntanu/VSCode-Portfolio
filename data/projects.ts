@@ -700,5 +700,6 @@ export const projects: Project[] = [
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Feb 2026 - Feb 2026',
     year: 2026,
+    fundedPrototype: true
   },
 ];
