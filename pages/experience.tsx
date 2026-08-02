@@ -33,29 +33,36 @@ const ExperiencePage = () => {
 
 ---
 
-## [Project / Research Initiative] Core Engineer: Wireless Power Transfer @ Ragastra
+## [Project / Research Initiative] Ragastra
 **Timeline:** September 2025 - Present · ${calculateDuration('2025-09-01', 'Present')}  
-**Location:** Patiala, Punjab
+**Location:** Patiala, Punjab  
+**Roles:** Project Engineer (Sep 2025 - Present) • Project Manager (May 2026 - Present)
 
-### KEY FOCUS
-*   Working on **Ragastra**, a modular maglev-inspired mobility system designed for controlled environments such as campuses and industrial zones.
-*   Exploring the practical scaling-down of maglev principles, focusing on **electromagnetic suspension (EMS)**, **contactless power delivery (WPT)**, and system-level cost optimization.
-*   Translating high-level transportation concepts into buildable subsystems with clear mechanical, electrical, and control boundaries.
+### WHAT WE'RE BUILDING
+**Ragastra** is a modular maglev-inspired mobility system for controlled environments—campuses, industrial zones, and urban corridors. We're translating high-level transportation concepts into buildable subsystems with clear mechanical, electrical, and control boundaries.
 
-### KEY CONTRIBUTIONS
-*   Designed the system architecture covering **levitation**, **propulsion**, **power delivery**, and **fail-safe mechanisms**.
-*   Worked on **WPT TX/RX coil design**, power flow modeling, and cost breakdowns for short-track deployments.
-*   Analyzed levitation force requirements, safety wheel integration, and mechanical load paths for fault-tolerant operation.
-*   Contributed to pitch preparation, technical justification, and feasibility analysis for early-stage evaluations and competitions.
+### TECHNICAL FOCUS
+*   **Electromagnetic Suspension (EMS)** - Levitation force modeling, safety wheel integration, and fault-tolerant mechanical load paths.
+*   **Wireless Power Transfer (WPT)** - TX/RX coil design, power flow modeling, and inductive coupling optimization for moving vehicles.
+*   **Embedded Systems** - Real-time control logic, sensor fusion, and fail-safe mechanisms.
+*   **System Architecture** - Integrating levitation, propulsion, power delivery, and safety subsystems.
 
-### CORE THEMES
-*   **Systems thinking** over isolated components.
-*   **Engineering-first decision making**, prioritizing safety, controllability, and scalability.
-*   Balancing ambitious ideas with realistic prototyping constraints.
+### ENGINEERING CONTRIBUTIONS
+*   Designed **WPT coil geometries** and power delivery circuits for contactless charging during motion.
+*   Built system-level models for **cost breakdowns**, power efficiency, and deployment feasibility on short-track prototypes.
+*   Owned **repository architecture** and documentation—maintaining codebases, schematics, and research notes created by team members.
+*   Led **technical justification** for competition pitches, balancing innovation with engineering constraints.
+
+### PROJECT MANAGEMENT
+*   Maintain source repository including all **firmware, hardware files, and research documentation**.
+*   Coordinate cross-functional work between electronics, mechanical, and software subsystems.
+*   Ensure technical decisions are documented, reproducible, and aligned with project milestones.
 
 ### ACHIEVEMENTS
-*   **1st Prize – Ideastorm Prelims (Punjab Zonals)**, E-Summit '26, IIT Roorkee (hosted at Thapar Institute of Engineering & Technology).
-*   Project selected through zonal-level evaluation based on technical feasibility, system design clarity, and cost rationale.
+*   **🏆 1st Prize – Ideastorm Prelims (Punjab Zonals)**, E-Summit '26, IIT Roorkee (hosted at TIET).
+*   Selected as **National Finalist** for Ideastorm IIT Roorkee based on technical feasibility and system design clarity.
+
+**Tech Stack:** Embedded C, Electromagnetics, WPT Circuit Design, Git, Technical Documentation, System Modeling
 
 ---
 
@@ -64,68 +71,184 @@ const ExperiencePage = () => {
 **Location:** Remote
 
 ### MISSION
-*   Created **Arceus Labs** as an open-source hardware organization for developers who want to go beyond tutorials and actually ship hardware.
-*   Built a collaborative space where **schematics are shared**, **firmware is open sourced**, and **documentation is written for real-world use**.
-*   Focused on making hardware development **accessible, collaborative, and educational** through public iteration and shared learning.
+**Arceus Labs** is an open-source hardware community for developers who want to go beyond tutorials and actually ship hardware. A collaborative space where schematics are shared, firmware is open sourced, and documentation is written for real-world use.
 
-### KEY PRINCIPLES
+### WHAT WE BUILD
+*   **IoT devices** - ESP32-based environmental sensors, GPS navigation systems, and smart automation.
+*   **Custom PCB designs** - Schematics and layouts shared publicly for learning and iteration.
+*   **Embedded firmware** - Production-ready code for microcontroller projects.
+*   **Technical documentation** - Build guides, architecture docs, and component selection rationale.
+
+### PHILOSOPHY
 *   **By developers, for developers** - Building real hardware, writing real firmware, sharing everything.
-*   **Open hardware philosophy** - Every project designed to be forked, learned from, and improved upon.
+*   **Transparent development** - Schematics, firmware, and documentation are publicly accessible for learning and iteration.
 *   **Public iteration** - Making mistakes in public, learning from them, and building something real.
-*   Covering **IoT devices**, **custom PCB design**, **firmware development**, and **hardware-level understanding**.
+*   **Open hardware** - Every project designed to be forked, learned from, and improved upon.
+
+### PROJECTS UNDER ARCEUS LABS
+*   [Jolt Locator](https://github.com/Arceus-Labs/Jolt-Locator) - Offline GPS navigation with compass guidance
+*   [The Ruin Machine](https://github.com/Arceus-Labs/The-Ruin-Machine) - Probability simulator proving gambling math
+*   [Servo Light Switch](https://github.com/Arceus-Labs/Servo-Light-Switch-Control-ESP8266-and-HC06) - Bluetooth home automation
+*   [RFID Attendance System](https://github.com/Arceus-Labs/RFID-Attendance-System) - Smart tracking with Arduino + ESP32
+*   [Electromagnet Controller](https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller) - Coil winding automation
+*   [Inductance Meter](https://github.com/Arceus-Labs/esp8266-inductance-meter) - ESP8266-based measurement tool
+
+**Tech Stack:** ESP32, ESP8266, Arduino, Embedded C/C++, IoT Protocols, PCB Design, Git, Open Source Hardware
 
 ---
 
-## [Work Experience] Early-Stage Founding Engineer @ Grosity
+## [Work Experience] Grosity • Early-Stage Agritech Startup
 **Timeline:** October 2025 - February 2026 · ${calculateDuration('2025-10-01', '2026-02-28')}  
 **Location:** Patiala, Punjab
 
-### KEY CONTRIBUTIONS
-*   Developed and deployed the company's public website using **AI-assisted workflows** (Claude, GitHub Copilot, Kiro IDE).
-*   Contributed to early-stage **R&D for autonomous payload-delivery drone systems**, including embedded electronics and logic.
-*   Worked with **B2B and D2C product models**, helping align engineering decisions with business strategy.
+### ROLE PROGRESSION
+**Product Development Team Lead** (Dec 2025 - Feb 2026)  
+**Product Developer** (Nov 2025 - Feb 2026)  
+**Frontend Developer** (Oct 2025 - Nov 2025)
+
+### WHAT I BUILT
+*   **Company Website** - Developed and deployed the full public-facing website using AI-assisted workflows (Claude, GitHub Copilot, Kiro IDE).
+*   **Product Strategy** - Contributed to defining digital product roadmap for fresh produce marketplace connecting farmers, vendors, and customers.
+*   **Marketing Systems** - Built social media presence and executed digital campaigns for B2C and B2B channels.
+
+### ENGINEERING WORK
+*   Explored **IoT and embedded systems integration** for autonomous payload-delivery drone systems.
+*   Designed electronics logic and sensor integration for agricultural automation.
+*   Balanced hardware feasibility with business model constraints (B2B distribution + D2C direct sales).
+
+### PRODUCT DEVELOPMENT
+*   Worked on **business-to-consumer systems** understanding market fit and user-centric design.
+*   Led product development initiatives combining web technologies with hardware automation concepts.
+*   Bridged technical decisions with business strategy in early-stage startup environment.
+
+**Tech Stack:** React, Next.js, TypeScript, AI-Assisted Development (Claude, Copilot), IoT Architecture, Embedded Systems, Product Strategy
+
+---
+
+## [Community & Technical Leadership]
+
+### GirlScript Summer of Code (GSSoC)
+**Role:** Contributor & Mentee  
+**Timeline:** May 2026 - Present · ${calculateDuration('2026-05-01', 'Present')}  
+**Location:** Remote
+
+Selected for GirlScript Summer of Code, an open-source program focused on collaborative development and learning. Contributing to open-source projects by working on issues, improving codebases, and collaborating with maintainers and fellow contributors.
+
+**Focus Areas:**
+*   Open-source collaboration and GitHub workflows
+*   Code reviews, issue resolution, and documentation
+*   IoT, embedded systems, and AI-related projects
+
+**Tech Stack:** Git, GitHub, Open Source Contribution, Software Development Workflows
+
+---
+
+### IETE Students' Forum, TIET
+**Role:** Mentor  
+**Timeline:** July 2026 - Present · ${calculateDuration('2026-07-01', 'Present')}  
+**Location:** Patiala, Punjab
+
+Mentoring students in electronics and embedded systems at the Institution of Electronics and Telecommunication Engineers (IETE) student chapter at Thapar Institute.
+
+**Responsibilities:**
+*   Technical mentorship for electronics and embedded systems projects
+*   Guiding students through hardware design and firmware development
+*   Knowledge sharing on industry practices and engineering workflows
+
+**Tech Stack:** Electronics, Embedded Systems, Technical Mentoring, Circuit Design
+
+---
+
+### ElectroFusion TIET
+**Role:** Executive Member  
+**Timeline:** December 2025 - Present · ${calculateDuration('2025-12-01', 'Present')}  
+**Location:** Patiala, Punjab
+
+Executive member of TIET's technical society focused on electronics and innovation. Assisting core members in organizing events, research work, and technical activities.
+
+**Contributions:**
+*   Event coordination, logistics, and technical engagement
+*   Documentation and communication for society initiatives
+*   Brainstorming sessions and innovative project ideation
+*   Representing the society in technical competitions and outreach
+
+**Focus:** Event Management, Technical Activities, Research Collaboration, Student Engagement
+
+---
+
+### Team Oorja
+**Role:** Member  
+**Timeline:** April 2026 - Present · ${calculateDuration('2026-04-01', 'Present')}  
+**Location:** Patiala, Punjab
+
+Learning and contributing in **Electronics and Data Acquisition (DAQ)** systems as part of a student-driven technical team.
+
+**Tech Stack:** Electronics, Data Acquisition Systems, Sensor Integration
+
+---
+
+## [Non-Technical Leadership]
+
+### Thapar Institute Counselling Cell (TICC)
+**Role:** Mental Health Student Ambassador (MHSA)  
+**Timeline:** November 2025 - Present · ${calculateDuration('2025-11-01', 'Present')}  
+**Location:** Patiala, Punjab
+
+Dedicated to promoting a culture of mental well-being and psychological safety across the TIET campus. Serving as a crucial bridge between the student body and professional counselling services.
+
+**Responsibilities:**
+*   Peer support and empathetic communication with students
+*   Managing sensitive interactions with strict confidentiality
+*   Promoting mental health awareness and psychological safety on campus
+*   Leveraging specialized training to connect students with professional resources
+
+**Focus:** Peer Support, Mental Health Advocacy, Campus Well-being, Confidential Communication
 
 ---
 
 ## [HARDWARE PROJECT] Smart Blind Stick | Arceus Labs
 **Role:** Lead Engineer  
 **Timeline:** Jul 2018 - Aug 2018  
-**Tech Stack:** Arduino, C++
 
 ### KEY DELIVERABLES
 *   Developed a **smart mobility aid** for visually impaired individuals with obstacle detection capabilities.
 *   Integrated **ultrasonic sensors** for real-time distance measurement and collision avoidance.
 *   Implemented multi-modal alerts with **buzzer** and **voice prompts** for enhanced user safety and navigation.
 
-## [HARDWARE PROJECT] Zephyr-Station
+**Tech Stack:** Arduino, C++, Ultrasonic Sensors (HC-SR04), Audio Output, Embedded Systems
+
+## [HARDWARE PROJECT] Zephyr-Station | Arceus Labs
 **Role:** Lead Engineer  
 **Timeline:** Aug 2025 - Nov 2025  
-**Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
 *   **ESP32-based environmental monitoring system** with real-time sensor acquisition, **OLED display**, **SD card data logging**, and threshold-based alerts.
 *   Integrated **BME280** (temperature, humidity, pressure) & **MQ135** (air quality) sensors for comprehensive environmental monitoring.
 *   Designed custom power management circuits for off-grid reliability and low-power operation.
 
+**Tech Stack:** C++, ESP32, BME280, MQ-135, SSD1306 OLED, I2C, SPI, SD Card Logging, IoT Architecture
+
 ## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
 **Role:** Lead Engineer  
 **Timeline:** Nov 2025 - Dec 2025  
-**Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
 *   **GPS-based true-north navigation system** running on **ESP32** with real-time heading and location processing.
 *   Implemented accurate compass functionality with magnetic declination correction for offline navigation.
 *   Designed for outdoor navigation and location tracking applications with intuitive display interface.
 
+**Tech Stack:** C++, ESP32, NEO-6M GPS, QMC5883L Magnetometer, I2C, UART, OLED Display, Offline Navigation
+
 ## [HARDWARE PROJECT] The-Ruin-Machine | Arceus Labs
 **Role:** Lead Engineer  
 **Timeline:** Jan 2026  
-**Tech Stack:** C++, ESP32
 
 ### KEY DELIVERABLES
 *   **Probability and stochastic-model simulator** implemented on **ESP32** with physical I/O (**OLED + buzzer**).
 *   Mathematical demonstration proving gambling always leads to loss through interactive simulations.
 *   Designed intuitive user interface for educational purposes showing betting strategy failures.
+
+**Tech Stack:** C++, ESP32, Probability Theory, Stochastic Modeling, OLED Display, Hardware RNG, Interactive Systems
 
 ---
 
