@@ -75,6 +75,16 @@ const contactCategories = [
     category: 'Personal',
     items: [
       {
+        social: 'Matiks',
+        link: 'shaxntanu',
+        href: 'https://app.matiks.org/profile/shaxntanu',
+      },
+      {
+        social: 'Duolingo',
+        link: 'shaxntanu',
+        href: 'https://www.duolingo.com/profile/shaxntanu',
+      },
+      {
         social: 'Monkeytype',
         link: 'shaxntanu',
         href: 'https://monkeytype.com/profile/shaxntanu',
