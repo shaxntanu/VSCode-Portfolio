@@ -30,6 +30,11 @@ const contactCategories = [
         href: 'https://hdlbits.01xz.net/wiki/Special:VlgStats/DDA5C05FACCB04C3',
       },
       {
+        social: 'CircuitVerse',
+        link: 'shaxntanu',
+        href: 'https://circuitverse.org/users/444204',
+      },
+      {
         social: 'CircuitLab',
         link: 'shaxntanu',
         href: 'https://www.circuitlab.com/user/shaxntanu/',
