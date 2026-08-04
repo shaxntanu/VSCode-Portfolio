@@ -65,6 +65,11 @@ const contactCategories = [
         href: 'https://www.thegitcity.com/dev/shaxntanu',
       },
       {
+        social: 'LeetCode',
+        link: 'shaxntanu',
+        href: 'https://leetcode.com/u/shaxntanu/',
+      },
+      {
         social: 'Medium',
         link: 'shaxntanu',
         href: 'https://shaxntanu.medium.com',
