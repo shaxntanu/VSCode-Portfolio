@@ -51,6 +51,7 @@ const skillData: SkillCategory[] = [
     skills: [
       { name: 'C (Embedded)', tools: 'Embedded C', score: 99, categoryColor: '#00dc8c' },
       { name: 'C++ (Arduino/ESP32)', tools: 'Arduino, ESP-IDF', score: 66, categoryColor: '#00dc8c' },
+      { name: 'Verilog', tools: 'HDLBits', score: 33, categoryColor: '#00dc8c' },
       { name: 'Debugging', tools: 'Serial Monitor, Hardware', score: 99, categoryColor: '#00dc8c' },
     ],
   },

@@ -12,20 +12,21 @@ const csvData = `ID,COMPONENT,CATEGORY,PROFICIENCY,STATUS
 009,MQTT,Protocol,Intermediate,Library Use
 010,C (Embedded),Language,Advanced,Firmware
 011,C++ (Arduino/ESP32),Language,Intermediate,Daily Driver
-012,Serial Monitor,Debugging,Advanced,Active
-013,Arduino IDE,IDE,Advanced,Daily Driver
-014,Kiro IDE,IDE,Advanced,Daily Driver
-015,Tinkercad,Simulation,Advanced,Prototyping
-016,Wokwi,Simulation,Advanced,Prototyping
-017,Git / GitHub,Version Control,Advanced,Active
-018,Notion,Documentation,Advanced,Daily Driver
-019,Obsidian,Documentation,Advanced,Daily Driver
-020,HTML / CSS / JavaScript,Web Frontend,Basic,AI-Assisted
-021,React / Tailwind CSS,Web Framework,Basic,AI-Assisted
-022,Firebase,Database,Basic,AI-Assisted
-023,Vercel,Deployment,Advanced,Active
-024,SolidWorks,CAD Design,Intermediate,Curriculum
-025,AutoCAD,CAD Design,Intermediate,Curriculum`;
+012,Verilog,HDL,Beginner,Learning
+013,Serial Monitor,Debugging,Advanced,Active
+014,Arduino IDE,IDE,Advanced,Daily Driver
+015,Kiro IDE,IDE,Advanced,Daily Driver
+016,Tinkercad,Simulation,Advanced,Prototyping
+017,Wokwi,Simulation,Advanced,Prototyping
+018,Git / GitHub,Version Control,Advanced,Active
+019,Notion,Documentation,Advanced,Daily Driver
+020,Obsidian,Documentation,Advanced,Daily Driver
+021,HTML / CSS / JavaScript,Web Frontend,Basic,AI-Assisted
+022,React / Tailwind CSS,Web Framework,Basic,AI-Assisted
+023,Firebase,Database,Basic,AI-Assisted
+024,Vercel,Deployment,Advanced,Active
+025,SolidWorks,CAD Design,Intermediate,Curriculum
+026,AutoCAD,CAD Design,Intermediate,Curriculum`;
 
 const TechStackPage = () => {
   // Parse CSV
