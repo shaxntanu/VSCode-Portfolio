@@ -267,8 +267,10 @@ void loop()
     slug: 'logic-gates-simulator',
     year: 2026,
     dateRange: 'Aug 2026',
-    code: `// OR Gate Implementation
-int A = 2;
+    codeVariants: [
+      {
+        label: 'OR Gate',
+        code: `int A = 2;
 int B = 3;
 int LED = 8;
 
@@ -280,41 +282,41 @@ void setup() {
 
 void loop() {
   digitalWrite(LED, digitalRead(A) || digitalRead(B));
+}`
+      },
+      {
+        label: 'NOR Gate',
+        code: `int A = 2;
+int B = 3;
+int LED = 8;
+
+void setup() {
+  pinMode(A, INPUT);
+  pinMode(B, INPUT);
+  pinMode(LED, OUTPUT);
 }
 
-// ============================================
-// NOR Gate Implementation
-// ============================================
-// int A = 2;
-// int B = 3;
-// int LED = 8;
-// 
-// void setup() {
-//   pinMode(A, INPUT);
-//   pinMode(B, INPUT);
-//   pinMode(LED, OUTPUT);
-// }
-// 
-// void loop() {
-//   digitalWrite(LED, !(digitalRead(A) || digitalRead(B)));
-// }
+void loop() {
+  digitalWrite(LED, !(digitalRead(A) || digitalRead(B)));
+}`
+      },
+      {
+        label: 'XNOR Gate',
+        code: `int A = 2;
+int B = 3;
+int LED = 8;
 
-// ============================================
-// XNOR Gate Implementation
-// ============================================
-// int A = 2;
-// int B = 3;
-// int LED = 8;
-// 
-// void setup() {
-//   pinMode(A, INPUT);
-//   pinMode(B, INPUT);
-//   pinMode(LED, OUTPUT);
-// }
-// 
-// void loop() {
-//   digitalWrite(LED, !(digitalRead(A) ^ digitalRead(B)));
-// }`,
+void setup() {
+  pinMode(A, INPUT);
+  pinMode(B, INPUT);
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED, !(digitalRead(A) ^ digitalRead(B)));
+}`
+      }
+    ],
     overview: 'This circuit uses an Arduino Uno, two push buttons, and an LED to simulate basic logic gates without using logic ICs. The push buttons provide digital inputs, while the Arduino processes the selected logic function (OR, NOR, or XNOR) and controls the output LED accordingly. The circuit demonstrates the implementation of Boolean logic using software and simple electronic components.',
     workingPrinciple: 'Two push buttons act as digital inputs A and B. The Arduino reads these inputs and applies Boolean logic operations (OR, NOR, XNOR) to determine the LED output state. Pressing one or both buttons changes the inputs, and the LED illuminates based on the logic gate truth table. The code can be easily modified to test different logic functions.',
     components: [

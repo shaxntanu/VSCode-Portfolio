@@ -18,8 +18,14 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [codeOpen, setCodeOpen] = useState(false);
   const [iframeInteractive, setIframeInteractive] = useState(false);
   const [codeCopied, setCodeCopied] = useState(false);
+  const [selectedCodeVariant, setSelectedCodeVariant] = useState(0);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const iframeContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Get the current code to display
+  const currentCode = circuit.codeVariants 
+    ? circuit.codeVariants[selectedCodeVariant].code 
+    : circuit.code;
   
   // Get color based on category
   const getCategoryColor = () => {
@@ -243,7 +249,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               <VscFileMedia />
             </a>
           )}
-          {circuit.code && (
+          {(circuit.code || circuit.codeVariants) && (
             <button
               onClick={() => {
                 setCodeOpen(!codeOpen);
@@ -398,7 +404,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
 
         {/* Code Viewer */}
         <AnimatePresence mode="wait">
-          {circuit.code && codeOpen && (
+          {(circuit.code || circuit.codeVariants) && codeOpen && (
             <div 
               style={{
                 marginTop: '1rem',
@@ -419,6 +425,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   alignItems: 'center',
                   position: 'relative',
                   minHeight: '52px',
+                  gap: '0.75rem',
                 }}
               >
                 <span
@@ -431,9 +438,35 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                 >
                   sketch.ino
                 </span>
+                
+                {/* Code Variant Selector */}
+                {circuit.codeVariants && circuit.codeVariants.length > 1 && (
+                  <select
+                    value={selectedCodeVariant}
+                    onChange={(e) => setSelectedCodeVariant(Number(e.target.value))}
+                    style={{
+                      fontFamily: "'Fira Code', 'Consolas', monospace",
+                      fontSize: '0.7rem',
+                      padding: '0.35rem 0.5rem',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      color: categoryColor,
+                      border: `1px solid ${categoryColor}`,
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      outline: 'none',
+                    }}
+                  >
+                    {circuit.codeVariants.map((variant, index) => (
+                      <option key={index} value={index} style={{ backgroundColor: '#1e1e1e' }}>
+                        {variant.label}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                
                 <button
                   onClick={() => {
-                    navigator.clipboard.writeText(circuit.code || '');
+                    navigator.clipboard.writeText(currentCode || '');
                     setCodeCopied(true);
                     setTimeout(() => setCodeCopied(false), 2000);
                   }}
@@ -459,7 +492,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                 }}
                 className="hide-scrollbar"
               >
-                <code>{circuit.code}</code>
+                <code>{currentCode}</code>
               </pre>
             </div>
           )}
