@@ -315,19 +315,21 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                 >
                   Circuit Preview
                 </span>
-                <span
-                  style={{
-                    fontFamily: "'Fira Code', 'Consolas', monospace",
-                    fontSize: '0.65rem',
-                    color: 'rgba(255, 193, 7, 0.9)',
-                    fontStyle: 'italic',
-                    flex: '1 1 auto',
-                    textAlign: 'center',
-                    minWidth: '200px',
-                  }}
-                >
-                  Note: Buzzer is muted in simulation. Minor changes needed to enable sound.
-                </span>
+                {circuit.hasBuzzer && (
+                  <span
+                    style={{
+                      fontFamily: "'Fira Code', 'Consolas', monospace",
+                      fontSize: '0.65rem',
+                      color: 'rgba(255, 193, 7, 0.9)',
+                      fontStyle: 'italic',
+                      flex: '1 1 auto',
+                      textAlign: 'center',
+                      minWidth: '200px',
+                    }}
+                  >
+                    Note: Buzzer is muted in simulation. Minor changes needed to enable sound.
+                  </span>
+                )}
                 <button
                   onClick={() => setEmbedOpen(false)}
                   style={{

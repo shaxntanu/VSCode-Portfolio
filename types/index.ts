@@ -66,6 +66,7 @@ export interface Circuit {
   embedUrl?: string; // Optional embed URL for inline viewing
   schematicLink?: string; // Optional link to schematic PDF/image
   code?: string; // Optional Arduino/firmware code
+  hasBuzzer?: boolean; // Whether circuit includes a buzzer component
   slug: string;
   year: number;
   dateRange?: string;

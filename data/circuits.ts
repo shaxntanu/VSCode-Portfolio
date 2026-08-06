@@ -27,6 +27,7 @@ export const circuits: Circuit[] = [
     link: 'https://www.tinkercad.com/things/eSt2stRF85u-blind-stick-circuit-simulation',
     embedUrl: 'https://www.tinkercad.com/embed/eSt2stRF85u',
     schematicLink: 'https://drive.google.com/file/d/1E_zLfBYrhrYC4G8KlEbl10jfzuxJiwEL/view?usp=sharing',
+    hasBuzzer: true,
     code: `// Pins
 const int trigPin = 9;
 const int echoPin = 10;
