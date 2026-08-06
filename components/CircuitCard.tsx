@@ -15,6 +15,7 @@ interface CircuitCardProps {
 const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [bomOpen, setBomOpen] = useState(false);
   const [embedOpen, setEmbedOpen] = useState(false);
+  const [iframeHovered, setIframeHovered] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   
   // Get color based on category
@@ -266,7 +267,15 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   ×
                 </button>
               </div>
-              <div style={{ width: '100%', aspectRatio: '16/10' }}>
+              <div 
+                style={{ 
+                  width: '100%', 
+                  aspectRatio: '16/10',
+                  position: 'relative'
+                }}
+                onMouseEnter={() => setIframeHovered(true)}
+                onMouseLeave={() => setIframeHovered(false)}
+              >
                 <iframe
                   src={circuit.embedUrl}
                   width="100%"
@@ -275,7 +284,10 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   marginWidth={0}
                   marginHeight={0}
                   scrolling="no"
-                  style={{ display: 'block' }}
+                  style={{ 
+                    display: 'block',
+                    pointerEvents: iframeHovered ? 'auto' : 'none'
+                  }}
                   title={`${circuit.title} embedded circuit`}
                 />
               </div>
