@@ -411,13 +411,14 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
             >
               <div
                 style={{
-                  padding: '0.75rem',
+                  padding: '0.75rem 3.5rem 0.75rem 0.75rem',
                   backgroundColor: 'rgba(0, 0, 0, 0.4)',
                   borderBottom: `1px solid ${categoryColor}`,
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   position: 'relative',
+                  minHeight: '52px',
                 }}
               >
                 <span
