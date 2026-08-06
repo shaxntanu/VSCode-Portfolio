@@ -169,6 +169,9 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
           </span>
         </div>
         <p className={styles.dateRange}>
+          {circuit.dateRange}
+        </p>
+        <p className={styles.dateRange} style={{ marginTop: '-0.5rem' }}>
           {circuit.platform} • {circuit.software}
         </p>
         <p className={styles.description}>{circuit.description}</p>
