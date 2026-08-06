@@ -64,10 +64,12 @@ export interface Circuit {
   status: CircuitStatus;
   link: string; // External link to simulation/design
   embedUrl?: string; // Optional embed URL for inline viewing
+  schematicLink?: string; // Optional link to schematic PDF/image
   slug: string;
   year: number;
   dateRange?: string;
   components?: Component[]; // Optional BOM
+  totalCost?: string; // Total project cost
   schematicImages?: string[]; // Optional circuit images
   workingPrinciple?: string; // How it works
   overview?: string; // Detailed overview

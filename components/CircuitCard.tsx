@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { VscCircuitBoard, VscEye } from 'react-icons/vsc';
+import { VscCircuitBoard, VscEye, VscFileMedia } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -176,6 +176,18 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               <VscEye />
             </button>
           )}
+          {circuit.schematicLink && (
+            <a
+              href={circuit.schematicLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.iconLink}`}
+              style={{ color: categoryColor }}
+              title="View Schematic"
+            >
+              <VscFileMedia />
+            </a>
+          )}
           {circuit.components && circuit.components.length > 0 && (
             <button
               onClick={() => {
@@ -197,7 +209,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
             <BOMViewer 
               components={circuit.components} 
               architecture={undefined}
-              totalCost={undefined}
+              totalCost={circuit.totalCost}
               isInline={true}
               sortBy={sortBy}
               setSortBy={setSortBy}
