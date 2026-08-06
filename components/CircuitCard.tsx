@@ -88,6 +88,13 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
             width={24}
             height={24}
             className={styles.logo}
+            priority
+            style={{
+              width: '24px',
+              height: '24px',
+              minWidth: '24px',
+              minHeight: '24px',
+            }}
           />
         ))}
       </div>

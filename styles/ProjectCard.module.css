@@ -40,6 +40,7 @@
 .content {
     padding: 1.75rem;
     padding-right: 1.75rem;
+    padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -47,11 +48,13 @@
     z-index: 1;
     overflow: visible;
     height: auto;
+    min-height: 320px;
 }
 
 .logoWrapper {
     background: rgba(255, 255, 255, 0.15);
     min-width: 42px;
+    width: fit-content;
     height: 42px;
     padding: 0 9px;
     border-radius: 8px;
@@ -66,12 +69,18 @@
     right: 1.75rem;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 10;
+    flex-shrink: 0;
+    pointer-events: none;
 }
 
 .logo {
     width: 24px;
     height: 24px;
+    min-width: 24px;
+    min-height: 24px;
     object-fit: contain;
+    flex-shrink: 0;
+    display: block;
 }
 
 .categoryBadge {
