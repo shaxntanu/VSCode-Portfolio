@@ -254,6 +254,7 @@ Dedicated to promoting a culture of mental well-being and psychological safety a
 
 ## [EDUCATION] Thapar Institute (TIET)
 **Degree:** '29 B.E. Electronics and Communication Engineering  
+**Minor:** Computer Science Engineering (Aug 2026 - Dec 2027)  
 **Focus:** Embedded Systems, IoT, Circuit Design, Signal Processing`;
 
   return (
