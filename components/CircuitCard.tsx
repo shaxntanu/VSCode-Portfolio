@@ -297,7 +297,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               <div 
                 style={{ 
                   width: '100%', 
-                  aspectRatio: '16/10',
+                  aspectRatio: '450/280',
                   position: 'relative'
                 }}
                 onMouseEnter={() => setIframeHovered(true)}
