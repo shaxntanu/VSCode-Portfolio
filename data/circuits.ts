@@ -27,6 +27,49 @@ export const circuits: Circuit[] = [
     link: 'https://www.tinkercad.com/things/eSt2stRF85u-blind-stick-circuit-simulation',
     embedUrl: 'https://www.tinkercad.com/embed/eSt2stRF85u',
     schematicLink: 'https://drive.google.com/file/d/1E_zLfBYrhrYC4G8KlEbl10jfzuxJiwEL/view?usp=sharing',
+    code: `const int trigPin = 9;
+const int echoPin = 10;
+const int buzzer = 11;
+const int tempPin = A0;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(buzzer, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Distance
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  long duration = pulseIn(echoPin, HIGH);
+  float distance = duration * 0.034 / 2;
+
+  // Temperature (TMP36)
+  int reading = analogRead(tempPin);
+  float voltage = reading * (5.0 / 1023.0);
+  float temperature = (voltage - 0.5) * 100.0;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.print(" cm\\t");
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" C");
+
+  // Alarm
+  if (distance < 20 || temperature > 35) {
+    tone(buzzer, 1000);
+  } else {
+    noTone(buzzer);
+  }
+
+  delay(500);
+}`,
     slug: 'blind-stick-circuit',
     year: 2018,
     dateRange: 'Jul 2018',

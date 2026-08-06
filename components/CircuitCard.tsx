@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { VscCircuitBoard, VscEye, VscFileMedia } from 'react-icons/vsc';
+import { VscCircuitBoard, VscEye, VscFileMedia, VscCode } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -15,6 +15,7 @@ interface CircuitCardProps {
 const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [bomOpen, setBomOpen] = useState(false);
   const [embedOpen, setEmbedOpen] = useState(false);
+  const [codeOpen, setCodeOpen] = useState(false);
   const [iframeHovered, setIframeHovered] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   
@@ -172,7 +173,10 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
             <button
               onClick={() => {
                 setEmbedOpen(!embedOpen);
-                if (!embedOpen) setBomOpen(false);
+                if (!embedOpen) {
+                  setBomOpen(false);
+                  setCodeOpen(false);
+                }
               }}
               className={`${styles.iconLink} ${styles.bomButton}`}
               style={{ color: embedOpen ? categoryColor : 'rgba(255, 255, 255, 0.6)' }}
@@ -193,11 +197,30 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               <VscFileMedia />
             </a>
           )}
+          {circuit.code && (
+            <button
+              onClick={() => {
+                setCodeOpen(!codeOpen);
+                if (!codeOpen) {
+                  setBomOpen(false);
+                  setEmbedOpen(false);
+                }
+              }}
+              className={`${styles.iconLink} ${styles.bomButton}`}
+              style={{ color: codeOpen ? categoryColor : 'rgba(255, 255, 255, 0.6)' }}
+              title="View Source Code"
+            >
+              <VscCode />
+            </button>
+          )}
           {circuit.components && circuit.components.length > 0 && (
             <button
               onClick={() => {
                 setBomOpen(!bomOpen);
-                if (!bomOpen) setEmbedOpen(false);
+                if (!bomOpen) {
+                  setEmbedOpen(false);
+                  setCodeOpen(false);
+                }
               }}
               className={`${styles.iconLink} ${styles.bomButton}`}
               style={{ color: bomOpen ? categoryColor : 'rgba(255, 255, 255, 0.6)' }}
@@ -295,6 +318,85 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   title={`${circuit.title} embedded circuit`}
                 />
               </div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        {/* Code Viewer */}
+        <AnimatePresence mode="wait">
+          {circuit.code && codeOpen && (
+            <div 
+              style={{
+                marginTop: '1rem',
+                width: '100%',
+                border: `1px solid ${categoryColor}`,
+                borderRadius: '8px',
+                overflow: 'hidden',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              }}
+            >
+              <div
+                style={{
+                  padding: '0.75rem',
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                  borderBottom: `1px solid ${categoryColor}`,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'Fira Code', 'Consolas', monospace",
+                    fontSize: '0.75rem',
+                    fontWeight: '600',
+                    color: categoryColor,
+                  }}
+                >
+                  sketch.ino
+                </span>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(circuit.code || '');
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: `1px solid ${categoryColor}`,
+                    color: categoryColor,
+                    cursor: 'pointer',
+                    fontSize: '0.7rem',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '4px',
+                    fontFamily: "'Fira Code', 'Consolas', monospace",
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = categoryColor;
+                    e.currentTarget.style.color = '#050505';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = categoryColor;
+                  }}
+                >
+                  Copy Code
+                </button>
+              </div>
+              <pre
+                style={{
+                  margin: 0,
+                  padding: '1rem',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontFamily: "'Fira Code', 'Consolas', monospace",
+                  fontSize: '0.8rem',
+                  lineHeight: '1.5',
+                  overflow: 'auto',
+                  maxHeight: '400px',
+                }}
+              >
+                <code>{circuit.code}</code>
+              </pre>
             </div>
           )}
         </AnimatePresence>

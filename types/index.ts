@@ -65,6 +65,7 @@ export interface Circuit {
   link: string; // External link to simulation/design
   embedUrl?: string; // Optional embed URL for inline viewing
   schematicLink?: string; // Optional link to schematic PDF/image
+  code?: string; // Optional Arduino/firmware code
   slug: string;
   year: number;
   dateRange?: string;
