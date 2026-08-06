@@ -304,10 +304,11 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               style={{
                 marginTop: '1rem',
                 width: '100%',
-                border: `1px solid ${categoryColor}`,
+                border: `2px solid ${categoryColor}`,
                 borderRadius: '8px',
                 overflow: 'hidden',
                 backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                boxShadow: `0 0 20px ${categoryColor}40`,
               }}
             >
               <div
@@ -409,10 +410,11 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               style={{
                 marginTop: '1rem',
                 width: '100%',
-                border: `1px solid ${categoryColor}`,
+                border: `2px solid ${categoryColor}`,
                 borderRadius: '8px',
                 overflow: 'hidden',
                 backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                boxShadow: `0 0 20px ${categoryColor}40`,
               }}
             >
               <div
