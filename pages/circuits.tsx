@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import { VscSearch, VscClose } from 'react-icons/vsc';
 import CircuitCard from '@/components/CircuitCard';
 import { circuits, circuitCategories } from '@/data/circuits';
-import { CircuitCategory } from '@/types';
 
 import styles from '@/styles/CircuitsPage.module.css';
 
@@ -79,7 +78,7 @@ const CircuitsPage = () => {
 
       {/* Results Count */}
       <div className={styles.resultsCount}>
-        <span className={styles.comment}>// </span>
+        <span className={styles.comment}>{'// '}</span>
         <span className={styles.countText}>
           {sortedCircuits.length} {sortedCircuits.length === 1 ? 'circuit' : 'circuits'} found
         </span>
