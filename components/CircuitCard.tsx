@@ -73,22 +73,26 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
       className={styles.card}
       style={{
         '--card-accent-color': categoryColor,
+        position: 'relative',
       } as React.CSSProperties}
     >
       <div className={styles.cardGlow}></div>
+      
+      {/* Logo Wrapper - Fixed to card, not content */}
+      <div className={styles.logoWrapper}>
+        {circuit.technologies.map((tech, index) => (
+          <Image
+            key={index}
+            src={getTechIcon(tech)}
+            alt={`${tech} icon`}
+            width={24}
+            height={24}
+            className={styles.logo}
+          />
+        ))}
+      </div>
+      
       <div className={styles.content}>
-        <div className={styles.logoWrapper}>
-          {circuit.technologies.map((tech, index) => (
-            <Image
-              key={index}
-              src={getTechIcon(tech)}
-              alt={`${tech} icon`}
-              width={24}
-              height={24}
-              className={styles.logo}
-            />
-          ))}
-        </div>
         <div 
           className={styles.categoryBadge}
           style={{ backgroundColor: categoryColor }}
