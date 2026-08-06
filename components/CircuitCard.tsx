@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { VscCircuitBoard, VscEye, VscFileMedia, VscCode, VscCopy, VscCheck } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
+import MatrixBackground from '@/components/MatrixBackground';
 
 import { Circuit } from '@/types';
 
@@ -19,8 +20,22 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [iframeInteractive, setIframeInteractive] = useState(false);
   const [codeCopied, setCodeCopied] = useState(false);
   const [selectedCodeVariant, setSelectedCodeVariant] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const iframeContainerRef = useRef<HTMLDivElement>(null);
+  
+  // Detect prefers-reduced-motion
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
   
   // Get the current code to display
   const currentCode = circuit.codeVariants 
@@ -478,24 +493,30 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   {codeCopied ? <VscCheck className={styles.checkmark} /> : <VscCopy className={styles.clipboard} />}
                 </button>
               </div>
-              <pre
-                style={{
-                  margin: 0,
-                  padding: '1rem',
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  fontFamily: "'Fira Code', 'Consolas', monospace",
-                  fontSize: '0.8rem',
-                  lineHeight: '1.5',
-                  overflow: 'auto',
-                  maxHeight: '400px',
-                  scrollbarWidth: 'none',
-                  msOverflowStyle: 'none',
-                }}
-                className="hide-scrollbar"
-              >
-                <code>{currentCode}</code>
-              </pre>
+              <div style={{ position: 'relative', overflow: 'hidden' }}>
+                {/* Matrix Background - Only animate if not reduced motion */}
+                {!prefersReducedMotion && <MatrixBackground />}
+                <pre
+                  style={{
+                    margin: 0,
+                    padding: '1rem',
+                    backgroundColor: prefersReducedMotion ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontFamily: "'Fira Code', 'Consolas', monospace",
+                    fontSize: '0.8rem',
+                    lineHeight: '1.5',
+                    overflow: 'auto',
+                    maxHeight: '400px',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
+                  className="hide-scrollbar"
+                >
+                  <code>{currentCode}</code>
+                </pre>
+              </div>
             </div>
           )}
         </AnimatePresence>
