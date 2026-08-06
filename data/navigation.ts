@@ -28,6 +28,7 @@ export const navFolders: NavFolder[] = [
     label: 'DEVELOPMENT',
     files: [
       { name: 'firmware.ino', path: '/projects', icon: '/logos/arduino_icon.svg' },
+      { name: 'circuits.sch', path: '/circuits', icon: '/logos/circuit_icon.svg' },
       { name: 'github.md', path: '/github', icon: '/logos/markdown_icon.svg' },
     ],
   },

@@ -11,6 +11,12 @@ export interface Article {
 
 export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT';
 
+export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS' | 'POWER_ELECTRONICS' | 'COMMUNICATION' | 'PCB' | 'EDUCATIONAL';
+
+export type CircuitDifficulty = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+
+export type CircuitStatus = 'VERIFIED' | 'IN_PROGRESS' | 'EXPERIMENTAL';
+
 export interface Component {
   name: string;
   role: string;
@@ -45,6 +51,25 @@ export interface CategoryConfig {
   titleHighlight: string;
   color: string;
   link?: string;
+}
+
+export interface Circuit {
+  title: string;
+  description: string;
+  platform: string; // Arduino, ESP32, etc.
+  software: string; // Tinkercad, KiCad, LTspice, etc.
+  technologies: string[]; // List of technologies used
+  category: CircuitCategory;
+  difficulty: CircuitDifficulty;
+  status: CircuitStatus;
+  link: string; // External link to simulation/design
+  slug: string;
+  year: number;
+  dateRange?: string;
+  components?: Component[]; // Optional BOM
+  schematicImages?: string[]; // Optional circuit images
+  workingPrinciple?: string; // How it works
+  overview?: string; // Detailed overview
 }
 
 export interface Repo {
