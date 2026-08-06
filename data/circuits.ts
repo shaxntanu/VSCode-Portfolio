@@ -252,4 +252,127 @@ void loop()
     ],
     totalCost: '₹565'
   },
+  {
+    title: 'Logic Gates Simulator Circuit',
+    description: 'Arduino-based logic gate implementation using push buttons and LED. Demonstrates OR, NOR, and XNOR gates using software-defined Boolean logic without dedicated logic ICs.',
+    platform: 'Arduino',
+    software: 'Tinkercad',
+    technologies: ['Arduino', 'Tinkercad'],
+    category: 'DIGITAL_LOGIC',
+    difficulty: 'BEGINNER',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/things/aiENaNPlch4',
+    embedUrl: 'https://www.tinkercad.com/embed/aiENaNPlch4',
+    schematicLink: 'https://drive.google.com/file/d/1PmNgFs6DdlL-yjWx3rv1YZ4U2Zmwp-Mc/view?usp=sharing',
+    slug: 'logic-gates-simulator',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    code: `// OR Gate Implementation
+int A = 2;
+int B = 3;
+int LED = 8;
+
+void setup() {
+  pinMode(A, INPUT);
+  pinMode(B, INPUT);
+  pinMode(LED, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED, digitalRead(A) || digitalRead(B));
+}
+
+// ============================================
+// NOR Gate Implementation
+// ============================================
+// int A = 2;
+// int B = 3;
+// int LED = 8;
+// 
+// void setup() {
+//   pinMode(A, INPUT);
+//   pinMode(B, INPUT);
+//   pinMode(LED, OUTPUT);
+// }
+// 
+// void loop() {
+//   digitalWrite(LED, !(digitalRead(A) || digitalRead(B)));
+// }
+
+// ============================================
+// XNOR Gate Implementation
+// ============================================
+// int A = 2;
+// int B = 3;
+// int LED = 8;
+// 
+// void setup() {
+//   pinMode(A, INPUT);
+//   pinMode(B, INPUT);
+//   pinMode(LED, OUTPUT);
+// }
+// 
+// void loop() {
+//   digitalWrite(LED, !(digitalRead(A) ^ digitalRead(B)));
+// }`,
+    overview: 'This circuit uses an Arduino Uno, two push buttons, and an LED to simulate basic logic gates without using logic ICs. The push buttons provide digital inputs, while the Arduino processes the selected logic function (OR, NOR, or XNOR) and controls the output LED accordingly. The circuit demonstrates the implementation of Boolean logic using software and simple electronic components.',
+    workingPrinciple: 'Two push buttons act as digital inputs A and B. The Arduino reads these inputs and applies Boolean logic operations (OR, NOR, XNOR) to determine the LED output state. Pressing one or both buttons changes the inputs, and the LED illuminates based on the logic gate truth table. The code can be easily modified to test different logic functions.',
+    components: [
+      {
+        name: 'Arduino Uno R3',
+        role: 'Logic Processor',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Implements Boolean logic in software',
+        price: '₹450'
+      },
+      {
+        name: 'Pushbutton',
+        role: 'Digital Input A & B',
+        interface: 'Digital Input (D2, D3)',
+        voltage: '5V',
+        quantity: 2,
+        notes: 'Provides two logic gate inputs',
+        price: '₹10'
+      },
+      {
+        name: 'Red LED',
+        role: 'Logic Output Indicator',
+        interface: 'Digital Output (D8)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Shows result of logic operation',
+        price: '₹5'
+      },
+      {
+        name: '220 Ω Resistor',
+        role: 'LED Current Limiting',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Protects LED from excessive current',
+        price: '₹2'
+      },
+      {
+        name: '10 kΩ Resistor',
+        role: 'Button Pull-down',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 2,
+        notes: 'Ensures stable LOW state for push buttons',
+        price: '₹4'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹551'
+  },
 ];
