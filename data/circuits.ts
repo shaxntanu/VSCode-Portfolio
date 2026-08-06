@@ -132,4 +132,97 @@ void loop() {
     ],
     totalCost: '₹660'
   },
+  {
+    title: 'LED Sequence Control Circuit',
+    description: 'Arduino-based circuit demonstrating sequential LED control with digital output. Five LEDs connected through current-limiting resistors for basic I/O experiments.',
+    platform: 'Arduino',
+    software: 'Tinkercad',
+    technologies: ['Arduino', 'Tinkercad'],
+    category: 'EDUCATIONAL',
+    difficulty: 'BEGINNER',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/things/h4P9qGZ2TYe',
+    embedUrl: 'https://www.tinkercad.com/embed/h4P9qGZ2TYe',
+    schematicLink: 'https://drive.google.com/file/d/1DDgGYsS4s82P186a02RldWV0dseHsoDq/view?usp=sharing',
+    slug: 'led-sequence-control',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    overview: 'This circuit consists of an Arduino Uno connected to a breadboard to perform two experiments. In the first experiment, five LEDs are connected to digital pins D2–D6 through 220 Ω current-limiting resistors. The Arduino sequentially turns each LED ON and OFF to demonstrate basic digital output control.',
+    workingPrinciple: 'The Arduino uses digitalWrite() to sequentially turn each LED ON and OFF in a pattern. Each LED is connected to a digital pin through a 220Ω resistor for current limiting. The program cycles through pins D2-D6, creating a chasing light effect that demonstrates basic digital I/O operations.',
+    components: [
+      {
+        name: 'Arduino Uno R3',
+        role: 'Main Controller',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Controls LED sequence through digital pins',
+        price: '₹450'
+      },
+      {
+        name: 'Blue LED',
+        role: 'Visual Indicator',
+        interface: 'Digital Output (D2)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'First LED in sequence',
+        price: '₹5'
+      },
+      {
+        name: 'Orange LED',
+        role: 'Visual Indicator',
+        interface: 'Digital Output (D3)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Second LED in sequence',
+        price: '₹5'
+      },
+      {
+        name: 'White LED',
+        role: 'Visual Indicator',
+        interface: 'Digital Output (D4)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Third LED in sequence',
+        price: '₹5'
+      },
+      {
+        name: 'Red LED',
+        role: 'Visual Indicator',
+        interface: 'Digital Output (D5)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Fourth LED in sequence',
+        price: '₹5'
+      },
+      {
+        name: 'Green LED',
+        role: 'Visual Indicator',
+        interface: 'Digital Output (D6)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Fifth LED in sequence',
+        price: '₹5'
+      },
+      {
+        name: '220 Ω Resistor',
+        role: 'Current Limiting',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 5,
+        notes: 'Protects LEDs from excessive current',
+        price: '₹10'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹565'
+  },
 ];
