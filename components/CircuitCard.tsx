@@ -173,6 +173,13 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
         </p>
         <p className={styles.description}>{circuit.description}</p>
         
+        {/* Funded Prototype Badge */}
+        {circuit.fundedPrototype && (
+          <div className={styles.fundedBadge}>
+            <span className={styles.fundedBadgeText}>⭐ Funded Prototype</span>
+          </div>
+        )}
+        
         <div className={styles.linkIcons}>
           <a
             href={circuit.link}

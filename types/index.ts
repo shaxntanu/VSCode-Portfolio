@@ -67,6 +67,7 @@ export interface Circuit {
   schematicLink?: string; // Optional link to schematic PDF/image
   code?: string; // Optional Arduino/firmware code
   hasBuzzer?: boolean; // Whether circuit includes a buzzer component
+  fundedPrototype?: boolean; // Whether this is a funded prototype
   slug: string;
   year: number;
   dateRange?: string;

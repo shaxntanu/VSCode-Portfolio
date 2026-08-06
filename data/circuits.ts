@@ -28,6 +28,7 @@ export const circuits: Circuit[] = [
     embedUrl: 'https://www.tinkercad.com/embed/eSt2stRF85u',
     schematicLink: 'https://drive.google.com/file/d/1E_zLfBYrhrYC4G8KlEbl10jfzuxJiwEL/view?usp=sharing',
     hasBuzzer: true,
+    fundedPrototype: true,
     code: `// Pins
 const int trigPin = 9;
 const int echoPin = 10;
