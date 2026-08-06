@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { VscCircuitBoard, VscEye, VscFileMedia, VscCode } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
@@ -16,8 +16,9 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [bomOpen, setBomOpen] = useState(false);
   const [embedOpen, setEmbedOpen] = useState(false);
   const [codeOpen, setCodeOpen] = useState(false);
-  const [iframeHovered, setIframeHovered] = useState(false);
+  const [iframeInteractive, setIframeInteractive] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
+  const iframeContainerRef = useRef<HTMLDivElement>(null);
   
   // Get color based on category
   const getCategoryColor = () => {
@@ -68,6 +69,34 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
   };
 
   const categoryColor = getCategoryColor();
+  
+  // Handle iframe interaction to prevent scroll trapping
+  useEffect(() => {
+    const container = iframeContainerRef.current;
+    if (!container || !embedOpen) return;
+
+    const handlePointerEnter = () => {
+      setIframeInteractive(true);
+    };
+
+    const handlePointerLeave = () => {
+      setIframeInteractive(false);
+      // Force blur on the iframe to release any captured events
+      const iframe = container.querySelector('iframe');
+      if (iframe && document.activeElement === iframe) {
+        (iframe as HTMLElement).blur();
+      }
+    };
+
+    container.addEventListener('pointerenter', handlePointerEnter);
+    container.addEventListener('pointerleave', handlePointerLeave);
+
+    return () => {
+      container.removeEventListener('pointerenter', handlePointerEnter);
+      container.removeEventListener('pointerleave', handlePointerLeave);
+      setIframeInteractive(false);
+    };
+  }, [embedOpen]);
   
   return (
     <div
@@ -316,13 +345,13 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                 </button>
               </div>
               <div 
+                ref={iframeContainerRef}
                 style={{ 
                   width: '100%', 
                   aspectRatio: '450/280',
-                  position: 'relative'
+                  position: 'relative',
+                  cursor: iframeInteractive ? 'default' : 'pointer',
                 }}
-                onMouseEnter={() => setIframeHovered(true)}
-                onMouseLeave={() => setIframeHovered(false)}
               >
                 <iframe
                   src={circuit.embedUrl}
@@ -334,10 +363,21 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   scrolling="no"
                   style={{ 
                     display: 'block',
-                    pointerEvents: iframeHovered ? 'auto' : 'none'
+                    pointerEvents: iframeInteractive ? 'auto' : 'none',
+                    transition: 'none',
                   }}
                   title={`${circuit.title} embedded circuit`}
                 />
+                {!iframeInteractive && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundColor: 'transparent',
+                      cursor: 'default',
+                    }}
+                  />
+                )}
               </div>
             </div>
           )}
