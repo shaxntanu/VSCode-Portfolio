@@ -80,7 +80,7 @@ void loop() {
 }`,
     slug: 'blind-stick-circuit',
     year: 2018,
-    dateRange: 'Jul 2018',
+    dateRange: 'Jul 2018 - Aug 2018',
     overview: 'This circuit simulates a smart blind stick that helps visually impaired individuals navigate safely. It uses an ultrasonic sensor to detect obstacles and provides audio feedback through a buzzer when objects are detected within a certain range.',
     workingPrinciple: 'The HC-SR04 ultrasonic sensor continuously measures the distance to nearby objects. When an obstacle is detected within the threshold distance (typically 50cm), the Arduino triggers the buzzer to alert the user. The closer the obstacle, the faster the buzzer beeps, providing intuitive distance feedback.',
     components: [
