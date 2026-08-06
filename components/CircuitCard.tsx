@@ -393,7 +393,10 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   lineHeight: '1.5',
                   overflow: 'auto',
                   maxHeight: '400px',
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
                 }}
+                className="hide-scrollbar"
               >
                 <code>{circuit.code}</code>
               </pre>

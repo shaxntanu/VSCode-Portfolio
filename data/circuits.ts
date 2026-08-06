@@ -27,48 +27,56 @@ export const circuits: Circuit[] = [
     link: 'https://www.tinkercad.com/things/eSt2stRF85u-blind-stick-circuit-simulation',
     embedUrl: 'https://www.tinkercad.com/embed/eSt2stRF85u',
     schematicLink: 'https://drive.google.com/file/d/1E_zLfBYrhrYC4G8KlEbl10jfzuxJiwEL/view?usp=sharing',
-    code: `const int trigPin = 9;
+    code: `// Pins
+const int trigPin = 9;
 const int echoPin = 10;
-const int buzzer = 11;
+const int buzzerPin = 11;
 const int tempPin = A0;
+
+// Variables
+long duration;
+float distance;
+float temperature;
 
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(buzzer, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
   Serial.begin(9600);
 }
 
 void loop() {
-  // Distance
+  // -------- Ultrasonic Sensor --------
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  long duration = pulseIn(echoPin, HIGH);
-  float distance = duration * 0.034 / 2;
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration * 0.0343 / 2;
 
-  // Temperature (TMP36)
-  int reading = analogRead(tempPin);
-  float voltage = reading * (5.0 / 1023.0);
-  float temperature = (voltage - 0.5) * 100.0;
+  // -------- Temperature Sensor (TMP36) --------
+  int sensorValue = analogRead(tempPin);
+  float voltage = sensorValue * (5.0 / 1023.0);
+  // TMP36 Formula
+  temperature = (voltage - 0.5) * 100.0;
 
+  // -------- Serial Monitor --------
   Serial.print("Distance: ");
   Serial.print(distance);
   Serial.print(" cm\\t");
   Serial.print("Temperature: ");
   Serial.print(temperature);
-  Serial.println(" C");
+  Serial.println(" °C");
 
-  // Alarm
-  if (distance < 20 || temperature > 35) {
-    tone(buzzer, 1000);
+  // -------- Alarm Logic --------
+  if ((distance > 0 && distance <= 20) || temperature > 35) {
+    tone(buzzerPin, 1000);      // Turn buzzer ON
   } else {
-    noTone(buzzer);
+    noTone(buzzerPin);          // Turn buzzer OFF immediately
   }
 
-  delay(500);
+  delay(50);    // Fast response
 }`,
     slug: 'blind-stick-circuit',
     year: 2018,
