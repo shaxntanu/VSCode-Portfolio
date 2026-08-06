@@ -63,6 +63,7 @@ export interface Circuit {
   difficulty: CircuitDifficulty;
   status: CircuitStatus;
   link: string; // External link to simulation/design
+  embedUrl?: string; // Optional embed URL for inline viewing
   slug: string;
   year: number;
   dateRange?: string;

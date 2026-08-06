@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { VscCircuitBoard } from 'react-icons/vsc';
+import { VscCircuitBoard, VscEye } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -14,6 +14,7 @@ interface CircuitCardProps {
 
 const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [bomOpen, setBomOpen] = useState(false);
+  const [embedOpen, setEmbedOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   
   // Get color based on category
@@ -162,9 +163,25 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
           >
             Open Circuit
           </a>
+          {circuit.embedUrl && (
+            <button
+              onClick={() => {
+                setEmbedOpen(!embedOpen);
+                if (!embedOpen) setBomOpen(false);
+              }}
+              className={`${styles.iconLink} ${styles.bomButton}`}
+              style={{ color: embedOpen ? categoryColor : 'rgba(255, 255, 255, 0.6)' }}
+              title="View Embedded Circuit"
+            >
+              <VscEye />
+            </button>
+          )}
           {circuit.components && circuit.components.length > 0 && (
             <button
-              onClick={() => setBomOpen(!bomOpen)}
+              onClick={() => {
+                setBomOpen(!bomOpen);
+                if (!bomOpen) setEmbedOpen(false);
+              }}
               className={`${styles.iconLink} ${styles.bomButton}`}
               style={{ color: bomOpen ? categoryColor : 'rgba(255, 255, 255, 0.6)' }}
               title="View Bill of Materials"
@@ -185,6 +202,72 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               sortBy={sortBy}
               setSortBy={setSortBy}
             />
+          )}
+        </AnimatePresence>
+
+        {/* Embedded Circuit Viewer */}
+        <AnimatePresence mode="wait">
+          {circuit.embedUrl && embedOpen && (
+            <div 
+              style={{
+                marginTop: '1rem',
+                width: '100%',
+                border: `1px solid ${categoryColor}`,
+                borderRadius: '8px',
+                overflow: 'hidden',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              }}
+            >
+              <div
+                style={{
+                  padding: '0.75rem',
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                  borderBottom: `1px solid ${categoryColor}`,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'Fira Code', 'Consolas', monospace",
+                    fontSize: '0.75rem',
+                    fontWeight: '600',
+                    color: categoryColor,
+                  }}
+                >
+                  Circuit Preview
+                </span>
+                <button
+                  onClick={() => setEmbedOpen(false)}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'rgba(255, 255, 255, 0.6)',
+                    cursor: 'pointer',
+                    fontSize: '1.2rem',
+                    padding: '0',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+              <div style={{ width: '100%', aspectRatio: '16/10' }}>
+                <iframe
+                  src={circuit.embedUrl}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  marginWidth={0}
+                  marginHeight={0}
+                  scrolling="no"
+                  style={{ display: 'block' }}
+                  title={`${circuit.title} embedded circuit`}
+                />
+              </div>
+            </div>
           )}
         </AnimatePresence>
       </div>

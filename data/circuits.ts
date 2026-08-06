@@ -25,6 +25,7 @@ export const circuits: Circuit[] = [
     difficulty: 'BEGINNER',
     status: 'VERIFIED',
     link: 'https://www.tinkercad.com/things/eSt2stRF85u-blind-stick-circuit-simulation',
+    embedUrl: 'https://www.tinkercad.com/embed/eSt2stRF85u',
     slug: 'blind-stick-circuit',
     year: 2018,
     dateRange: 'Jul 2018',
