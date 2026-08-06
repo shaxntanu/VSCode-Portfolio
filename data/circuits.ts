@@ -149,6 +149,31 @@ void loop() {
     slug: 'led-sequence-control',
     year: 2026,
     dateRange: 'Aug 2026',
+    code: `int ledPins[] = {2, 3, 4, 5, 6};
+
+void setup()
+{
+  for(int i=0;i<5;i++)
+  {
+    pinMode(ledPins[i], OUTPUT);
+  }
+}
+
+void loop()
+{
+  // Turn ON one by one
+  for(int i=0;i<5;i++)
+  {
+    digitalWrite(ledPins[i], HIGH);
+    delay(500);
+  }
+  // Turn OFF one by one
+  for(int i=0;i<5;i++)
+  {
+    digitalWrite(ledPins[i], LOW);
+    delay(500);
+  }
+}`,
     overview: 'This circuit consists of an Arduino Uno connected to a breadboard to perform two experiments. In the first experiment, five LEDs are connected to digital pins D2–D6 through 220 Ω current-limiting resistors. The Arduino sequentially turns each LED ON and OFF to demonstrate basic digital output control.',
     workingPrinciple: 'The Arduino uses digitalWrite() to sequentially turn each LED ON and OFF in a pattern. Each LED is connected to a digital pin through a 220Ω resistor for current limiting. The program cycles through pins D2-D6, creating a chasing light effect that demonstrates basic digital I/O operations.',
     components: [

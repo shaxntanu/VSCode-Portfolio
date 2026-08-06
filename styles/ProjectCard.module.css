@@ -345,3 +345,50 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+/* Copy Button Styles for Code Viewer */
+.copyButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #353434;
+    color: #CCCCCC;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.15s ease;
+}
+
+.copyButton:hover {
+    background-color: #464646;
+}
+
+.copyButton:hover svg {
+    color: #8bb9fe;
+}
+
+.copyButton:active {
+    outline: 1px solid rgb(141, 141, 141);
+    transform: scale(0.95);
+}
+
+.copyButton svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkmark {
+    display: block;
+    color: #4caf50;
+}
+
+.clipboard {
+    display: block;
+}

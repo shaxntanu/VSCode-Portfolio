@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { VscCircuitBoard, VscEye, VscFileMedia, VscCode } from 'react-icons/vsc';
+import { VscCircuitBoard, VscEye, VscFileMedia, VscCode, VscCopy, VscCheck } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
 
@@ -17,6 +17,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
   const [embedOpen, setEmbedOpen] = useState(false);
   const [codeOpen, setCodeOpen] = useState(false);
   const [iframeInteractive, setIframeInteractive] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const iframeContainerRef = useRef<HTMLDivElement>(null);
   
@@ -416,6 +417,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
+                  position: 'relative',
                 }}
               >
                 <span
@@ -431,28 +433,13 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(circuit.code || '');
+                    setCodeCopied(true);
+                    setTimeout(() => setCodeCopied(false), 2000);
                   }}
-                  style={{
-                    background: 'transparent',
-                    border: `1px solid ${categoryColor}`,
-                    color: categoryColor,
-                    cursor: 'pointer',
-                    fontSize: '0.7rem',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontFamily: "'Fira Code', 'Consolas', monospace",
-                    transition: 'all 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = categoryColor;
-                    e.currentTarget.style.color = '#050505';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = categoryColor;
-                  }}
+                  className={styles.copyButton}
+                  aria-label="Copy code"
                 >
-                  Copy Code
+                  {codeCopied ? <VscCheck className={styles.checkmark} /> : <VscCopy className={styles.clipboard} />}
                 </button>
               </div>
               <pre
