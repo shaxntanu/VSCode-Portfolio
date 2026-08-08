@@ -207,6 +207,13 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
           </div>
         )}
         
+        {/* College Course Project Badge */}
+        {circuit.collegeCourseProject && (
+          <div className={styles.fundedBadge}>
+            <span className={styles.fundedBadgeText}>🎓 College Course Project</span>
+          </div>
+        )}
+        
         <div className={styles.linkIcons}>
           <a
             href={circuit.link}

@@ -69,6 +69,7 @@ export interface Circuit {
   codeVariants?: { label: string; code: string }[]; // Multiple code implementations
   hasBuzzer?: boolean; // Whether circuit includes a buzzer component
   fundedPrototype?: boolean; // Whether this is a funded prototype
+  collegeCourseProject?: boolean; // Whether this is a college course project
   slug: string;
   year: number;
   dateRange?: string;
