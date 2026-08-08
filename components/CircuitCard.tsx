@@ -203,14 +203,14 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
         {/* Funded Prototype Badge */}
         {circuit.fundedPrototype && (
           <div className={styles.fundedBadge}>
-            <span className={styles.fundedBadgeText}>⭐ Funded Prototype</span>
+            <span className={styles.fundedBadgeText}>Funded Prototype</span>
           </div>
         )}
         
         {/* College Course Project Badge */}
         {circuit.collegeCourseProject && (
           <div className={styles.fundedBadge}>
-            <span className={styles.fundedBadgeText}>🎓 College Course Project</span>
+            <span className={styles.fundedBadgeText}>College Course Project</span>
           </div>
         )}
         
