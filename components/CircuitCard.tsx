@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { VscCircuitBoard, VscEye, VscFileMedia, VscCode, VscCopy, VscCheck } from 'react-icons/vsc';
 import { AnimatePresence } from 'framer-motion';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import BOMViewer from '@/components/BOMViewer';
 import MatrixBackground from '@/components/MatrixBackground';
 
@@ -496,26 +498,36 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
               <div style={{ position: 'relative', overflow: 'hidden' }}>
                 {/* Matrix Background - Only animate if not reduced motion */}
                 {!prefersReducedMotion && <MatrixBackground />}
-                <pre
+                <div
                   style={{
-                    margin: 0,
-                    padding: '1rem',
-                    backgroundColor: prefersReducedMotion ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    fontFamily: "'Fira Code', 'Consolas', monospace",
-                    fontSize: '0.8rem',
-                    lineHeight: '1.5',
-                    overflow: 'auto',
-                    maxHeight: '400px',
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none',
                     position: 'relative',
                     zIndex: 1,
+                    maxHeight: '400px',
+                    overflow: 'auto',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
                   }}
                   className="hide-scrollbar"
                 >
-                  <code>{currentCode}</code>
-                </pre>
+                  <SyntaxHighlighter
+                    language="cpp"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      margin: 0,
+                      padding: '1rem',
+                      backgroundColor: prefersReducedMotion ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+                      fontSize: '0.8rem',
+                      lineHeight: '1.5',
+                    }}
+                    codeTagProps={{
+                      style: {
+                        fontFamily: "'Fira Code', 'Consolas', monospace",
+                      }
+                    }}
+                  >
+                    {currentCode || ''}
+                  </SyntaxHighlighter>
+                </div>
               </div>
             </div>
           )}
