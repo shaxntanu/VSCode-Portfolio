@@ -464,4 +464,98 @@ void loop() {
     ],
     totalCost: '₹116'
   },
+  {
+    title: '74HC73 IC Verification Circuit',
+    description: 'Digital sequential circuit to verify the functionality of 74HC73 Dual J-K Flip-Flop IC. Demonstrates flip-flop behavior using Arduino clock input, slide switches for J-K inputs, and LED output indicators.',
+    platform: 'Arduino & Digital IC',
+    software: 'Tinkercad',
+    technologies: ['Arduino', 'Tinkercad'],
+    category: 'DIGITAL_LOGIC',
+    difficulty: 'INTERMEDIATE',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/things/3k6pl1OnIPL-verification-of-74hc73',
+    embedUrl: 'https://www.tinkercad.com/embed/3k6pl1OnIPL',
+    schematicLink: 'https://drive.google.com/file/d/1KaWyD5SmmB60J_5D2lWYv1zuTrwjtZbO/view?usp=sharing',
+    collegeCourseProject: true,
+    slug: '74hc73-ic-verification',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    overview: 'This circuit verifies the operation of the 74HC73 dual negative-edge-triggered J-K flip-flop integrated circuit. Using an Arduino to generate clock pulses, slide switches for J and K inputs, and a pushbutton for reset, students can manually verify the flip-flop truth table and observe state transitions.',
+    workingPrinciple: 'The 74HC73 IC contains two independent J-K flip-flops with clear inputs. The Arduino provides clock pulses, and slide switches control the J and K inputs. When the clock transitions from HIGH to LOW (negative edge), the flip-flop updates its output based on J-K input combinations: J=0 K=0 (hold), J=0 K=1 (reset), J=1 K=0 (set), J=1 K=1 (toggle). The LED displays the Q output state, demonstrating sequential logic behavior.',
+    components: [
+      {
+        name: '74HC73 IC',
+        role: 'Dual J-K Flip-Flop',
+        interface: '14-pin DIP',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Negative-edge-triggered flip-flop with clear',
+        price: '₹20'
+      },
+      {
+        name: 'Arduino Uno R3',
+        role: 'Clock Generator',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Generates clock pulses for flip-flop',
+        price: '₹450'
+      },
+      {
+        name: 'Yellow LED',
+        role: 'Output Indicator',
+        interface: 'Digital Output',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Displays Q output state',
+        price: '₹5'
+      },
+      {
+        name: 'Slide Switch',
+        role: 'J-K Input Control',
+        interface: 'Digital Input',
+        voltage: '5V',
+        quantity: 2,
+        notes: 'Controls J and K inputs for flip-flop',
+        price: '₹15'
+      },
+      {
+        name: '220 Ω Resistor',
+        role: 'LED Current Limiting',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Limits current through LED',
+        price: '₹2'
+      },
+      {
+        name: 'Pushbutton',
+        role: 'Clear/Reset Input',
+        interface: 'Digital Input',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Resets flip-flop to known state',
+        price: '₹5'
+      },
+      {
+        name: '10 kΩ Resistor',
+        role: 'Pull-down Resistor',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 3,
+        notes: 'Ensures stable LOW state for inputs',
+        price: '₹6'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹583'
+  },
 ];
