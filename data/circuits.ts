@@ -388,7 +388,7 @@ void loop() {
     category: 'DIGITAL_LOGIC',
     difficulty: 'BEGINNER',
     status: 'VERIFIED',
-    link: 'https://www.tinkercad.com/things/3Gh4dBVkqEK',
+    link: 'https://www.tinkercad.com/things/3Gh4dBVkqEK-verification-of-74hc08',
     embedUrl: 'https://www.tinkercad.com/embed/3Gh4dBVkqEK',
     collegeCourseProject: true,
     slug: '74hc08-ic-verification',
