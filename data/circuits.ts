@@ -390,6 +390,7 @@ void loop() {
     status: 'VERIFIED',
     link: 'https://www.tinkercad.com/things/3Gh4dBVkqEK-verification-of-74hc08',
     embedUrl: 'https://www.tinkercad.com/embed/3Gh4dBVkqEK',
+    schematicLink: 'https://drive.google.com/file/d/1-p4nFwHIFFKPi7f1j3umwKyTT47ETS2r/view?usp=sharing',
     collegeCourseProject: true,
     slug: '74hc08-ic-verification',
     year: 2026,
