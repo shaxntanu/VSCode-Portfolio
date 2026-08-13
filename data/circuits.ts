@@ -379,4 +379,22 @@ void loop() {
     ],
     totalCost: '₹551'
   },
+  {
+    title: '74HC08 IC Verification Circuit',
+    description: 'Digital logic circuit to verify the functionality of 74HC08 Quad 2-input AND gate IC. Demonstrates IC testing using manual input switches and LED output indicators.',
+    platform: 'Digital IC',
+    software: 'Tinkercad',
+    technologies: ['Tinkercad'],
+    category: 'DIGITAL_LOGIC',
+    difficulty: 'BEGINNER',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/things/3Gh4dBVkqEK',
+    embedUrl: 'https://www.tinkercad.com/embed/3Gh4dBVkqEK',
+    collegeCourseProject: true,
+    slug: '74hc08-ic-verification',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    overview: 'This circuit verifies the operation of the 74HC08 quad 2-input AND gate integrated circuit. Using switches to provide input combinations and LEDs to display outputs, students can manually verify the AND gate truth table for all four gates within the IC.',
+    workingPrinciple: 'The 74HC08 IC contains four independent 2-input AND gates. Each gate has two input pins and one output pin. By toggling the input switches through all possible combinations (00, 01, 10, 11), the output LED illuminates only when both inputs are HIGH, demonstrating the AND gate logic function. This hands-on verification helps understand IC pinout and Boolean logic.',
+  },
 ];
