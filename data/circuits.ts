@@ -396,5 +396,71 @@ void loop() {
     dateRange: 'Aug 2026',
     overview: 'This circuit verifies the operation of the 74HC08 quad 2-input AND gate integrated circuit. Using switches to provide input combinations and LEDs to display outputs, students can manually verify the AND gate truth table for all four gates within the IC.',
     workingPrinciple: 'The 74HC08 IC contains four independent 2-input AND gates. Each gate has two input pins and one output pin. By toggling the input switches through all possible combinations (00, 01, 10, 11), the output LED illuminates only when both inputs are HIGH, demonstrating the AND gate logic function. This hands-on verification helps understand IC pinout and Boolean logic.',
+    components: [
+      {
+        name: '74HC08 IC',
+        role: 'Quad 2-Input AND Gate',
+        interface: '14-pin DIP',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Contains four independent AND gates',
+        price: '₹15'
+      },
+      {
+        name: 'Push Button Switch',
+        role: 'Input Control',
+        interface: 'Digital Input',
+        voltage: '5V',
+        quantity: 2,
+        notes: 'Provides logic inputs A and B for testing',
+        price: '₹10'
+      },
+      {
+        name: 'LED',
+        role: 'Output Indicator',
+        interface: 'Digital Output',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Displays AND gate output state',
+        price: '₹5'
+      },
+      {
+        name: '220 Ω Resistor',
+        role: 'LED Current Limiting',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Limits current through LED',
+        price: '₹2'
+      },
+      {
+        name: '10 kΩ Resistor',
+        role: 'Pull-down Resistor',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 2,
+        notes: 'Ensures stable LOW state for switches',
+        price: '₹4'
+      },
+      {
+        name: '5V Power Supply',
+        role: 'Power Source',
+        interface: 'Power',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Powers the IC and components',
+        price: '₹0'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹116'
   },
 ];
