@@ -114,6 +114,30 @@ const PublicationsPage = () => {
         <h2 className={styles.sectionTitle}>Personal & Blogs</h2>
         <div className={styles.grid}>
           <a
+            href="https://shaxntanu.medium.com/the-problem-isnt-that-i-feel-too-much-it-s-what-my-brain-does-with-it-6b9d792bb6f4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.card}
+          >
+            <div className={styles.cardIcon}>
+              <SiMedium />
+            </div>
+            <div className={styles.cardContent}>
+              <h3 className={styles.cardTitle}>The Problem Isn't That I Feel Too Much - It's What My Brain Does With It</h3>
+              <div className={styles.cardMeta}>
+                <span className={styles.cardId}>BLG-002</span>
+                <span className={styles.cardType}>Personal Article</span>
+              </div>
+              <div className={styles.cardFooter}>
+                <span className={styles.cardDate}>2026-08-14</span>
+                <span className={styles.statusBadge}>PUBLISHED</span>
+              </div>
+            </div>
+            <div className={styles.cardLink}>
+              <VscLinkExternal />
+            </div>
+          </a>
+          <a
             href="https://medium.com/@shaxntanu/how-a-robotics-class-shaped-my-engineering-journey-19acd8f99bb4"
             target="_blank"
             rel="noopener noreferrer"
