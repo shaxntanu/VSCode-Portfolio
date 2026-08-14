@@ -123,7 +123,7 @@ const PublicationsPage = () => {
               <SiMedium />
             </div>
             <div className={styles.cardContent}>
-              <h3 className={styles.cardTitle}>The Problem Isn't That I Feel Too Much - It's What My Brain Does With It</h3>
+              <h3 className={styles.cardTitle}>The Problem Isn&apos;t That I Feel Too Much - It&apos;s What My Brain Does With It</h3>
               <div className={styles.cardMeta}>
                 <span className={styles.cardId}>BLG-002</span>
                 <span className={styles.cardType}>Personal Article</span>
