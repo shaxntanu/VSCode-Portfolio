@@ -558,4 +558,131 @@ void loop() {
     ],
     totalCost: '₹583'
   },
+  {
+    title: 'CD4511 BCD to 7-Segment Decoder Circuit',
+    description: 'Arduino-controlled 7-segment display using CD4511 BCD decoder IC. Demonstrates BCD encoding and digit display with counter and single-digit modes.',
+    platform: 'Arduino & Digital IC',
+    software: 'Tinkercad',
+    technologies: ['Arduino', 'Tinkercad'],
+    category: 'DIGITAL_LOGIC',
+    difficulty: 'INTERMEDIATE',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/things/eygh0dbLKMC-cd4511-and-7-sd-ardunio-uno',
+    embedUrl: 'https://www.tinkercad.com/embed/eygh0dbLKMC',
+    schematicLink: 'https://drive.google.com/file/d/1syTCvV42XwFwDtunTlat8ZFnKUMCTjcX/view?usp=sharing',
+    collegeCourseProject: true,
+    slug: 'cd4511-7segment-decoder',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    codeVariants: [
+      {
+        label: 'Counter (0-9)',
+        code: `// Arduino D2 -> CD4511 A
+// Arduino D3 -> CD4511 B
+// Arduino D4 -> CD4511 C
+// Arduino D5 -> CD4511 D
+
+const int A = 2;
+const int B = 3;
+const int C = 4;
+const int D = 5;
+
+void setup() {
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(D, OUTPUT);
+}
+
+void displayDigit(int digit) {
+  // Send BCD value to CD4511
+  digitalWrite(A, bitRead(digit, 0));
+  digitalWrite(B, bitRead(digit, 1));
+  digitalWrite(C, bitRead(digit, 2));
+  digitalWrite(D, bitRead(digit, 3));
+}
+
+void loop() {
+  for (int digit = 0; digit <= 9; digit++) {
+    displayDigit(digit);
+    delay(1000);
+  }
+}`
+      },
+      {
+        label: 'Single Digit (6)',
+        code: `// Arduino D2 -> CD4511 A
+// Arduino D3 -> CD4511 B
+// Arduino D4 -> CD4511 C
+// Arduino D5 -> CD4511 D
+
+void setup() {
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  
+  // 6 = BCD 0110 (DCBA)
+  digitalWrite(2, LOW);   // A = 0
+  digitalWrite(3, HIGH);  // B = 1
+  digitalWrite(4, HIGH);  // C = 1
+  digitalWrite(5, LOW);   // D = 0
+}
+
+void loop() {
+  // Keep displaying 6
+}`
+      }
+    ],
+    overview: 'This circuit demonstrates BCD (Binary-Coded Decimal) to 7-segment decoding using the CD4511 IC. The Arduino sends 4-bit BCD values (0000-1001) to the decoder, which drives a common-cathode 7-segment display. Two modes showcase counting from 0-9 and displaying a fixed digit.',
+    workingPrinciple: 'The CD4511 is a BCD-to-7-segment decoder/driver IC. The Arduino outputs a 4-bit binary number on pins D2-D5 (representing bits A-D). The CD4511 decodes this BCD input and activates the appropriate segments (a-g) on the 7-segment display through current-limiting resistors. The bitRead() function extracts individual bits from decimal numbers for BCD conversion.',
+    components: [
+      {
+        name: 'Arduino Uno R3',
+        role: 'BCD Generator',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Generates BCD signals for decoder',
+        price: '₹450'
+      },
+      {
+        name: 'CD4511 IC',
+        role: '7-Segment Decoder',
+        interface: '16-pin DIP',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'BCD to 7-segment decoder/driver',
+        price: '₹25'
+      },
+      {
+        name: 'Common Cathode 7-Segment Display',
+        role: 'Visual Output',
+        interface: 'Digital Output',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Displays decimal digits 0-9',
+        price: '₹15'
+      },
+      {
+        name: '220 Ω Resistor',
+        role: 'Segment Current Limiting',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 7,
+        notes: 'Limits current for each segment (a-g)',
+        price: '₹14'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹584'
+  },
 ];
