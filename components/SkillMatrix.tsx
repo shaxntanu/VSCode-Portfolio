@@ -57,6 +57,15 @@ const skillData: SkillCategory[] = [
   },
   {
     title: '// ',
+    titleHighlight: 'COLLEGE_CURRICULUM',
+    color: '#ffc107',
+    skills: [
+      { name: 'MATLAB', tools: 'MATLAB', score: 33, categoryColor: '#ffc107' },
+      { name: 'Verilog HDL', tools: 'HDL', score: 33, categoryColor: '#ffc107' },
+    ],
+  },
+  {
+    title: '// ',
     titleHighlight: 'TOOLCHAIN_OPS',
     color: '#a078ff',
     skills: [
