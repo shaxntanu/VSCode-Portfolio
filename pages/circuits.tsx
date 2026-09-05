@@ -12,10 +12,7 @@ const CircuitsPage = () => {
   // Filter circuits based on category and search query
   const filteredCircuits = useMemo(() => {
     return circuits.filter((circuit) => {
-      // EDUCATIONAL category should include circuits with collegeCourseProject tag
-      const matchesCategory = selectedCategory === 'ALL' || 
-        circuit.category === selectedCategory ||
-        (selectedCategory === 'EDUCATIONAL' && circuit.collegeCourseProject);
+      const matchesCategory = selectedCategory === 'ALL' || circuit.category === selectedCategory;
       const matchesSearch = searchQuery === '' || 
         circuit.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         circuit.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
