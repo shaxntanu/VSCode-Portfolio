@@ -856,7 +856,7 @@ void loop() {
     title: 'Digital System Design Lab',
     description: 'Hardware design experiments covering digital logic fundamentals. Includes Half Adder, 4:1 MUX, Ripple Carry Adder (RCA), ALU, and Shift Register (SIPO) implementations in Verilog.',
     platform: 'Verilog HDL',
-    software: 'Xilinx/ModelSim',
+    software: 'Verilog HDL',
     technologies: ['Verilog', 'Digital Logic', 'HDL', 'Hardware Design'],
     category: 'DIGITAL_LOGIC',
     difficulty: 'INTERMEDIATE',

@@ -86,6 +86,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
       'Tinkercad': '/logos/tinkercad_icon.svg',
       'ESP32': '/logos/espressif_icon.svg',
       'ESP8266': '/logos/espressif_icon.svg',
+      'Verilog': '/logos/verilog_icon.svg',
       'KiCad': '/logos/kicad_icon.svg',
       'LTspice': '/logos/ltspice_icon.svg',
     };
