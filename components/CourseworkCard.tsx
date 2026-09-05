@@ -1,6 +1,7 @@
 import { VscGithubInverted, VscCode } from 'react-icons/vsc';
 import { CourseworkItem } from '@/types';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import styles from '@/styles/CourseworkCard.module.css';
 
@@ -59,11 +60,20 @@ const getYearColor = (year: number): string => {
 const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
   const router = useRouter();
   const yearColor = getYearColor(coursework.year);
+  const logos = coursework.logo ? (Array.isArray(coursework.logo) ? coursework.logo : [coursework.logo]) : [];
 
   const handleProjectReference = () => {
     if (coursework.projectReference) {
       // Navigate to projects page and scroll to the specific project
-      router.push(`/projects#${coursework.projectReference}`);
+      router.push(`/projects`).then(() => {
+        // Wait for navigation to complete, then scroll to the project
+        setTimeout(() => {
+          const element = document.getElementById(coursework.projectReference!);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
+      });
     }
   };
 
@@ -168,14 +178,30 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
                 borderColor: yearColor,
                 color: yearColor
               }}
-              title="Open Project Page"
+              title="Open in Projects Section"
             >
               <VscCode />
-              OPEN PROJECT
+              OPEN IN FIRMWARE.INO
             </button>
           )}
         </div>
       </div>
+
+      {/* Logo wrapper - positioned in bottom right corner */}
+      {logos.length > 0 && (
+        <div className={styles.logoWrapper}>
+          {logos.map((logo, index) => (
+            <Image
+              key={index}
+              src={logo}
+              alt="Technology Logo"
+              width={24}
+              height={24}
+              className={styles.logo}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

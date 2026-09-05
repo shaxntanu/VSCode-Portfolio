@@ -70,11 +70,12 @@ const ProjectsPage = () => {
             </div>
             <div className={styles.container}>
               {categoryProjects.map((project) => (
-                <ProjectCard 
-                  key={project.slug} 
-                  project={project} 
-                  categoryConfig={config}
-                />
+                <div key={project.slug} id={project.slug}>
+                  <ProjectCard 
+                    project={project} 
+                    categoryConfig={config}
+                  />
+                </div>
               ))}
             </div>
           </div>

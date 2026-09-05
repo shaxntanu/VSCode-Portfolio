@@ -33,6 +33,7 @@ export interface CourseworkItem {
   repositoryUrl: string;
   projectReference?: string; // Reference to existing project slug if it exists in Projects
   slug: string;
+  logo?: string | string[]; // Logo(s) to display - optional
 }
 
 export interface Component {

@@ -14,7 +14,8 @@ export const courseworkData: CourseworkItem[] = [
     technologies: ['Android Studio', 'Java', 'Kotlin', 'XML'],
     repositoryUrl: 'https://github.com/shaxntanu/Android-Studio-Apps_Shantanu',
     projectReference: 'android-studio-apps', // Will be created in Projects
-    slug: 'android-studio-apps-coursework'
+    slug: 'android-studio-apps-coursework',
+    logo: '/logos/android_icon.svg'
   },
   {
     id: 'CW-002',
@@ -26,7 +27,8 @@ export const courseworkData: CourseworkItem[] = [
     technologies: ['Python', 'OpenCV', 'NumPy', 'Matplotlib', 'Jupyter'],
     repositoryUrl: 'https://github.com/shaxntanu/Geometrical-Shape-Detection-and-Recognition-using-Python-in-Image-Processing-ELC-TIET-2029-ECE',
     projectReference: 'shape-detection-system', // Exists in Projects
-    slug: 'shape-detection-coursework'
+    slug: 'shape-detection-coursework',
+    logo: ['/logos/python_icon.svg', '/logos/jupyter_icon.svg']
   },
   {
     id: 'CW-003',
@@ -37,7 +39,8 @@ export const courseworkData: CourseworkItem[] = [
     area: 'Scientific Computing',
     technologies: ['Python', 'Matplotlib', 'NumPy', 'Physics Simulation'],
     repositoryUrl: 'https://github.com/shaxntanu/Malus-and-Maglev-Simulation-in-Python',
-    slug: 'malus-maglev-simulation'
+    slug: 'malus-maglev-simulation',
+    logo: '/logos/python_icon.svg'
   },
 
   // Year 2 Coursework
@@ -51,7 +54,8 @@ export const courseworkData: CourseworkItem[] = [
     area: 'Mathematical Optimization',
     technologies: ['MATLAB', 'Linear Programming', 'Optimization'],
     repositoryUrl: 'https://github.com/shaxntanu/UMA035-Optimization-Techniques-MATLAB',
-    slug: 'optimization-techniques'
+    slug: 'optimization-techniques',
+    logo: '/logos/matlab_icon.svg'
   },
   {
     id: 'CW-005',
@@ -63,7 +67,8 @@ export const courseworkData: CourseworkItem[] = [
     area: 'Artificial Intelligence',
     technologies: ['Python', 'Pandas', 'Machine Learning', 'Data Science'],
     repositoryUrl: 'https://github.com/shaxntanu/UCS321-AI-For-Engineers',
-    slug: 'ai-for-engineers'
+    slug: 'ai-for-engineers',
+    logo: '/logos/python_icon.svg'
   },
   {
     id: 'CW-006',
@@ -75,7 +80,8 @@ export const courseworkData: CourseworkItem[] = [
     area: 'Digital Logic Design',
     technologies: ['Verilog', 'Digital Logic', 'HDL', 'Hardware Design'],
     repositoryUrl: 'https://github.com/shaxntanu/UEC612-Digital-System-Design',
-    slug: 'digital-system-design'
+    slug: 'digital-system-design',
+    logo: '/logos/verilog_icon.svg'
   }
 ];
 
