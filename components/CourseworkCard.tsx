@@ -24,9 +24,9 @@ const getTechColor = (tech: string): string => {
     // Development Tools
     'Android Studio': '#3ddc84',
     'OpenCV': '#5c3ee8',
-    'NumPy': '#013243',
+    'NumPy': '#4dabcf',
     'Matplotlib': '#11557c',
-    'Pandas': '#150458',
+    'Pandas': '#e70488',
     'Jupyter': '#f37626',
     
     // Areas & Technologies
@@ -151,37 +151,29 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
         {/* Technology tags */}
         {renderTechTags()}
         
-        {/* Action buttons */}
+        {/* Action buttons - icon-only style like ProjectCard */}
         <div className={styles.actionButtons}>
-          {/* Repository button (primary) */}
+          {/* Repository button */}
           <a
             href={coursework.repositoryUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.primaryButton}
-            style={{ 
-              backgroundColor: yearColor,
-              color: '#050505'
-            }}
-            title="View Repository"
+            style={{ color: yearColor }}
+            title="View Repository on GitHub"
           >
             <VscGithubInverted />
-            VIEW REPOSITORY
           </a>
           
-          {/* Project reference button (secondary) */}
+          {/* Project reference button */}
           {coursework.projectReference && (
             <button
               onClick={handleProjectReference}
               className={styles.secondaryButton}
-              style={{ 
-                borderColor: yearColor,
-                color: yearColor
-              }}
+              style={{ color: yearColor }}
               title="Open in Projects Section"
             >
               <VscCode />
-              OPEN IN FIRMWARE.INO
             </button>
           )}
         </div>
