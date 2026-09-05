@@ -691,7 +691,7 @@ void loop() {
     platform: 'Arduino',
     software: 'Tinkercad',
     technologies: ['Arduino', 'Tinkercad'],
-    category: 'SENSORS',
+    category: 'EDUCATIONAL',
     difficulty: 'BEGINNER',
     status: 'VERIFIED',
     link: 'https://www.tinkercad.com/embed/krpqMRencWc',
@@ -742,7 +742,7 @@ void loop() {
         price: '₹450'
       },
       {
-        name: 'HC-SR04 Ultrasonic Sensor',
+        name: 'Ultrasonic Distance Sensor (4-pin)',
         role: 'Distance Measurement',
         interface: 'Digital (TRIG/ECHO)',
         voltage: '5V',
@@ -751,7 +751,7 @@ void loop() {
         price: '₹80'
       },
       {
-        name: 'Breadboard & Wires',
+        name: 'Breadboard Small',
         role: 'Prototyping',
         interface: 'N/A',
         voltage: 'N/A',
@@ -768,7 +768,7 @@ void loop() {
     platform: 'Arduino',
     software: 'Tinkercad',
     technologies: ['Arduino', 'Tinkercad'],
-    category: 'SENSORS',
+    category: 'EDUCATIONAL',
     difficulty: 'BEGINNER',
     status: 'VERIFIED',
     link: 'https://www.tinkercad.com/embed/a0syYJ6pHPV',
@@ -814,7 +814,7 @@ void loop() {
         price: '₹450'
       },
       {
-        name: 'IR Sensor',
+        name: 'IR sensor',
         role: 'Object Detection',
         interface: 'Digital Input',
         voltage: '5V',
@@ -823,7 +823,7 @@ void loop() {
         price: '₹40'
       },
       {
-        name: 'LED',
+        name: 'Yellow LED',
         role: 'Visual Indicator',
         interface: 'Digital Output',
         voltage: '5V',
@@ -841,7 +841,7 @@ void loop() {
         price: '₹2'
       },
       {
-        name: 'Breadboard & Wires',
+        name: 'Breadboard Small',
         role: 'Prototyping',
         interface: 'N/A',
         voltage: 'N/A',
