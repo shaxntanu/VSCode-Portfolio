@@ -80,6 +80,7 @@ export const courseworkData: CourseworkItem[] = [
     area: 'Digital Logic Design',
     technologies: ['Verilog', 'Digital Logic', 'HDL', 'Hardware Design'],
     repositoryUrl: 'https://github.com/shaxntanu/UEC612-Digital-System-Design',
+    circuitReference: 'digital-system-design',
     slug: 'digital-system-design',
     logo: '/logos/verilog_icon.svg'
   },

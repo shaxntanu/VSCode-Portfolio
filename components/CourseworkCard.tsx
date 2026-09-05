@@ -1,4 +1,4 @@
-import { VscGithubInverted, VscCode } from 'react-icons/vsc';
+import { VscGithubInverted, VscCode, VscCircuitBoard } from 'react-icons/vsc';
 import { CourseworkItem } from '@/types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -69,6 +69,21 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
         // Wait for navigation to complete, then scroll to the project
         setTimeout(() => {
           const element = document.getElementById(coursework.projectReference!);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
+      });
+    }
+  };
+
+  const handleCircuitReference = () => {
+    if (coursework.circuitReference) {
+      // Navigate to circuits page and scroll to the specific circuit
+      router.push(`/circuits`).then(() => {
+        // Wait for navigation to complete, then scroll to the circuit
+        setTimeout(() => {
+          const element = document.getElementById(coursework.circuitReference!);
           if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
@@ -173,6 +188,18 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
               title="Open in Projects Section"
             >
               <VscCode />
+            </button>
+          )}
+
+          {/* Circuit reference button */}
+          {coursework.circuitReference && (
+            <button
+              onClick={handleCircuitReference}
+              className={styles.secondaryButton}
+              style={{ color: yearColor }}
+              title="Open in Circuits Section"
+            >
+              <VscCircuitBoard />
             </button>
           )}
         </div>

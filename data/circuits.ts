@@ -852,4 +852,68 @@ void loop() {
     ],
     totalCost: '₹577'
   },
+  {
+    title: 'Digital System Design Lab',
+    description: 'Hardware design experiments covering digital logic fundamentals. Includes Half Adder, 4:1 MUX, Ripple Carry Adder (RCA), ALU, and Shift Register (SIPO) implementations in Verilog.',
+    platform: 'Verilog HDL',
+    software: 'Xilinx/ModelSim',
+    technologies: ['Verilog', 'Digital Logic', 'HDL', 'Hardware Design'],
+    category: 'DIGITAL_LOGIC',
+    difficulty: 'INTERMEDIATE',
+    status: 'VERIFIED',
+    link: 'https://github.com/shaxntanu/UEC612-Digital-System-Design',
+    collegeCourseProject: true,
+    slug: 'digital-system-design',
+    year: 2024,
+    dateRange: 'Jan 2024 - Jun 2024',
+    overview: 'This repository contains Verilog implementations of fundamental digital logic circuits from the UEC612 Digital System Design course. It covers combinational circuits (Half Adder, 4:1 Multiplexer, Ripple Carry Adder), arithmetic units (ALU), and sequential circuits (Shift Registers). Each module includes testbenches for simulation and verification.',
+    workingPrinciple: 'Hardware Description Language (HDL) allows designers to model digital circuits at various abstraction levels. Verilog uses module definitions to describe circuit behavior and structure. Combinational logic is implemented using continuous assignments (assign) and always blocks, while sequential logic uses clocked always blocks with sensitivity lists. The designs are synthesizable and can be implemented on FPGAs or ASICs.',
+    components: [
+      {
+        name: 'Half Adder',
+        role: 'Basic Arithmetic',
+        interface: 'Combinational Logic',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Adds two single bits producing sum and carry',
+        price: 'Free'
+      },
+      {
+        name: '4:1 Multiplexer',
+        role: 'Data Selection',
+        interface: 'Combinational Logic',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Selects one of four inputs based on 2-bit select signal',
+        price: 'Free'
+      },
+      {
+        name: 'Ripple Carry Adder',
+        role: 'Multi-bit Addition',
+        interface: 'Combinational Logic',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Cascaded full adders for n-bit addition',
+        price: 'Free'
+      },
+      {
+        name: 'Arithmetic Logic Unit (ALU)',
+        role: 'Arithmetic Operations',
+        interface: 'Combinational Logic',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Performs ADD, SUB, AND, OR, XOR operations',
+        price: 'Free'
+      },
+      {
+        name: 'Shift Register (SIPO)',
+        role: 'Serial to Parallel Conversion',
+        interface: 'Sequential Logic',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Converts serial input data to parallel output',
+        price: 'Free'
+      },
+    ]
+  },
 ];

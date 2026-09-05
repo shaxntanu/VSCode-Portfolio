@@ -88,7 +88,9 @@ const CircuitsPage = () => {
       {sortedCircuits.length > 0 ? (
         <div className={styles.container}>
           {sortedCircuits.map((circuit) => (
-            <CircuitCard key={circuit.slug} circuit={circuit} />
+            <div key={circuit.slug} id={circuit.slug}>
+              <CircuitCard circuit={circuit} />
+            </div>
           ))}
         </div>
       ) : (

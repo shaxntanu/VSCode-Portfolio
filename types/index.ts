@@ -32,6 +32,7 @@ export interface CourseworkItem {
   technologies: string[];
   repositoryUrl: string;
   projectReference?: string; // Reference to existing project slug if it exists in Projects
+  circuitReference?: string; // Reference to existing circuit slug if it exists in Circuits
   slug: string;
   logo?: string | string[]; // Logo(s) to display - optional
 }
