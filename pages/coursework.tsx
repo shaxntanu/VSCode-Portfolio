@@ -7,23 +7,32 @@ import { CourseworkYear } from '@/types';
 import styles from '@/styles/CourseworkPage.module.css';
 
 type FilterOption = 'ALL' | CourseworkYear;
+type CSMinorFilter = 'ALL' | 1 | 2 | 3;
 
 const CourseworkPage = () => {
   const [selectedYear, setSelectedYear] = useState<FilterOption>('ALL');
+  const [selectedCSMinor, setSelectedCSMinor] = useState<CSMinorFilter>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter and search logic
   const filteredCoursework = useMemo(() => {
     let filtered = getCourseworkByYear(selectedYear);
     
+    // Apply CS-Minor filter
+    if (selectedCSMinor !== 'ALL') {
+      filtered = filtered.filter(item => item.csMinorSemester === selectedCSMinor);
+    }
+    
     if (searchQuery.trim()) {
-      filtered = searchCoursework(searchQuery.trim()).filter(item =>
-        selectedYear === 'ALL' || item.year === selectedYear
-      );
+      filtered = searchCoursework(searchQuery.trim()).filter(item => {
+        const matchesYear = selectedYear === 'ALL' || item.year === selectedYear;
+        const matchesCSMinor = selectedCSMinor === 'ALL' || item.csMinorSemester === selectedCSMinor;
+        return matchesYear && matchesCSMinor;
+      });
     }
     
     return filtered;
-  }, [selectedYear, searchQuery]);
+  }, [selectedYear, selectedCSMinor, searchQuery]);
 
   // Group by year for display
   const groupedCoursework = useMemo(() => {
@@ -101,6 +110,23 @@ const CourseworkPage = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className={styles.searchInput}
           />
+        </div>
+      </div>
+
+      {/* CS-Minor Filter */}
+      <div className={styles.controls}>
+        <div className={styles.filters}>
+          <VscFilter className={styles.filterIcon} />
+          <span className={styles.filterLabel}>CS-Minor:</span>
+          {(['ALL', 1, 2, 3] as CSMinorFilter[]).map((sem) => (
+            <button
+              key={sem}
+              className={`${styles.filterButton} ${selectedCSMinor === sem ? styles.active : ''}`}
+              onClick={() => setSelectedCSMinor(sem)}
+            >
+              {sem === 'ALL' ? 'ALL' : `SEM ${sem}`}
+            </button>
+          ))}
         </div>
       </div>
 

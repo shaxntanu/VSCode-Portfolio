@@ -35,6 +35,7 @@ export interface CourseworkItem {
   circuitReference?: string; // Reference to existing circuit slug if it exists in Circuits
   slug: string;
   logo?: string | string[]; // Logo(s) to display - optional
+  csMinorSemester?: 1 | 2 | 3; // CS-Minor semester (1st, 2nd, or 3rd)
 }
 
 export interface Component {

@@ -95,7 +95,8 @@ export const courseworkData: CourseworkItem[] = [
     technologies: ['Bash', 'Shell Scripting', 'Linux', 'Unix'],
     repositoryUrl: 'https://github.com/shaxntanu/Operating-System-Shell-Commands-UCM002',
     slug: 'os-shell-commands-ucm002',
-    logo: '/logos/bash_icon.svg'
+    logo: '/logos/bash_icon.svg',
+    csMinorSemester: 1
   },
   {
     id: 'CW-008',
@@ -108,7 +109,8 @@ export const courseworkData: CourseworkItem[] = [
     technologies: ['C', 'C++', 'Data Structures', 'Algorithms'],
     repositoryUrl: 'https://github.com/shaxntanu/Data-Structures-UCM004',
     slug: 'data-structures-ucm004',
-    logo: '/logos/cpp_icon.svg'
+    logo: '/logos/cpp_icon.svg',
+    csMinorSemester: 2
   }
 ];
 
