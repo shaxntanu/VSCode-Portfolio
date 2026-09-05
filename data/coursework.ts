@@ -82,6 +82,32 @@ export const courseworkData: CourseworkItem[] = [
     repositoryUrl: 'https://github.com/shaxntanu/UEC612-Digital-System-Design',
     slug: 'digital-system-design',
     logo: '/logos/verilog_icon.svg'
+  },
+  {
+    id: 'CW-007',
+    title: 'Operating System Shell Commands',
+    description: 'Comprehensive shell command documentation for Unix/Linux systems. Includes basic commands, file operations, process management, and shell scripting fundamentals covered in CS-Minor 1st semester.',
+    year: 2,
+    type: 'Course Repository',
+    subject: 'UCM002 - Operating Systems',
+    area: 'System Administration',
+    technologies: ['Bash', 'Shell Scripting', 'Linux', 'Unix'],
+    repositoryUrl: 'https://github.com/shaxntanu/Operating-System-Shell-Commands-UCM002',
+    slug: 'os-shell-commands-ucm002',
+    logo: '/logos/bash_icon.svg'
+  },
+  {
+    id: 'CW-008',
+    title: 'Data Structures Implementation',
+    description: 'Complete implementation of fundamental data structures in C/C++. Covers arrays, linked lists, stacks, queues, trees, graphs, and associated algorithms from CS-Minor 2nd semester coursework.',
+    year: 2,
+    type: 'Course Repository',
+    subject: 'UCM004 - Data Structures',
+    area: 'Data Structures & Algorithms',
+    technologies: ['C', 'C++', 'Data Structures', 'Algorithms'],
+    repositoryUrl: 'https://github.com/shaxntanu/Data-Structures-UCM004',
+    slug: 'data-structures-ucm004',
+    logo: '/logos/cpp_icon.svg'
   }
 ];
 
