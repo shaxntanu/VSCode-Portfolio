@@ -15,7 +15,7 @@ export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS
 
 export type CircuitDifficulty = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
-export type CircuitStatus = 'VERIFIED' | 'IN_PROGRESS' | 'EXPERIMENTAL';
+export type CircuitStatus = 'VERIFIED' | 'IN_PROGRESS' | 'EXPERIMENTAL' | 'COMPLETED';
 
 export type CourseworkYear = 1 | 2 | 3 | 4;
 
