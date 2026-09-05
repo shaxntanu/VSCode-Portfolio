@@ -49,10 +49,10 @@ const getTechColor = (tech: string): string => {
 
 const getYearColor = (year: number): string => {
   const yearColors = {
-    1: '#00dc8c', // Green
-    2: '#2196f3', // Blue  
-    3: '#ff9800', // Orange
-    4: '#9c27b0'  // Purple
+    1: '#00dc8c', // Green (Mint)
+    2: '#00d4ff', // Cyan
+    3: '#ff4757', // Red
+    4: '#ffa502'  // Orange
   };
   return yearColors[year as keyof typeof yearColors] || '#64748b';
 };
