@@ -101,7 +101,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-008',
     title: 'Data Structures Implementation',
-    description: 'Complete implementation of fundamental data structures in C/C++. Covers arrays, linked lists, stacks, queues, trees, graphs, and associated algorithms from CS-Minor 2nd semester coursework.',
+    description: 'Complete implementation of fundamental data structures in C/C++. Covers arrays, linked lists, stacks, queues, trees, graphs, and associated algorithms from CS-Minor 1st semester coursework.',
     year: 2,
     type: 'Course Repository',
     subject: 'UCM004 - Data Structures',
@@ -110,7 +110,7 @@ export const courseworkData: CourseworkItem[] = [
     repositoryUrl: 'https://github.com/shaxntanu/Data-Structures-UCM004',
     slug: 'data-structures-ucm004',
     logo: '/logos/cpp_icon.svg',
-    csMinorSemester: 2
+    csMinorSemester: 1
   }
 ];
 
