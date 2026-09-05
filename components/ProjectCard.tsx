@@ -142,7 +142,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         </AnimatePresence>
 
         {/* Project Badge - College Project or Funded Prototype */}
-        {project.fundedPrototype && (
+        {project.badgeType && (
           <div className={styles.fundedBadge}>
             <span className={styles.fundedBadgeText}>
               {project.badgeType === 'college' ? 'College Project' : 'Funded Prototype'}
