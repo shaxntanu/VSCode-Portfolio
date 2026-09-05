@@ -706,4 +706,16 @@ export const projects: Project[] = [
     badgeType: 'college',
     certificateLink: 'https://drive.google.com/file/d/1REfRVbNwPe1F2IFPOBTny1fCYRTbOdnq/view?usp=sharing'
   },
+  {
+    title: 'Android Studio Apps Collection',
+    description: 'Mobile application suite including EncoderDecoderApp and Twitter-style social app. Features user interface design, data handling, and mobile development fundamentals using Android Studio.',
+    logo: '/logos/android_icon.svg',
+    link: 'https://github.com/shaxntanu/Android-Studio-Apps_Shantanu',
+    slug: 'android-studio-apps',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Year 1 - College Project',
+    year: 2026, // Using 2026 as the portfolio year, actual academic year is stored in coursework
+    fundedPrototype: true,
+    badgeType: 'college'
+  },
 ];

@@ -4,6 +4,7 @@ import { VscGithubInverted, VscCircuitBoard, VscMortarBoard } from 'react-icons/
 import { SiVercel, SiNotion } from 'react-icons/si';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
+import { getProjectSkills, normalizeSkillName } from '@/utils/skillsMapper';
 
 import { Project, CategoryConfig } from '@/types';
 
@@ -75,6 +76,31 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         </h3>
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
+        
+        {/* Skill Tags */}
+        {(() => {
+          const skills = getProjectSkills(project.slug);
+          if (skills.length === 0) return null;
+          
+          return (
+            <div className={styles.skillTags}>
+              {skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className={styles.skillTag}
+                  style={{ 
+                    backgroundColor: `${skill.color}20`,
+                    color: skill.color,
+                    borderColor: `${skill.color}40`
+                  }}
+                  title={`${skill.category} - ${skill.proficiency}`}
+                >
+                  {normalizeSkillName(skill.name)}
+                </span>
+              ))}
+            </div>
+          );
+        })()}
         
         {(linkIcon || reportIcon || certificateIcon || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>

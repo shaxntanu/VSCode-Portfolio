@@ -17,6 +17,24 @@ export type CircuitDifficulty = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
 export type CircuitStatus = 'VERIFIED' | 'IN_PROGRESS' | 'EXPERIMENTAL';
 
+export type CourseworkYear = 1 | 2 | 3 | 4;
+
+export type CourseworkType = 'College Project' | 'Course Repository' | 'Academic Simulation' | 'Laboratory Work' | 'Subject Implementation';
+
+export interface CourseworkItem {
+  id: string;
+  title: string;
+  description: string;
+  year: CourseworkYear;
+  type: CourseworkType;
+  subject?: string;
+  area: string;
+  technologies: string[];
+  repositoryUrl: string;
+  projectReference?: string; // Reference to existing project slug if it exists in Projects
+  slug: string;
+}
+
 export interface Component {
   name: string;
   role: string;
@@ -44,6 +62,7 @@ export interface Project {
   totalCost?: string; // Total project cost
   fundedPrototype?: boolean; // Whether this is a funded prototype
   badgeType?: 'funded' | 'college'; // Type of badge to display
+  skills?: string[]; // Relevant skills/technologies for this project
 }
 
 export interface CategoryConfig {
