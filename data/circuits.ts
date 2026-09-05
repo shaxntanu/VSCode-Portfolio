@@ -12,6 +12,9 @@ export const circuitCategories = [
   { id: 'COMMUNICATION', label: 'Communication' },
   { id: 'PCB', label: 'PCB' },
   { id: 'EDUCATIONAL', label: 'Educational' },
+  { id: 'CS_MINOR_1ST_SEM', label: 'CS-Minor 1st Sem' },
+  { id: 'CS_MINOR_2ND_SEM', label: 'CS-Minor 2nd Sem' },
+  { id: 'CS_MINOR_3RD_SEM', label: 'CS-Minor 3rd Sem' },
 ] as const;
 
 export const circuits: Circuit[] = [
@@ -851,5 +854,106 @@ void loop() {
       },
     ],
     totalCost: '₹577'
+  },
+  {
+    title: 'Operating System Shell Commands (UCM002)',
+    description: 'Comprehensive shell command documentation for Unix/Linux systems. Includes basic commands, file operations, process management, and shell scripting fundamentals covered in CS-Minor 1st semester.',
+    platform: 'Unix/Linux Shell',
+    software: 'Terminal',
+    technologies: ['Bash', 'Shell Scripting', 'Linux', 'Unix'],
+    category: 'CS_MINOR_1ST_SEM',
+    difficulty: 'BEGINNER',
+    status: 'COMPLETED',
+    link: 'https://github.com/shaxntanu/Operating-System-Shell-Commands-UCM002',
+    collegeCourseProject: true,
+    slug: 'os-shell-commands-ucm002',
+    year: 2024,
+    dateRange: 'Jul 2024 - Dec 2024',
+    overview: 'This repository contains comprehensive documentation and examples of operating system shell commands, covering fundamental Unix/Linux command-line operations. Part of the CS Minor program\'s first semester coursework (UCM002), it demonstrates proficiency in system administration, file management, process control, and shell scripting.',
+    workingPrinciple: 'Shell commands provide direct interface to the operating system kernel. Users interact with the OS by typing text commands in a terminal, which are interpreted by the shell (Bash, Zsh, etc.). The shell executes these commands by invoking system calls, managing file descriptors, and controlling processes. This repository documents common commands for file manipulation (ls, cd, cp, mv), process management (ps, kill, top), permissions (chmod, chown), and scripting techniques for automation.',
+    components: [
+      {
+        name: 'Shell Commands Reference',
+        role: 'Command Documentation',
+        interface: 'CLI',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Basic to advanced shell command examples with explanations',
+        price: 'Free'
+      },
+      {
+        name: 'Shell Scripts',
+        role: 'Automation Examples',
+        interface: 'Bash Scripts',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Sample shell scripts demonstrating automation techniques',
+        price: 'Free'
+      },
+      {
+        name: 'Process Management Guide',
+        role: 'System Administration',
+        interface: 'CLI',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Commands for managing system processes and resources',
+        price: 'Free'
+      },
+    ]
+  },
+  {
+    title: 'Data Structures Implementation (UCM004)',
+    description: 'Complete implementation of fundamental data structures in C/C++. Covers arrays, linked lists, stacks, queues, trees, graphs, and associated algorithms from CS-Minor 1st and 2nd semester coursework.',
+    platform: 'C/C++',
+    software: 'GCC/G++ Compiler',
+    technologies: ['C', 'C++', 'Data Structures', 'Algorithms'],
+    category: 'CS_MINOR_2ND_SEM',
+    difficulty: 'INTERMEDIATE',
+    status: 'COMPLETED',
+    link: 'https://github.com/shaxntanu/Data-Structures-UCM004',
+    collegeCourseProject: true,
+    slug: 'data-structures-ucm004',
+    year: 2024,
+    dateRange: 'Jul 2024 - Dec 2024',
+    overview: 'This repository contains comprehensive implementations of fundamental data structures and algorithms in C/C++. Part of the CS Minor program coursework (UCM004), it covers linear structures (arrays, linked lists, stacks, queues), non-linear structures (trees, graphs), and essential algorithms including searching, sorting, and traversals. Each implementation includes detailed comments, time/space complexity analysis, and example usage.',
+    workingPrinciple: 'Data structures organize and store data efficiently in memory, enabling optimal access and modification. This repository demonstrates both static (arrays) and dynamic (linked lists, trees) structures. Key concepts include pointer manipulation for linked structures, recursion for tree traversals, queue/stack operations for BFS/DFS graph algorithms, and sorting techniques (bubble, selection, merge, quick sort). Each structure is implemented with core operations: insertion, deletion, searching, and traversal, with analysis of their computational complexity.',
+    components: [
+      {
+        name: 'Linear Data Structures',
+        role: 'Sequential Storage',
+        interface: 'C/C++ Implementation',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Arrays, Linked Lists, Stacks, Queues with operations',
+        price: 'Free'
+      },
+      {
+        name: 'Non-Linear Data Structures',
+        role: 'Hierarchical Storage',
+        interface: 'C/C++ Implementation',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Binary Trees, BST, AVL Trees, Graphs with traversals',
+        price: 'Free'
+      },
+      {
+        name: 'Sorting Algorithms',
+        role: 'Data Organization',
+        interface: 'C/C++ Implementation',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Bubble, Selection, Insertion, Merge, Quick Sort',
+        price: 'Free'
+      },
+      {
+        name: 'Searching Algorithms',
+        role: 'Data Retrieval',
+        interface: 'C/C++ Implementation',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Linear Search, Binary Search, BFS, DFS',
+        price: 'Free'
+      },
+    ]
   },
 ];
