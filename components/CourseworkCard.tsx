@@ -116,7 +116,6 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
         '--card-accent-color': yearColor,
       } as React.CSSProperties}
     >
-      <div className={styles.cardGlow}></div>
       <div className={styles.content}>
         {/* Year badge */}
         <div 

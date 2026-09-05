@@ -1,4 +1,4 @@
-# 💻 VS Code Portfolio
+# VS Code Portfolio
 
 <div align="center">
 
@@ -9,86 +9,88 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)
 
-**My portfolio, but make it look like the editor I actually use**
+**My portfolio, designed to look like the editor I use every day**
 
-[🌐 Live Site](https://shantanu-vsc-portfolio.vercel.app) • [🐛 Found a Bug?](https://github.com/shaxntanu/VSCode-Portfolio/issues) • [💡 Got Ideas?](https://github.com/shaxntanu/VSCode-Portfolio/issues)
+[Live Site](https://shantanu-vsc-portfolio.vercel.app) | [Report Bug](https://github.com/shaxntanu/VSCode-Portfolio/issues) | [Request Feature](https://github.com/shaxntanu/VSCode-Portfolio/issues)
 
 </div>
   
 ---
 
-## What's This?
+## Overview
 
-I spend most of my time in VS Code building hardware and firmware, so I figured - why not make my portfolio look like it too?
+I spend most of my time in VS Code working on hardware and firmware, so I built my portfolio to match that workflow.
 
-This isn't just another themed website. It actually mimics VS Code's interface with a working file explorer, tabs, sidebar navigation, and even a terminal-style resume viewer. The home page shows Arduino/C++ pseudo-code that describes how I work (spoiler: lots of debugging, coffee, and the occasional "why isn't this working?" moment).
+This is not just another themed website. It replicates VS Code's interface with a working file explorer, tab system, sidebar navigation, and a terminal-style resume viewer. The home page displays Arduino/C++ pseudo-code that describes my development process (including debugging, testing, and the occasional troubleshooting session).
 
-Built with Next.js because I wanted something fast and SEO-friendly. The web development part was mostly AI-assisted since my real passion is embedded systems and IoT hardware - I'd rather be soldering than styling CSS.
+Built with Next.js for fast performance and SEO optimization. The web development was mostly AI-assisted since my primary focus is embedded systems and IoT hardware. I prefer working with microcontrollers and circuits over styling CSS.
 
-## What's Inside
+## Features
 
 **Pages:**
-- **Home** - Pseudo-code that won't compile but tells you how I think
-- **About** - Who I am, what I build, and why (with a world map because why not)
-- **Projects** - Hardware modules, IoT systems, and some web dashboards with integrated BOM viewer
-- **Resume** - Terminal-style CV that auto-updates from my LaTeX repo on GitHub
-- **Experience** - Work history with Ragastra and Grosity
-- **Publications** - Technical reports and articles
-- **GitHub** - Live stats pulled from GitHub API
-- **Skills** - Tech stack in CSV format + skill matrix visualization
-- **Contact** - JSON-formatted contact info (keeping the dev theme consistent)
+- **Home** - Pseudo-code representation of my development workflow
+- **About** - Background, interests, and current work (includes an interactive world map)
+- **Circuits** - Embedded projects with circuit simulations, schematics, and code viewers
+- **Coursework** - Academic projects organized by year (mobile apps, image processing, simulations, AI/ML, digital logic)
+- **Projects** - Hardware modules, IoT systems, and web applications with integrated BOM viewer
+- **Resume** - Terminal-style CV that auto-updates from my LaTeX repository
+- **Experience** - Work history and role descriptions
+- **Publications** - Technical reports and documentation
+- **GitHub** - Live statistics from GitHub API
+- **Tech Stack** - Technologies in CSV format with skill proficiency matrix
+- **Contact** - Contact information in JSON format
 
-**Cool Stuff:**
-- Bill of Materials (BOM) viewer for hardware projects with searchable component tables
+**Components:**
+- Bill of Materials (BOM) viewer with sortable component tables and pricing
+- Circuit simulator embeds with code viewers and schematic galleries
+- Multiple code variant support for different implementations
 - Animated text effects (decryption, rotation, shimmer)
-- Click sparks because they're fun
-- Collapsible file explorer with smooth animations
-- Activity bar badges showing project/publication counts
-- Professional status bar with build info and tech stack
-- Theme switcher (multiple VS Code themes)
-- Lite mode toggle for performance
-- Mobile-friendly (with a notification suggesting desktop for best experience)
+- Click sparks for visual feedback
+- Collapsible file explorer with smooth transitions
+- Activity badges showing project and publication counts
+- Professional status bar with build information
+- Theme switcher with multiple VS Code color schemes
+- Lite mode for improved performance
+- Mobile responsive design with desktop experience notification
 
-**Technical:**
+**Technical Stack:**
 - Next.js 15 with TypeScript
-- CSS Modules for styling
+- CSS Modules for component styling
 - Framer Motion for animations
-- GitHub API integration for live data
-- Configuration-driven status bar and badges
+- GitHub API integration for dynamic data
+- Configuration-driven status bar and badge system
 - Ctrl+K and Ctrl+Shift+P command palettes
-- Dynamic activity bar badges
-- Vercel deployment with auto-updates
+- Vercel deployment with continuous integration
 
-## Why This Exists
+## Purpose
 
-I needed a portfolio that actually represents what I do. Most templates felt too corporate or startup-y for someone who spends their days debugging ESP32 code and designing PCBs. Since I practically live in VS Code anyway, this felt more honest.
+I needed a portfolio that accurately represents my work. Most templates felt too generic or startup-focused for someone who builds IoT systems and designs PCBs. Since I use VS Code daily, this approach felt more authentic.
 
-The web development part was done with AI assistance (Claude, Copilot, Kiro IDE) because I'd rather spend time figuring out why my sensors aren't talking to each other. But the content, structure, and design decisions? All mine, along with the occasional 3 AM "this would look cool" idea.
+The web development was AI-assisted (Claude, GitHub Copilot, Kiro IDE) because my expertise is in embedded systems and hardware design. The content, structure, and design decisions were manually crafted based on my actual workflow and project requirements.
 
-## Resume Auto-Update
+## Resume Integration
 
-The resume page pulls the latest PDF from my [LaTeX Resume repo](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Whenever I update my resume there, it automatically reflects here. Because manually uploading files is so 2019.
+The resume page pulls the latest PDF from my [LaTeX Resume repository](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Updates to that repository automatically reflect on this site through Vercel deployment.
 
 ## License
 
-MIT License - use it, fork it, modify it. Just don't claim you built it from scratch.
+MIT License. You are free to use, modify, and distribute this code with proper attribution.
 
-See [LICENSE](https://github.com/shaxntanu/VSCode-Portfolio/blob/main/LICENSE) for details.
+See the [LICENSE](https://github.com/shaxntanu/VSCode-Portfolio/blob/main/LICENSE) file for complete details.
 
-## Credits
+## Acknowledgments
 
-- VS Code for being the editor I can't live without
-- [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/) for making things look pretty
-- [Framer Motion](https://www.framer.com/motion/) for animations that don't make me cringe
-- Coffee, lots of coffee, for making any of this possible
-- Stack Overflow for... well, you know
+- VS Code for providing the primary development environment
+- [Iconify](https://iconify.design/) and [React Icons](https://react-icons.github.io/react-icons/) for comprehensive icon libraries
+- [Framer Motion](https://www.framer.com/motion/) for animation framework
+- Open source community for tools and resources
 
 ---
 
 <div align="center">
 
-**If this helped you, give it a star ⭐ If it broke something, open an issue 🐛**
+**If you find this useful, please star the repository. For bugs or feature requests, open an issue.**
 
-Built by [Shantanu](https://github.com/shaxntanu) with way too much caffeine • Deployed on [Vercel](https://vercel.com)
+Built by [Shantanu](https://github.com/shaxntanu) | Deployed on [Vercel](https://vercel.com)
 
 </div>
