@@ -104,7 +104,6 @@ function getProjectMetrics(projects: Project[]): ProjectMetrics {
     MISC_LABS: 0,
     COMMUNITY_PROJECT: 0,
     RAGASTRA_PROJECT: 0,
-    CIRCUITS: 0,
   };
 
   const byYear: Record<number, number> = {};
@@ -186,7 +185,6 @@ function getExperienceMetrics(projects: Project[]): ExperienceMetrics {
   projects.forEach((project) => {
     if (project.category === 'COMMUNITY_PROJECT') organizations.add('Arceus Labs');
     if (project.category === 'RAGASTRA_PROJECT') organizations.add('Ragastra');
-    if (project.category === 'CIRCUITS') organizations.add('College Course Projects');
   });
 
   // Calculate years from earliest to current

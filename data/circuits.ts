@@ -685,4 +685,171 @@ void loop() {
     ],
     totalCost: '₹584'
   },
+  {
+    title: 'Distance Measurement Using Ultrasonic Sensor',
+    description: 'Arduino-based distance measurement circuit using HC-SR04 ultrasonic sensor. Measures distance to objects and displays results in serial monitor.',
+    platform: 'Arduino',
+    software: 'Tinkercad',
+    technologies: ['Arduino', 'Tinkercad'],
+    category: 'SENSORS',
+    difficulty: 'BEGINNER',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/embed/krpqMRencWc',
+    embedUrl: 'https://www.tinkercad.com/embed/krpqMRencWc',
+    schematicLink: 'https://drive.google.com/file/d/1q5TnV-tQk6ouVmCX_CbtMMjDwf3n_awo/view?usp=sharing',
+    collegeCourseProject: true,
+    slug: 'distance-measurement-ultrasonic',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    code: `const int trigPin = 9;
+const int echoPin = 10;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+
+  float distance = duration * 0.0343 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  delay(500);
+}`,
+    overview: 'This circuit demonstrates distance measurement using an HC-SR04 ultrasonic sensor connected to an Arduino. The sensor emits ultrasonic waves and measures the time it takes for the echo to return, calculating the distance to objects.',
+    workingPrinciple: 'The HC-SR04 ultrasonic sensor works by sending a 10μs trigger pulse from the Arduino. The sensor then emits 8 cycles of ultrasonic bursts at 40kHz and detects the echo. The Arduino measures the time between trigger and echo using pulseIn(), then calculates distance using the formula: distance = (duration × speed of sound) / 2. The speed of sound is approximately 0.0343 cm/μs.',
+    components: [
+      {
+        name: 'Arduino Uno R3',
+        role: 'Main Controller',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Processes ultrasonic sensor data and calculates distance',
+        price: '₹450'
+      },
+      {
+        name: 'HC-SR04 Ultrasonic Sensor',
+        role: 'Distance Measurement',
+        interface: 'Digital (TRIG/ECHO)',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Emits ultrasonic waves and measures echo return time',
+        price: '₹80'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹610'
+  },
+  {
+    title: 'IR Sensor Operation Using Arduino',
+    description: 'Arduino-based IR sensor circuit for object detection using infrared technology. Detects objects and provides visual feedback through LED.',
+    platform: 'Arduino',
+    software: 'Tinkercad',
+    technologies: ['Arduino', 'Tinkercad'],
+    category: 'SENSORS',
+    difficulty: 'BEGINNER',
+    status: 'VERIFIED',
+    link: 'https://www.tinkercad.com/embed/a0syYJ6pHPV',
+    embedUrl: 'https://www.tinkercad.com/embed/a0syYJ6pHPV',
+    schematicLink: 'https://drive.google.com/file/d/1q5TnV-tQk6ouVmCX_CbtMMjDwf3n_awo/view?usp=sharing',
+    collegeCourseProject: true,
+    slug: 'ir-sensor-operation',
+    year: 2026,
+    dateRange: 'Aug 2026',
+    code: `const int irPin = 2;
+const int ledPin = 13;
+
+void setup() {
+  pinMode(irPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int sensorState = digitalRead(irPin);
+
+  if (sensorState == LOW) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Object Detected");
+  } else {
+    digitalWrite(ledPin, LOW);
+    Serial.println("No Object");
+  }
+
+  delay(200);
+}`,
+    overview: 'This circuit demonstrates object detection using an IR (Infrared) sensor connected to an Arduino. The IR sensor detects objects by emitting and receiving infrared light, providing digital output that indicates object presence.',
+    workingPrinciple: 'The IR sensor consists of an IR LED and a photodetector. When an object is in front of the sensor, the IR light from the LED reflects off the object and is detected by the photodetector. The sensor outputs a LOW signal when an object is detected and HIGH when no object is present. The Arduino reads this digital signal and controls an LED to provide visual feedback of detection status.',
+    components: [
+      {
+        name: 'Arduino Uno R3',
+        role: 'Main Controller',
+        interface: 'USB',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Processes IR sensor data and controls LED output',
+        price: '₹450'
+      },
+      {
+        name: 'IR Sensor',
+        role: 'Object Detection',
+        interface: 'Digital Input',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Detects objects using infrared reflection',
+        price: '₹40'
+      },
+      {
+        name: 'LED',
+        role: 'Visual Indicator',
+        interface: 'Digital Output',
+        voltage: '5V',
+        quantity: 1,
+        notes: 'Indicates object detection status',
+        price: '₹5'
+      },
+      {
+        name: '220 Ω Resistor',
+        role: 'LED Current Limiting',
+        interface: 'Passive',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'Protects LED from excessive current',
+        price: '₹2'
+      },
+      {
+        name: 'Breadboard & Wires',
+        role: 'Prototyping',
+        interface: 'N/A',
+        voltage: 'N/A',
+        quantity: 1,
+        notes: 'For circuit connections and testing',
+        price: '₹80'
+      },
+    ],
+    totalCost: '₹577'
+  },
 ];
