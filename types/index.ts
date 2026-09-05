@@ -11,7 +11,7 @@ export interface Article {
 
 export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT';
 
-export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS' | 'POWER_ELECTRONICS' | 'COMMUNICATION' | 'PCB' | 'EDUCATIONAL';
+export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS' | 'POWER_ELECTRONICS' | 'COMMUNICATION' | 'PCB' | 'EDUCATIONAL' | 'CS_MINOR_1ST_SEM' | 'CS_MINOR_2ND_SEM' | 'CS_MINOR_3RD_SEM';
 
 export type CircuitDifficulty = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
