@@ -89,6 +89,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
       'Verilog': '/logos/verilog_icon.svg',
       'KiCad': '/logos/kicad_icon.svg',
       'LTspice': '/logos/ltspice_icon.svg',
+      'Linux': '/logos/linux_icon.svg',
     };
     return iconMap[tech] || '/logos/circuit_icon.svg';
   };

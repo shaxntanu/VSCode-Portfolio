@@ -95,7 +95,7 @@ export const courseworkData: CourseworkItem[] = [
     technologies: ['Bash', 'Shell Scripting', 'Linux', 'Unix'],
     repositoryUrl: 'https://github.com/shaxntanu/Operating-System-Shell-Commands-UCM002',
     slug: 'os-shell-commands-ucm002',
-    logo: '/logos/bash_icon.svg',
+    logo: '/logos/linux_icon.svg',
     csMinorSemester: 1
   },
   {
