@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Vendored from @bible-strong/avatar-react Avatar.tsx (AGPL-3.0).
 // TypeScript/JSX types stripped; runtime behavior unchanged.
 // Note: the automatic JSX runtime (Vite @vitejs/plugin-react) means no
