@@ -364,6 +364,12 @@ export default function PortfolioCompanion() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
+    // Capture the tracking layer once: the same node is measured in the mouse
+    // handler and transformed in the rAF loop. A local avoids a stale
+    // avatarContainerRef.current read when this cleanup later runs.
+    const element = avatarContainerRef.current;
+    if (!element) return;
+
     const EASE_FACTOR = 0.14; // per-frame ease toward the cursor target
     const STEADY_MS = 1800; // Return to neutral after 1.8s
     const MAX_TRANSLATE_X = 12; // pixels - clearly visible but subtle
@@ -379,9 +385,7 @@ export default function PortfolioCompanion() {
       if (now - lastMouseUpdate < THROTTLE_MS) return;
       lastMouseUpdate = now;
 
-      if (!avatarContainerRef.current) return;
-
-      const rect = avatarContainerRef.current.getBoundingClientRect();
+      const rect = element.getBoundingClientRect();
       const avatarCenterX = rect.left + rect.width / 2;
       const avatarCenterY = rect.top + rect.height / 2;
 
@@ -423,13 +427,11 @@ export default function PortfolioCompanion() {
       const rotateY = state.currentX * MAX_ROTATE_Y;
 
       // Apply transform to the layer measured in handleMouseMove
-      if (avatarContainerRef.current) {
-        avatarContainerRef.current.style.transform = `
-          translate3d(${translateX}px, ${translateY}px, 0)
-          rotateX(${rotateX}deg)
-          rotateY(${rotateY}deg)
-        `;
-      }
+      element.style.transform = `
+        translate3d(${translateX}px, ${translateY}px, 0)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+      `;
 
       mouseAnimFrameRef.current = requestAnimationFrame(animateTracking);
     };
@@ -444,9 +446,7 @@ export default function PortfolioCompanion() {
         mouseAnimFrameRef.current = null;
       }
       // Reset transform
-      if (avatarContainerRef.current) {
-        avatarContainerRef.current.style.transform = '';
-      }
+      element.style.transform = '';
     };
   }, [zenMode, liteMode]);
 
