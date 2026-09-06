@@ -42,10 +42,22 @@ export const courseworkData: CourseworkItem[] = [
     slug: 'malus-maglev-simulation',
     logo: '/logos/python_icon.svg'
   },
+  {
+    id: 'CW-004',
+    title: 'C Mini Projects',
+    description: 'Collection of C programming mini projects demonstrating fundamental programming concepts and problem-solving skills. Includes practical implementations of algorithms, data manipulation, and core C language features.',
+    year: 1,
+    type: 'Course Repository',
+    area: 'Programming Fundamentals',
+    technologies: ['C', 'Programming', 'Algorithms'],
+    repositoryUrl: 'https://github.com/shaxntanu/C-Mini-Projects',
+    slug: 'c-mini-projects',
+    logo: '/logos/c_icon.svg'
+  },
 
   // Year 2 Coursework
   {
-    id: 'CW-004',
+    id: 'CW-005',
     title: 'Optimization Techniques Lab',
     description: 'MATLAB implementations for optimization algorithms including linear programming and plotting techniques. Covers mathematical optimization methods used in engineering problem-solving.',
     year: 2,
@@ -58,7 +70,7 @@ export const courseworkData: CourseworkItem[] = [
     logo: '/logos/matlab_icon.svg'
   },
   {
-    id: 'CW-005',
+    id: 'CW-006',
     title: 'AI for Engineers Lab',
     description: 'Python programming labs covering AI and machine learning fundamentals. Includes Python basics, data preprocessing, missing value handling, linear regression implementation, and data science techniques.',
     year: 2,
@@ -71,7 +83,7 @@ export const courseworkData: CourseworkItem[] = [
     logo: '/logos/python_icon.svg'
   },
   {
-    id: 'CW-006',
+    id: 'CW-007',
     title: 'Digital System Design Lab',
     description: 'Hardware design experiments covering digital logic fundamentals including Half Adder, 4:1 MUX, Ripple Carry Adder (RCA), ALU, and Shift Register (SIPO) implementations.',
     year: 2,
@@ -85,7 +97,7 @@ export const courseworkData: CourseworkItem[] = [
     logo: '/logos/verilog_icon.svg'
   },
   {
-    id: 'CW-007',
+    id: 'CW-008',
     title: 'Operating System Shell Commands',
     description: 'Comprehensive shell command documentation for Unix/Linux systems. Includes basic commands, file operations, process management, and shell scripting fundamentals covered in CS-Minor 1st semester.',
     year: 2,
@@ -99,7 +111,7 @@ export const courseworkData: CourseworkItem[] = [
     csMinorSemester: 1
   },
   {
-    id: 'CW-008',
+    id: 'CW-009',
     title: 'Data Structures Implementation',
     description: 'Complete implementation of fundamental data structures in C/C++. Covers arrays, linked lists, stacks, queues, trees, graphs, and associated algorithms from CS-Minor 1st semester coursework.',
     year: 2,
