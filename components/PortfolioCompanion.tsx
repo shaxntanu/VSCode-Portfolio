@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
 import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from '@/data/companionMessages';
 import Avatar from '@/components/Avatar/bible-strong/Avatar.jsx';
-import byteDefinition from '@/components/Avatar/freddy.avatar';
+import { avatarData } from '@/components/Avatar/freddy.avatar';
 import styles from '@/styles/PortfolioCompanion.module.css';
 
 type ByteMood = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
@@ -489,7 +489,7 @@ export default function PortfolioCompanion() {
           <div className={styles.avatarWrapper} ref={avatarContainerRef}>
             <Avatar
               ref={avatarRef}
-              definition={byteDefinition.avatarData as any}
+              definition={avatarData as any}
               defaultAnimation="idle"
               autoplay
               size={96}
