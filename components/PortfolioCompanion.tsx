@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
 import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from '@/data/companionMessages';
-import Avatar from '@/components/Avatar/bible-strong/Avatar';
+import Avatar from '@/components/Avatar/bible-strong/Avatar.jsx';
 import byteDefinition from '@/components/Avatar/freddy.avatar';
 import styles from '@/styles/PortfolioCompanion.module.css';
 
