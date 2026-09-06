@@ -372,10 +372,10 @@ export default function PortfolioCompanion() {
 
     const EASE_FACTOR = 0.14; // per-frame ease toward the cursor target
     const STEADY_MS = 1800; // Return to neutral after 1.8s
-    const MAX_TRANSLATE_X = 18; // pixels - whole body drifts toward the cursor
-    const MAX_TRANSLATE_Y = 12; // pixels
-    const MAX_ROTATE_X = 7; // degrees - body leans toward the cursor
-    const MAX_ROTATE_Y = 9; // degrees
+    const MAX_TRANSLATE_X = 26; // pixels - body steps toward the cursor
+    const MAX_TRANSLATE_Y = 18; // pixels
+    const MAX_ROTATE_X = 8; // degrees - body leans toward the cursor
+    const MAX_ROTATE_Y = 10; // degrees
 
     let lastMouseUpdate = Date.now();
     const THROTTLE_MS = 50;
@@ -489,10 +489,11 @@ export default function PortfolioCompanion() {
     // glance expressions - and validates cleanly for any data update).
     // head.x/head.y rotate Byte's WHOLE body (poseFromExpression builds the
     // orientation quaternion applied to every rendered point), so YAW/PITCH are
-    // also the body-lean amplitudes: the body tilts toward the cursor, and the
-    // eyes follow inside the same rotation.
-    const GAZE_YAW = 16
-    const GAZE_PITCH = 13
+    // the facing amplitudes: the body turns so its face points at the cursor,
+    // and the eyes follow inside the same rotation. Values sit at the top of
+    // Freddy's editorial range (~20-35 deg) so the turn reads as facing.
+    const GAZE_YAW = 24
+    const GAZE_PITCH = 18
     const GAZE_ROLL = 16
 
     type Vec = [number, number]
