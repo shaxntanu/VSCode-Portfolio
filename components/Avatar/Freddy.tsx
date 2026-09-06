@@ -21,7 +21,7 @@ export type AvatarProps = {
 
 export const Freddy = forwardRef<AvatarHandle, AvatarProps>(function Freddy(
   {
-    animation = "sleeping",
+    animation = "idle",
     playing = true,
     loop,
     size = 240,
@@ -36,6 +36,9 @@ export const Freddy = forwardRef<AvatarHandle, AvatarProps>(function Freddy(
   const animationRef = useRef(animation)
   const playingRef = useRef(playing)
   const onAnimationEndRef = useRef(onAnimationEnd)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  
   animationRef.current = animation
   playingRef.current = playing
   onAnimationEndRef.current = onAnimationEnd
@@ -44,21 +47,40 @@ export const Freddy = forwardRef<AvatarHandle, AvatarProps>(function Freddy(
     if (!host.current) return
     let disposed = false
     let avatar: RuntimeAvatar<AnimationName> | null = null
-    void loadAvatarRuntime<AnimationName>(avatarData).then(runtime => {
-      if (disposed || !host.current) return
-      avatar = runtime.createAvatar(host.current, {
-        animation: animationRef.current,
-        autoplay: playingRef.current,
-        loop,
-        size: '100%',
-        onAnimationEnd: next => onAnimationEndRef.current?.(next),
+    
+    console.log('[Freddy] Starting avatar load...')
+    setIsLoading(true)
+    setLoadError(null)
+    
+    void loadAvatarRuntime<AnimationName>(avatarData)
+      .then(runtime => {
+        if (disposed || !host.current) {
+          console.log('[Freddy] Disposed before runtime loaded')
+          return
+        }
+        console.log('[Freddy] Runtime loaded, creating avatar')
+        avatar = runtime.createAvatar(host.current, {
+          animation: animationRef.current,
+          autoplay: playingRef.current,
+          loop,
+          size: '100%',
+          onAnimationEnd: next => onAnimationEndRef.current?.(next),
+        })
+        controller.current = avatar
+        setIsLoading(false)
+        console.log('[Freddy] Avatar created successfully')
       })
-      controller.current = avatar
-    })
+      .catch(error => {
+        console.error('[Freddy] Failed to load avatar:', error)
+        setLoadError(error.message)
+        setIsLoading(false)
+      })
+    
     return () => {
       disposed = true
       avatar?.destroy()
       controller.current = null
+      console.log('[Freddy] Cleanup')
     }
   }, [loop])
 
@@ -76,7 +98,38 @@ export const Freddy = forwardRef<AvatarHandle, AvatarProps>(function Freddy(
   }), [animation])
 
   const dimension = typeof size === 'number' ? size + 'px' : size
-  return <span ref={host} className={className} style={{ display: 'inline-block', width: dimension, height: dimension, ...style }} />
+  
+  if (loadError) {
+    return <span 
+      className={className} 
+      style={{ 
+        display: 'inline-flex', 
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: dimension, 
+        height: dimension,
+        background: 'rgba(255,0,0,0.1)',
+        border: '2px solid red',
+        fontSize: '10px',
+        color: 'red',
+        ...style 
+      }}
+    >
+      Error
+    </span>
+  }
+  
+  return <span 
+    ref={host} 
+    className={className} 
+    style={{ 
+      display: 'inline-block', 
+      width: dimension, 
+      height: dimension,
+      background: isLoading ? 'rgba(230, 133, 92, 0.1)' : 'transparent',
+      ...style 
+    }} 
+  />
 })
 
 export default Freddy
