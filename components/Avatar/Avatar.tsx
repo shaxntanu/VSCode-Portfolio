@@ -1,6 +1,6 @@
 // Avatar runtime for Portfolio Companion
 // Renders Freddy from byte.avatar.json definition with proper body geometry
-import { useEffect, useLayoutEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
+import { useEffect, useRef, forwardRef, useImperativeHandle, useState, useCallback } from 'react';
 import styles from './Avatar.module.css';
 
 interface AvatarDefinition {
@@ -59,7 +59,7 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
   const [blinkState, setBlinkState] = useState({ isBlinking: false, nextBlink: Date.now() + 3000 });
 
   // Render the avatar on canvas
-  const renderAvatar = (expression: any, blinkAmount = 0) => {
+  const renderAvatar = useCallback((expression: any, blinkAmount = 0) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -152,7 +152,7 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
     });
 
     ctx.restore();
-  };
+  }, [definition.body.nodes, definition.colors.body, definition.colors.eyes, size]);
 
   const drawEye = (ctx: CanvasRenderingContext2D, eye: any) => {
     ctx.save();
@@ -181,9 +181,8 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
     if (!autoplay) return;
 
     let isRunning = true;
-    let lastBlinkCheck = Date.now();
     
-    const animate = (timestamp: number) => {
+    const animate = () => {
       if (!isRunning) return;
 
       // Handle blinking
@@ -241,7 +240,7 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [autoplay, definition, size, blinkState]);
+  }, [autoplay, definition, size, blinkState, renderAvatar]);
 
   // Expose control methods
   useImperativeHandle(ref, () => ({
