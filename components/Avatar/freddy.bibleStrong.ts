@@ -113,7 +113,7 @@ export const buildBibleStrongDefinition = (source: typeof import('./freddy.avata
     const animationValue = animation as {
       playbackMode: string
       blink: unknown
-      steps: Array<{ expressionId: string; holdMs: number; transitionMs: number; transition: string }>
+      steps: ReadonlyArray<{ expressionId: string; holdMs: number; transitionMs: number; transition: string }>
     }
     animations[key] = {
       ...animationValue,
