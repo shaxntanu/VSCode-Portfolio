@@ -1,5 +1,5 @@
 
-import { forwardRef, useEffect, useImperativeHandle, useRef, type CSSProperties } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type CSSProperties } from 'react'
 import { loadAvatarRuntime, type RuntimeAvatar } from './avatar-runtime'
 import { avatarData, type AnimationName } from './freddy.avatar'
 
