@@ -79,7 +79,8 @@ export const clickMessages: string[] = [
   "This portfolio runs entirely client-side.",
   "The terminal at the bottom actually works.",
   "Zen mode hides everything. Including me.",
-  "Built with Next.js and way too much attention to detail."
+  "Built with Next.js and way too much attention to detail.",
+  "Lite mode disables my animations. Toggle it off in Settings to see me move!"
 ];
 
 export const portfolioFacts: string[] = [
