@@ -32,7 +32,6 @@ const INACTIVITY_BORED_MS = 50000; // 50 seconds
 const INACTIVITY_ANGRY_MS = 150000; // 2.5 minutes
 const FACT_INTERVAL_MIN_MS = 60000; // 1 minute
 const FACT_INTERVAL_MAX_MS = 120000; // 2 minutes
-const MOUSE_TRACK_MAX_ROTATION = 8; // degrees
 
 export default function PortfolioCompanion() {
   const router = useRouter();
@@ -57,12 +56,6 @@ export default function PortfolioCompanion() {
   const messageRef = useRef<Message | null>(null);
   const currentMessageIdRef = useRef<string>('');
   const boredMessageShownRef = useRef(false);
-  
-  // Gaze tracking state
-  const gazeTargetRef = useRef({ x: 0, y: 0 });
-  const gazeCurrentRef = useRef({ x: 0, y: 0 });
-  const lastMouseMoveRef = useRef(Date.now());
-  const isGazingRef = useRef(false);
 
   messageRef.current = message;
 
@@ -331,7 +324,7 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, mood]);
 
-  // Cursor gaze tracking - eyes follow mouse
+  // Cursor gaze tracking - eyes follow mouse by mutating definition
   useEffect(() => {
     if (zenMode) return;
     
@@ -341,9 +334,26 @@ export default function PortfolioCompanion() {
 
     const GAZE_EASE_FACTOR = 0.16;
     const GAZE_STEADY_MS = 1400; // Look away if cursor still for 1.4s
-    const GAZE_MAX_OFFSET = 25; // Max pixel offset for eyes
+    const MAX_EYE_OFFSET_X = 8; // Max pixel offset for eyes horizontally
+    const MAX_EYE_OFFSET_Y = 6; // Max pixel offset for eyes vertically
 
-    let lastMouseUpdate = 0;
+    // Store original neutral eye positions
+    const neutral = (byteDefinition as any).expressions.neutral;
+    const originalLeftX = neutral.eyes.left.x;
+    const originalLeftY = neutral.eyes.left.y;
+    const originalRightX = neutral.eyes.right.x;
+    const originalRightY = neutral.eyes.right.y;
+
+    const state = {
+      targetX: 0,
+      targetY: 0,
+      currentX: 0,
+      currentY: 0,
+      lastMoveAt: Date.now(),
+      isActive: false
+    };
+
+    let lastMouseUpdate = Date.now();
     const THROTTLE_MS = 50;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -360,51 +370,37 @@ export default function PortfolioCompanion() {
       const deltaX = e.clientX - centerX;
       const deltaY = e.clientY - centerY;
       
-      // Normalize based on distance
-      const maxDistance = Math.max(window.innerWidth, window.innerHeight);
-      const normalizedX = Math.max(-1, Math.min(1, deltaX / (maxDistance * 0.3)));
-      const normalizedY = Math.max(-1, Math.min(1, deltaY / (maxDistance * 0.3)));
-      
-      gazeTargetRef.current = { x: normalizedX, y: normalizedY };
-      lastMouseMoveRef.current = now;
-      
-      if (!isGazingRef.current) {
-        isGazingRef.current = true;
-      }
+      // Normalize based on distance - whole viewport is gaze field
+      const maxDist = Math.max(window.innerWidth, window.innerHeight) / 2;
+      state.targetX = Math.max(-1, Math.min(1, deltaX / maxDist));
+      state.targetY = Math.max(-1, Math.min(1, deltaY / maxDist));
+      state.lastMoveAt = now;
+      state.isActive = true;
     };
 
-    // Gaze animation loop
+    // Gaze animation loop - directly mutate the neutral expression
     const animateGaze = () => {
-      if (!avatarRef.current) {
-        gazeFrameRef.current = requestAnimationFrame(animateGaze);
-        return;
-      }
-
       const now = Date.now();
-      const timeSinceMove = now - lastMouseMoveRef.current;
+      const timeSinceMove = now - state.lastMoveAt;
       
-      // If cursor hasn't moved for GAZE_STEADY_MS, look back to neutral
-      if (timeSinceMove > GAZE_STEADY_MS && isGazingRef.current) {
-        gazeTargetRef.current = { x: 0, y: 0 };
+      // If cursor hasn't moved, fade back to neutral
+      if (timeSinceMove > GAZE_STEADY_MS) {
+        state.targetX = 0;
+        state.targetY = 0;
       }
       
       // Ease toward target
-      const current = gazeCurrentRef.current;
-      const target = gazeTargetRef.current;
+      state.currentX += (state.targetX - state.currentX) * GAZE_EASE_FACTOR;
+      state.currentY += (state.targetY - state.currentY) * GAZE_EASE_FACTOR;
       
-      current.x += (target.x - current.x) * GAZE_EASE_FACTOR;
-      current.y += (target.y - current.y) * GAZE_EASE_FACTOR;
+      // Apply to neutral expression (which all animations use as base)
+      const offsetX = state.currentX * MAX_EYE_OFFSET_X;
+      const offsetY = state.currentY * MAX_EYE_OFFSET_Y;
       
-      // If very close to neutral, snap to it and stop gazing
-      if (Math.abs(current.x) < 0.01 && Math.abs(current.y) < 0.01 && timeSinceMove > GAZE_STEADY_MS) {
-        current.x = 0;
-        current.y = 0;
-        isGazingRef.current = false;
-      }
-      
-      // Update avatar eye position through expression manipulation
-      // This would require the avatar to support dynamic expression updates
-      // For now, we'll use the setExpression API if available
+      neutral.eyes.left.x = originalLeftX + offsetX;
+      neutral.eyes.left.y = originalLeftY + offsetY;
+      neutral.eyes.right.x = originalRightX + offsetX;
+      neutral.eyes.right.y = originalRightY + offsetY;
       
       gazeFrameRef.current = requestAnimationFrame(animateGaze);
     };
@@ -417,6 +413,11 @@ export default function PortfolioCompanion() {
       if (gazeFrameRef.current) {
         cancelAnimationFrame(gazeFrameRef.current);
       }
+      // Restore original eye positions
+      neutral.eyes.left.x = originalLeftX;
+      neutral.eyes.left.y = originalLeftY;
+      neutral.eyes.right.x = originalRightX;
+      neutral.eyes.right.y = originalRightY;
     };
   }, [zenMode]);
 
@@ -482,7 +483,6 @@ export default function PortfolioCompanion() {
             autoplay
             size={96}
             ariaLabel="Byte, the portfolio companion"
-            gazeTarget={gazeCurrentRef.current}
           />
         </div>
       </button>
