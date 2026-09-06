@@ -35,7 +35,6 @@ export default function PortfolioCompanion() {
   const [isEntering, setIsEntering] = useState(false);
   const [message, setMessage] = useState<Message | null>(null);
   const [companionState, setCompanionState] = useState<CompanionState>('entering');
-  const [currentAnimation, setCurrentAnimation] = useState<AnimationKey>('idle');
   const [liteMode, setLiteMode] = useState(true);
 
   // Refs for timer management
@@ -80,7 +79,6 @@ export default function PortfolioCompanion() {
       messageTimerRef.current = null;
     }
     setMessage(null);
-    setCurrentAnimation('idle');
     setCompanionState('idle');
   }, []);
 
@@ -99,7 +97,6 @@ export default function PortfolioCompanion() {
     }
 
     setMessage(candidate);
-    setCurrentAnimation(candidate.animation);
     setCompanionState('speaking');
 
     messageTimerRef.current = setTimeout(hideMessage, durationMs);
@@ -141,7 +138,7 @@ export default function PortfolioCompanion() {
       clearTimeout(visibilityTimer);
       if (introTimerRef.current) clearTimeout(introTimerRef.current);
     };
-  }, [zenMode, liteMode, showMessage]);
+  }, [zenMode, liteMode, showMessage, clearAllTimers]);
 
   // Route change reactions
   useEffect(() => {
@@ -220,7 +217,6 @@ export default function PortfolioCompanion() {
       
       if (idleMs >= INACTIVITY_ANNOYED_MS && companionState !== 'annoyed') {
         setCompanionState('annoyed');
-        setCurrentAnimation('annoyed');
         
         if (!messageRef.current) {
           showMessage({
@@ -231,7 +227,6 @@ export default function PortfolioCompanion() {
         }
       } else if (idleMs >= INACTIVITY_BORED_MS && companionState !== 'bored' && companionState !== 'annoyed') {
         setCompanionState('bored');
-        setCurrentAnimation('bored');
         
         if (!messageRef.current) {
           showMessage({
@@ -260,12 +255,11 @@ export default function PortfolioCompanion() {
       
       if (wasInactive && !messageRef.current) {
         setCompanionState('idle');
-        setCurrentAnimation('happy');
         
         // Brief happy reaction
         setTimeout(() => {
           if (!messageRef.current) {
-            setCurrentAnimation('idle');
+            setCompanionState('idle');
           }
         }, 2000);
       }
