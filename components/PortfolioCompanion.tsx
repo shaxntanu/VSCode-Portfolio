@@ -5,7 +5,7 @@ import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from
 import Freddy, { AvatarHandle, AnimationName } from '@/components/Avatar/Freddy';
 import styles from '@/styles/PortfolioCompanion.module.css';
 
-type ByteMood = 'neutral' | 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
+type ByteMood = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
 
 interface Message {
   text: string;
@@ -36,7 +36,7 @@ export default function PortfolioCompanion() {
   const [isVisible, setIsVisible] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [message, setMessage] = useState<Message | null>(null);
-  const [mood, setMood] = useState<ByteMood>('neutral');
+  const [mood, setMood] = useState<ByteMood>('idle');
   const [liteMode, setLiteMode] = useState(true);
 
   // Refs for timer management
