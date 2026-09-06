@@ -45,17 +45,27 @@ export default function PortfolioCompanion() {
   // Refs for timer management
   const avatarRef = useRef<AvatarRef>(null);
   const avatarContainerRef = useRef<HTMLDivElement>(null);
+  const mouseTrackingRef = useRef<HTMLDivElement>(null);
   const messageTimerRef = useRef<NodeJS.Timeout | null>(null);
   const introTimerRef = useRef<NodeJS.Timeout | null>(null);
   const factTimerRef = useRef<NodeJS.Timeout | null>(null);
   const inactivityCheckRef = useRef<NodeJS.Timeout | null>(null);
-  const gazeFrameRef = useRef<number | null>(null);
+  const mouseAnimFrameRef = useRef<number | null>(null);
   const lastActivityRef = useRef(Date.now());
   const lastFactRef = useRef<string | null>(null);
   const lastRouteRef = useRef<string>('');
   const messageRef = useRef<Message | null>(null);
   const currentMessageIdRef = useRef<string>('');
   const boredMessageShownRef = useRef(false);
+  
+  // Mouse tracking state
+  const mouseStateRef = useRef({
+    targetX: 0,
+    targetY: 0,
+    currentX: 0,
+    currentY: 0,
+    lastMoveAt: Date.now()
+  });
 
   messageRef.current = message;
 
@@ -65,7 +75,7 @@ export default function PortfolioCompanion() {
     if (introTimerRef.current) clearTimeout(introTimerRef.current);
     if (factTimerRef.current) clearTimeout(factTimerRef.current);
     if (inactivityCheckRef.current) clearTimeout(inactivityCheckRef.current);
-    if (gazeFrameRef.current) cancelAnimationFrame(gazeFrameRef.current);
+    if (mouseAnimFrameRef.current) cancelAnimationFrame(mouseAnimFrameRef.current);
   }, []);
 
   // Check lite mode
@@ -324,34 +334,20 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, mood]);
 
-  // Cursor gaze tracking - eyes follow mouse by mutating definition
+  // Mouse tracking - visible physical movement
   useEffect(() => {
-    if (zenMode) return;
+    if (zenMode || liteMode) return;
     
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    const GAZE_EASE_FACTOR = 0.16;
-    const GAZE_STEADY_MS = 1400; // Look away if cursor still for 1.4s
-    const MAX_EYE_OFFSET_X = 8; // Max pixel offset for eyes horizontally
-    const MAX_EYE_OFFSET_Y = 6; // Max pixel offset for eyes vertically
-
-    // Store original neutral eye positions
-    const neutral = (byteDefinition as any).expressions.neutral;
-    const originalLeftX = neutral.eyes.left.x;
-    const originalLeftY = neutral.eyes.left.y;
-    const originalRightX = neutral.eyes.right.x;
-    const originalRightY = neutral.eyes.right.y;
-
-    const state = {
-      targetX: 0,
-      targetY: 0,
-      currentX: 0,
-      currentY: 0,
-      lastMoveAt: Date.now(),
-      isActive: false
-    };
+    const EASE_FACTOR = 0.12;
+    const STEADY_MS = 1800; // Return to neutral after 1.8s
+    const MAX_TRANSLATE_X = 6; // pixels
+    const MAX_TRANSLATE_Y = 4; // pixels  
+    const MAX_ROTATE_X = 3; // degrees
+    const MAX_ROTATE_Y = 5; // degrees
 
     let lastMouseUpdate = Date.now();
     const THROTTLE_MS = 50;
@@ -364,62 +360,70 @@ export default function PortfolioCompanion() {
       if (!avatarContainerRef.current) return;
       
       const rect = avatarContainerRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      const avatarCenterX = rect.left + rect.width / 2;
+      const avatarCenterY = rect.top + rect.height / 2;
       
-      const deltaX = e.clientX - centerX;
-      const deltaY = e.clientY - centerY;
+      const deltaX = e.clientX - avatarCenterX;
+      const deltaY = e.clientY - avatarCenterY;
       
-      // Normalize based on distance - whole viewport is gaze field
+      // Normalize based on distance
       const maxDist = Math.max(window.innerWidth, window.innerHeight) / 2;
-      state.targetX = Math.max(-1, Math.min(1, deltaX / maxDist));
-      state.targetY = Math.max(-1, Math.min(1, deltaY / maxDist));
-      state.lastMoveAt = now;
-      state.isActive = true;
+      const normalizedX = Math.max(-1, Math.min(1, deltaX / maxDist));
+      const normalizedY = Math.max(-1, Math.min(1, deltaY / maxDist));
+      
+      mouseStateRef.current.targetX = normalizedX;
+      mouseStateRef.current.targetY = normalizedY;
+      mouseStateRef.current.lastMoveAt = now;
     };
 
-    // Gaze animation loop - directly mutate the neutral expression
-    const animateGaze = () => {
+    // Animation loop - apply visible transform
+    const animateTracking = () => {
       const now = Date.now();
+      const state = mouseStateRef.current;
       const timeSinceMove = now - state.lastMoveAt;
       
-      // If cursor hasn't moved, fade back to neutral
-      if (timeSinceMove > GAZE_STEADY_MS) {
+      // Fade back to neutral if cursor hasn't moved
+      if (timeSinceMove > STEADY_MS) {
         state.targetX = 0;
         state.targetY = 0;
       }
       
-      // Ease toward target
-      state.currentX += (state.targetX - state.currentX) * GAZE_EASE_FACTOR;
-      state.currentY += (state.targetY - state.currentY) * GAZE_EASE_FACTOR;
+      // Smooth interpolation
+      state.currentX += (state.targetX - state.currentX) * EASE_FACTOR;
+      state.currentY += (state.targetY - state.currentY) * EASE_FACTOR;
       
-      // Apply to neutral expression (which all animations use as base)
-      const offsetX = state.currentX * MAX_EYE_OFFSET_X;
-      const offsetY = state.currentY * MAX_EYE_OFFSET_Y;
+      // Calculate transforms
+      const translateX = state.currentX * MAX_TRANSLATE_X;
+      const translateY = state.currentY * MAX_TRANSLATE_Y;
+      const rotateX = -state.currentY * MAX_ROTATE_X; // Inverted for natural feel
+      const rotateY = state.currentX * MAX_ROTATE_Y;
       
-      neutral.eyes.left.x = originalLeftX + offsetX;
-      neutral.eyes.left.y = originalLeftY + offsetY;
-      neutral.eyes.right.x = originalRightX + offsetX;
-      neutral.eyes.right.y = originalRightY + offsetY;
+      // Apply transform to mouse tracking layer
+      if (mouseTrackingRef.current) {
+        mouseTrackingRef.current.style.transform = `
+          translate3d(${translateX}px, ${translateY}px, 0)
+          rotateX(${rotateX}deg)
+          rotateY(${rotateY}deg)
+        `;
+      }
       
-      gazeFrameRef.current = requestAnimationFrame(animateGaze);
+      mouseAnimFrameRef.current = requestAnimationFrame(animateTracking);
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    gazeFrameRef.current = requestAnimationFrame(animateGaze);
+    mouseAnimFrameRef.current = requestAnimationFrame(animateTracking);
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (gazeFrameRef.current) {
-        cancelAnimationFrame(gazeFrameRef.current);
+      if (mouseAnimFrameRef.current) {
+        cancelAnimationFrame(mouseAnimFrameRef.current);
       }
-      // Restore original eye positions
-      neutral.eyes.left.x = originalLeftX;
-      neutral.eyes.left.y = originalLeftY;
-      neutral.eyes.right.x = originalRightX;
-      neutral.eyes.right.y = originalRightY;
+      // Reset transform
+      if (mouseTrackingRef.current) {
+        mouseTrackingRef.current.style.transform = '';
+      }
     };
-  }, [zenMode]);
+  }, [zenMode, liteMode]);
 
   // Click interaction
   const handleAvatarClick = useCallback(() => {
@@ -475,15 +479,20 @@ export default function PortfolioCompanion() {
         aria-label="Click Byte for a message"
         title="Click for a random message"
       >
-        <div className={styles.avatarWrapper} ref={avatarContainerRef}>
-          <Avatar
-            ref={avatarRef}
-            definition={byteDefinition as any}
-            defaultAnimation="idle"
-            autoplay
-            size={96}
-            ariaLabel="Byte, the portfolio companion"
-          />
+        <div 
+          ref={mouseTrackingRef}
+          className={styles.mouseTrackingLayer}
+        >
+          <div className={styles.avatarWrapper} ref={avatarContainerRef}>
+            <Avatar
+              ref={avatarRef}
+              definition={byteDefinition as any}
+              defaultAnimation="idle"
+              autoplay
+              size={96}
+              ariaLabel="Byte, the portfolio companion"
+            />
+          </div>
         </div>
       </button>
     </div>

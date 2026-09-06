@@ -67,6 +67,15 @@
   justify-content: center;
 }
 
+/* Mouse tracking layer - JavaScript applies transform here */
+.mouseTrackingLayer {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: none; /* JS handles all interpolation */
+  will-change: transform;
+}
+
 .bubble {
   pointer-events: auto;
   background: rgba(30, 30, 30, 0.75);
