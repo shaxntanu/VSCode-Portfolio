@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
 import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from '@/data/companionMessages';
-import Freddy, { AvatarHandle, AnimationName } from '@/components/Avatar/Freddy';
+import ByteAvatar, { AvatarHandle, AnimationName } from '@/components/Avatar/ByteAvatar';
 import styles from '@/styles/PortfolioCompanion.module.css';
 
 type ByteMood = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
@@ -486,11 +486,10 @@ export default function PortfolioCompanion() {
           className={styles.mouseTrackingLayer}
         >
           <div className={styles.avatarWrapper} ref={avatarContainerRef}>
-            <Freddy
+            <ByteAvatar
               ref={avatarRef}
               animation={mood as AnimationName}
               playing={!liteMode}
-              loop
               size={96}
               style={{ display: 'block' }}
             />
