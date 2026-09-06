@@ -18,7 +18,8 @@ import {
 } from './index.js'
 import { useEffect, useId, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
 
-import './styles.css'
+// Removed global CSS import - Next.js doesn't allow global CSS in components
+// import './styles.css'
 
 const validatedDefinitions = new WeakSet()
 const controlledExpressionTransitionMs = 420
