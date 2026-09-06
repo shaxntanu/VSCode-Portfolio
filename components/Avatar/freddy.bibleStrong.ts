@@ -91,7 +91,35 @@ const NEUTRAL: FlatExpression = {
   bodyMotion: 'none',
 }
 
-export const buildBibleStrongDefinition = (source: typeof import('./freddy.avatar').avatarData) => {
+// Shape the vendored @bible-strong/avatar-react runtime validates against.
+// Declared explicitly (not inferred) so callers indexing expressions['gaze-live']
+// see Record<string, unknown> instead of a literal-typed object without an index
+// signature.
+type BibleStrongDefinition = {
+  schema: string
+  schemaVersion: number
+  version: number
+  name: string
+  colors: Record<string, string>
+  body: {
+    primary: Record<string, unknown>
+    nodes: Array<{
+      id: string
+      name: string
+      surface: Record<string, unknown>
+      position: number[]
+      rotation: number[]
+    }>
+  }
+  expressions: Record<string, unknown>
+  expressionOrder: string[]
+  animations: Record<string, unknown>
+  animationOrder: string[]
+}
+
+export const buildBibleStrongDefinition = (
+  source: typeof import('./freddy.avatar').avatarData
+): BibleStrongDefinition => {
   const expressions: Record<string, unknown> = {}
   for (const [key, expression] of Object.entries(source.expressions)) {
     expressions[key] = toNestedExpression(key, expression as unknown as FlatExpression)
