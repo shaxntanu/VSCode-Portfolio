@@ -13,6 +13,7 @@ import MobileNotification from '@/components/MobileNotification';
 import Terminal from '@/components/Terminal/Terminal';
 import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
 import PortfolioStatsModal from '@/components/PortfolioStatsModal';
+import PortfolioCompanion from '@/components/PortfolioCompanion';
 import { FolderProvider } from '@/contexts/FolderContext';
 import { UIStateProvider, useUIState } from '@/contexts/UIStateContext';
 
@@ -129,6 +130,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
       <Bottombar />
       {!zenMode && <CommandPalette />}
       {!zenMode && <CommandPaletteShiftP />}
+      <PortfolioCompanion />
       <div id="dock-icon" className={styles.dockIcon} style={{ display: 'none' }}>
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <rect width="40" height="40" rx="8" fill="url(#gradient)" />
