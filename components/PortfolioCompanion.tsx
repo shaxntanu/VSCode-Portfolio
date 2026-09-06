@@ -372,10 +372,10 @@ export default function PortfolioCompanion() {
 
     const EASE_FACTOR = 0.14; // per-frame ease toward the cursor target
     const STEADY_MS = 1800; // Return to neutral after 1.8s
-    const MAX_TRANSLATE_X = 12; // pixels - clearly visible but subtle
-    const MAX_TRANSLATE_Y = 8; // pixels
-    const MAX_ROTATE_X = 5; // degrees
-    const MAX_ROTATE_Y = 7; // degrees
+    const MAX_TRANSLATE_X = 18; // pixels - whole body drifts toward the cursor
+    const MAX_TRANSLATE_Y = 12; // pixels
+    const MAX_ROTATE_X = 7; // degrees - body leans toward the cursor
+    const MAX_ROTATE_Y = 9; // degrees
 
     let lastMouseUpdate = Date.now();
     const THROTTLE_MS = 50;
@@ -487,8 +487,12 @@ export default function PortfolioCompanion() {
     // Four synthesized gaze directions derived parametrically from the neutral
     // head range (covers all screen quadrants with no dependency on editorial
     // glance expressions - and validates cleanly for any data update).
-    const GAZE_YAW = 12
-    const GAZE_PITCH = 10
+    // head.x/head.y rotate Byte's WHOLE body (poseFromExpression builds the
+    // orientation quaternion applied to every rendered point), so YAW/PITCH are
+    // also the body-lean amplitudes: the body tilts toward the cursor, and the
+    // eyes follow inside the same rotation.
+    const GAZE_YAW = 16
+    const GAZE_PITCH = 13
     const GAZE_ROLL = 16
 
     type Vec = [number, number]

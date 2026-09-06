@@ -79,7 +79,7 @@ export const clickMessages: string[] = [
   "Zen mode hides everything. Including me.",
   "Built with Next.js and way too much attention to detail.",
   "Lite mode disables my animations. Toggle it off in Settings to see me move!",
-  "My name is Byte. I'm powered by Freddy from Avatar Studio."
+  "My name is Byte. Watch me track your cursor."
 ];
 
 export const portfolioFacts: string[] = [
