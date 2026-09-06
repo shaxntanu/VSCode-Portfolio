@@ -1,8 +1,6 @@
-import { AnimationName } from '@/components/Avatar/Freddy';
-
 export interface RouteMessage {
   message: string;
-  animation: AnimationName;
+  animation: string;
 }
 
 export const routeMessages: Record<string, RouteMessage> = {

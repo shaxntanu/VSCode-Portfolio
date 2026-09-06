@@ -2,14 +2,15 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
 import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from '@/data/companionMessages';
-import ByteAvatar, { AvatarHandle, AnimationName } from '@/components/Avatar/ByteAvatar';
+import Avatar from '@/components/Avatar/bible-strong/Avatar';
+import byteDefinition from '@/components/Avatar/freddy.avatar';
 import styles from '@/styles/PortfolioCompanion.module.css';
 
 type ByteMood = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
 
 interface Message {
   text: string;
-  animation: AnimationName;
+  animation: string;
   priority: number;
   id: string;
 }
@@ -40,7 +41,7 @@ export default function PortfolioCompanion() {
   const [liteMode, setLiteMode] = useState(true);
 
   // Refs for timer management
-  const avatarRef = useRef<AvatarHandle>(null);
+  const avatarRef = useRef<any>(null);
   const avatarContainerRef = useRef<HTMLDivElement>(null);
   const mouseTrackingRef = useRef<HTMLDivElement>(null);
   const messageTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -486,12 +487,13 @@ export default function PortfolioCompanion() {
           className={styles.mouseTrackingLayer}
         >
           <div className={styles.avatarWrapper} ref={avatarContainerRef}>
-            <ByteAvatar
+            <Avatar
               ref={avatarRef}
-              animation={mood as AnimationName}
-              playing={!liteMode}
+              definition={byteDefinition.avatarData as any}
+              defaultAnimation="idle"
+              autoplay
               size={96}
-              style={{ display: 'block' }}
+              ariaLabel="Byte, the portfolio companion"
             />
           </div>
         </div>
