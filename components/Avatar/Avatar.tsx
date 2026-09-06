@@ -12,11 +12,23 @@ interface AvatarDefinition {
     eyes: string;
   };
   body: {
-    type: string;
+    primary?: {
+      type: string;
+      width: number;
+      height: number;
+      depth: number;
+      roundness: number;
+    };
     nodes?: Array<{
-      shape: string;
-      size: number;
+      surface: {
+        type: string;
+        width: number;
+        height: number;
+        depth: number;
+        roundness: number;
+      };
       position: [number, number, number];
+      rotation: [number, number, number];
     }>;
   };
   expressions: Record<string, any>;
@@ -90,38 +102,69 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
     // Simple 2D projection with rotation
     ctx.rotate(rotZ);
 
-    // Render body nodes (Freddy's cube with sphere nodes)
-    if (definition.body.nodes) {
+    // Render body - primary cube
+    if (definition.body.primary) {
+      const primary = definition.body.primary;
       ctx.fillStyle = definition.colors.body;
       
+      // Draw primary body as a rounded rectangle (simplified cube)
+      const w = primary.width * scale * 0.8;
+      const h = primary.height * scale * 0.8;
+      const radius = Math.min(w, h) * primary.roundness * 0.5;
+      
+      ctx.beginPath();
+      ctx.moveTo(-w/2 + radius, -h/2);
+      ctx.lineTo(w/2 - radius, -h/2);
+      ctx.quadraticCurveTo(w/2, -h/2, w/2, -h/2 + radius);
+      ctx.lineTo(w/2, h/2 - radius);
+      ctx.quadraticCurveTo(w/2, h/2, w/2 - radius, h/2);
+      ctx.lineTo(-w/2 + radius, h/2);
+      ctx.quadraticCurveTo(-w/2, h/2, -w/2, h/2 - radius);
+      ctx.lineTo(-w/2, -h/2 + radius);
+      ctx.quadraticCurveTo(-w/2, -h/2, -w/2 + radius, -h/2);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Render body nodes
+    if (definition.body.nodes) {
       // Sort nodes by Z position for painter's algorithm
       const sortedNodes = [...definition.body.nodes].sort((a, b) => a.position[2] - b.position[2]);
       
       sortedNodes.forEach(node => {
-        if (node.shape === 'sphere') {
-          const x = node.position[0] * scale;
-          const y = node.position[1] * scale;
-          const z = node.position[2] * scale;
-          
-          // Apply 3D rotation
-          const rotatedY = y * Math.cos(rotX) - z * Math.sin(rotX);
-          const rotatedZ = y * Math.sin(rotX) + z * Math.cos(rotX);
-          const rotatedX = x * Math.cos(rotY) + rotatedZ * Math.sin(rotY);
-          const finalZ = -x * Math.sin(rotY) + rotatedZ * Math.cos(rotY);
-          
-          // Perspective projection (simple)
-          const perspective = 1 / (1 + finalZ * 0.001);
-          const projX = rotatedX * perspective;
-          const projY = rotatedY * perspective;
-          const projSize = node.size * scale * perspective;
-          
-          // Darken back nodes
-          const brightness = Math.max(0.6, 1 - finalZ * 0.002);
-          const color = adjustBrightness(definition.colors.body, brightness);
-          
-          ctx.fillStyle = color;
+        const surface = node.surface;
+        const x = node.position[0] * scale;
+        const y = node.position[1] * scale;
+        const z = node.position[2] * scale;
+        
+        // Apply 3D rotation
+        const rotatedY = y * Math.cos(rotX) - z * Math.sin(rotX);
+        const rotatedZ = y * Math.sin(rotX) + z * Math.cos(rotX);
+        const rotatedX = x * Math.cos(rotY) + rotatedZ * Math.sin(rotY);
+        const finalZ = -x * Math.sin(rotY) + rotatedZ * Math.cos(rotY);
+        
+        // Perspective projection
+        const perspective = 1 / (1 + finalZ * 0.001);
+        const projX = rotatedX * perspective;
+        const projY = rotatedY * perspective;
+        
+        // Darken back nodes
+        const brightness = Math.max(0.6, 1 - finalZ * 0.002);
+        const color = adjustBrightness(definition.colors.body, brightness);
+        
+        ctx.fillStyle = color;
+        
+        if (surface.type === 'sphere') {
+          const radius = (surface.width / 2) * scale * perspective;
           ctx.beginPath();
-          ctx.arc(projX, projY, projSize, 0, Math.PI * 2);
+          ctx.arc(projX, projY, radius, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (surface.type === 'cylinder') {
+          // Draw cylinder as ellipse
+          const radiusX = (surface.width / 2) * scale * perspective;
+          const radiusY = (surface.height / 2) * scale * perspective;
+          ctx.beginPath();
+          ctx.ellipse(projX, projY, radiusX, radiusY, 0, 0, Math.PI * 2);
           ctx.fill();
         }
       });
@@ -152,7 +195,7 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
     });
 
     ctx.restore();
-  }, [definition.body.nodes, definition.colors.body, definition.colors.eyes, size]);
+  }, [definition.body.primary, definition.body.nodes, definition.colors.body, definition.colors.eyes, size]);
 
   const drawEye = (ctx: CanvasRenderingContext2D, eye: any) => {
     ctx.save();
