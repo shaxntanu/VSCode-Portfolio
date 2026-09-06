@@ -326,20 +326,28 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, mood]);
 
-  // Mouse tracking with RAF
+  // Mouse tracking with RAF - always active unless reduced motion
   useEffect(() => {
-    if (zenMode || liteMode || !avatarContainerRef.current) return;
+    if (zenMode) return;
     
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let isThrottled = false;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (mouseFrameRef.current) return;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
       
-      mouseFrameRef.current = requestAnimationFrame(() => {
+      if (isThrottled || !avatarContainerRef.current) return;
+      isThrottled = true;
+      
+      requestAnimationFrame(() => {
         if (!avatarContainerRef.current) {
-          mouseFrameRef.current = null;
+          isThrottled = false;
           return;
         }
         
@@ -347,31 +355,29 @@ export default function PortfolioCompanion() {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         
-        const deltaX = e.clientX - centerX;
-        const deltaY = e.clientY - centerY;
+        const deltaX = lastMouseX - centerX;
+        const deltaY = lastMouseY - centerY;
         
-        // Normalize to -1 to 1 range based on viewport
-        const normalizedX = Math.max(-1, Math.min(1, deltaX / (window.innerWidth / 2)));
-        const normalizedY = Math.max(-1, Math.min(1, deltaY / (window.innerHeight / 2)));
+        // Normalize to -1 to 1 range based on distance from center
+        const maxDistance = Math.max(window.innerWidth, window.innerHeight);
+        const normalizedX = Math.max(-1, Math.min(1, deltaX / (maxDistance * 0.5)));
+        const normalizedY = Math.max(-1, Math.min(1, deltaY / (maxDistance * 0.5)));
         
         // Apply rotation limits
         const rotX = normalizedX * MOUSE_TRACK_MAX_ROTATION;
         const rotY = -normalizedY * MOUSE_TRACK_MAX_ROTATION;
         
         setMouseRotation({ x: rotX, y: rotY });
-        mouseFrameRef.current = null;
+        isThrottled = false;
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (mouseFrameRef.current) {
-        cancelAnimationFrame(mouseFrameRef.current);
-      }
     };
-  }, [zenMode, liteMode]);
+  }, [zenMode]);
 
   // Click interaction
   const handleAvatarClick = useCallback(() => {
@@ -427,10 +433,8 @@ export default function PortfolioCompanion() {
         aria-label="Click Byte for a message"
         title="Click for a random message"
         style={{
-          transform: liteMode 
-            ? 'none' 
-            : `perspective(800px) rotateY(${mouseRotation.x}deg) rotateX(${mouseRotation.y}deg)`,
-          transition: liteMode ? 'none' : 'transform 0.1s ease-out'
+          transform: `perspective(800px) rotateY(${mouseRotation.x}deg) rotateX(${mouseRotation.y}deg)`,
+          transition: 'transform 0.15s ease-out'
         }}
       >
         <div className={styles.avatarWrapper} ref={avatarContainerRef}>
