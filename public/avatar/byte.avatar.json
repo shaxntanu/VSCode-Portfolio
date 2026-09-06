@@ -3,56 +3,50 @@
   "schemaVersion": 1,
   "name": "Byte",
   "colors": {
-    "body": "#007ACC",
+    "body": "#e6855c",
     "eyes": "#ffffff"
   },
   "body": {
     "primary": {
-      "type": "sphere",
-      "width": 182.95728256225593,
-      "height": 185.5484375,
-      "depth": 100.01221191461767,
-      "roundness": 1
+      "type": "cube",
+      "width": 174.732421875,
+      "height": 149.474609375,
+      "depth": 125.596484375,
+      "roundness": 0.7621875
     },
     "nodes": [
       {
-        "surface": { "type": "sphere", "width": 60, "height": 60, "depth": 24.375287224264703, "roundness": 1 },
-        "position": [-94.48309236361106, -95.44637036124786, -10.398419675330803],
+        "surface": {
+          "type": "sphere",
+          "width": 81.60000000000001,
+          "height": 81.60000000000001,
+          "depth": 37.96875000000001,
+          "roundness": 1
+        },
+        "position": [-82, -72, -18],
         "rotation": [0, 0, 0]
       },
       {
-        "surface": { "type": "sphere", "width": 59.57851562500001, "height": 59.57851562500001, "depth": 24.204057179245304, "roundness": 1 },
-        "position": [-6.440040491385305, -133.984012454223, -10.398419675330803],
+        "surface": {
+          "type": "sphere",
+          "width": 81.60000000000001,
+          "height": 81.60000000000001,
+          "depth": 37.024609375000004,
+          "roundness": 1
+        },
+        "position": [82, -72, -18],
         "rotation": [0, 0, 0]
       },
       {
-        "surface": { "type": "sphere", "width": 81.60000000000001, "height": 81.60000000000001, "depth": 33.150390625, "roundness": 1 },
-        "position": [89.09066821815593, -114.30101031028101, -10.398419675330803],
-        "rotation": [0, 0, 0]
-      },
-      {
-        "surface": { "type": "sphere", "width": 70.12148437500001, "height": 70.12148437500001, "depth": 28.487188703873578, "roundness": 1 },
-        "position": [132.2484739833418, -11.704819633353354, -10.398419675330803],
-        "rotation": [0, 0, 0]
-      },
-      {
-        "surface": { "type": "sphere", "width": 61.89843750000001, "height": 61.89843750000001, "depth": 25.146536546594966, "roundness": 1 },
-        "position": [-138.13379284351342, -1.1847860044189815, -10.398419675330803],
-        "rotation": [0, 0, 0]
-      },
-      {
-        "surface": { "type": "sphere", "width": 61.11328125000001, "height": 61.11328125000001, "depth": 24.827563061433676, "roundness": 1 },
-        "position": [-103.29429634246448, 92.4041125555865, -10.398419675330803],
-        "rotation": [0, 0, 0]
-      },
-      {
-        "surface": { "type": "sphere", "width": 61.726171875000006, "height": 61.726171875000006, "depth": 25.076552811790915, "roundness": 1 },
-        "position": [-2.4878844479075983, 133.06983674233183, -10.398419675330803],
-        "rotation": [0, 0, 0]
-      },
-      {
-        "surface": { "type": "sphere", "width": 64.116796875, "height": 64.116796875, "depth": 26.047755662132705, "roundness": 1 },
-        "position": [109.54168183067505, 83.98361858650364, -10.398419675330803],
+        "surface": {
+          "type": "cylinder",
+          "width": 59.483593750000004,
+          "height": 63.461328124999994,
+          "depth": 73.10000000000001,
+          "roundness": 1.5026171875,
+          "morphRoundness": 0.366171875
+        },
+        "position": [-1.021484375, -72, -18],
         "rotation": [0, 0, 0]
       }
     ]
@@ -61,9 +55,9 @@
     "neutral": {
       "head": { "x": 0, "y": 0, "z": 0 },
       "eyes": {
-        "left": { "width": 20, "height": 50, "x": 0, "y": -7, "angle": 0 },
-        "right": { "width": 20, "height": 50, "x": 0, "y": -7, "angle": 0 },
-        "spacing": 35
+        "left": { "width": 28.934879954481378, "height": 60.839338555790405, "x": -0.11992187500000001, "y": -4.310546875000002, "angle": 0 },
+        "right": { "width": 28.934879954481378, "height": 60.839338555790405, "x": -0.11992187500000001, "y": -4.310546875000002, "angle": 0 },
+        "spacing": 47.380859375
       },
       "perspective": 1,
       "motion": { "eyes": "none", "body": "none" }
@@ -178,16 +172,6 @@
       "perspective": 1,
       "motion": { "eyes": "none", "body": "none" }
     },
-    "shy-downward": {
-      "head": { "x": 7.131640624999998, "y": 7.7828124999999995, "z": 3.935546874999999 },
-      "eyes": {
-        "left": { "width": 21.5, "height": 32, "x": 0, "y": 40, "angle": 0 },
-        "right": { "width": 23.2, "height": 33.5, "x": 0, "y": 40, "angle": 0 },
-        "spacing": 51.2
-      },
-      "perspective": 1,
-      "motion": { "eyes": "none", "body": "none" }
-    },
     "skeptical-right": {
       "head": { "x": -16.528515625, "y": -3.7679687499999996, "z": -13.7296875 },
       "eyes": {
@@ -204,6 +188,26 @@
         "left": { "width": 20.908203124999996, "height": 40.40078125, "x": 0, "y": 0, "angle": -30.865625 },
         "right": { "width": 20.908203124999996, "height": 40.40078125, "x": 0, "y": 0, "angle": 28.781640625 },
         "spacing": 52.059765625
+      },
+      "perspective": 1,
+      "motion": { "eyes": "none", "body": "none" }
+    },
+    "angry-left": {
+      "head": { "x": -14.750781250000001, "y": -19.350000000000005, "z": 5.631640624999998 },
+      "eyes": {
+        "left": { "width": 19.602343750000003, "height": 48.63984375, "x": 0, "y": 0, "angle": -27.606640625 },
+        "right": { "width": 19.602343750000003, "height": 48.63984375, "x": 0, "y": 0, "angle": 26.1484375 },
+        "spacing": 55.1
+      },
+      "perspective": 1,
+      "motion": { "eyes": "none", "body": "none" }
+    },
+    "skeptical-left": {
+      "head": { "x": 3.5292968750000004, "y": -7.0765625, "z": 9.830078125 },
+      "eyes": {
+        "left": { "width": 24.306250000000002, "height": 59.281640624999994, "x": 0, "y": 0, "angle": 0 },
+        "right": { "width": 48.92421875000001, "height": 13.408203124999996, "x": 0, "y": 0, "angle": 0 },
+        "spacing": 62.218359375
       },
       "perspective": 1,
       "motion": { "eyes": "none", "body": "none" }
@@ -232,9 +236,10 @@
     "gentle-downward-gaze",
     "surprised-wide-left",
     "drowsy-closed",
-    "shy-downward",
     "skeptical-right",
     "angry-right",
+    "angry-left",
+    "skeptical-left",
     "suspicious-right"
   ],
   "animations": {
@@ -290,23 +295,24 @@
       "blink": { "enabled": true, "initialDelayMs": 4800, "minIntervalMs": 6500, "maxIntervalMs": 9500, "durationMs": 420 },
       "metadata": { "label": "Bored", "description": "Waiting", "group": "Reactions" }
     },
-    "skeptical": {
+    "suspicious": {
       "playbackMode": "loop",
       "steps": [
+        { "expression": "skeptical-left", "holdMs": 2300, "transitionMs": 500, "transition": "smooth" },
         { "expression": "skeptical-right", "holdMs": 2300, "transitionMs": 500, "transition": "smooth" },
         { "expression": "suspicious-right", "holdMs": 2300, "transitionMs": 500, "transition": "smooth" }
       ],
       "blink": { "enabled": true, "initialDelayMs": 2100, "minIntervalMs": 2800, "maxIntervalMs": 5000, "durationMs": 260 },
-      "metadata": { "label": "Skeptical", "description": "Impatient", "group": "Reactions" }
+      "metadata": { "label": "Suspicious", "description": "Impatient", "group": "Reactions" }
     },
-    "annoyed": {
+    "angry": {
       "playbackMode": "loop",
       "steps": [
         { "expression": "angry-right", "holdMs": 2300, "transitionMs": 500, "transition": "smooth" },
-        { "expression": "suspicious-right", "holdMs": 2300, "transitionMs": 500, "transition": "smooth" }
+        { "expression": "angry-left", "holdMs": 2300, "transitionMs": 500, "transition": "smooth" }
       ],
       "blink": { "enabled": true, "initialDelayMs": 2100, "minIntervalMs": 2800, "maxIntervalMs": 5000, "durationMs": 260 },
-      "metadata": { "label": "Annoyed", "description": "Really?", "group": "Reactions" }
+      "metadata": { "label": "Angry", "description": "Really?", "group": "Reactions" }
     }
   },
   "animationOrder": [
@@ -315,7 +321,7 @@
     "excited",
     "curious",
     "bored",
-    "skeptical",
-    "annoyed"
+    "suspicious",
+    "angry"
   ]
 }

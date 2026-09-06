@@ -1,4 +1,4 @@
-export type AnimationKey = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'skeptical' | 'annoyed';
+export type AnimationKey = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
 
 export interface RouteMessage {
   message: string;
@@ -96,7 +96,5 @@ export const portfolioFacts: string[] = [
 ];
 
 export const inactivityMessages: Record<string, string> = {
-  bored: "Still here. Take your time exploring.",
-  skeptical: "No rush. I'll just be here... waiting...",
-  annoyed: "I'm starting to think you forgot about me."
+  bored: "Go on, keep exploring."
 };

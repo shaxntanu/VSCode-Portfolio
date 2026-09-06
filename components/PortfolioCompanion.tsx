@@ -8,12 +8,13 @@ import styles from '@/styles/PortfolioCompanion.module.css';
 // Import the avatar definition
 import byteDefinition from '@/public/avatar/byte.avatar.json';
 
-type CompanionState = 'entering' | 'idle' | 'speaking' | 'excited' | 'bored' | 'annoyed';
+type ByteMood = 'neutral' | 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
 
 interface Message {
   text: string;
   animation: AnimationKey;
   priority: number;
+  id: string;
 }
 
 const MESSAGE_PRIORITY = {
@@ -27,10 +28,11 @@ const MESSAGE_PRIORITY = {
 const INTRO_KEY = 'byte-intro-shown';
 const INTRO_DELAY_MS = 2000;
 const MESSAGE_DISPLAY_MS = 6500;
-const INACTIVITY_BORED_MS = 45000; // 45 seconds
-const INACTIVITY_ANNOYED_MS = 120000; // 2 minutes
+const INACTIVITY_BORED_MS = 50000; // 50 seconds
+const INACTIVITY_ANGRY_MS = 150000; // 2.5 minutes
 const FACT_INTERVAL_MIN_MS = 60000; // 1 minute
 const FACT_INTERVAL_MAX_MS = 120000; // 2 minutes
+const MOUSE_TRACK_MAX_ROTATION = 8; // degrees
 
 export default function PortfolioCompanion() {
   const router = useRouter();
@@ -38,21 +40,35 @@ export default function PortfolioCompanion() {
   const [isVisible, setIsVisible] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
   const [message, setMessage] = useState<Message | null>(null);
-  const [companionState, setCompanionState] = useState<CompanionState>('entering');
+  const [mood, setMood] = useState<ByteMood>('neutral');
   const [liteMode, setLiteMode] = useState(true);
+  const [mouseRotation, setMouseRotation] = useState({ x: 0, y: 0 });
 
   // Refs for timer management
   const avatarRef = useRef<AvatarRef>(null);
+  const avatarContainerRef = useRef<HTMLDivElement>(null);
   const messageTimerRef = useRef<NodeJS.Timeout | null>(null);
   const introTimerRef = useRef<NodeJS.Timeout | null>(null);
   const factTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const inactivityCheckRef = useRef<NodeJS.Timeout | null>(null);
+  const mouseFrameRef = useRef<number | null>(null);
   const lastActivityRef = useRef(Date.now());
   const lastFactRef = useRef<string | null>(null);
   const lastRouteRef = useRef<string>('');
   const messageRef = useRef<Message | null>(null);
+  const currentMessageIdRef = useRef<string>('');
+  const boredMessageShownRef = useRef(false);
 
   messageRef.current = message;
+
+  // Clear all timers - defined first to avoid hoisting issues
+  const clearAllTimers = useCallback(() => {
+    if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
+    if (introTimerRef.current) clearTimeout(introTimerRef.current);
+    if (factTimerRef.current) clearTimeout(factTimerRef.current);
+    if (inactivityCheckRef.current) clearTimeout(inactivityCheckRef.current);
+    if (mouseFrameRef.current) cancelAnimationFrame(mouseFrameRef.current);
+  }, []);
 
   // Check lite mode
   useEffect(() => {
@@ -66,17 +82,10 @@ export default function PortfolioCompanion() {
     if (zenMode) {
       setIsVisible(false);
       clearAllTimers();
-    } else if (!isVisible && companionState !== 'entering') {
+    } else if (!isVisible && !isEntering) {
       setIsVisible(true);
     }
-  }, [zenMode, isVisible, companionState]);
-
-  const clearAllTimers = useCallback(() => {
-    if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
-    if (introTimerRef.current) clearTimeout(introTimerRef.current);
-    if (factTimerRef.current) clearTimeout(factTimerRef.current);
-    if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
-  }, []);
+  }, [zenMode, isVisible, isEntering, clearAllTimers]);
 
   const hideMessage = useCallback(() => {
     if (messageTimerRef.current) {
@@ -84,14 +93,29 @@ export default function PortfolioCompanion() {
       messageTimerRef.current = null;
     }
     setMessage(null);
-    setCompanionState('idle');
+    currentMessageIdRef.current = '';
+    
+    // Return to appropriate mood based on activity
+    const idleMs = Date.now() - lastActivityRef.current;
+    if (idleMs >= INACTIVITY_ANGRY_MS) {
+      setMood('angry');
+    } else if (idleMs >= INACTIVITY_BORED_MS) {
+      setMood('bored');
+    } else {
+      setMood('idle');
+    }
   }, []);
 
   const showMessage = useCallback((candidate: Message, durationMs: number = MESSAGE_DISPLAY_MS) => {
     const current = messageRef.current;
     
-    // Priority check
-    if (current && candidate.priority <= current.priority) {
+    // Priority check - route changes always win
+    if (current && candidate.priority < current.priority) {
+      return false;
+    }
+    
+    // If same priority, check if it's a different message
+    if (current && candidate.priority === current.priority && current.id === candidate.id) {
       return false;
     }
 
@@ -102,7 +126,7 @@ export default function PortfolioCompanion() {
     }
 
     setMessage(candidate);
-    setCompanionState('speaking');
+    currentMessageIdRef.current = candidate.id;
     
     // Play animation on avatar
     if (avatarRef.current && candidate.animation) {
@@ -128,7 +152,7 @@ export default function PortfolioCompanion() {
       // Remove entering class after animation
       setTimeout(() => {
         setIsEntering(false);
-        setCompanionState('idle');
+        setMood('idle');
       }, liteMode ? 0 : 600);
     }, visibilityDelay);
 
@@ -139,7 +163,8 @@ export default function PortfolioCompanion() {
         showMessage({
           text: "Hey, I'm Byte. I'll be your guide throughout the portfolio.",
           animation: 'happy',
-          priority: MESSAGE_PRIORITY.intro
+          priority: MESSAGE_PRIORITY.intro,
+          id: 'intro'
         }, 8000);
       }, INTRO_DELAY_MS + visibilityDelay);
     }
@@ -148,9 +173,9 @@ export default function PortfolioCompanion() {
       clearTimeout(visibilityTimer);
       if (introTimerRef.current) clearTimeout(introTimerRef.current);
     };
-  }, [zenMode, liteMode, showMessage, clearAllTimers]);
+  }, [zenMode, liteMode, showMessage]);
 
-  // Route change reactions
+  // Route change reactions - immediate replacement
   useEffect(() => {
     if (zenMode) return;
 
@@ -169,13 +194,18 @@ export default function PortfolioCompanion() {
 
     lastRouteRef.current = currentPath;
     lastActivityRef.current = Date.now();
+    boredMessageShownRef.current = false;
+    
+    // Reset mood to happy on route change
+    setMood('happy');
 
     const routeConfig = routeMessages[currentPath];
     if (routeConfig) {
       showMessage({
         text: routeConfig.message,
         animation: routeConfig.animation,
-        priority: MESSAGE_PRIORITY.route
+        priority: MESSAGE_PRIORITY.route,
+        id: `route-${currentPath}`
       }, MESSAGE_DISPLAY_MS);
     }
   }, [router.pathname, zenMode, showMessage]);
@@ -203,7 +233,8 @@ export default function PortfolioCompanion() {
           showMessage({
             text: fact,
             animation: 'curious',
-            priority: MESSAGE_PRIORITY.fact
+            priority: MESSAGE_PRIORITY.fact,
+            id: `fact-${fact.substring(0, 20)}`
           }, MESSAGE_DISPLAY_MS);
         }
         
@@ -218,60 +249,68 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, liteMode, showMessage]);
 
-  // Inactivity detection
+  // Inactivity detection with mood progression
   useEffect(() => {
     if (zenMode) return;
 
     const checkInactivity = () => {
       const idleMs = Date.now() - lastActivityRef.current;
       
-      if (idleMs >= INACTIVITY_ANNOYED_MS && companionState !== 'annoyed') {
-        setCompanionState('annoyed');
+      if (idleMs >= INACTIVITY_ANGRY_MS && mood !== 'angry') {
+        setMood('angry');
         
-        if (!messageRef.current) {
-          showMessage({
-            text: inactivityMessages.annoyed,
-            animation: 'annoyed',
-            priority: MESSAGE_PRIORITY.inactivity
-          }, MESSAGE_DISPLAY_MS);
+        if (!messageRef.current && avatarRef.current) {
+          avatarRef.current.play('angry');
         }
-      } else if (idleMs >= INACTIVITY_BORED_MS && companionState !== 'bored' && companionState !== 'annoyed') {
-        setCompanionState('bored');
+      } else if (idleMs >= INACTIVITY_BORED_MS && mood !== 'bored' && mood !== 'angry') {
+        setMood('bored');
         
-        if (!messageRef.current) {
+        // Show bored message only once per bored transition
+        if (!boredMessageShownRef.current && !messageRef.current) {
+          boredMessageShownRef.current = true;
           showMessage({
             text: inactivityMessages.bored,
             animation: 'bored',
-            priority: MESSAGE_PRIORITY.inactivity
+            priority: MESSAGE_PRIORITY.inactivity,
+            id: 'bored'
           }, MESSAGE_DISPLAY_MS);
+        } else if (!messageRef.current && avatarRef.current) {
+          avatarRef.current.play('bored');
         }
       }
+      
+      // Schedule next check
+      inactivityCheckRef.current = setTimeout(checkInactivity, 5000);
     };
 
-    inactivityTimerRef.current = setInterval(checkInactivity, 5000);
+    checkInactivity();
 
     return () => {
-      if (inactivityTimerRef.current) clearInterval(inactivityTimerRef.current);
+      if (inactivityCheckRef.current) clearTimeout(inactivityCheckRef.current);
     };
-  }, [zenMode, companionState, showMessage]);
+  }, [zenMode, mood, showMessage]);
 
   // Activity tracking
   useEffect(() => {
     if (zenMode) return;
 
     const handleActivity = () => {
-      const wasInactive = companionState === 'bored' || companionState === 'annoyed';
+      const wasInactive = mood === 'bored' || mood === 'angry';
       lastActivityRef.current = Date.now();
+      boredMessageShownRef.current = false;
       
-      if (wasInactive && !messageRef.current) {
-        setCompanionState('idle');
+      if (wasInactive) {
+        setMood('idle');
         
-        // Brief happy reaction
-        setTimeout(() => {
-          if (!messageRef.current) {
-            setCompanionState('idle');
-          }
-        }, 2000);
+        // Play happy animation briefly
+        if (avatarRef.current && !messageRef.current) {
+          avatarRef.current.play('happy');
+          setTimeout(() => {
+            if (!messageRef.current && avatarRef.current) {
+              avatarRef.current.play('idle');
+            }
+          }, 2000);
+        }
       }
     };
 
@@ -285,19 +324,68 @@ export default function PortfolioCompanion() {
         window.removeEventListener(event, handleActivity);
       });
     };
-  }, [zenMode, companionState]);
+  }, [zenMode, mood]);
+
+  // Mouse tracking with RAF
+  useEffect(() => {
+    if (zenMode || liteMode || !avatarContainerRef.current) return;
+    
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (mouseFrameRef.current) return;
+      
+      mouseFrameRef.current = requestAnimationFrame(() => {
+        if (!avatarContainerRef.current) {
+          mouseFrameRef.current = null;
+          return;
+        }
+        
+        const rect = avatarContainerRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const deltaX = e.clientX - centerX;
+        const deltaY = e.clientY - centerY;
+        
+        // Normalize to -1 to 1 range based on viewport
+        const normalizedX = Math.max(-1, Math.min(1, deltaX / (window.innerWidth / 2)));
+        const normalizedY = Math.max(-1, Math.min(1, deltaY / (window.innerHeight / 2)));
+        
+        // Apply rotation limits
+        const rotX = normalizedX * MOUSE_TRACK_MAX_ROTATION;
+        const rotY = -normalizedY * MOUSE_TRACK_MAX_ROTATION;
+        
+        setMouseRotation({ x: rotX, y: rotY });
+        mouseFrameRef.current = null;
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (mouseFrameRef.current) {
+        cancelAnimationFrame(mouseFrameRef.current);
+      }
+    };
+  }, [zenMode, liteMode]);
 
   // Click interaction
   const handleAvatarClick = useCallback(() => {
     if (zenMode) return;
     
     lastActivityRef.current = Date.now();
+    boredMessageShownRef.current = false;
     
     const msg = clickMessages[Math.floor(Math.random() * clickMessages.length)];
     showMessage({
       text: msg,
       animation: 'excited',
-      priority: MESSAGE_PRIORITY.click
+      priority: MESSAGE_PRIORITY.click,
+      id: `click-${Date.now()}`
     }, MESSAGE_DISPLAY_MS);
   }, [zenMode, showMessage]);
 
@@ -338,8 +426,14 @@ export default function PortfolioCompanion() {
         onClick={handleAvatarClick}
         aria-label="Click Byte for a message"
         title="Click for a random message"
+        style={{
+          transform: liteMode 
+            ? 'none' 
+            : `perspective(800px) rotateY(${mouseRotation.x}deg) rotateX(${mouseRotation.y}deg)`,
+          transition: liteMode ? 'none' : 'transform 0.1s ease-out'
+        }}
       >
-        <div className={styles.avatarWrapper}>
+        <div className={styles.avatarWrapper} ref={avatarContainerRef}>
           <Avatar
             ref={avatarRef}
             definition={byteDefinition as any}
