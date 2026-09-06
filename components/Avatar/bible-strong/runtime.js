@@ -77,6 +77,7 @@ export const advanceAvatarPlayback = (definition, state, now, environment) => {
     if (now < state.directTransition.startedAt + state.directTransition.durationMs) {
       return { ...state }
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { directTransition: _directTransition, ...next } = state
     return { ...next, status: 'stopped' }
   }
