@@ -25,7 +25,7 @@ const MESSAGE_PRIORITY = {
 
 const INTRO_KEY = 'byte-intro-shown';
 const INTRO_DELAY_MS = 2000;
-const MESSAGE_DISPLAY_MS = 6500;
+const MESSAGE_DISPLAY_MS = 5000;
 const INACTIVITY_BORED_MS = 50000; // 50 seconds
 const INACTIVITY_ANGRY_MS = 150000; // 2.5 minutes
 const FACT_INTERVAL_MIN_MS = 60000; // 1 minute
