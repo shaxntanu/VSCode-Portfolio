@@ -29,7 +29,7 @@ const runtimeEnvironment = () => ({
   reduceMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
 })
 
-const shouldRunFrameLoop = (definition, playback, environment) => {
+const shouldRunFrameLoop = (definition: any, playback: any, environment: any) => {
   if (playback.status === 'playing') return true
   const motion = definition.expressions[playback.activeExpression]?.motion
   return (
