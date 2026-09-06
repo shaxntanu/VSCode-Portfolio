@@ -1,5 +1,7 @@
 
 export type AvatarData<AnimationName extends string = string> = Readonly<{
+  schema?: string
+  schemaVersion?: number
   version: number
   avatar: Readonly<{ name: string } & Record<string, unknown>>
   expressions: Readonly<Record<string, unknown>>
