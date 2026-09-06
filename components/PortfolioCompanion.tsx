@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
 import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from '@/data/companionMessages';
 import Avatar from '@/components/Avatar/bible-strong/Avatar.jsx';
-import { avatarData } from '@/components/Avatar/freddy.avatar';
+import { byteAvatarDefinition } from '@/components/Avatar/freddy.bibleStrong';
 import styles from '@/styles/PortfolioCompanion.module.css';
 
 type ByteMood = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
@@ -43,7 +43,7 @@ export default function PortfolioCompanion() {
   // Refs for timer management
   const avatarRef = useRef<any>(null);
   const avatarContainerRef = useRef<HTMLDivElement>(null);
-  const mouseTrackingRef = useRef<HTMLDivElement>(null);
+  const moodRef = useRef<ByteMood>('idle');
   const messageTimerRef = useRef<NodeJS.Timeout | null>(null);
   const introTimerRef = useRef<NodeJS.Timeout | null>(null);
   const factTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -66,7 +66,22 @@ export default function PortfolioCompanion() {
     lastMoveAt: Date.now()
   });
 
+  // Eye gaze live-tracking state (see the gaze effect below)
+  const gazeStateRef = useRef({
+    on: false,
+    armed: false,
+    lastMoveAt: 0,
+    targetX: 0,
+    targetY: 0,
+    u: 0,
+    v: 0,
+    t: 0,
+    nextBlinkAt: 0,
+    blinkUntil: 0
+  });
+
   messageRef.current = message;
+  moodRef.current = mood;
 
   // Clear all timers - defined first to avoid hoisting issues
   const clearAllTimers = useCallback(() => {
@@ -337,20 +352,24 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, mood]);
 
-  // Mouse tracking - visible physical movement
+  // Mouse tracking - visible physical wrapper movement (REQUIRED layer).
+  // Transform is applied to avatarContainerRef's element - the same element
+  // the rect is measured from - and only that element receives JS transforms,
+  // so no other system can overwrite them. The avatarMotionLayer above it adds
+  // perspective so the 3D rotations actually render.
   useEffect(() => {
     if (zenMode || liteMode) return;
-    
+
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    const EASE_FACTOR = 0.12;
+    const EASE_FACTOR = 0.14; // per-frame ease toward the cursor target
     const STEADY_MS = 1800; // Return to neutral after 1.8s
-    const MAX_TRANSLATE_X = 6; // pixels
-    const MAX_TRANSLATE_Y = 4; // pixels  
-    const MAX_ROTATE_X = 3; // degrees
-    const MAX_ROTATE_Y = 5; // degrees
+    const MAX_TRANSLATE_X = 12; // pixels - clearly visible but subtle
+    const MAX_TRANSLATE_Y = 8; // pixels
+    const MAX_ROTATE_X = 5; // degrees
+    const MAX_ROTATE_Y = 7; // degrees
 
     let lastMouseUpdate = Date.now();
     const THROTTLE_MS = 50;
@@ -361,72 +380,327 @@ export default function PortfolioCompanion() {
       lastMouseUpdate = now;
 
       if (!avatarContainerRef.current) return;
-      
+
       const rect = avatarContainerRef.current.getBoundingClientRect();
       const avatarCenterX = rect.left + rect.width / 2;
       const avatarCenterY = rect.top + rect.height / 2;
-      
+
       const deltaX = e.clientX - avatarCenterX;
       const deltaY = e.clientY - avatarCenterY;
-      
+
       // Normalize based on distance
       const maxDist = Math.max(window.innerWidth, window.innerHeight) / 2;
       const normalizedX = Math.max(-1, Math.min(1, deltaX / maxDist));
       const normalizedY = Math.max(-1, Math.min(1, deltaY / maxDist));
-      
+
       mouseStateRef.current.targetX = normalizedX;
       mouseStateRef.current.targetY = normalizedY;
       mouseStateRef.current.lastMoveAt = now;
     };
 
-    // Animation loop - apply visible transform
+    // Animation loop - apply visible transform to the tracking layer
     const animateTracking = () => {
       const now = Date.now();
       const state = mouseStateRef.current;
       const timeSinceMove = now - state.lastMoveAt;
-      
+
       // Fade back to neutral if cursor hasn't moved
       if (timeSinceMove > STEADY_MS) {
         state.targetX = 0;
         state.targetY = 0;
       }
-      
+
       // Smooth interpolation
       state.currentX += (state.targetX - state.currentX) * EASE_FACTOR;
       state.currentY += (state.targetY - state.currentY) * EASE_FACTOR;
-      
-      // Calculate transforms
+
+      // Calculate transforms. Positive rotateY turns the face toward screen
+      // right; positive rotateX nods the face down, so a cursor below the
+      // avatar (positive currentY) leans it down toward the cursor.
       const translateX = state.currentX * MAX_TRANSLATE_X;
       const translateY = state.currentY * MAX_TRANSLATE_Y;
-      const rotateX = -state.currentY * MAX_ROTATE_X; // Inverted for natural feel
+      const rotateX = state.currentY * MAX_ROTATE_X;
       const rotateY = state.currentX * MAX_ROTATE_Y;
-      
-      // Apply transform to mouse tracking layer
-      if (mouseTrackingRef.current) {
-        mouseTrackingRef.current.style.transform = `
+
+      // Apply transform to the layer measured in handleMouseMove
+      if (avatarContainerRef.current) {
+        avatarContainerRef.current.style.transform = `
           translate3d(${translateX}px, ${translateY}px, 0)
           rotateX(${rotateX}deg)
           rotateY(${rotateY}deg)
         `;
       }
-      
+
       mouseAnimFrameRef.current = requestAnimationFrame(animateTracking);
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     mouseAnimFrameRef.current = requestAnimationFrame(animateTracking);
-    
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       if (mouseAnimFrameRef.current) {
         cancelAnimationFrame(mouseAnimFrameRef.current);
+        mouseAnimFrameRef.current = null;
       }
       // Reset transform
-      if (mouseTrackingRef.current) {
-        mouseTrackingRef.current.style.transform = '';
+      if (avatarContainerRef.current) {
+        avatarContainerRef.current.style.transform = '';
       }
     };
   }, [zenMode, liteMode]);
+
+  // Optional eye-gaze tracking (ENHANCEMENT layer).
+  // Mutates byteAvatarDefinition.expressions['gaze-live'] every frame, which
+  // bible-strong/runtime.js's sampleAvatarFrame re-samples live. Durable live
+  // repaint is achieved by holding the runtime on a 'gaze-follow' loop over
+  // the single 'gaze-live' step (blink disabled, so the frame loop never idles).
+  // Independent from the wrapper movement above: a gaze failure never breaks it.
+  useEffect(() => {
+    if (zenMode || liteMode) return
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const neutral = byteAvatarDefinition.expressions['neutral'] as unknown as {
+      head: { x: number; y: number; z: number }
+      eyes: {
+        spacing: number
+        left: { width: number; height: number; x: number; y: number; angle: number }
+        right: { width: number; height: number; x: number; y: number; angle: number }
+      }
+    }
+    const slot = byteAvatarDefinition.expressions['gaze-live'] as unknown as {
+      head: { x: number; y: number; z: number }
+      eyes: {
+        spacing: number
+        left: { width: number; height: number; x: number; y: number; angle: number }
+        right: { width: number; height: number; x: number; y: number; angle: number }
+      }
+    }
+
+    // Copy of neutral captured at mount; writePose always lerps from this.
+    const nHead = { ...neutral.head }
+    const nLeft = { ...neutral.eyes.left }
+    const nRight = { ...neutral.eyes.right }
+    const nSpacing = neutral.eyes.spacing
+
+    // Four synthesized gaze directions derived parametrically from the neutral
+    // head range (covers all screen quadrants with no dependency on editorial
+    // glance expressions - and validates cleanly for any data update).
+    const GAZE_YAW = 12
+    const GAZE_PITCH = 10
+    const GAZE_ROLL = 16
+
+    type Vec = [number, number]
+    type Guide = {
+      dir: Vec
+      head: { x: number; y: number; z: number }
+      left: { width: number; height: number; x: number; y: number; angle: number }
+      right: { width: number; height: number; x: number; y: number; angle: number }
+      spacing: number
+    }
+    const guides: Record<string, Guide> = {
+      left: {
+        dir: [-1, 0],
+        head: { x: 0, y: -GAZE_YAW, z: 0 },
+        left: { ...nLeft, x: nLeft.x - 1.5, angle: -GAZE_ROLL },
+        right: { ...nRight, x: nRight.x - 1.5, angle: GAZE_ROLL },
+        spacing: nSpacing,
+      },
+      right: {
+        dir: [1, 0],
+        head: { x: 0, y: GAZE_YAW, z: 0 },
+        left: { ...nLeft, x: nLeft.x + 1.5, angle: GAZE_ROLL },
+        right: { ...nRight, x: nRight.x + 1.5, angle: -GAZE_ROLL },
+        spacing: nSpacing,
+      },
+      up: {
+        dir: [0, -1],
+        head: { x: -GAZE_PITCH, y: 0, z: 0 },
+        left: { ...nLeft, y: nLeft.y - 1.6 },
+        right: { ...nRight, y: nRight.y - 1.6 },
+        spacing: nSpacing,
+      },
+      down: {
+        dir: [0, 1],
+        head: { x: GAZE_PITCH, y: 0, z: 0 },
+        left: { ...nLeft, y: nLeft.y + 1.8 },
+        right: { ...nRight, y: nRight.y + 1.8 },
+        spacing: nSpacing,
+      },
+    }
+
+    const suppressed = () => Boolean(messageRef.current) || moodRef.current !== 'idle'
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+
+    const writePose = (
+      weight: number,
+      blend: { head: { x: number; y: number; z: number }; left: { width: number; height: number; x: number; y: number; angle: number }; right: { width: number; height: number; x: number; y: number; angle: number }; spacing: number } | null,
+      blinking: boolean
+    ) => {
+      const b = blend ?? { head: nHead, left: nLeft, right: nRight, spacing: nSpacing }
+      slot.head.x = lerp(nHead.x, b.head.x, weight)
+      slot.head.y = lerp(nHead.y, b.head.y, weight)
+      slot.head.z = lerp(nHead.z, b.head.z, weight)
+      slot.eyes.spacing = lerp(nSpacing, b.spacing, weight)
+      slot.eyes.left.width = lerp(nLeft.width, b.left.width, weight)
+      slot.eyes.right.width = lerp(nRight.width, b.right.width, weight)
+      const hL = lerp(nLeft.height, b.left.height, weight)
+      const hR = lerp(nRight.height, b.right.height, weight)
+      // Autonomous micro-blink written directly into eye heights (gaze-follow
+      // disables blink playback, so this is the only blink during tracking).
+      if (blinking) {
+        slot.eyes.left.height = 14
+        slot.eyes.right.height = 14
+      } else {
+        slot.eyes.left.height = hL
+        slot.eyes.right.height = hR
+      }
+      slot.eyes.left.x = lerp(nLeft.x, b.left.x, weight)
+      slot.eyes.right.x = lerp(nRight.x, b.right.x, weight)
+      slot.eyes.left.y = lerp(nLeft.y, b.left.y, weight)
+      slot.eyes.right.y = lerp(nRight.y, b.right.y, weight)
+      slot.eyes.left.angle = lerp(nLeft.angle, b.left.angle, weight)
+      slot.eyes.right.angle = lerp(nRight.angle, b.right.angle, weight)
+    }
+
+    const state = gazeStateRef.current
+
+    const scheduleBlink = (now: number) => {
+      const gap = 2600 + Math.random() * 3600
+      state.nextBlinkAt = now + gap
+    }
+    scheduleBlink(Date.now())
+
+    const stop = () => {
+      if (state.on) state.on = false
+      if (gazeFrameRef.current !== null) {
+        cancelAnimationFrame(gazeFrameRef.current)
+        gazeFrameRef.current = null
+      }
+      state.armed = false
+    }
+
+    const start = () => {
+      if (state.on) return
+      state.on = true
+      const tick = (now: number) => {
+        gazeFrameRef.current = requestAnimationFrame(tick)
+        const active = !suppressed() && !(now - state.lastMoveAt > 1800 && Math.hypot(state.u, state.v) < 0.02)
+        const wantU = active ? Math.max(-1, Math.min(1, state.targetX / (window.innerWidth / 2 || 1))) : 0
+        const wantV = active ? Math.max(-1, Math.min(1, state.targetY / (window.innerHeight / 2 || 1))) : 0
+        // Target blend weight grows with radial distance so the gaze reaches
+        // corner blends near screen edges and merges smoothly between axes.
+        const wantT = active ? Math.min(1, Math.hypot(wantU, wantV) * 0.95 + 0.15) : 0
+        state.u += (wantU - state.u) * 0.16
+        state.v += (wantV - state.v) * 0.16
+        state.t += (wantT - state.t) * 0.16
+
+        const nowAbs = now
+        let blinking = false
+        if (nowAbs >= state.nextBlinkAt && !state.blinkUntil) {
+          state.blinkUntil = nowAbs + 170
+          blinking = true
+        } else if (state.blinkUntil) {
+          if (nowAbs >= state.blinkUntil) {
+            state.blinkUntil = 0
+            scheduleBlink(nowAbs)
+          } else {
+            // Eye is held closed for the blink window; scheduleBlink seeds the
+            // next one when the window ends.
+            const p = (nowAbs - (state.blinkUntil - 170)) / 170
+            blinking = p > 0.35 && p < 0.65
+          }
+        }
+
+        // Angular kernel over the four parametric guides (same recipe the
+        // reference Sunee companion uses, tuned for these guide dirs).
+        type Blend = Guide
+        const dirs: Array<{ key: string; guide: Blend }> = [
+          { key: 'left', guide: guides.left },
+          { key: 'right', guide: guides.right },
+          { key: 'up', guide: guides.up },
+          { key: 'down', guide: guides.down },
+        ]
+        let total = 0
+        const weights: Record<string, number> = {}
+        for (const { key, guide } of dirs) {
+          const w = Math.max(0, state.u * guide.dir[0] + state.v * guide.dir[1])
+          weights[key] = w
+          total += w
+        }
+        let blend: Blend | null = null
+        if (total > 0.0001 && state.t > 0.01) {
+          const hx = dirs.reduce((s, { key, guide }) => s + (weights[key] / total) * guide.head.x, 0)
+          const hy = dirs.reduce((s, { key, guide }) => s + (weights[key] / total) * guide.head.y, 0)
+          const hz = dirs.reduce((s, { key, guide }) => s + (weights[key] / total) * guide.head.z, 0)
+          const wl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.width, 0)
+          const wr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.width, 0)
+          const hl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.height, 0)
+          const hr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.height, 0)
+          const xl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.x, 0)
+          const xr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.x, 0)
+          const yl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.y, 0)
+          const yr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.y, 0)
+          const al = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.angle, 0)
+          const ar = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.angle, 0)
+          const sp = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].spacing, 0)
+          blend = {
+            dir: [0, 0],
+            head: { x: hx, y: hy, z: hz },
+            left: { width: wl, height: hl, x: xl, y: yl, angle: al },
+            right: { width: wr, height: hr, x: xr, y: yr, angle: ar },
+            spacing: sp,
+          }
+        }
+
+        writePose(state.t, blend ? { head: blend.head, left: blend.left, right: blend.right, spacing: blend.spacing } : null, blinking)
+
+        // Converged back to neutral -> disarm cleanly. Only replay idle if
+        // the companion has no visible priority of its own.
+        const converged = state.t < 0.015 && Math.abs(state.u) < 0.02 && Math.abs(state.v) < 0.02
+        if (converged && !active) {
+          writePose(0, null, blinking)
+          if (!messageRef.current && moodRef.current === 'idle') {
+            stop()
+            try { avatarRef.current?.play?.('idle') } catch {}
+          } else {
+            stop()
+          }
+        }
+      }
+      gazeFrameRef.current = requestAnimationFrame(tick)
+    }
+
+    const handleMove = (e: MouseEvent) => {
+      if (suppressed()) return
+      const now = Date.now()
+      // Throttle high-frequency mousemoves matching the wrapper's 50 ms rhythm.
+      if (now - state.lastMoveAt < 50) return
+      const el = avatarContainerRef.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      state.targetX = e.clientX - cx
+      state.targetY = e.clientY - cy
+      state.lastMoveAt = now
+      if (!state.armed) {
+        state.armed = true
+        try { avatarRef.current?.play?.('gaze-follow') } catch {}
+        start()
+      }
+    }
+
+    window.addEventListener('mousemove', handleMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      stop()
+      // Leave the gaze slot neutral so the next idle playback paints cleanly.
+      try { writePose(0, null, false) } catch {}
+    }
+  }, [zenMode, liteMode])
 
   // Click interaction
   const handleAvatarClick = useCallback(() => {
@@ -482,14 +756,11 @@ export default function PortfolioCompanion() {
         aria-label="Click Byte for a message"
         title="Click for a random message"
       >
-        <div 
-          ref={mouseTrackingRef}
-          className={styles.mouseTrackingLayer}
-        >
-          <div className={styles.avatarWrapper} ref={avatarContainerRef}>
+        <div className={styles.avatarMotionLayer}>
+          <div ref={avatarContainerRef} className={styles.mouseTrackingLayer}>
             <Avatar
               ref={avatarRef}
-              definition={avatarData as any}
+              definition={byteAvatarDefinition}
               animation={undefined}
               expression={undefined}
               defaultAnimation="idle"

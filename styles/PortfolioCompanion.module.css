@@ -58,16 +58,17 @@
   outline-offset: 4px;
 }
 
-/* Avatar wrapper to contain the actual avatar render */
-.avatarWrapper {
+/* Motion layer - perspective + preserve-3d so the JS 3D rotations on the
+   inner layer render visibly. No transforms are applied here. */
+.avatarMotionLayer {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  perspective: 700px;
+  transform-style: preserve-3d;
 }
 
-/* Mouse tracking layer - JavaScript applies transform here */
+/* Mouse tracking layer - JavaScript applies the transform here
+   (via avatarContainerRef). No CSS transition: JS interpolates. */
 .mouseTrackingLayer {
   width: 100%;
   height: 100%;
