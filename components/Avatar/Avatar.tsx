@@ -1,6 +1,6 @@
-// Simplified Avatar runtime for Portfolio Companion
-// Based on bible-strong/avatar-lab Avatar component
-import { useEffect, useLayoutEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+// Avatar runtime for Portfolio Companion
+// Renders Freddy from byte.avatar.json definition with proper body geometry
+import { useEffect, useLayoutEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import styles from './Avatar.module.css';
 
 interface AvatarDefinition {
@@ -11,7 +11,14 @@ interface AvatarDefinition {
     body: string;
     eyes: string;
   };
-  body: any;
+  body: {
+    type: string;
+    nodes?: Array<{
+      shape: string;
+      size: number;
+      position: [number, number, number];
+    }>;
+  };
   expressions: Record<string, any>;
   expressionOrder: string[];
   animations: Record<string, any>;
@@ -29,6 +36,7 @@ interface AvatarProps {
 export interface AvatarRef {
   play: (animationKey: string) => void;
   stop: () => void;
+  setExpression: (expressionKey: string) => void;
 }
 
 const Avatar = forwardRef<AvatarRef, AvatarProps>(({
@@ -38,64 +46,194 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
   size = 96,
   ariaLabel = 'Avatar'
 }, ref) => {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const currentAnimationRef = useRef<string>(defaultAnimation);
+  const currentExpressionRef = useRef<string>('neutral');
   const animationFrameRef = useRef<number | null>(null);
+  const animationStateRef = useRef<{
+    stepIndex: number;
+    stepStartTime: number;
+    isTransitioning: boolean;
+  }>({ stepIndex: 0, stepStartTime: Date.now(), isTransitioning: false });
+  
+  const [blinkState, setBlinkState] = useState({ isBlinking: false, nextBlink: Date.now() + 3000 });
 
-  // Simple render - just show the neutral expression with colors
-  useLayoutEffect(() => {
-    if (!svgRef.current) return;
+  // Render the avatar on canvas
+  const renderAvatar = (expression: any, blinkAmount = 0) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const svg = svgRef.current;
-    const { colors } = definition;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    // Clear existing content
-    while (svg.firstChild) {
-      svg.removeChild(svg.firstChild);
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    ctx.scale(dpr, dpr);
+
+    // Clear canvas
+    ctx.clearRect(0, 0, size, size);
+
+    const centerX = size / 2;
+    const centerY = size / 2;
+    const scale = size / 320; // Scale to fit in the size
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+
+    // Apply head rotation from expression
+    const headRot = expression?.head?.rotation || { x: 0, y: 0, z: 0 };
+    const rotX = (headRot.x || 0) * Math.PI / 180;
+    const rotY = (headRot.y || 0) * Math.PI / 180;
+    const rotZ = (headRot.z || 0) * Math.PI / 180;
+
+    // Simple 2D projection with rotation
+    ctx.rotate(rotZ);
+
+    // Render body nodes (Freddy's cube with sphere nodes)
+    if (definition.body.nodes) {
+      ctx.fillStyle = definition.colors.body;
+      
+      // Sort nodes by Z position for painter's algorithm
+      const sortedNodes = [...definition.body.nodes].sort((a, b) => a.position[2] - b.position[2]);
+      
+      sortedNodes.forEach(node => {
+        if (node.shape === 'sphere') {
+          const x = node.position[0] * scale;
+          const y = node.position[1] * scale;
+          const z = node.position[2] * scale;
+          
+          // Apply 3D rotation
+          const rotatedY = y * Math.cos(rotX) - z * Math.sin(rotX);
+          const rotatedZ = y * Math.sin(rotX) + z * Math.cos(rotX);
+          const rotatedX = x * Math.cos(rotY) + rotatedZ * Math.sin(rotY);
+          const finalZ = -x * Math.sin(rotY) + rotatedZ * Math.cos(rotY);
+          
+          // Perspective projection (simple)
+          const perspective = 1 / (1 + finalZ * 0.001);
+          const projX = rotatedX * perspective;
+          const projY = rotatedY * perspective;
+          const projSize = node.size * scale * perspective;
+          
+          // Darken back nodes
+          const brightness = Math.max(0.6, 1 - finalZ * 0.002);
+          const color = adjustBrightness(definition.colors.body, brightness);
+          
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(projX, projY, projSize, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
     }
 
-    // Create a simple circular avatar with the body color
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', '0');
-    circle.setAttribute('cy', '0');
-    circle.setAttribute('r', '120');
-    circle.setAttribute('fill', colors.body);
-    svg.appendChild(circle);
+    // Render eyes
+    const leftEye = expression?.leftEye || {};
+    const rightEye = expression?.rightEye || {};
+    
+    ctx.fillStyle = definition.colors.eyes;
+    
+    // Left eye
+    drawEye(ctx, {
+      x: (leftEye.x || -40) * scale,
+      y: (leftEye.y || -20) * scale,
+      width: (leftEye.width || 18) * scale,
+      height: ((leftEye.height || 40) * (1 - blinkAmount)) * scale,
+      angle: (leftEye.angle || 0) * Math.PI / 180
+    });
+    
+    // Right eye
+    drawEye(ctx, {
+      x: (rightEye.x || 40) * scale,
+      y: (rightEye.y || -20) * scale,
+      width: (rightEye.width || 18) * scale,
+      height: ((rightEye.height || 40) * (1 - blinkAmount)) * scale,
+      angle: (rightEye.angle || 0) * Math.PI / 180
+    });
 
-    // Add eyes
-    const leftEye = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-    leftEye.setAttribute('cx', '-35');
-    leftEye.setAttribute('cy', '-20');
-    leftEye.setAttribute('rx', '15');
-    leftEye.setAttribute('ry', '35');
-    leftEye.setAttribute('fill', colors.eyes);
-    svg.appendChild(leftEye);
+    ctx.restore();
+  };
 
-    const rightEye = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-    rightEye.setAttribute('cx', '35');
-    rightEye.setAttribute('cy', '-20');
-    rightEye.setAttribute('rx', '15');
-    rightEye.setAttribute('ry', '35');
-    rightEye.setAttribute('fill', colors.eyes);
-    svg.appendChild(rightEye);
-  }, [definition]);
+  const drawEye = (ctx: CanvasRenderingContext2D, eye: any) => {
+    ctx.save();
+    ctx.translate(eye.x, eye.y);
+    ctx.rotate(eye.angle);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, eye.width, eye.height, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
 
-  // Simple animation loop
+  const adjustBrightness = (hex: string, factor: number): string => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    
+    return `#${
+      Math.round(r * factor).toString(16).padStart(2, '0')}${
+      Math.round(g * factor).toString(16).padStart(2, '0')}${
+      Math.round(b * factor).toString(16).padStart(2, '0')
+    }`;
+  };
+
+  // Animation loop
   useEffect(() => {
-    if (!autoplay || !defaultAnimation) return;
+    if (!autoplay) return;
 
     let isRunning = true;
+    let lastBlinkCheck = Date.now();
     
-    const animate = () => {
+    const animate = (timestamp: number) => {
       if (!isRunning) return;
+
+      // Handle blinking
+      const now = Date.now();
+      let currentBlink = 0;
       
-      // Placeholder for animation logic
-      // In a full implementation, this would update the SVG based on animation frames
-      
+      if (blinkState.isBlinking) {
+        const blinkProgress = (now - (blinkState.nextBlink - 170)) / 170;
+        if (blinkProgress >= 1) {
+          setBlinkState({ isBlinking: false, nextBlink: now + 2600 + Math.random() * 3600 });
+        } else {
+          // Sin wave blink
+          currentBlink = Math.sin(blinkProgress * Math.PI);
+        }
+      } else if (now >= blinkState.nextBlink) {
+        setBlinkState({ isBlinking: true, nextBlink: now });
+      }
+
+      // Get current animation and expression
+      const animation = definition.animations[currentAnimationRef.current];
+      if (animation && animation.steps) {
+        const state = animationStateRef.current;
+        const currentStep = animation.steps[state.stepIndex];
+        
+        if (currentStep) {
+          const elapsed = now - state.stepStartTime;
+          const transitionTime = currentStep.transitionMs || 0;
+          const holdTime = currentStep.holdMs || 0;
+          
+          if (elapsed < transitionTime + holdTime) {
+            // Get expression
+            const expr = definition.expressions[currentStep.expression] || definition.expressions.neutral;
+            currentExpressionRef.current = currentStep.expression;
+            renderAvatar(expr, currentBlink);
+          } else {
+            // Move to next step
+            state.stepIndex = (state.stepIndex + 1) % animation.steps.length;
+            state.stepStartTime = now;
+          }
+        }
+      } else {
+        // No animation, render neutral
+        const expr = definition.expressions[currentExpressionRef.current] || definition.expressions.neutral;
+        renderAvatar(expr, currentBlink);
+      }
+
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
       isRunning = false;
@@ -103,18 +241,29 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [autoplay, defaultAnimation]);
+  }, [autoplay, definition, size, blinkState]);
 
   // Expose control methods
   useImperativeHandle(ref, () => ({
     play: (animationKey: string) => {
-      currentAnimationRef.current = animationKey;
-      // In full implementation: trigger animation change
+      if (definition.animations[animationKey]) {
+        currentAnimationRef.current = animationKey;
+        animationStateRef.current = {
+          stepIndex: 0,
+          stepStartTime: Date.now(),
+          isTransitioning: false
+        };
+      }
     },
     stop: () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
+      }
+    },
+    setExpression: (expressionKey: string) => {
+      if (definition.expressions[expressionKey]) {
+        currentExpressionRef.current = expressionKey;
       }
     }
   }));
@@ -129,10 +278,13 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
       role="img"
       aria-label={ariaLabel}
     >
-      <svg
-        ref={svgRef}
-        className={styles.svg}
-        viewBox="-150 -150 300 300"
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+        style={{
+          width: size,
+          height: size
+        }}
         aria-hidden="true"
       />
     </div>

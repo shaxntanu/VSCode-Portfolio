@@ -39,19 +39,18 @@
   background: transparent;
   cursor: pointer;
   pointer-events: auto;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  border-radius: 50%;
+  transition: filter 0.2s ease;
   padding: 0;
   position: relative;
+  transform-style: preserve-3d;
 }
 
 .avatarButton:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 4px 12px rgba(0, 122, 204, 0.3));
+  filter: drop-shadow(0 4px 12px rgba(230, 133, 92, 0.3));
 }
 
 .avatarButton:active {
-  transform: scale(0.95);
+  filter: brightness(0.9);
 }
 
 .avatarButton:focus-visible {
@@ -104,6 +103,8 @@
   width: 12px;
   height: 12px;
   background: rgba(30, 30, 30, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-right: 1px solid var(--vscode-panel-border, rgba(60, 60, 60, 0.5));
   border-bottom: 1px solid var(--vscode-panel-border, rgba(60, 60, 60, 0.5));
   transform: rotate(45deg);
