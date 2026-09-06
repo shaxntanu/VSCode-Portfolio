@@ -490,10 +490,18 @@ export default function PortfolioCompanion() {
             <Avatar
               ref={avatarRef}
               definition={avatarData as any}
+              animation={undefined}
+              expression={undefined}
               defaultAnimation="idle"
+              defaultExpression={undefined}
               autoplay
               size={96}
+              className={undefined}
+              style={undefined}
               ariaLabel="Byte, the portfolio companion"
+              onError={undefined}
+              onAnimationEnd={undefined}
+              onExpressionChange={undefined}
             />
           </div>
         </div>
