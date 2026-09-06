@@ -2,7 +2,11 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
 import { routeMessages, clickMessages, portfolioFacts, inactivityMessages, AnimationKey } from '@/data/companionMessages';
+import Avatar, { AvatarRef } from '@/components/Avatar/Avatar';
 import styles from '@/styles/PortfolioCompanion.module.css';
+
+// Import the avatar definition
+import byteDefinition from '@/public/avatar/byte.avatar.json';
 
 type CompanionState = 'entering' | 'idle' | 'speaking' | 'excited' | 'bored' | 'annoyed';
 
@@ -38,6 +42,7 @@ export default function PortfolioCompanion() {
   const [liteMode, setLiteMode] = useState(true);
 
   // Refs for timer management
+  const avatarRef = useRef<AvatarRef>(null);
   const messageTimerRef = useRef<NodeJS.Timeout | null>(null);
   const introTimerRef = useRef<NodeJS.Timeout | null>(null);
   const factTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -98,6 +103,11 @@ export default function PortfolioCompanion() {
 
     setMessage(candidate);
     setCompanionState('speaking');
+    
+    // Play animation on avatar
+    if (avatarRef.current && candidate.animation) {
+      avatarRef.current.play(candidate.animation);
+    }
 
     messageTimerRef.current = setTimeout(hideMessage, durationMs);
     return true;
@@ -330,22 +340,14 @@ export default function PortfolioCompanion() {
         title="Click for a random message"
       >
         <div className={styles.avatarWrapper}>
-          {/* Placeholder for avatar - will be replaced with actual Avatar component */}
-          <div style={{
-            width: '96px',
-            height: '96px',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #007ACC, #0098FF)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '48px',
-            fontWeight: 'bold',
-            color: 'white',
-            userSelect: 'none'
-          }}>
-            B
-          </div>
+          <Avatar
+            ref={avatarRef}
+            definition={byteDefinition as any}
+            defaultAnimation="idle"
+            autoplay
+            size={96}
+            ariaLabel="Byte, the portfolio companion"
+          />
         </div>
       </button>
     </div>
