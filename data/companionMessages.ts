@@ -1,8 +1,8 @@
-export type AnimationKey = 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
+import { AnimationName } from '@/components/Avatar/Freddy';
 
 export interface RouteMessage {
   message: string;
-  animation: AnimationKey;
+  animation: AnimationName;
 }
 
 export const routeMessages: Record<string, RouteMessage> = {
@@ -80,7 +80,8 @@ export const clickMessages: string[] = [
   "The terminal at the bottom actually works.",
   "Zen mode hides everything. Including me.",
   "Built with Next.js and way too much attention to detail.",
-  "Lite mode disables my animations. Toggle it off in Settings to see me move!"
+  "Lite mode disables my animations. Toggle it off in Settings to see me move!",
+  "My name is Byte. I'm powered by Freddy from Avatar Studio."
 ];
 
 export const portfolioFacts: string[] = [

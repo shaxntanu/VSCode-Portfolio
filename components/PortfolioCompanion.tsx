@@ -1,18 +1,15 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useUIState } from '@/contexts/UIStateContext';
-import { routeMessages, clickMessages, portfolioFacts, inactivityMessages, AnimationKey } from '@/data/companionMessages';
-import Avatar, { AvatarRef } from '@/components/Avatar/Avatar';
+import { routeMessages, clickMessages, portfolioFacts, inactivityMessages } from '@/data/companionMessages';
+import Freddy, { AvatarHandle, AnimationName } from '@/components/Avatar/Freddy';
 import styles from '@/styles/PortfolioCompanion.module.css';
-
-// Import the avatar definition
-import byteDefinition from '@/public/avatar/byte.avatar.json';
 
 type ByteMood = 'neutral' | 'idle' | 'happy' | 'excited' | 'curious' | 'bored' | 'suspicious' | 'angry';
 
 interface Message {
   text: string;
-  animation: AnimationKey;
+  animation: AnimationName;
   priority: number;
   id: string;
 }
@@ -43,7 +40,7 @@ export default function PortfolioCompanion() {
   const [liteMode, setLiteMode] = useState(true);
 
   // Refs for timer management
-  const avatarRef = useRef<AvatarRef>(null);
+  const avatarRef = useRef<AvatarHandle>(null);
   const avatarContainerRef = useRef<HTMLDivElement>(null);
   const mouseTrackingRef = useRef<HTMLDivElement>(null);
   const messageTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -170,12 +167,15 @@ export default function PortfolioCompanion() {
     if (!hasShownIntro) {
       introTimerRef.current = setTimeout(() => {
         sessionStorage.setItem(INTRO_KEY, '1');
+        const introText = liteMode 
+          ? "Hey, I'm Byte. I'll be your guide throughout the portfolio. Lite mode is enabled—disable it in Settings to see my animations!"
+          : "Hey, I'm Byte. I'll be your guide throughout the portfolio.";
         showMessage({
-          text: "Hey, I'm Byte. I'll be your guide throughout the portfolio.",
+          text: introText,
           animation: 'happy',
           priority: MESSAGE_PRIORITY.intro,
           id: 'intro'
-        }, 8000);
+        }, liteMode ? 10000 : 8000);
       }, INTRO_DELAY_MS + visibilityDelay);
     }
 
@@ -427,179 +427,6 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, liteMode]);
 
-  // Cursor gaze tracking - Sunee-style eye following
-  useEffect(() => {
-    if (zenMode || liteMode) return;
-    
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const GAZE_THROTTLE_MS = 200;
-    const GAZE_EASE_FACTOR = 0.16;
-    const GAZE_STEADY_MS = 1400;
-    const BLINK_MIN_MS = 2600;
-    const BLINK_MAX_MS = 6200;
-    const BLINK_DURATION_MS = 170;
-
-    const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
-    const slot = (byteDefinition as any).expressions['gaze-live'];
-    const neutral = (byteDefinition as any).expressions.neutral;
-    
-    // Guide expressions for angular blending
-    const guides = [
-      { key: 'up', dir: DIRS.up, pose: (byteDefinition as any).expressions['upward-side-glance'] },
-      { key: 'down', dir: DIRS.down, pose: (byteDefinition as any).expressions['gentle-downward-gaze'] },
-      { key: 'left', dir: DIRS.left, pose: (byteDefinition as any).expressions['curious-left'] },
-      { key: 'right', dir: DIRS.right, pose: (byteDefinition as any).expressions['playful-right'] }
-    ];
-
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-    const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-    const randBetween = (min: number, max: number) => Math.floor(min + Math.random() * (max - min));
-
-    const gazeState = {
-      on: false,
-      armed: false,
-      lastEval: 0,
-      lastMoveAt: Date.now(),
-      target: { x: 0, y: 0 },
-      u: 0,
-      v: 0,
-      t: 0,
-      nextBlinkAt: Date.now() + randBetween(BLINK_MIN_MS, BLINK_MAX_MS),
-      blinkUntil: 0
-    };
-
-    const writePose = (t: number, mixes: any, blinking: boolean) => {
-      const nEyes = neutral.eyes;
-      const nL = nEyes.left;
-      const nR = nEyes.right;
-      const blend = { hx: 0, hy: 0, hz: 0, wL: 0, hL: 0, xL: 0, yL: 0, aL: 0, wR: 0, hR: 0, xR: 0, yR: 0, aR: 0, sp: 0 };
-      let total = 0;
-
-      if (mixes) {
-        for (const guide of guides) {
-          const weight = mixes[guide.key];
-          if (weight <= 0) continue;
-          total += weight;
-          const pose = guide.pose;
-          const l = pose.eyes.left;
-          const r = pose.eyes.right;
-          blend.hx += weight * pose.head.x;
-          blend.hy += weight * pose.head.y;
-          blend.hz += weight * pose.head.z;
-          blend.wL += weight * l.width;
-          blend.hL += weight * l.height;
-          blend.xL += weight * l.x;
-          blend.yL += weight * l.y;
-          blend.aL += weight * l.angle;
-          blend.wR += weight * r.width;
-          blend.hR += weight * r.height;
-          blend.xR += weight * r.x;
-          blend.yR += weight * r.y;
-          blend.aR += weight * r.angle;
-          blend.sp += weight * pose.eyes.spacing;
-        }
-        if (total > 0) {
-          const inv = 1 / total;
-          Object.keys(blend).forEach(key => blend[key as keyof typeof blend] *= inv);
-        }
-      }
-
-      const hasBlend = total > 0;
-      slot.head.x = lerp(neutral.head.x, blend.hx, t);
-      slot.head.y = lerp(neutral.head.y, blend.hy, t);
-      slot.head.z = lerp(neutral.head.z, blend.hz, t);
-      slot.eyes.left.width = lerp(nL.width, blend.wL, t * Number(hasBlend));
-      slot.eyes.left.height = lerp(nL.height, blend.hL, t * Number(hasBlend));
-      slot.eyes.left.x = lerp(nL.x, blend.xL, t * Number(hasBlend));
-      slot.eyes.left.y = lerp(nL.y, blend.yL, t * Number(hasBlend));
-      slot.eyes.left.angle = lerp(nL.angle, blend.aL, t * Number(hasBlend));
-      slot.eyes.right.width = lerp(nR.width, blend.wR, t * Number(hasBlend));
-      slot.eyes.right.height = lerp(nR.height, blend.hR, t * Number(hasBlend));
-      slot.eyes.right.x = lerp(nR.x, blend.xR, t * Number(hasBlend));
-      slot.eyes.right.y = lerp(nR.y, blend.yR, t * Number(hasBlend));
-      slot.eyes.right.angle = lerp(nR.angle, blend.aR, t * Number(hasBlend));
-      slot.eyes.spacing = lerp(nEyes.spacing, blend.sp, t * Number(hasBlend));
-
-      if (blinking) {
-        const progress = (Date.now() - (gazeState.blinkUntil - BLINK_DURATION_MS)) / BLINK_DURATION_MS;
-        const dip = Math.sin(Math.PI * clamp(progress, 0, 1));
-        slot.eyes.left.height = lerp(slot.eyes.left.height, 14, dip);
-        slot.eyes.right.height = lerp(slot.eyes.right.height, 14, dip);
-      }
-    };
-
-    const tick = () => {
-      gazeFrameRef.current = requestAnimationFrame(tick);
-      const now = Date.now();
-      const suppressed = Boolean(messageRef.current || mood === 'bored' || mood === 'angry');
-      const active = !suppressed && gazeState.armed && now - gazeState.lastMoveAt <= GAZE_STEADY_MS;
-
-      const wantU = active ? clamp(gazeState.target.x / (window.innerWidth / 2), -1, 1) : 0;
-      const wantV = active ? clamp(gazeState.target.y / (window.innerHeight / 2), -1, 1) : 0;
-      const wantT = active ? clamp(Math.hypot(wantU, wantV), 0, 1) : 0;
-
-      gazeState.t += (wantT - gazeState.t) * GAZE_EASE_FACTOR;
-      gazeState.u += (wantU - gazeState.u) * GAZE_EASE_FACTOR;
-      gazeState.v += (wantV - gazeState.v) * GAZE_EASE_FACTOR;
-
-      // Autonomous micro-blink
-      if (now >= gazeState.nextBlinkAt) {
-        gazeState.nextBlinkAt = now + randBetween(BLINK_MIN_MS, BLINK_MAX_MS);
-        gazeState.blinkUntil = now + BLINK_DURATION_MS;
-      }
-      const blinking = now < gazeState.blinkUntil;
-
-      // Converged on neutral
-      if (gazeState.t < 0.015 && Math.abs(gazeState.u) < 0.02 && Math.abs(gazeState.v) < 0.02) {
-        writePose(0, null, blinking);
-        if (!active && !suppressed && !messageRef.current && mood === 'idle' && gazeState.armed) {
-          gazeState.armed = false;
-          if (avatarRef.current) avatarRef.current.play('idle');
-        }
-        return;
-      }
-
-      // Angular kernels
-      const weights: Record<string, number> = {};
-      let weightTotal = 0;
-      for (const guide of guides) {
-        const w = clamp(gazeState.u * guide.dir[0] + gazeState.v * guide.dir[1], 0, 1);
-        weights[guide.key] = w;
-        weightTotal += w;
-      }
-      const mixes = weightTotal > 1e-6 ? weights : null;
-      writePose(gazeState.t, mixes, blinking);
-    };
-
-    const onMove = (event: MouseEvent) => {
-      const now = Date.now();
-      if (now - gazeState.lastEval < GAZE_THROTTLE_MS) return;
-      gazeState.lastEval = now;
-      if (messageRef.current || mood === 'bored' || mood === 'angry') return;
-      if (!avatarContainerRef.current) return;
-
-      const rect = avatarContainerRef.current.getBoundingClientRect();
-      gazeState.target.x = event.clientX - (rect.left + rect.width / 2);
-      gazeState.target.y = event.clientY - (rect.top + rect.height / 2);
-      gazeState.lastMoveAt = now;
-
-      if (!gazeState.armed) {
-        gazeState.armed = true;
-        if (avatarRef.current) avatarRef.current.play('gaze-follow');
-      }
-    };
-
-    window.addEventListener('mousemove', onMove, { passive: true });
-    gazeFrameRef.current = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      if (gazeFrameRef.current) cancelAnimationFrame(gazeFrameRef.current);
-    };
-  }, [zenMode, liteMode, mood]);
-
   // Click interaction
   const handleAvatarClick = useCallback(() => {
     if (zenMode) return;
@@ -659,13 +486,13 @@ export default function PortfolioCompanion() {
           className={styles.mouseTrackingLayer}
         >
           <div className={styles.avatarWrapper} ref={avatarContainerRef}>
-            <Avatar
+            <Freddy
               ref={avatarRef}
-              definition={byteDefinition as any}
-              defaultAnimation="idle"
-              autoplay
+              animation={mood as AnimationName}
+              playing={!liteMode}
+              loop
               size={96}
-              ariaLabel="Byte, the portfolio companion"
+              style={{ display: 'block' }}
             />
           </div>
         </div>
