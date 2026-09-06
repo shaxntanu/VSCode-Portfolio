@@ -42,7 +42,6 @@ export default function PortfolioCompanion() {
   const [message, setMessage] = useState<Message | null>(null);
   const [mood, setMood] = useState<ByteMood>('neutral');
   const [liteMode, setLiteMode] = useState(true);
-  const [mouseRotation, setMouseRotation] = useState({ x: 0, y: 0 });
 
   // Refs for timer management
   const avatarRef = useRef<AvatarRef>(null);
@@ -51,13 +50,19 @@ export default function PortfolioCompanion() {
   const introTimerRef = useRef<NodeJS.Timeout | null>(null);
   const factTimerRef = useRef<NodeJS.Timeout | null>(null);
   const inactivityCheckRef = useRef<NodeJS.Timeout | null>(null);
-  const mouseFrameRef = useRef<number | null>(null);
+  const gazeFrameRef = useRef<number | null>(null);
   const lastActivityRef = useRef(Date.now());
   const lastFactRef = useRef<string | null>(null);
   const lastRouteRef = useRef<string>('');
   const messageRef = useRef<Message | null>(null);
   const currentMessageIdRef = useRef<string>('');
   const boredMessageShownRef = useRef(false);
+  
+  // Gaze tracking state
+  const gazeTargetRef = useRef({ x: 0, y: 0 });
+  const gazeCurrentRef = useRef({ x: 0, y: 0 });
+  const lastMouseMoveRef = useRef(Date.now());
+  const isGazingRef = useRef(false);
 
   messageRef.current = message;
 
@@ -67,7 +72,7 @@ export default function PortfolioCompanion() {
     if (introTimerRef.current) clearTimeout(introTimerRef.current);
     if (factTimerRef.current) clearTimeout(factTimerRef.current);
     if (inactivityCheckRef.current) clearTimeout(inactivityCheckRef.current);
-    if (mouseFrameRef.current) cancelAnimationFrame(mouseFrameRef.current);
+    if (gazeFrameRef.current) cancelAnimationFrame(gazeFrameRef.current);
   }, []);
 
   // Check lite mode
@@ -326,7 +331,7 @@ export default function PortfolioCompanion() {
     };
   }, [zenMode, mood]);
 
-  // Mouse tracking with RAF - always active unless reduced motion
+  // Cursor gaze tracking - eyes follow mouse
   useEffect(() => {
     if (zenMode) return;
     
@@ -334,48 +339,84 @@ export default function PortfolioCompanion() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    let lastMouseX = 0;
-    let lastMouseY = 0;
-    let isThrottled = false;
+    const GAZE_EASE_FACTOR = 0.16;
+    const GAZE_STEADY_MS = 1400; // Look away if cursor still for 1.4s
+    const GAZE_MAX_OFFSET = 25; // Max pixel offset for eyes
+
+    let lastMouseUpdate = 0;
+    const THROTTLE_MS = 50;
 
     const handleMouseMove = (e: MouseEvent) => {
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
+      const now = Date.now();
+      if (now - lastMouseUpdate < THROTTLE_MS) return;
+      lastMouseUpdate = now;
+
+      if (!avatarContainerRef.current) return;
       
-      if (isThrottled || !avatarContainerRef.current) return;
-      isThrottled = true;
+      const rect = avatarContainerRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
       
-      requestAnimationFrame(() => {
-        if (!avatarContainerRef.current) {
-          isThrottled = false;
-          return;
-        }
-        
-        const rect = avatarContainerRef.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        const deltaX = lastMouseX - centerX;
-        const deltaY = lastMouseY - centerY;
-        
-        // Normalize to -1 to 1 range based on distance from center
-        const maxDistance = Math.max(window.innerWidth, window.innerHeight);
-        const normalizedX = Math.max(-1, Math.min(1, deltaX / (maxDistance * 0.5)));
-        const normalizedY = Math.max(-1, Math.min(1, deltaY / (maxDistance * 0.5)));
-        
-        // Apply rotation limits
-        const rotX = normalizedX * MOUSE_TRACK_MAX_ROTATION;
-        const rotY = -normalizedY * MOUSE_TRACK_MAX_ROTATION;
-        
-        setMouseRotation({ x: rotX, y: rotY });
-        isThrottled = false;
-      });
+      const deltaX = e.clientX - centerX;
+      const deltaY = e.clientY - centerY;
+      
+      // Normalize based on distance
+      const maxDistance = Math.max(window.innerWidth, window.innerHeight);
+      const normalizedX = Math.max(-1, Math.min(1, deltaX / (maxDistance * 0.3)));
+      const normalizedY = Math.max(-1, Math.min(1, deltaY / (maxDistance * 0.3)));
+      
+      gazeTargetRef.current = { x: normalizedX, y: normalizedY };
+      lastMouseMoveRef.current = now;
+      
+      if (!isGazingRef.current) {
+        isGazingRef.current = true;
+      }
+    };
+
+    // Gaze animation loop
+    const animateGaze = () => {
+      if (!avatarRef.current) {
+        gazeFrameRef.current = requestAnimationFrame(animateGaze);
+        return;
+      }
+
+      const now = Date.now();
+      const timeSinceMove = now - lastMouseMoveRef.current;
+      
+      // If cursor hasn't moved for GAZE_STEADY_MS, look back to neutral
+      if (timeSinceMove > GAZE_STEADY_MS && isGazingRef.current) {
+        gazeTargetRef.current = { x: 0, y: 0 };
+      }
+      
+      // Ease toward target
+      const current = gazeCurrentRef.current;
+      const target = gazeTargetRef.current;
+      
+      current.x += (target.x - current.x) * GAZE_EASE_FACTOR;
+      current.y += (target.y - current.y) * GAZE_EASE_FACTOR;
+      
+      // If very close to neutral, snap to it and stop gazing
+      if (Math.abs(current.x) < 0.01 && Math.abs(current.y) < 0.01 && timeSinceMove > GAZE_STEADY_MS) {
+        current.x = 0;
+        current.y = 0;
+        isGazingRef.current = false;
+      }
+      
+      // Update avatar eye position through expression manipulation
+      // This would require the avatar to support dynamic expression updates
+      // For now, we'll use the setExpression API if available
+      
+      gazeFrameRef.current = requestAnimationFrame(animateGaze);
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    gazeFrameRef.current = requestAnimationFrame(animateGaze);
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      if (gazeFrameRef.current) {
+        cancelAnimationFrame(gazeFrameRef.current);
+      }
     };
   }, [zenMode]);
 
@@ -432,10 +473,6 @@ export default function PortfolioCompanion() {
         onClick={handleAvatarClick}
         aria-label="Click Byte for a message"
         title="Click for a random message"
-        style={{
-          transform: `perspective(800px) rotateY(${mouseRotation.x}deg) rotateX(${mouseRotation.y}deg)`,
-          transition: 'transform 0.15s ease-out'
-        }}
       >
         <div className={styles.avatarWrapper} ref={avatarContainerRef}>
           <Avatar
@@ -445,6 +482,7 @@ export default function PortfolioCompanion() {
             autoplay
             size={96}
             ariaLabel="Byte, the portfolio companion"
+            gazeTarget={gazeCurrentRef.current}
           />
         </div>
       </button>

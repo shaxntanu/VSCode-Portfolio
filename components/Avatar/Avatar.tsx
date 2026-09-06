@@ -43,6 +43,7 @@ interface AvatarProps {
   autoplay?: boolean;
   size?: number;
   ariaLabel?: string;
+  gazeTarget?: { x: number; y: number };
 }
 
 export interface AvatarRef {
@@ -56,7 +57,8 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
   defaultAnimation = 'idle',
   autoplay = true,
   size = 96,
-  ariaLabel = 'Avatar'
+  ariaLabel = 'Avatar',
+  gazeTarget
 }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const currentAnimationRef = useRef<string>(defaultAnimation);
@@ -170,16 +172,20 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
       });
     }
 
-    // Render eyes
+    // Render eyes with gaze offset
     const leftEye = expression?.leftEye || {};
     const rightEye = expression?.rightEye || {};
+    
+    // Apply gaze offset if provided
+    const gazeOffsetX = (gazeTarget?.x || 0) * 15 * scale; // Max 15px offset
+    const gazeOffsetY = (gazeTarget?.y || 0) * 10 * scale; // Max 10px offset
     
     ctx.fillStyle = definition.colors.eyes;
     
     // Left eye
     drawEye(ctx, {
-      x: (leftEye.x || -40) * scale,
-      y: (leftEye.y || -20) * scale,
+      x: (leftEye.x || -40) * scale + gazeOffsetX,
+      y: (leftEye.y || -20) * scale + gazeOffsetY,
       width: (leftEye.width || 18) * scale,
       height: ((leftEye.height || 40) * (1 - blinkAmount)) * scale,
       angle: (leftEye.angle || 0) * Math.PI / 180
@@ -187,15 +193,15 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
     
     // Right eye
     drawEye(ctx, {
-      x: (rightEye.x || 40) * scale,
-      y: (rightEye.y || -20) * scale,
+      x: (rightEye.x || 40) * scale + gazeOffsetX,
+      y: (rightEye.y || -20) * scale + gazeOffsetY,
       width: (rightEye.width || 18) * scale,
       height: ((rightEye.height || 40) * (1 - blinkAmount)) * scale,
       angle: (rightEye.angle || 0) * Math.PI / 180
     });
 
     ctx.restore();
-  }, [definition.body.primary, definition.body.nodes, definition.colors.body, definition.colors.eyes, size]);
+  }, [definition.body.primary, definition.body.nodes, definition.colors.body, definition.colors.eyes, size, gazeTarget]);
 
   const drawEye = (ctx: CanvasRenderingContext2D, eye: any) => {
     ctx.save();
@@ -283,7 +289,7 @@ const Avatar = forwardRef<AvatarRef, AvatarProps>(({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [autoplay, definition, size, blinkState, renderAvatar]);
+  }, [autoplay, definition, size, blinkState, renderAvatar, gazeTarget]);
 
   // Expose control methods
   useImperativeHandle(ref, () => ({
