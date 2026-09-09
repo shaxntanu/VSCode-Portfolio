@@ -33,7 +33,7 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   MINI_BUILDS: {
     title: '// ',
     titleHighlight: 'MINI_BUILDS',
-    color: '#ffc107', // Yellow/Gold - Mini projects
+    color: '#00d4ff', // Bright cyan/teal - Mini projects
   },
 };
 
