@@ -285,6 +285,11 @@ const SkillMatrix = () => {
           <span className={styles.comment}>{' skills are AI-assisted'}</span>
         </div>
         <div className={styles.footerNote}>
+          <span className={styles.comment}>{'// '}</span>
+          <span style={{ color: '#ffc107' }}>SolidWorks, AutoCAD, Linux, MATLAB, Verilog</span>
+          <span className={styles.comment}>{' learned in college curriculum'}</span>
+        </div>
+        <div className={styles.footerNote}>
           <span className={styles.comment}>{'// focusing on rapid prototyping for IoT dashboards and startup projects'}</span>
         </div>
       </div>
