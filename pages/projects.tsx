@@ -40,7 +40,11 @@ const ProjectsPage = () => {
         const config = categoryConfig[category];
         
         return (
-          <div key={category} className={styles.categorySection}>
+          <div 
+            key={category} 
+            className={styles.categorySection}
+            id={category === 'MINI_BUILDS' ? 'minibuilds' : undefined}
+          >
             <div className={styles.categoryHeader}>
               <span className={styles.comment}>{config.title}</span>
               {config.link ? (
