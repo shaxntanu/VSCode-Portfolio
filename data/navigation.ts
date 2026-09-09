@@ -28,6 +28,7 @@ export const navFolders: NavFolder[] = [
     label: 'DEVELOPMENT',
     files: [
       { name: 'firmware.ino', path: '/projects', icon: '/logos/arduino_icon.svg' },
+      { name: 'minibuilds.cfg', path: '/projects#minibuilds', icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPgoJPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIgLz4KCTxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+CgkJPHBhdGggZD0iTTMgNWg0bTE0IDBIMTFtLTggN2gxMm02IDBoLTJNMyAxOWgybTE2IDBIOSIgLz4KCQk8Y2lyY2xlIGN4PSI5IiBjeT0iNSIgcj0iMiIgLz4KCQk8Y2lyY2xlIGN4PSIxNyIgY3k9IjEyIiByPSIyIiAvPgoJCTxjaXJjbGUgY3g9IjciIGN5PSIxOSIgcj0iMiIgLz4KCTwvZz4KPC9zdmc+Cg==' },
       { name: 'circuits.sch', path: '/circuits', icon: '/logos/circuit_icon.svg' },
       { name: 'coursework.log', path: '/coursework', icon: '/logos/log_icon.svg' },
       { name: 'github.md', path: '/github', icon: '/logos/markdown_icon.svg' },

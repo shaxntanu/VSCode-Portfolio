@@ -9,7 +9,7 @@ export interface Article {
   comments_count: number;
 }
 
-export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT';
+export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT' | 'MINI_BUILDS';
 
 export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS' | 'POWER_ELECTRONICS' | 'COMMUNICATION' | 'PCB' | 'EDUCATIONAL';
 

@@ -30,6 +30,11 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     color: '#a078ff', // Purple - Ragastra
     link: 'https://github.com/Ragastra',
   },
+  MINI_BUILDS: {
+    title: '// ',
+    titleHighlight: 'MINI_BUILDS',
+    color: '#ffc107', // Yellow/Gold - Mini projects
+  },
 };
 
 export const projects: Project[] = [
@@ -717,5 +722,56 @@ export const projects: Project[] = [
     year: 2026, // Using 2026 as the portfolio year, actual academic year is stored in coursework
     fundedPrototype: true,
     badgeType: 'college'
+  },
+  // Mini Builds
+  {
+    title: 'Computer Always Awake',
+    description: 'PowerShell script that prevents computer sleep and hibernation by simulating keypress activity.',
+    logo: '/logos/bash_icon.svg',
+    link: 'https://github.com/shaxntanu/Computer-Always-Awake',
+    slug: 'computer-always-awake',
+    category: 'MINI_BUILDS',
+    dateRange: 'Utility Script',
+    year: 2026,
+  },
+  {
+    title: 'Arduino Nano Mini Projects',
+    description: 'Collection of beginner Arduino Nano projects including OLED display text and RGB LED color cycling with PWM control.',
+    logo: '/logos/arduino_icon.svg',
+    link: 'https://github.com/shaxntanu/Arduino-NANO-Mini-Projects',
+    slug: 'arduino-nano-mini-projects',
+    category: 'MINI_BUILDS',
+    dateRange: 'Learning Projects',
+    year: 2026,
+  },
+  {
+    title: 'Arduino Electromagnet Turns Controller',
+    description: 'Arduino firmware for controlling stepper motors to wind turns onto electromagnetic mild steel core with CNC Shield V3.',
+    logo: '/logos/arduino_icon.svg',
+    link: 'https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller',
+    slug: 'electromagnet-turns-controller-mini',
+    category: 'MINI_BUILDS',
+    dateRange: 'Arceus Labs',
+    year: 2026,
+  },
+  {
+    title: 'Servo Light Switch Control',
+    description: 'Bluetooth-controlled servo automation for physical light switches using ESP8266 and HC-06 module.',
+    logo: '/logos/espressif_icon.svg',
+    link: 'https://github.com/Arceus-Labs/Servo-Light-Switch-Control-ESP8266-and-HC06',
+    slug: 'servo-light-switch-mini',
+    category: 'MINI_BUILDS',
+    dateRange: 'Arceus Labs',
+    year: 2026,
+  },
+  {
+    title: 'ESP8266 Inductance Meter',
+    description: 'Inductance measurement tool with OLED display using RL time constant method and ESP8266.',
+    logo: '/logos/espressif_icon.svg',
+    link: 'https://github.com/Arceus-Labs/esp8266-inductance-meter',
+    slug: 'inductance-meter-mini',
+    category: 'MINI_BUILDS',
+    dateRange: 'Arceus Labs',
+    year: 2026,
   },
 ];

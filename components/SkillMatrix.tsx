@@ -73,6 +73,7 @@ const skillData: SkillCategory[] = [
       { name: 'Simulation', tools: 'Tinkercad, Wokwi', score: 99, categoryColor: '#a078ff' },
       { name: 'Version Control', tools: 'Git, GitHub', score: 99, categoryColor: '#a078ff' },
       { name: 'Documentation', tools: 'Notion, Obsidian', score: 99, categoryColor: '#a078ff' },
+      { name: 'Linux', tools: 'Ubuntu, CLI', score: 33, categoryColor: '#a078ff' },
     ],
   },
   {
