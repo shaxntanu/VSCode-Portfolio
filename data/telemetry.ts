@@ -104,6 +104,7 @@ function getProjectMetrics(projects: Project[]): ProjectMetrics {
     MISC_LABS: 0,
     COMMUNITY_PROJECT: 0,
     RAGASTRA_PROJECT: 0,
+    MINI_BUILDS: 0,
   };
 
   const byYear: Record<number, number> = {};
