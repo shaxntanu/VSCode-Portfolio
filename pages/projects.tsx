@@ -23,8 +23,8 @@ const ProjectsPage = () => {
     groupedProjects[category as ProjectCategory].sort((a, b) => a.year - b.year);
   });
 
-  // Define category order: Hardware first, then Arceus Labs, then Ragastra, then Software, then Mini Builds
-  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'COMMUNITY_PROJECT', 'RAGASTRA_PROJECT', 'SOFTWARE_SYSTEMS', 'MISC_LABS', 'MINI_BUILDS'];
+  // Define category order: Hardware first, then Arceus Labs, then Ragastra, then Software
+  const categoryOrder: ProjectCategory[] = ['HARDWARE_MODULES', 'COMMUNITY_PROJECT', 'RAGASTRA_PROJECT', 'SOFTWARE_SYSTEMS', 'MISC_LABS'];
 
   return (
     <div className={styles.layout}>
@@ -40,11 +40,7 @@ const ProjectsPage = () => {
         const config = categoryConfig[category];
         
         return (
-          <div 
-            key={category} 
-            className={styles.categorySection}
-            id={category === 'MINI_BUILDS' ? 'minibuilds' : undefined}
-          >
+          <div key={category} className={styles.categorySection}>
             <div className={styles.categoryHeader}>
               <span className={styles.comment}>{config.title}</span>
               {config.link ? (

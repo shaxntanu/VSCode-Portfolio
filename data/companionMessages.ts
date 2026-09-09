@@ -16,7 +16,7 @@ export const routeMessages: Record<string, RouteMessage> = {
     message: "Now we're getting to the good stuff. Hardware and software experiments.",
     animation: 'excited'
   },
-  '/projects#minibuilds': {
+  '/minibuilds': {
     message: "Small experiments and quick builds. The learning ground for bigger projects.",
     animation: 'curious'
   },
