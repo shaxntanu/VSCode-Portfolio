@@ -97,6 +97,20 @@ export const courseworkData: CourseworkItem[] = [
     logo: '/logos/verilog_icon.svg'
   },
   {
+    id: 'CW-007A',
+    title: 'Energy Consumption Pattern Analysis',
+    description: 'ML pipeline using PCA and K-Means clustering to analyze household energy consumption patterns. Features dark-mode visualizations, SHAP explainability, seasonal modeling, longitudinal stability checks, and interactive Vercel explorer with React.',
+    year: 2,
+    type: 'College Project',
+    subject: 'UCS321 - AI For Engineers Mini Project',
+    area: 'Machine Learning',
+    technologies: ['Python', 'Scikit-Learn', 'PCA', 'K-Means', 'SHAP', 'Pandas', 'React', 'Vercel'],
+    repositoryUrl: 'https://github.com/shaxntanu/Energy-Consumption-Pattern-Analysis-using-PCA-and-K-Means',
+    projectReference: 'energy-consumption-analysis',
+    slug: 'energy-consumption-analysis-coursework',
+    logo: '/logos/claude_icon.svg'
+  },
+  {
     id: 'CW-008',
     title: 'Operating System Shell Commands',
     description: 'Comprehensive shell command documentation for Unix/Linux systems. Includes basic commands, file operations, process management, and shell scripting fundamentals covered in CS-Minor 1st semester.',

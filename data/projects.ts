@@ -723,6 +723,18 @@ export const projects: Project[] = [
     fundedPrototype: true,
     badgeType: 'college'
   },
+  {
+    title: 'Energy Consumption Pattern Analysis',
+    description: 'Machine learning pipeline using PCA and K-Means clustering to analyze household energy patterns. Features SHAP explainability, seasonal analysis, and interactive Vercel explorer.',
+    logo: '/logos/claude_icon.svg',
+    link: 'https://github.com/shaxntanu/Energy-Consumption-Pattern-Analysis-using-PCA-and-K-Means',
+    slug: 'energy-consumption-analysis',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Year 2 - AI/ML Mini Project',
+    year: 2026,
+    fundedPrototype: true,
+    badgeType: 'college'
+  },
   // Mini Builds
   {
     title: 'Computer Always Awake',
