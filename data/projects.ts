@@ -802,5 +802,6 @@ export const projects: Project[] = [
     category: 'CREATIVE_LAB',
     dateRange: 'Experimental Work',
     year: 2026,
+    projectReference: 'pixelated-mask-touchdesigner', // Reference to itself in main projects page
   },
 ];

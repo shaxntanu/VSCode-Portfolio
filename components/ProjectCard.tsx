@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { VscGithubInverted, VscCircuitBoard, VscMortarBoard } from 'react-icons/vsc';
+import { VscGithubInverted, VscCircuitBoard, VscMortarBoard, VscCode } from 'react-icons/vsc';
 import { SiVercel, SiNotion, SiStreamlit } from 'react-icons/si';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
@@ -16,9 +17,26 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
+  const router = useRouter();
   const [bomOpen, setBomOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
   const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
+  
+  // Handle navigation to main projects page
+  const handleProjectReference = () => {
+    if (project.projectReference) {
+      // Navigate to projects page and scroll to the specific project
+      router.push(`/projects`).then(() => {
+        // Wait for navigation to complete, then scroll to the project
+        setTimeout(() => {
+          const element = document.getElementById(project.projectReference!);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
+      });
+    }
+  };
   
   // Determine which icon to show based on the link
   const getLinkIcon = () => {
@@ -108,7 +126,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
           );
         })()}
         
-        {(linkIcon || reportIcon || certificateIcon || streamlitIcon || (project.components && project.components.length > 0)) && (
+        {(linkIcon || reportIcon || certificateIcon || streamlitIcon || project.projectReference || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
             {linkIcon && (
               <a
@@ -157,6 +175,16 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
               >
                 {certificateIcon}
               </a>
+            )}
+            {project.projectReference && (
+              <button
+                onClick={handleProjectReference}
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+                title="View in Main Projects"
+              >
+                <VscCode />
+              </button>
             )}
             {project.components && project.components.length > 0 && (
               <button

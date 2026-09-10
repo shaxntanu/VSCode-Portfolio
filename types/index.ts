@@ -62,6 +62,7 @@ export interface Project {
   reportLink?: string; // Optional link to technical report/article
   certificateLink?: string; // Optional link to certificate
   streamlitLink?: string; // Optional link to Streamlit app
+  projectReference?: string; // Reference to project slug in main projects page (for cross-navigation)
   components?: Component[]; // BOM components
   architecture?: string; // Architecture description
   totalCost?: string; // Total project cost
