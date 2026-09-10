@@ -20,6 +20,10 @@ export const routeMessages: Record<string, RouteMessage> = {
     message: "Small experiments and quick builds. The learning ground for bigger projects.",
     animation: 'curious'
   },
+  '/creativelab': {
+    message: "A little different from the usual builds. This is where the creative experiments live.",
+    animation: 'curious'
+  },
   '/circuits': {
     message: "Circuit designs and schematics. The blueprints behind the hardware.",
     animation: 'curious'

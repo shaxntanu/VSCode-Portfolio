@@ -35,6 +35,11 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     titleHighlight: 'MINI_BUILDS',
     color: '#00d4ff', // Bright cyan/teal - Mini projects
   },
+  CREATIVE_LAB: {
+    title: '// ',
+    titleHighlight: 'CREATIVE_LAB',
+    color: '#ff6b9d', // Pink/Magenta - Creative experimentation
+  },
 };
 
 export const projects: Project[] = [
@@ -784,6 +789,17 @@ export const projects: Project[] = [
     slug: 'inductance-meter-mini',
     category: 'MINI_BUILDS',
     dateRange: 'Arceus Labs',
+    year: 2026,
+  },
+  // Creative Lab
+  {
+    title: 'TouchDesigner Experiment',
+    description: 'Visual programming and real-time rendering project using TouchDesigner for interactive audiovisual experimentation.',
+    logo: '/logos/flask_icon.svg',
+    link: '#',
+    slug: 'touchdesigner-experiment',
+    category: 'CREATIVE_LAB',
+    dateRange: 'Experimental Work',
     year: 2026,
   },
 ];
