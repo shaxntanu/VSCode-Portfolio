@@ -704,11 +704,11 @@ export const projects: Project[] = [
     totalCost: '₹3,829'
   },
   {
-    title: 'Pixelated Mask',
-    description: 'Real-time computer vision system that tracks thumb and index finger to generate a dynamic quadrilateral mask, pixelating the enclosed area using OpenCV and MediaPipe hand tracking.',
-    logo: '/logos/pixelated_mask_icon.svg',
+    title: 'Shape Detection System',
+    description: 'OpenCV-based geometric shape detection and recognition system.',
+    logo: ['/logos/python_icon.svg', '/logos/jupyter_icon.svg'],
     link: 'https://github.com/shaxntanu/Geometrical-Shape-Detection-and-Recognition-using-Python-in-Image-Processing-ELC-TIET-2029-ECE',
-    slug: 'pixelated-mask',
+    slug: 'shape-detection-system',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Feb 2026 - Feb 2026',
     year: 2026,
@@ -794,11 +794,11 @@ export const projects: Project[] = [
   },
   // Creative Lab
   {
-    title: 'TouchDesigner Experiment',
-    description: 'Visual programming and real-time rendering project using TouchDesigner for interactive audiovisual experimentation.',
-    logo: '/logos/touchdesigner_icon.svg',
+    title: 'Pixelated Mask',
+    description: 'TouchDesigner project that tracks thumb and index finger to create a dynamic quadrilateral filled with pixels for real-time visual experimentation.',
+    logo: '/logos/pixelated_mask_icon.svg',
     link: 'https://github.com/shaxntanu/TouchDesigner-Projects',
-    slug: 'touchdesigner-experiment',
+    slug: 'pixelated-mask-touchdesigner',
     category: 'CREATIVE_LAB',
     dateRange: 'Experimental Work',
     year: 2026,
