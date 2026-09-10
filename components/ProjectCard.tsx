@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { VscGithubInverted, VscCircuitBoard, VscMortarBoard } from 'react-icons/vsc';
-import { SiVercel, SiNotion } from 'react-icons/si';
+import { SiVercel, SiNotion, SiStreamlit } from 'react-icons/si';
 import { AnimatePresence } from 'framer-motion';
 import BOMViewer from '@/components/BOMViewer';
 import { getProjectSkills, normalizeSkillName } from '@/utils/skillsMapper';
@@ -40,9 +40,15 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
     return <VscMortarBoard />; // Graduation cap icon for certificate
   };
 
+  const getStreamlitIcon = () => {
+    if (!project.streamlitLink) return null;
+    return <SiStreamlit />; // Streamlit icon
+  };
+
   const linkIcon = getLinkIcon();
   const reportIcon = getReportIcon();
   const certificateIcon = getCertificateIcon();
+  const streamlitIcon = getStreamlitIcon();
   
   return (
     <div
@@ -102,7 +108,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
           );
         })()}
         
-        {(linkIcon || reportIcon || certificateIcon || (project.components && project.components.length > 0)) && (
+        {(linkIcon || reportIcon || certificateIcon || streamlitIcon || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
             {linkIcon && (
               <a
@@ -114,6 +120,18 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
                 title={`View on ${project.link.includes('github') ? 'GitHub' : project.link.includes('vercel') ? 'Vercel' : 'Notion'}`}
               >
                 {linkIcon}
+              </a>
+            )}
+            {streamlitIcon && (
+              <a
+                href={project.streamlitLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+                title="View Streamlit App"
+              >
+                {streamlitIcon}
               </a>
             )}
             {reportIcon && (

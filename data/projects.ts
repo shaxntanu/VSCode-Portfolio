@@ -704,11 +704,11 @@ export const projects: Project[] = [
     totalCost: '₹3,829'
   },
   {
-    title: 'Shape Detection System',
-    description: 'OpenCV-based geometric shape detection and recognition.',
-    logo: ['/logos/python_icon.svg', '/logos/jupyter_icon.svg'],
+    title: 'Pixelated Mask',
+    description: 'Real-time computer vision system that tracks thumb and index finger to generate a dynamic quadrilateral mask, pixelating the enclosed area using OpenCV and MediaPipe hand tracking.',
+    logo: '/logos/pixelated_mask_icon.svg',
     link: 'https://github.com/shaxntanu/Geometrical-Shape-Detection-and-Recognition-using-Python-in-Image-Processing-ELC-TIET-2029-ECE',
-    slug: 'shape-detection-system',
+    slug: 'pixelated-mask',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Feb 2026 - Feb 2026',
     year: 2026,
@@ -733,6 +733,7 @@ export const projects: Project[] = [
     description: 'Machine learning pipeline using PCA and K-Means clustering to analyze household energy patterns. Features SHAP explainability, seasonal analysis, and interactive Vercel explorer.',
     logo: '/logos/claude_icon.svg',
     link: 'https://github.com/shaxntanu/Energy-Consumption-Pattern-Analysis-using-PCA-and-K-Means',
+    streamlitLink: 'https://energy-pattern-analysis.streamlit.app/',
     slug: 'energy-consumption-analysis',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Year 2 - AI/ML Mini Project',

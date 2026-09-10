@@ -31,6 +31,7 @@ export interface CourseworkItem {
   area: string;
   technologies: string[];
   repositoryUrl: string;
+  streamlitLink?: string; // Optional link to Streamlit app
   projectReference?: string; // Reference to existing project slug if it exists in Projects
   circuitReference?: string; // Reference to existing circuit slug if it exists in Circuits
   slug: string;
@@ -60,6 +61,7 @@ export interface Project {
   background?: string;
   reportLink?: string; // Optional link to technical report/article
   certificateLink?: string; // Optional link to certificate
+  streamlitLink?: string; // Optional link to Streamlit app
   components?: Component[]; // BOM components
   architecture?: string; // Architecture description
   totalCost?: string; // Total project cost

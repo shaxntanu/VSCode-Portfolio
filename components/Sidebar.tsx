@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import {
   VscAccount,
   VscSettings,
@@ -68,15 +69,25 @@ const Sidebar = () => {
                   router.pathname === path && styles.active
                 }`}
               >
-                <Icon
-                  size={16}
-                  fill={
-                    router.pathname === path
-                      ? 'rgb(225, 228, 232)'
-                      : 'rgb(106, 115, 125)'
-                  }
-                  className={styles.icon}
-                />
+                {path === '/' ? (
+                  <Image
+                    src="/icons/files_green.svg"
+                    alt="Explorer"
+                    width={16}
+                    height={16}
+                    className={styles.icon}
+                  />
+                ) : (
+                  <Icon
+                    size={16}
+                    fill={
+                      router.pathname === path
+                        ? 'rgb(225, 228, 232)'
+                        : 'rgb(106, 115, 125)'
+                    }
+                    className={styles.icon}
+                  />
+                )}
                 {badge && badge.show && badgeCount > 0 && (
                   <span className={styles.badge}>{formatBadgeCount(badgeCount)}</span>
                 )}

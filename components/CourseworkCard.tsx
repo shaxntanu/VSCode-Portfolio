@@ -1,4 +1,5 @@
 import { VscGithubInverted, VscCode, VscCircuitBoard } from 'react-icons/vsc';
+import { SiStreamlit } from 'react-icons/si';
 import { CourseworkItem } from '@/types';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -178,6 +179,20 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
           >
             <VscGithubInverted />
           </a>
+          
+          {/* Streamlit button */}
+          {coursework.streamlitLink && (
+            <a
+              href={coursework.streamlitLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.secondaryButton}
+              style={{ color: yearColor }}
+              title="View Streamlit App"
+            >
+              <SiStreamlit />
+            </a>
+          )}
           
           {/* Project reference button */}
           {coursework.projectReference && (
