@@ -21,7 +21,7 @@ const CreativeLabPage = () => {
 
       <div className={styles.categorySection}>
         <div className={styles.categoryHeader}>
-          <span className={styles.comment}>// </span>
+          <span className={styles.comment}>{config.title}</span>
           <span style={{ color: config.color }}>Creative Lab</span>
         </div>
         <div className={styles.container}>
