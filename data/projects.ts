@@ -796,7 +796,7 @@ export const projects: Project[] = [
   {
     title: 'TouchDesigner Experiment',
     description: 'Visual programming and real-time rendering project using TouchDesigner for interactive audiovisual experimentation.',
-    logo: '/logos/pixelated_mask_icon.svg',
+    logo: '/logos/touchdesigner_icon.svg',
     link: 'https://github.com/shaxntanu/TouchDesigner-Projects',
     slug: 'touchdesigner-experiment',
     category: 'CREATIVE_LAB',
