@@ -796,7 +796,7 @@ export const projects: Project[] = [
   {
     title: 'Pixelated Mask',
     description: 'TouchDesigner project that tracks thumb and index finger to create a dynamic quadrilateral filled with pixels for real-time visual experimentation.',
-    logo: '/logos/pixelated_mask_icon.svg',
+    logo: '/logos/touchdesigner_hand_icon.svg',
     link: 'https://github.com/shaxntanu/TouchDesigner-Projects',
     slug: 'pixelated-mask-touchdesigner',
     category: 'CREATIVE_LAB',
