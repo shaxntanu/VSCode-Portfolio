@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import styles from '@/styles/LanguagesPage.module.css';
 import { getLanguageColor, formatBytes } from '@/utils/languageColors';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface LanguageData {
   name: string;
