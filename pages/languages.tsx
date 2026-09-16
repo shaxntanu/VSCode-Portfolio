@@ -19,7 +19,6 @@ interface LanguagesPageProps {
 
 const LanguagesPage = ({
   languages,
-  totalBytes,
   repositoriesAnalyzed,
   languagesDetected,
   lastUpdated,
@@ -40,7 +39,7 @@ const LanguagesPage = ({
     <div className={styles.container}>
       <h1 className={styles.pageTitle}>languages.stats</h1>
       <p className={styles.pageSubtitle}>
-        GitHub Language Distribution — Languages detected across my repositories based on GitHub's language analysis. These percentages represent the distribution of code bytes, not personal proficiency.
+        GitHub Language Distribution — Languages detected across my repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes, not personal proficiency.
       </p>
 
       <div className={styles.header}>
