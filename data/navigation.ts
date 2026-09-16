@@ -41,6 +41,7 @@ export const navFolders: NavFolder[] = [
     files: [
       { name: 'sm_techstack.csv', path: '/techstack', icon: '/logos/csv_icon.svg' },
       { name: 'skillmatrix.ipynb', path: '/skillmatrix', icon: '/logos/jupyter_icon.svg' },
+      { name: 'languages.stats', path: '/languages', icon: '/logos/stats_icon.svg' },
       { name: 'keysprint.env', path: '/keysprint', icon: '/logos/env_icon.svg' },
     ],
   },

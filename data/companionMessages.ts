@@ -52,6 +52,10 @@ export const routeMessages: Record<string, RouteMessage> = {
     message: "Skill breakdown across the tech stack.",
     animation: 'curious'
   },
+  '/languages': {
+    message: "Let's see what languages are actually showing up across the codebase.",
+    animation: 'curious'
+  },
   '/techstack': {
     message: "The tools and technologies that power everything.",
     animation: 'excited'
