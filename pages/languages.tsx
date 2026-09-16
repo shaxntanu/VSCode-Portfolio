@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import styles from '@/styles/LanguagesPage.module.css';
 import { getLanguageColor, formatBytes } from '@/utils/languageColors';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface LanguageData {
   name: string;
@@ -35,6 +36,25 @@ const LanguagesPage = ({
     );
   }
 
+  // Custom tooltip to show exact percentage
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className={styles.tooltip}>
+          <p className={styles.tooltipLabel}>{data.name}</p>
+          <p className={styles.tooltipValue}>
+            {data.percentage >= 0.01 
+              ? `${data.percentage.toFixed(2)}%` 
+              : `${data.percentage.toFixed(4)}%`}
+          </p>
+          <p className={styles.tooltipBytes}>{formatBytes(data.bytes)}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.pageTitle}>languages.stats</h1>
@@ -60,6 +80,32 @@ const LanguagesPage = ({
         </div>
       </div>
 
+      {/* Pie Chart Visualization */}
+      <div className={styles.chartSection}>
+        <h3 className={styles.chartTitle}>Language Distribution</h3>
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={languages.slice(0, 10)} // Top 10 languages for clarity
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={({ name, percentage }) => 
+                percentage > 3 ? `${name} ${percentage.toFixed(1)}%` : ''
+              }
+              outerRadius={120}
+              fill="#8884d8"
+              dataKey="percentage"
+            >
+              {languages.slice(0, 10).map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
       <div className={styles.languageList}>
         {languages.map((language) => (
           <div key={language.name} className={styles.languageItem}>
@@ -78,8 +124,10 @@ const LanguagesPage = ({
                   }}
                 />
               </div>
-              <span className={styles.percentage}>
-                {language.percentage.toFixed(1)}%
+              <span className={styles.percentage} title={`Exact: ${language.percentage.toFixed(4)}%`}>
+                {language.percentage >= 0.01 
+                  ? `${language.percentage.toFixed(2)}%` 
+                  : `${language.percentage.toFixed(4)}%`}
               </span>
             </div>
             <div className={styles.bytes}>{formatBytes(language.bytes)}</div>
