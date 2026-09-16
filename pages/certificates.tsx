@@ -65,7 +65,7 @@ const certificateData: CertificateCategory[] = [
       {
         provider: "Unstop",
         courses: [
-          { name: "Competition Certificate", url: "https://unstop.com/certificate-preview/1fa7529a-164c-4b1b-8198-f45bdea0b243", tags: ["#Competition", "#Achievement", "#Unstop"] }
+          { name: "Logo Time Machine", url: "https://unstop.com/certificate-preview/1fa7529a-164c-4b1b-8198-f45bdea0b243", tags: ["#Competition", "#Achievement", "#Unstop"] }
         ]
       },
       {
