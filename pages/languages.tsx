@@ -90,9 +90,10 @@ const LanguagesPage = ({
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ name, percentage }) => 
-                percentage > 3 ? `${name} ${percentage.toFixed(1)}%` : ''
-              }
+              label={(props: any) => {
+                const { name, percentage } = props;
+                return percentage > 3 ? `${name} ${percentage.toFixed(1)}%` : '';
+              }}
               outerRadius={120}
               fill="#8884d8"
               dataKey="percentage"
