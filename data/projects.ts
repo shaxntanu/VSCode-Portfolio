@@ -808,7 +808,7 @@ export const projects: Project[] = [
     title: 'Operating Systems',
     description: 'AI-generated educational video exploring fundamental concepts of operating systems through creative visual storytelling.',
     logo: '/logos/youtube_icon.svg',
-    link: 'https://www.youtube.com/watch?v=4Lb3VFPhbcs',
+    link: '#',
     slug: 'operating-systems-ai-video',
     category: 'CREATIVE_LAB',
     dateRange: 'AI-Generated Content',
