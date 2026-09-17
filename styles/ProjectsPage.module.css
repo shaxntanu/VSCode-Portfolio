@@ -62,6 +62,17 @@
     gap: 1.5rem;
 }
 
+/* Creative Lab: Full-width vertical stacking */
+.creativeLabContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.creativeLabContainer > div {
+    width: 100%;
+}
+
 /* Last item spanning rules for 3-column layout */
 /* If last item is alone in its row (position 3n+1), span full width */
 .container> :last-child:nth-child(3n+1) {

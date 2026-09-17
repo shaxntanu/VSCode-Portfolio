@@ -24,7 +24,7 @@ const CreativeLabPage = () => {
           <span className={styles.comment}>{config.title}</span>
           <span style={{ color: config.color }}>Creative Lab</span>
         </div>
-        <div className={styles.container}>
+        <div className={styles.creativeLabContainer}>
           {creativeLabProjects.map((project) => (
             <div key={project.slug} id={project.slug}>
               <ProjectCard 
