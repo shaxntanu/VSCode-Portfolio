@@ -804,4 +804,15 @@ export const projects: Project[] = [
     year: 2026,
     projectReference: 'pixelated-mask-touchdesigner', // Reference to itself in main projects page
   },
+  {
+    title: 'Operating Systems',
+    description: 'AI-generated educational video exploring fundamental concepts of operating systems through creative visual storytelling.',
+    logo: '/logos/youtube_icon.svg',
+    link: 'https://www.youtube.com/watch?v=4Lb3VFPhbcs',
+    slug: 'operating-systems-ai-video',
+    category: 'CREATIVE_LAB',
+    dateRange: 'AI-Generated Content',
+    year: 2026,
+    videoEmbed: 'https://www.youtube.com/embed/4Lb3VFPhbcs',
+  },
 ];

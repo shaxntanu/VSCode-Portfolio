@@ -101,6 +101,22 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
         <p className={styles.dateRange}>{project.dateRange}</p>
         <p className={styles.description}>{project.description}</p>
         
+        {/* Video Embed */}
+        {project.videoEmbed && (
+          <div className={styles.videoEmbed}>
+            <iframe
+              width="100%"
+              height="315"
+              src={project.videoEmbed}
+              title={project.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        )}
+        
         {/* Skill Tags */}
         {(() => {
           const skills = getProjectSkills(project.slug);
