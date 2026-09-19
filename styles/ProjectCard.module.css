@@ -5,7 +5,8 @@
     border-radius: 20px;
     overflow: visible;
     position: relative;
-    min-height: 320px;
+    min-height: 420px;
+    height: 100%;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
@@ -49,8 +50,9 @@
     position: relative;
     z-index: 1;
     overflow: visible;
-    height: auto;
-    min-height: 320px;
+    height: 100%;
+    min-height: 420px;
+    flex: 1;
 }
 
 .logoWrapper {
@@ -132,7 +134,7 @@
     flex: 1;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
 
@@ -179,13 +181,6 @@
 .skillTag:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Auto-span card for long descriptions */
-.card:has(.description[style*="line-clamp"]) {
-    grid-row: span 2;
-    height: auto;
-    min-height: 320px;
 }
 
 .linkIcons {
