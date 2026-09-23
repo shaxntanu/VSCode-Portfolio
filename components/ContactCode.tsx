@@ -14,6 +14,11 @@ const contactCategories = [
         link: 'Shantanu M.',
         href: 'https://www.linkedin.com/in/shantanu-maratha28',
       },
+      {
+        social: 'ORCID',
+        link: '0009-0008-4403-0670',
+        href: 'https://orcid.org/0009-0008-4403-0670',
+      },
     ],
   },
   {
