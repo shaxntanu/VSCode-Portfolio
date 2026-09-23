@@ -4,15 +4,35 @@ import GitHubCalendar from 'react-github-calendar';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
 import { useState, useRef } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { getLanguageColor, formatBytes } from '@/utils/languageColors';
+
+interface LanguageData {
+  name: string;
+  bytes: number;
+  percentage: number;
+  color: string;
+}
 
 interface GithubPageProps {
   repos?: Repo[];
   user?: User;
   totalStars?: number;
   totalForks?: number;
+  languages?: LanguageData[];
+  repositoriesAnalyzed?: number;
+  languagesDetected?: number;
 }
 
-const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: GithubPageProps) => {
+const GithubPage = ({ 
+  repos = [], 
+  user, 
+  totalStars = 0, 
+  totalForks = 0,
+  languages = [],
+  repositoriesAnalyzed = 0,
+  languagesDetected = 0
+}: GithubPageProps) => {
   const username = 'shaxntanu';
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
@@ -55,6 +75,25 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
     }, 500); // 0.5 second delay
+  };
+
+  // Custom tooltip for language chart
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className={styles.tooltip}>
+          <p className={styles.tooltipLabel}>{data.name}</p>
+          <p className={styles.tooltipValue}>
+            {data.percentage >= 0.01 
+              ? `${data.percentage.toFixed(2)}%` 
+              : `${data.percentage.toFixed(4)}%`}
+          </p>
+          <p className={styles.tooltipBytes}>{formatBytes(data.bytes)}</p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -164,12 +203,100 @@ const GithubPage = ({ repos = [], user, totalStars = 0, totalForks = 0 }: Github
             </div>
           )}
         </div>
+
+        {/* Language Distribution Section */}
+        {languages.length > 0 && (
+          <div className={styles.languageSection}>
+            <div className={styles.languageHeader}>
+              <h2 className={styles.sectionTitle}>Language Distribution</h2>
+              <div className={styles.languageMetadata}>
+                <div className={styles.metadataItem}>
+                  <span className={styles.metadataLabel}>Repositories</span>
+                  <span className={styles.metadataValue}>{repositoriesAnalyzed}</span>
+                </div>
+                <div className={styles.metadataItem}>
+                  <span className={styles.metadataLabel}>Languages</span>
+                  <span className={styles.metadataValue}>{languagesDetected}</span>
+                </div>
+              </div>
+            </div>
+            <p className={styles.sectionSubtitle}>
+              Languages detected across my repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes.
+            </p>
+            
+            {/* Pie Chart */}
+            <div className={styles.chartSection}>
+              <ResponsiveContainer width="100%" height={400}>
+                <PieChart>
+                  <Pie
+                    data={languages.slice(0, 10)}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={(props: any) => {
+                      const { name, percentage } = props;
+                      return percentage > 3 ? `${name} ${percentage.toFixed(1)}%` : '';
+                    }}
+                    outerRadius={120}
+                    fill="#8884d8"
+                    dataKey="percentage"
+                  >
+                    {languages.slice(0, 10).map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Language List */}
+            <div className={styles.languageList}>
+              {languages.map((language) => (
+                <div key={language.name} className={styles.languageItem}>
+                  <div className={styles.languageRow}>
+                    <div
+                      className={styles.languageIcon}
+                      style={{ backgroundColor: language.color }}
+                    />
+                    <span className={styles.languageName}>{language.name}</span>
+                    <div className={styles.barContainer}>
+                      <div
+                        className={styles.bar}
+                        style={{
+                          width: `${language.percentage}%`,
+                          backgroundColor: language.color,
+                        }}
+                      />
+                    </div>
+                    <span className={styles.percentage} title={`Exact: ${language.percentage.toFixed(4)}%`}>
+                      {language.percentage >= 0.01 
+                        ? `${language.percentage.toFixed(2)}%` 
+                        : `${language.percentage.toFixed(4)}%`}
+                    </span>
+                  </div>
+                  <div className={styles.bytes}>{formatBytes(language.bytes)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
     </div>
   );
 };
 
 export async function getStaticProps() {
   const username = 'shaxntanu';
+  
+  // Allowlist of Arceus-Labs repositories
+  const arceusLabsRepos = [
+    'Jolt-Locator',
+    'The-Ruin-Machine',
+    'RFID-Attendance-System',
+    'Servo-Light-Switch-Control-ESP8266-and-HC06',
+    'esp8266-inductance-meter',
+    'Arduino-Electromagnet-Turns-Controller',
+  ];
   
   try {
     const [reposRes, userRes] = await Promise.all([
@@ -184,6 +311,44 @@ export async function getStaticProps() {
     const totalStars = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0) : 0;
     const totalForks = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.forks || 0), 0) : 0;
 
+    // Fetch language data
+    const ownRepos = Array.isArray(repos) ? repos.filter((repo: any) => !repo.fork) : [];
+    
+    const arceusRepoPromises = arceusLabsRepos.map((repoName) =>
+      fetch(`https://api.github.com/repos/Arceus-Labs/${repoName}`).then((res) =>
+        res.ok ? res.json() : null
+      )
+    );
+
+    const arceusRepos = (await Promise.all(arceusRepoPromises)).filter(Boolean);
+    const allRepos = [...ownRepos, ...arceusRepos];
+
+    const languagePromises = allRepos.map((repo: any) =>
+      fetch(repo.languages_url).then((res) => (res.ok ? res.json() : {}))
+    );
+
+    const languageResults = await Promise.all(languagePromises);
+
+    const languageMap = new Map<string, number>();
+    let totalBytes = 0;
+
+    languageResults.forEach((languages) => {
+      Object.entries(languages).forEach(([language, bytes]) => {
+        const currentBytes = languageMap.get(language) || 0;
+        languageMap.set(language, currentBytes + (bytes as number));
+        totalBytes += bytes as number;
+      });
+    });
+
+    const languages = Array.from(languageMap.entries())
+      .map(([name, bytes]) => ({
+        name,
+        bytes,
+        percentage: (bytes / totalBytes) * 100,
+        color: getLanguageColor(name),
+      }))
+      .sort((a, b) => b.percentage - a.percentage);
+
     return {
       props: { 
         title: 'Github',
@@ -191,14 +356,26 @@ export async function getStaticProps() {
         repos: Array.isArray(repos) ? repos.slice(0, 10) : [], 
         user: user?.login ? user : null,
         totalStars,
-        totalForks
+        totalForks,
+        languages,
+        repositoriesAnalyzed: allRepos.length,
+        languagesDetected: languages.length,
       },
       revalidate: 3600,
     };
   } catch (error) {
     console.error('Error fetching GitHub data:', error);
     return {
-      props: { title: 'Github', repos: [], user: null, totalStars: 0, totalForks: 0 },
+      props: { 
+        title: 'Github', 
+        repos: [], 
+        user: null, 
+        totalStars: 0, 
+        totalForks: 0,
+        languages: [],
+        repositoriesAnalyzed: 0,
+        languagesDetected: 0,
+      },
       revalidate: 60,
     };
   }
