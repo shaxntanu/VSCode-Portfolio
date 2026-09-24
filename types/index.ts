@@ -32,6 +32,8 @@ export interface CourseworkItem {
   technologies: string[];
   repositoryUrl: string;
   streamlitLink?: string; // Optional link to Streamlit app
+  notebookLink?: string; // Optional link to Jupyter notebook
+  datasetLink?: string; // Optional link to dataset
   projectReference?: string; // Reference to existing project slug if it exists in Projects
   circuitReference?: string; // Reference to existing circuit slug if it exists in Circuits
   slug: string;
@@ -62,6 +64,8 @@ export interface Project {
   reportLink?: string; // Optional link to technical report/article
   certificateLink?: string; // Optional link to certificate
   streamlitLink?: string; // Optional link to Streamlit app
+  notebookLink?: string; // Optional link to Jupyter notebook
+  datasetLink?: string; // Optional link to dataset
   videoEmbed?: string; // Optional YouTube embed URL
   projectReference?: string; // Reference to project slug in main projects page (for cross-navigation)
   components?: Component[]; // BOM components

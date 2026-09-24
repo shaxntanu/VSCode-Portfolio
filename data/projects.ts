@@ -734,6 +734,8 @@ export const projects: Project[] = [
     logo: '/logos/claude_icon.svg',
     link: 'https://github.com/shaxntanu/Energy-Consumption-Pattern-Analysis-using-PCA-and-K-Means',
     streamlitLink: 'https://energy-pattern-analysis.streamlit.app/',
+    notebookLink: 'https://www.kaggle.com/code/shaxntanu/energy-consumption-pattern-analysis-pca-k-means',
+    datasetLink: 'https://www.kaggle.com/datasets/shaxntanu/energy-consumption-pattern-analysis-dataset',
     slug: 'energy-consumption-analysis',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Year 2 - AI/ML Mini Project',

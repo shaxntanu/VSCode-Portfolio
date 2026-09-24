@@ -107,6 +107,8 @@ export const courseworkData: CourseworkItem[] = [
     technologies: ['Python', 'Scikit-Learn', 'PCA', 'K-Means', 'SHAP', 'Pandas', 'React', 'Vercel'],
     repositoryUrl: 'https://github.com/shaxntanu/Energy-Consumption-Pattern-Analysis-using-PCA-and-K-Means',
     streamlitLink: 'https://energy-pattern-analysis.streamlit.app/',
+    notebookLink: 'https://www.kaggle.com/code/shaxntanu/energy-consumption-pattern-analysis-pca-k-means',
+    datasetLink: 'https://www.kaggle.com/datasets/shaxntanu/energy-consumption-pattern-analysis-dataset',
     projectReference: 'energy-consumption-analysis',
     slug: 'energy-consumption-analysis-coursework',
     logo: '/logos/claude_icon.svg'
