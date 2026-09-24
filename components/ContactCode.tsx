@@ -5,9 +5,14 @@ const contactCategories = [
     category: 'Professional',
     items: [
       {
-        social: 'E-Mail',
+        social: 'E-Mail (Personal)',
         link: 'shaxntanu@gmail.com',
         href: 'mailto:shaxntanu@gmail.com',
+      },
+      {
+        social: 'E-Mail (College)',
+        link: 'sshantanu_be25@thapar.edu',
+        href: 'mailto:sshantanu_be25@thapar.edu',
       },
       {
         social: 'LinkedIn',
