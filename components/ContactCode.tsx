@@ -70,6 +70,11 @@ const contactCategories = [
     category: 'Developer Platforms',
     items: [
       {
+        social: 'Kaggle',
+        link: 'shaxntanu',
+        href: 'https://www.kaggle.com/shaxntanu',
+      },
+      {
         social: 'Git City',
         link: 'shaxntanu',
         href: 'https://www.thegitcity.com/dev/shaxntanu',
