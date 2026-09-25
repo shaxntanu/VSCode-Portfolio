@@ -15,6 +15,11 @@ const contactCategories = [
         href: 'mailto:sshantanu_be25@thapar.edu',
       },
       {
+        social: 'X (Twitter)',
+        link: '@x_shaxntanu',
+        href: 'https://x.com/x_shaxntanu',
+      },
+      {
         social: 'LinkedIn',
         link: 'Shantanu M.',
         href: 'https://www.linkedin.com/in/shantanu-maratha28',
