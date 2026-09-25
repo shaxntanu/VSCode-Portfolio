@@ -16,8 +16,8 @@ const contactCategories = [
       },
       {
         social: 'X (Twitter)',
-        link: '@x_shaxntanu',
-        href: 'https://x.com/x_shaxntanu',
+        link: 'shaxntanu',
+        href: 'https://x.com/shaxntanu',
       },
       {
         social: 'LinkedIn',
