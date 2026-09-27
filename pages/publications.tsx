@@ -137,6 +137,31 @@ const PublicationsPage = () => {
               <VscLinkExternal />
             </div>
           </a>
+
+          <a
+            href="https://shaxntanu.medium.com/qwen-cli-has-a-sense-of-humour-159506bd0840"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.card}
+          >
+            <div className={styles.cardIcon}>
+              <SiMedium />
+            </div>
+            <div className={styles.cardContent}>
+              <h3 className={styles.cardTitle}>Qwen CLI has a sense of humour</h3>
+              <div className={styles.cardMeta}>
+                <span className={styles.cardId}>BLG-002</span>
+                <span className={styles.cardType}>Personal Article</span>
+              </div>
+              <div className={styles.cardFooter}>
+                <span className={styles.cardDate}>2024-06-21</span>
+                <span className={styles.statusBadge}>PUBLISHED</span>
+              </div>
+            </div>
+            <div className={styles.cardLink}>
+              <VscLinkExternal />
+            </div>
+          </a>
         </div>
       </div>
     </div>
