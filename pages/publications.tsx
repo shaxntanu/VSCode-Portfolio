@@ -154,7 +154,7 @@ const PublicationsPage = () => {
                 <span className={styles.cardType}>Personal Article</span>
               </div>
               <div className={styles.cardFooter}>
-                <span className={styles.cardDate}>2024-06-21</span>
+                <span className={styles.cardDate}>2029-09-27</span>
                 <span className={styles.statusBadge}>PUBLISHED</span>
               </div>
             </div>
