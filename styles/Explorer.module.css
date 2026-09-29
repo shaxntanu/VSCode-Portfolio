@@ -89,6 +89,7 @@
     cursor: pointer;
     padding: 0.35rem 0.5rem;
     user-select: none;
+    color: var(--text-color, white);
 }
 
 .heading:hover {
@@ -106,7 +107,7 @@
     display: flex;
     align-items: center;
     font-size: 0.875rem;
-    color: white;
+    color: var(--text-color, white);
     text-decoration: none;
 }
 
@@ -139,6 +140,7 @@
     padding: 0.35rem 0.5rem 0.35rem 1.5rem;
     user-select: none;
     margin-top: 0.25rem;
+    color: var(--text-color, white);
 }
 
 .folder:hover {
@@ -165,6 +167,7 @@
     padding: 0.35rem 0.5rem 0.35rem 1rem;
     user-select: none;
     margin-top: 0.25rem;
+    color: var(--text-color, white);
 }
 
 .nestedFolder:hover {
