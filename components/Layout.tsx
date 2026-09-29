@@ -117,7 +117,6 @@ const LayoutContent = ({ children }: LayoutProps) => {
           <div style={{ display: 'flex', flex: 1, minHeight: 0, overflow: 'hidden', height: '100%', position: 'relative' }}>
             <main id="main-editor" className={styles.content}>
               {children}
-              <BackToTop />
               <div className={`${styles.jpMatrix} jp-matrix`}>
                 {Array.from({ length: 700 }).map((_, i) => {
                   const chars = ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','ユ','ヨ','ラ','リ','ル','レ','ロ','ワ','ヲ','ン','ガ','ギ','グ','ゲ','ゴ','ザ','ジ','ズ','ゼ','ゾ','ダ','ヂ','ヅ','デ','ド','バ','ビ','ブ','ベ','ボ','パ','ピ','プ','ペ','ポ'];
