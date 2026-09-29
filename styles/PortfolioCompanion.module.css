@@ -79,17 +79,17 @@
 
 .bubble {
   pointer-events: auto;
-  background: rgba(30, 30, 30, 0.75);
+  background: var(--card-bg, rgba(30, 30, 30, 0.75));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--vscode-panel-border, rgba(60, 60, 60, 0.5));
+  border: 1px solid var(--border, rgba(60, 60, 60, 0.5));
   border-radius: 6px;
   padding: 12px 32px 12px 16px;
   width: fit-content;
   max-width: min(380px, calc(100vw - 140px));
   min-width: 180px;
   height: auto;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px var(--shadow, rgba(0, 0, 0, 0.4));
   position: relative;
   animation: bubbleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -112,16 +112,16 @@
   bottom: -6px;
   width: 12px;
   height: 12px;
-  background: rgba(30, 30, 30, 0.75);
+  background: var(--card-bg, rgba(30, 30, 30, 0.75));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-right: 1px solid var(--vscode-panel-border, rgba(60, 60, 60, 0.5));
-  border-bottom: 1px solid var(--vscode-panel-border, rgba(60, 60, 60, 0.5));
+  border-right: 1px solid var(--border, rgba(60, 60, 60, 0.5));
+  border-bottom: 1px solid var(--border, rgba(60, 60, 60, 0.5));
   transform: rotate(45deg);
 }
 
 .bubbleText {
-  color: var(--vscode-editor-foreground, #d4d4d4);
+  color: var(--text-color, #d4d4d4);
   font-size: 13px;
   line-height: 1.5;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
@@ -138,7 +138,7 @@
   right: 8px;
   background: transparent;
   border: none;
-  color: var(--vscode-descriptionForeground, #8c8c8c);
+  color: var(--text-secondary, #8c8c8c);
   font-size: 16px;
   line-height: 1;
   width: 20px;
