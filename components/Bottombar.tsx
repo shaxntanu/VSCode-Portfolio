@@ -11,6 +11,7 @@ const Bottombar = () => {
   const router = useRouter();
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
   const [liteMode, setLiteMode] = useState(true);
+  const [isLightMode, setIsLightMode] = useState(false);
   const [buildDate, setBuildDate] = useState('Jun 2026');
   const [showBuildInfo, setShowBuildInfo] = useState(false);
   const { zenMode, setZenMode } = useUIState();
@@ -36,8 +37,12 @@ const Bottombar = () => {
         'dark-plus': 'Dark+',
         'tokyo-night': 'Tokyo Night',
         'catppuccin': 'Catppuccin',
+        'light': 'Light+',
       };
       setCurrentTheme(themeNames[theme] || 'Ayu Dark');
+      
+      // Check if in light mode
+      setIsLightMode(theme === 'light');
     };
 
     updateThemeAndMode();
@@ -205,7 +210,7 @@ const Bottombar = () => {
             title="Click to open Settings"
             style={{ cursor: 'pointer' }}
           >
-            <span>[{liteMode ? 'Lite Mode' : 'Full Mode'}]</span>
+            <span>[{isLightMode ? 'Light Mode' : 'Dark Mode'}]</span>
           </div>
           {rightItems.map(renderItem)}
         </div>

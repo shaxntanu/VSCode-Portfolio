@@ -1,13 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { VscInfo } from 'react-icons/vsc';
 import ProjectCard from '@/components/ProjectCard';
 import SoftwareInfoPopup from '@/components/SoftwareInfoPopup';
+import LightModeInfoPopup from '@/components/LightModeInfoPopup';
 import { projects, categoryConfig, ProjectCategory } from '@/data/projects';
 
 import styles from '@/styles/ProjectsPage.module.css';
 
 const ProjectsPage = () => {
   const [showSoftwareInfo, setShowSoftwareInfo] = useState(false);
+  const [showLightModeInfo, setShowLightModeInfo] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  useEffect(() => {
+    const checkLightMode = () => {
+      const theme = localStorage.getItem('theme') || 'ayu-dark';
+      setIsLightMode(theme === 'light');
+    };
+
+    checkLightMode();
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme') {
+        checkLightMode();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('themeChanged', checkLightMode);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('themeChanged', checkLightMode);
+    };
+  }, []);
 
   // Group projects by category
   const groupedProjects = projects.reduce((acc, project) => {
@@ -67,6 +93,17 @@ const ProjectsPage = () => {
                   <span className={styles.infoText}>Why These Projects?</span>
                 </button>
               )}
+              {isLightMode && category === 'SOFTWARE_SYSTEMS' && (
+                <button
+                  className={styles.infoButton}
+                  onClick={() => setShowLightModeInfo(true)}
+                  aria-label="About Light Mode info"
+                  title="Click for more info"
+                >
+                  <VscInfo />
+                  <span className={styles.infoText}>About Light Mode</span>
+                </button>
+              )}
             </div>
             <div className={styles.container}>
               {categoryProjects.map((project) => (
@@ -83,6 +120,7 @@ const ProjectsPage = () => {
       })}
       
       {showSoftwareInfo && <SoftwareInfoPopup onClose={() => setShowSoftwareInfo(false)} />}
+      {showLightModeInfo && <LightModeInfoPopup onClose={() => setShowLightModeInfo(false)} />}
     </div>
   );
 };
