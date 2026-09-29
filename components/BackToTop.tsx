@@ -38,8 +38,8 @@ const BackToTop = () => {
     const container = getScrollContainer();
     const scrollTop = getScrollTop(container);
 
-    // Show button after scrolling down 100px (reduced threshold for internal scrolling)
-    if (scrollTop > 100) {
+    // Show button immediately for testing - remove this later
+    if (scrollTop >= 0) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
