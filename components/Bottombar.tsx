@@ -10,6 +10,7 @@ import styles from '@/styles/Bottombar.module.css';
 const Bottombar = () => {
   const router = useRouter();
   const [currentTheme, setCurrentTheme] = useState('Ayu Dark');
+  const [liteMode, setLiteMode] = useState(true);
   const [isLightMode, setIsLightMode] = useState(false);
   const [buildDate, setBuildDate] = useState('Jun 2026');
   const [showBuildInfo, setShowBuildInfo] = useState(false);
@@ -21,6 +22,10 @@ const Bottombar = () => {
 
   useEffect(() => {
     const updateThemeAndMode = () => {
+      const savedLiteMode = localStorage.getItem('liteMode');
+      const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
+      setLiteMode(isLiteMode);
+
       const theme = localStorage.getItem('theme') || 'ayu-dark';
       const themeNames: { [key: string]: string } = {
         'github-dark': 'GitHub Dark',
@@ -205,7 +210,15 @@ const Bottombar = () => {
             title="Click to open Settings"
             style={{ cursor: 'pointer' }}
           >
-            <span>[{isLightMode ? 'Light Mode' : 'Dark Mode'}]</span>
+            <span>[{isLightMode ? 'Light' : 'Dark'}]</span>
+          </div>
+          <div
+            className={`${styles.section} ${styles.priority13}`}
+            onClick={() => router.push('/settings')}
+            title="Click to open Settings"
+            style={{ cursor: 'pointer' }}
+          >
+            <span>[{liteMode ? 'Lite' : 'Full'}]</span>
           </div>
           {rightItems.map(renderItem)}
         </div>
