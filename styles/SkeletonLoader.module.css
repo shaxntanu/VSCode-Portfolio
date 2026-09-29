@@ -1,0 +1,64 @@
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.skeleton.animated {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton.text {
+  height: 1em;
+  border-radius: 4px;
+}
+
+.skeleton.circular {
+  border-radius: 50%;
+}
+
+.skeleton.rectangular {
+  border-radius: 4px;
+}
+
+.skeleton.rounded {
+  border-radius: 8px;
+}
+
+/* Light theme skeleton colors */
+[data-theme="light"] .skeleton,
+[data-theme="light-plus"] .skeleton,
+[data-theme="github-light"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+}
+
+/* Lite mode - disable animation */
+[data-lite-mode="true"] .skeleton.animated {
+  animation: none;
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton.animated {
+    animation: none;
+  }
+}

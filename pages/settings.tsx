@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ThemeInfo from '@/components/ThemeInfo';
+import ThemeSwitch from '@/components/ThemeSwitch';
 
 import styles from '@/styles/SettingsPage.module.css';
 
@@ -46,6 +47,13 @@ const SettingsPage = () => {
 
       <div className={styles.themesSection}>
         <h2 className={styles.sectionTitle}>Themes</h2>
+        <div className={styles.themeToggleContainer}>
+          <div className={styles.themeToggleInfo}>
+            <h3>Dark / Light Mode</h3>
+            <p>Toggle between dark and light theme</p>
+          </div>
+          <ThemeSwitch />
+        </div>
         <div className={styles.container}>
           <ThemeInfo
             name="GitHub Dark"

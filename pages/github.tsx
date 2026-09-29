@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import RepoCard from '@/components/RepoCard';
 import GitHubCalendar from 'react-github-calendar';
+import GithubSkeleton from '@/components/GithubSkeleton';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
 import { useState, useRef } from 'react';
@@ -95,6 +96,16 @@ const GithubPage = ({
     }
     return null;
   };
+
+  // Show skeleton while loading
+  if (isLoading) {
+    return <GithubSkeleton />;
+  }
+
+  // Show skeleton if no user data is available
+  if (!user) {
+    return <GithubSkeleton />;
+  }
 
   return (
     <div className={styles.container}>

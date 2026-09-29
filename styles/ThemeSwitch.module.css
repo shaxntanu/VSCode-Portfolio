@@ -1,0 +1,430 @@
+.themeSwitch {
+  --switch-width: 80px;
+  --switch-height: 40px;
+  --circle-size: 28px;
+  --anim-duration: 0.4s;
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  height: var(--switch-height);
+}
+
+.themeSwitchCheckbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.themeSwitchContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background var(--anim-duration) ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer {
+  background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+}
+
+.themeSwitchClouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 20%),
+    radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.6) 0%, transparent 25%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.7) 0%, transparent 18%);
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer .themeSwitchClouds {
+  opacity: 1;
+}
+
+.themeSwitchStarsContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity var(--anim-duration) ease;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer .themeSwitchStarsContainer {
+  opacity: 0;
+}
+
+.themeSwitchCircleContainer {
+  position: absolute;
+  top: 50%;
+  left: 6px;
+  transform: translateY(-50%);
+  width: var(--circle-size);
+  height: var(--circle-size);
+  transition: transform var(--anim-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer .themeSwitchCircleContainer {
+  transform: translate(calc(var(--switch-width) - var(--circle-size) - 6px), -50%);
+}
+
+.themeSwitchSunMoonContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #f5d76e;
+  box-shadow: 0 0 20px rgba(245, 215, 110, 0.5);
+  transition: background var(--anim-duration) ease, box-shadow var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer .themeSwitchSunMoonContainer {
+  background: #e8e8e8;
+  box-shadow: 0 0 15px rgba(200, 200, 200, 0.5);
+}
+
+.themeSwitchMoon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: transparent;
+  transition: background var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer .themeSwitchMoon {
+  background: #c9c9c9;
+  box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.themeSwitchSpot {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchSpot:nth-child(1) {
+  width: 6px;
+  height: 6px;
+  top: 8px;
+  left: 6px;
+}
+
+.themeSwitchSpot:nth-child(2) {
+  width: 4px;
+  height: 4px;
+  top: 16px;
+  left: 12px;
+}
+
+.themeSwitchSpot:nth-child(3) {
+  width: 5px;
+  height: 5px;
+  top: 12px;
+  left: 18px;
+}
+
+.themeSwitchCheckbox:checked + .themeSwitchContainer .themeSwitchSpot {
+  opacity: 1;
+}
+
+.themeSwitchShootingStar {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  top: 20%;
+  right: 20%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:not(:checked) + .themeSwitchContainer .themeSwitchShootingStar {
+  opacity: 1;
+  animation: shooting 2s infinite;
+}
+
+@keyframes shooting {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-20px, 20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-20px, 20px);
+    opacity: 0;
+  }
+}
+
+.themeSwitchShootingStar2 {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  top: 40%;
+  right: 30%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:not(:checked) + .themeSwitchContainer .themeSwitchShootingStar2 {
+  opacity: 1;
+  animation: shooting2 3s infinite 1s;
+}
+
+@keyframes shooting2 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-15px, 15px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-15px, 15px);
+    opacity: 0;
+  }
+}
+
+.themeSwitchMeteor {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  border-radius: 50%;
+  top: 30%;
+  left: 15%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:not(:checked) + .themeSwitchContainer .themeSwitchMeteor {
+  opacity: 1;
+  animation: meteor 4s infinite 0.5s;
+}
+
+@keyframes meteor {
+  0% {
+    transform: translate(0, 0) rotate(45deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(30px, 30px) rotate(45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(30px, 30px) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.themeSwitchStarsCluster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:not(:checked) + .themeSwitchContainer .themeSwitchStarsCluster {
+  opacity: 1;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+
+.star:nth-child(1) {
+  width: 2px;
+  height: 2px;
+  top: 15%;
+  left: 25%;
+  animation-delay: 0s;
+}
+
+.star:nth-child(2) {
+  width: 1.5px;
+  height: 1.5px;
+  top: 35%;
+  left: 45%;
+  animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+  width: 2px;
+  height: 2px;
+  top: 60%;
+  left: 20%;
+  animation-delay: 1s;
+}
+
+.star:nth-child(4) {
+  width: 1px;
+  height: 1px;
+  top: 45%;
+  left: 65%;
+  animation-delay: 1.5s;
+}
+
+.star:nth-child(5) {
+  width: 1.5px;
+  height: 1.5px;
+  top: 70%;
+  left: 55%;
+  animation-delay: 0.8s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.themeSwitchAurora {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(0, 212, 255, 0.1) 50%, 
+    rgba(138, 43, 226, 0.1) 100%);
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:not(:checked) + .themeSwitchContainer .themeSwitchAurora {
+  opacity: 1;
+  animation: aurora 8s infinite;
+}
+
+@keyframes aurora {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.themeSwitchComets {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--anim-duration) ease;
+}
+
+.themeSwitchCheckbox:not(:checked) + .themeSwitchContainer .themeSwitchComets {
+  opacity: 1;
+}
+
+.comet {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: linear-gradient(90deg, #00d4ff, transparent);
+  border-radius: 50%;
+  animation: cometMove 6s infinite;
+}
+
+.comet:nth-child(1) {
+  top: 25%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.comet:nth-child(2) {
+  top: 55%;
+  left: 30%;
+  animation-delay: 3s;
+}
+
+@keyframes cometMove {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(40px) translateY(-20px);
+    opacity: 0;
+  }
+}
+
+/* Lite mode - reduce animations */
+[data-lite-mode="true"] .themeSwitchContainer,
+[data-lite-mode="true"] .themeSwitchCircleContainer,
+[data-lite-mode="true"] .themeSwitchSunMoonContainer,
+[data-lite-mode="true"] .themeSwitchMoon,
+[data-lite-mode="1"] .themeSwitchSpot,
+[data-lite-mode="true"] .themeSwitchClouds,
+[data-lite-mode="true"] .themeSwitchStarsContainer,
+[data-lite-mode="true"] .themeSwitchShootingStar,
+[data-lite-mode="true"] .themeSwitchShootingStar2,
+[data-lite-mode="true"] .themeSwitchMeteor,
+[data-lite-mode="true"] .themeSwitchStarsCluster,
+[data-lite-mode="true"] .themeSwitchAurora,
+[data-lite-mode="true"] .themeSwitchComets {
+  transition: none;
+  animation: none;
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .themeSwitchContainer,
+  .themeSwitchCircleContainer,
+  .themeSwitchSunMoonContainer,
+  .themeSwitchMoon,
+  .themeSwitchSpot,
+  .themeSwitchClouds,
+  .themeSwitchStarsContainer,
+  .themeSwitchShootingStar,
+  .themeSwitchShootingStar2,
+  .themeSwitchMeteor,
+  .themeSwitchStarsCluster,
+  .themeSwitchAurora,
+  .themeSwitchComets {
+    transition: none;
+    animation: none;
+  }
+}
