@@ -97,11 +97,6 @@ const GithubPage = ({
     return null;
   };
 
-  // Show skeleton while loading
-  if (isLoading) {
-    return <GithubSkeleton />;
-  }
-
   // Show skeleton if no user data is available
   if (!user) {
     return <GithubSkeleton />;

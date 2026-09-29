@@ -7,42 +7,42 @@ const ScrollProgress = () => {
   const progressRef = useRef(0);
   const animationFrameRef = useRef<number | null>(null);
 
-  const updateProgress = () => {
-    const mainEditor = document.getElementById('main-editor');
-    const container = mainEditor || window;
-    const isWindow = container === window;
-    
-    const scrollTop = isWindow 
-      ? window.scrollY 
-      : (container as HTMLElement).scrollTop;
-    const scrollHeight = isWindow 
-      ? document.documentElement.scrollHeight 
-      : (container as HTMLElement).scrollHeight;
-    const clientHeight = isWindow 
-      ? window.innerHeight 
-      : (container as HTMLElement).clientHeight;
-
-    // Calculate progress (0 to 1)
-    const progress = scrollHeight > clientHeight 
-      ? scrollTop / (scrollHeight - clientHeight)
-      : 0;
-
-    // Clamp between 0 and 1
-    const clampedProgress = Math.max(0, Math.min(1, progress));
-    
-    // Only update if changed significantly to avoid unnecessary updates
-    if (Math.abs(clampedProgress - progressRef.current) > 0.001) {
-      progressRef.current = clampedProgress;
-      
-      // Update CSS variable for efficient rendering
-      document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);
-    }
-
-    // Continue animation loop
-    animationFrameRef.current = requestAnimationFrame(updateProgress);
-  };
-
   useEffect(() => {
+    const updateProgress = () => {
+      const mainEditor = document.getElementById('main-editor');
+      const container = mainEditor || window;
+      const isWindow = container === window;
+      
+      const scrollTop = isWindow 
+        ? window.scrollY 
+        : (container as HTMLElement).scrollTop;
+      const scrollHeight = isWindow 
+        ? document.documentElement.scrollHeight 
+        : (container as HTMLElement).scrollHeight;
+      const clientHeight = isWindow 
+        ? window.innerHeight 
+        : (container as HTMLElement).clientHeight;
+
+      // Calculate progress (0 to 1)
+      const progress = scrollHeight > clientHeight 
+        ? scrollTop / (scrollHeight - clientHeight)
+        : 0;
+
+      // Clamp between 0 and 1
+      const clampedProgress = Math.max(0, Math.min(1, progress));
+      
+      // Only update if changed significantly to avoid unnecessary updates
+      if (Math.abs(clampedProgress - progressRef.current) > 0.001) {
+        progressRef.current = clampedProgress;
+        
+        // Update CSS variable for efficient rendering
+        document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);
+      }
+
+      // Continue animation loop
+      animationFrameRef.current = requestAnimationFrame(updateProgress);
+    };
+
     // Start animation loop
     animationFrameRef.current = requestAnimationFrame(updateProgress);
 
