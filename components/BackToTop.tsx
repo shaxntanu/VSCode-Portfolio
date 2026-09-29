@@ -3,7 +3,6 @@ import styles from '@/styles/BackToTop.module.css';
 
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [opacity, setOpacity] = useState(1);
 
   // Get the actual scroll container - prioritize internal scroll container
   const getScrollContainer = useCallback((): Window | HTMLElement => {
@@ -35,38 +34,6 @@ const BackToTop = () => {
     }
   }, []);
 
-  // Check overlap with page content
-  const checkOverlap = useCallback(() => {
-    const button = document.querySelector(`.${styles.button}`);
-    if (!button) return false;
-
-    const buttonRect = button.getBoundingClientRect();
-    const mainEditor = document.getElementById('main-editor');
-    
-    if (!mainEditor) return false;
-
-    // Get all major content elements within the main editor
-    const contentElements = mainEditor.querySelectorAll('h1, h2, h3, p, div, section, article');
-    
-    for (const element of contentElements) {
-      const rect = element.getBoundingClientRect();
-      
-      // Check if button overlaps with content
-      const isOverlapping = !(
-        buttonRect.right < rect.left ||
-        buttonRect.left > rect.right ||
-        buttonRect.bottom < rect.top ||
-        buttonRect.top > rect.bottom
-      );
-
-      if (isOverlapping) {
-        return true;
-      }
-    }
-
-    return false;
-  }, []);
-
   const handleScroll = useCallback(() => {
     const container = getScrollContainer();
     const scrollTop = getScrollTop(container);
@@ -77,13 +44,7 @@ const BackToTop = () => {
     } else {
       setIsVisible(false);
     }
-
-    // Check overlap using requestAnimationFrame for performance
-    requestAnimationFrame(() => {
-      const overlapping = checkOverlap();
-      setOpacity(overlapping ? 0.5 : 1);
-    });
-  }, [getScrollContainer, getScrollTop, checkOverlap]);
+  }, [getScrollContainer, getScrollTop]);
 
   const scrollToTop = useCallback(() => {
     const container = getScrollContainer();
@@ -103,25 +64,14 @@ const BackToTop = () => {
     // Initial check
     handleScroll();
 
-    // Also check overlap on window resize
-    const handleResize = () => {
-      requestAnimationFrame(() => {
-        const overlapping = checkOverlap();
-        setOpacity(overlapping ? 0.5 : 1);
-      });
-    };
-
-    window.addEventListener('resize', handleResize, { passive: true });
-
     return () => {
       if (container === window) {
         window.removeEventListener('scroll', handleScroll);
       } else {
         (container as HTMLElement).removeEventListener('scroll', handleScroll);
       }
-      window.removeEventListener('resize', handleResize);
     };
-  }, [getScrollContainer, handleScroll, checkOverlap]);
+  }, [getScrollContainer, handleScroll]);
 
   if (!isVisible) return null;
 
@@ -129,7 +79,6 @@ const BackToTop = () => {
     <button
       className={styles.button}
       onClick={scrollToTop}
-      style={{ opacity }}
       aria-label="Back to top"
       title="Back to top"
     >
