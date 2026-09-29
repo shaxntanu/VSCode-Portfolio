@@ -56,7 +56,7 @@
 }
 
 .logoWrapper {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.15));
     min-width: 42px;
     width: fit-content;
     height: 42px;
@@ -170,8 +170,8 @@
     padding: 0.25rem 0.5rem;
     border-radius: 12px;
     border: 1px solid;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
+    background-color: var(--explorer-hover-bg, rgba(255, 255, 255, 0.1));
+    color: var(--text-secondary, rgba(255, 255, 255, 0.8));
     text-transform: uppercase;
     letter-spacing: 0.02em;
     transition: all 0.2s ease;
@@ -180,7 +180,7 @@
 
 .skillTag:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px var(--shadow, rgba(0, 0, 0, 0.2));
 }
 
 .linkIcons {
@@ -200,8 +200,8 @@
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.1));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
     transition: all 0.3s ease;
     font-size: 1.2rem;
     cursor: pointer;
@@ -211,15 +211,15 @@
 }
 
 .iconLink:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.15));
     border-color: currentColor;
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.2));
 }
 
 .bomButton {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.3));
     color: inherit;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -309,19 +309,19 @@
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--background-color, rgba(255, 255, 255, 0.1));
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.2));
     transition: all 0.3s ease;
     font-size: 0.9rem;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-color, rgba(255, 255, 255, 0.6));
 }
 
 .cardSortButton:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.15));
     border-color: currentColor;
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.2));
 }
 
 .cardSortMenu {
@@ -329,9 +329,9 @@
     top: calc(100% + 8px);
     right: 0;
     background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.3));
     z-index: 100;
     overflow: hidden;
     min-width: 120px;
@@ -343,7 +343,7 @@
     padding: 0.5rem 0.75rem;
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.75rem;
     text-align: left;
@@ -352,12 +352,12 @@
 }
 
 .cardSortOption:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.9);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.08));
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
 }
 
 .cardSortSelected {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.1));
     color: inherit;
 }
 
