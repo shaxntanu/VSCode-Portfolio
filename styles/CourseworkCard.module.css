@@ -51,7 +51,7 @@
 
 /* Logo wrapper - positioned in bottom right corner like ProjectCard */
 .logoWrapper {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.15));
     min-width: 42px;
     width: fit-content;
     height: 42px;
@@ -199,8 +199,8 @@
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.1));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
     transition: all 0.3s ease;
     font-size: 1.2rem;
     cursor: pointer;
@@ -213,10 +213,10 @@
 
 .primaryButton:hover,
 .secondaryButton:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.15));
     border-color: currentColor;
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.2));
 }
 
 /* Icon sizing in buttons */

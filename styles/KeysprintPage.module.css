@@ -70,8 +70,8 @@
 }
 
 .error {
-    background: rgba(255, 100, 100, 0.1);
-    border: 1px solid rgba(255, 100, 100, 0.3);
+    background: var(--error-bg, rgba(255, 100, 100, 0.1));
+    border: 1px solid var(--error-border, rgba(255, 100, 100, 0.3));
     border-radius: 8px;
     padding: 1.5rem;
     display: flex;
@@ -190,8 +190,8 @@
 }
 
 .statCard {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     border-radius: 8px;
     padding: 1.25rem;
     display: flex;
@@ -203,7 +203,7 @@
 
 .statCard:hover {
     border-color: var(--accent-color);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.05));
 }
 
 .statLabel {
@@ -241,7 +241,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--explorer-bg, rgba(0, 0, 0, 0.2));
     border-radius: 6px;
     padding: 1rem;
 }

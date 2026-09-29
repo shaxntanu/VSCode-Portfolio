@@ -53,8 +53,8 @@
     gap: 1rem;
     margin-bottom: 3rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.05));
     border-radius: 8px;
 }
 
@@ -80,9 +80,9 @@
 
 .filterButton {
     padding: 0.4rem 0.8rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
     border-radius: 6px;
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.75rem;
@@ -92,8 +92,8 @@
 }
 
 .filterButton:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.9);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.1));
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
     transform: translateY(-1px);
 }
 
@@ -124,10 +124,10 @@
 .searchInput {
     width: 100%;
     padding: 0.6rem 0.75rem 0.6rem 2.25rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     border-radius: 6px;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.8rem;
     outline: none;
@@ -135,7 +135,7 @@
 }
 
 .searchInput:focus {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.08));
     border-color: var(--accent-color);
     box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.1);
 }
@@ -181,8 +181,8 @@
 
 /* Empty state */
 .emptyState {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.05));
     border-radius: 8px;
     padding: 2rem;
     text-align: center;

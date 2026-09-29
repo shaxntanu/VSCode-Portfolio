@@ -51,8 +51,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.05));
   border-radius: 8px;
 }
 
@@ -119,8 +119,8 @@
 
 .repoCard {
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.05));
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -257,8 +257,8 @@
 /* Light theme adjustments */
 [data-theme="light"] .statCard,
 [data-theme="light"] .repoCard {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.08);
+  background: var(--explorer-hover-bg, rgba(0, 0, 0, 0.02));
+  border-color: var(--border, rgba(0, 0, 0, 0.08));
 }
 
 [data-theme="light"] .statLabel,
