@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/ScrollProgress.module.css';
 
@@ -7,25 +7,20 @@ const ScrollProgress = () => {
   const progressRef = useRef(0);
   const animationFrameRef = useRef<number | null>(null);
 
-  // Get the actual scroll container
-  const getScrollContainer = useCallback(() => {
+  const updateProgress = () => {
     const mainEditor = document.getElementById('main-editor');
-    return mainEditor || window;
-  }, []);
-
-  const updateProgress = useCallback(() => {
-    const container = getScrollContainer();
+    const container = mainEditor || window;
     const isWindow = container === window;
     
     const scrollTop = isWindow 
       ? window.scrollY 
-      : container.scrollTop;
+      : (container as HTMLElement).scrollTop;
     const scrollHeight = isWindow 
       ? document.documentElement.scrollHeight 
-      : container.scrollHeight;
+      : (container as HTMLElement).scrollHeight;
     const clientHeight = isWindow 
       ? window.innerHeight 
-      : container.clientHeight;
+      : (container as HTMLElement).clientHeight;
 
     // Calculate progress (0 to 1)
     const progress = scrollHeight > clientHeight 
@@ -45,7 +40,7 @@ const ScrollProgress = () => {
 
     // Continue animation loop
     animationFrameRef.current = requestAnimationFrame(updateProgress);
-  }, [getScrollContainer]);
+  };
 
   useEffect(() => {
     // Start animation loop
@@ -67,7 +62,7 @@ const ScrollProgress = () => {
       // Clean up CSS variable
       document.documentElement.style.removeProperty('--scroll-progress');
     };
-  }, [router, updateProgress]);
+  }, [router]);
 
   return <div className={styles.progressBar} />;
 };

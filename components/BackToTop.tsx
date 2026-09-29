@@ -6,9 +6,32 @@ const BackToTop = () => {
   const [opacity, setOpacity] = useState(1);
 
   // Get the actual scroll container
-  const getScrollContainer = useCallback(() => {
+  const getScrollContainer = useCallback((): Window | HTMLElement => {
     const mainEditor = document.getElementById('main-editor');
     return mainEditor || window;
+  }, []);
+
+  // Helper to get scroll position safely
+  const getScrollTop = useCallback((container: Window | HTMLElement): number => {
+    if (container === window) {
+      return window.scrollY;
+    }
+    return (container as HTMLElement).scrollTop;
+  }, []);
+
+  // Helper to scroll to top safely
+  const scrollToTopHelper = useCallback((container: Window | HTMLElement) => {
+    if (container === window) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      (container as HTMLElement).scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   }, []);
 
   // Check overlap with page content
@@ -45,9 +68,7 @@ const BackToTop = () => {
 
   const handleScroll = useCallback(() => {
     const container = getScrollContainer();
-    const scrollTop = container === window 
-      ? window.scrollY 
-      : container.scrollTop;
+    const scrollTop = getScrollTop(container);
 
     // Show button after scrolling down 200px
     if (scrollTop > 200) {
@@ -61,29 +82,22 @@ const BackToTop = () => {
       const overlapping = checkOverlap();
       setOpacity(overlapping ? 0.5 : 1);
     });
-  }, [getScrollContainer, checkOverlap]);
+  }, [getScrollContainer, getScrollTop, checkOverlap]);
 
   const scrollToTop = useCallback(() => {
     const container = getScrollContainer();
-    
-    if (container === window) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    } else {
-      container.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-  }, [getScrollContainer]);
+    scrollToTopHelper(container);
+  }, [getScrollContainer, scrollToTopHelper]);
 
   useEffect(() => {
     const container = getScrollContainer();
     
     // Add scroll listener to the actual scroll container
-    container.addEventListener('scroll', handleScroll, { passive: true });
+    if (container === window) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    } else {
+      (container as HTMLElement).addEventListener('scroll', handleScroll, { passive: true });
+    }
     
     // Initial check
     handleScroll();
@@ -92,7 +106,6 @@ const BackToTop = () => {
     const handleResize = () => {
       requestAnimationFrame(() => {
         const overlapping = checkOverlap();
-        setIsOverlapping(overlapping);
         setOpacity(overlapping ? 0.5 : 1);
       });
     };
@@ -100,7 +113,11 @@ const BackToTop = () => {
     window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      container.removeEventListener('scroll', handleScroll);
+      if (container === window) {
+        window.removeEventListener('scroll', handleScroll);
+      } else {
+        (container as HTMLElement).removeEventListener('scroll', handleScroll);
+      }
       window.removeEventListener('resize', handleResize);
     };
   }, [getScrollContainer, handleScroll, checkOverlap]);
