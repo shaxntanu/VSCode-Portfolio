@@ -62,7 +62,7 @@
 }
 
 .bio {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
     font-size: 1rem;
     margin: 0.5rem 0 0 0;
     max-width: 500px;
@@ -77,7 +77,7 @@
 
 .statCard {
     background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     border-radius: 8px;
     padding: 1rem 1.5rem;
     display: flex;
@@ -95,7 +95,7 @@
 
 .statLabel {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
     margin-top: 0.25rem;
 }
 
@@ -133,13 +133,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     transition: 300ms;
 }
 
 .select:hover .selected {
     border-color: var(--accent-color);
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
 }
 
 .arrow {
@@ -166,8 +166,8 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 200ms ease, visibility 200ms ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.3));
     z-index: 1000;
     max-height: 150px;
     overflow-y: auto;
@@ -179,7 +179,7 @@
 }
 
 .options::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
     border-radius: 3px;
 }
 
@@ -204,7 +204,7 @@
 }
 
 .option:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--explorer-active-bg, rgba(255, 255, 255, 0.1));
     color: var(--accent-color);
 }
 
@@ -226,8 +226,8 @@
     border-radius: 12px;
     background: var(--article-bg);
     padding: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    box-shadow: 0 4px 6px var(--shadow, rgba(0, 0, 0, 0.1));
 }
 
 /* Make contribution calendar cells interactive */
@@ -238,7 +238,7 @@
 
 .contributionGraph rect:hover {
     filter: brightness(1.4);
-    stroke: rgba(255, 255, 255, 0.6);
+    stroke: var(--text-secondary, rgba(255, 255, 255, 0.6));
     stroke-width: 1px;
 }
 
@@ -304,7 +304,7 @@
 .languageSection {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
 }
 
 .languageHeader {
@@ -320,7 +320,7 @@
     display: flex;
     gap: 2rem;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted, rgba(255, 255, 255, 0.5));
 }
 
 .metadataItem {
@@ -336,13 +336,13 @@
 }
 
 .metadataValue {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
     font-weight: 500;
 }
 
 .sectionSubtitle {
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -350,22 +350,22 @@
 .chartSection {
     margin-bottom: 2rem;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
 }
 
 .tooltip {
-    background: rgba(30, 30, 30, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--card-bg, rgba(30, 30, 30, 0.98));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
     border-radius: 6px;
     padding: 0.75rem 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.4));
 }
 
 .tooltipLabel {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
     font-weight: 600;
     margin: 0 0 0.25rem 0;
 }
@@ -379,7 +379,7 @@
 
 .tooltipBytes {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
     margin: 0;
 }
 
@@ -413,14 +413,14 @@
 .languageName {
     flex: 0 0 140px;
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
     font-weight: 500;
 }
 
 .barContainer {
     flex: 1;
     height: 20px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
     border-radius: 4px;
     overflow: hidden;
     position: relative;
@@ -437,13 +437,13 @@
     flex: 0 0 60px;
     text-align: right;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
     font-weight: 500;
 }
 
 .bytes {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted, rgba(255, 255, 255, 0.4));
     padding-left: 36px;
 }
 
