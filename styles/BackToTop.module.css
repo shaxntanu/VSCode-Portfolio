@@ -1,117 +1,62 @@
 .button {
   position: absolute;
-  left: 8px;
-  bottom: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: rgb(20, 20, 20);
-  border: none;
+  left: 16px;
+  bottom: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: rgb(30, 30, 30);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
   cursor: pointer;
-  transition-duration: 0.3s;
   overflow: hidden;
   z-index: 10;
   opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease, background-color 180ms ease, border-color 180ms ease;
 }
 
 .button.visible {
   opacity: 1;
-  transform: translateX(0);
-}
-
-.svgIcon {
-  width: 12px;
-  transition-duration: 0.3s;
-}
-
-.svgIcon path {
-  fill: white;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .button:hover {
-  width: 140px;
-  border-radius: 50px;
-  transition-duration: 0.3s;
-  background-color: rgb(181, 160, 255);
-  align-items: center;
+  background-color: rgb(40, 40, 40);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.button:active {
+  background-color: rgb(50, 50, 50);
+}
+
+.svgIcon {
+  width: 16px;
+  height: 16px;
+  transition: transform 180ms ease;
+}
+
+.svgIcon path {
+  fill: rgba(255, 255, 255, 0.9);
 }
 
 .button:hover .svgIcon {
-  transform: translateY(-200%);
-}
-
-.button::before {
-  position: absolute;
-  bottom: -20px;
-  content: "Back to Top";
-  color: white;
-  font-size: 0px;
-}
-
-.button:hover::before {
-  font-size: 13px;
-  opacity: 1;
-  bottom: unset;
-  transition-duration: 0.3s;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .button {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* Lite mode - reduce animations */
-[data-lite-mode="true"] .button,
-[data-lite-mode="true"] .svgIcon,
-[data-lite-mode="true"] .button::before {
-  transition: none;
-}
-
-[data-lite-mode="true"] .button:hover {
-  width: 50px;
-  border-radius: 50%;
-  background-color: var(--button-bg, rgb(20, 20, 20));
-}
-
-[data-lite-mode="true"] .button:hover .svgIcon {
-  transform: none;
-}
-
-[data-lite-mode="true"] .button:hover::before {
-  font-size: 0px;
-  content: "";
+  transform: translateY(-1px);
 }
 
 /* Prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .button,
-  .svgIcon,
-  .button::before {
+  .svgIcon {
     transition: none;
-  }
-
-  .button:hover {
-    width: 50px;
-    border-radius: 50%;
-    background-color: var(--button-bg, rgb(20, 20, 20));
   }
 
   .button:hover .svgIcon {
     transform: none;
-  }
-
-  .button:hover::before {
-    font-size: 0px;
-    content: "";
   }
 }

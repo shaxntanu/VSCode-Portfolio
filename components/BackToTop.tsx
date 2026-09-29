@@ -1,53 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { usePageScrollContainer } from '@/hooks/usePageScrollContainer';
 import styles from '@/styles/BackToTop.module.css';
 
-// Reusable function to find the actual page scroll container
-const findPageScrollContainer = (): HTMLElement | null => {
-  const mainEditor = document.getElementById('main-editor');
-  if (!mainEditor) return null;
-
-  // First check if main-editor itself is scrollable
-  if (mainEditor.scrollHeight > mainEditor.clientHeight) {
-    return mainEditor;
-  }
-
-  // Otherwise, find the scrollable descendant with the largest vertical scroll range
-  let bestCandidate: HTMLElement | null = null;
-  let maxScrollRange = 0;
-
-  const allElements = mainEditor.querySelectorAll('*');
-  allElements.forEach((el: any) => {
-    const computed = getComputedStyle(el);
-    const overflowY = computed.overflowY;
-    const scrollHeight = el.scrollHeight;
-    const clientHeight = el.clientHeight;
-    const scrollRange = scrollHeight - clientHeight;
-
-    // Only consider elements with meaningful vertical scroll
-    if (
-      (overflowY === 'auto' || overflowY === 'scroll') &&
-      scrollRange > maxScrollRange &&
-      scrollRange > 50 // Minimum meaningful scroll range
-    ) {
-      maxScrollRange = scrollRange;
-      bestCandidate = el;
-    }
-  });
-
-  return bestCandidate;
-};
-
 const BackToTop = () => {
-  const router = useRouter();
+  const { scrollContainer } = usePageScrollContainer();
   const [isVisible, setIsVisible] = useState(false);
-  const scrollContainerRef = useRef<HTMLElement | null>(null);
   const rafRef = useRef<number | null>(null);
-
-  // Get the actual scroll container using the discovery function
-  const getScrollContainer = useCallback((): HTMLElement | null => {
-    return findPageScrollContainer();
-  }, []);
 
   const handleScroll = useCallback(() => {
     if (rafRef.current) {
@@ -55,10 +13,9 @@ const BackToTop = () => {
     }
 
     rafRef.current = requestAnimationFrame(() => {
-      const container = getScrollContainer();
-      if (!container) return;
+      if (!scrollContainer) return;
 
-      const scrollTop = container.scrollTop;
+      const scrollTop = scrollContainer.scrollTop;
 
       // Show button after scrolling down 150px
       if (scrollTop >= 150) {
@@ -67,59 +24,35 @@ const BackToTop = () => {
         setIsVisible(false);
       }
     });
-  }, [getScrollContainer]);
+  }, [scrollContainer]);
 
   const scrollToTop = useCallback(() => {
-    const container = getScrollContainer();
-    if (container) {
-      container.scrollTo({
+    if (scrollContainer) {
+      scrollContainer.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
     }
-  }, [getScrollContainer]);
+  }, [scrollContainer]);
 
   useEffect(() => {
-    const container = getScrollContainer();
-    if (!container) return;
-
-    scrollContainerRef.current = container;
+    if (!scrollContainer) return;
 
     // Add scroll listener to the discovered container
-    container.addEventListener('scroll', handleScroll, { passive: true });
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
 
     // Initial check
     handleScroll();
 
-    // Reset on route change
-    const handleRouteChange = () => {
-      setIsVisible(false);
-      // Re-attach to new container after route change
-      setTimeout(() => {
-        const newContainer = getScrollContainer();
-        if (newContainer && newContainer !== scrollContainerRef.current) {
-          if (scrollContainerRef.current) {
-            scrollContainerRef.current.removeEventListener('scroll', handleScroll);
-          }
-          scrollContainerRef.current = newContainer;
-          newContainer.addEventListener('scroll', handleScroll, { passive: true });
-          handleScroll();
-        }
-      }, 100);
-    };
-
-    router.events.on('routeChangeComplete', handleRouteChange);
-
     return () => {
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.removeEventListener('scroll', handleScroll);
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
       }
-      router.events.off('routeChangeComplete', handleRouteChange);
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [getScrollContainer, handleScroll, router]);
+  }, [scrollContainer, handleScroll]);
 
   return (
     <button

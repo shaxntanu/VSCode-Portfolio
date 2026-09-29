@@ -1,69 +1,59 @@
-import { useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useCallback, useRef } from 'react';
+import { usePageScrollContainer } from '@/hooks/usePageScrollContainer';
 import styles from '@/styles/ScrollProgress.module.css';
 
 const ScrollProgress = () => {
-  const router = useRouter();
+  const { scrollContainer } = usePageScrollContainer();
   const progressRef = useRef(0);
-  const animationFrameRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  const updateProgress = useCallback(() => {
+    if (!scrollContainer) return;
+
+    const scrollTop = scrollContainer.scrollTop;
+    const scrollHeight = scrollContainer.scrollHeight;
+    const clientHeight = scrollContainer.clientHeight;
+
+    // Calculate progress (0 to 1)
+    const maxScroll = scrollHeight - clientHeight;
+    const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+
+    // Clamp between 0 and 1
+    const clampedProgress = Math.max(0, Math.min(1, progress));
+
+    // Only update if changed significantly
+    if (Math.abs(clampedProgress - progressRef.current) > 0.001) {
+      progressRef.current = clampedProgress;
+      document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);
+    }
+  }, [scrollContainer]);
+
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    rafRef.current = requestAnimationFrame(updateProgress);
+  }, [updateProgress]);
 
   useEffect(() => {
-    const updateProgress = () => {
-      // Always use main-editor as the scroll container since that's where internal scrolling happens
-      const mainEditor = document.getElementById('main-editor');
-      const container = mainEditor || window;
-      const isWindow = container === window;
-      
-      const scrollTop = isWindow 
-        ? window.scrollY 
-        : (container as HTMLElement).scrollTop;
-      const scrollHeight = isWindow 
-        ? document.documentElement.scrollHeight 
-        : (container as HTMLElement).scrollHeight;
-      const clientHeight = isWindow 
-        ? window.innerHeight 
-        : (container as HTMLElement).clientHeight;
+    if (!scrollContainer) return;
 
-      // Calculate progress (0 to 1)
-      const progress = scrollHeight > clientHeight 
-        ? scrollTop / (scrollHeight - clientHeight)
-        : 0;
+    // Add scroll listener
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
 
-      // Clamp between 0 and 1
-      const clampedProgress = Math.max(0, Math.min(1, progress));
-      
-      // Only update if changed significantly to avoid unnecessary updates
-      if (Math.abs(clampedProgress - progressRef.current) > 0.001) {
-        progressRef.current = clampedProgress;
-        
-        // Update CSS variable for efficient rendering
-        document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);
-      }
-
-      // Continue animation loop
-      animationFrameRef.current = requestAnimationFrame(updateProgress);
-    };
-
-    // Start animation loop
-    animationFrameRef.current = requestAnimationFrame(updateProgress);
-
-    // Reset progress on route change
-    const handleRouteChange = () => {
-      progressRef.current = 0;
-      document.documentElement.style.setProperty('--scroll-progress', '0%');
-    };
-
-    router.events.on('routeChangeStart', handleRouteChange);
+    // Initial update
+    updateProgress();
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
       }
-      router.events.off('routeChangeStart', handleRouteChange);
-      // Clean up CSS variable
-      document.documentElement.style.removeProperty('--scroll-progress');
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
-  }, [router]);
+  }, [scrollContainer, handleScroll, updateProgress]);
 
   return <div className={styles.progressBar} />;
 };
