@@ -35,16 +35,33 @@ const BackToTop = () => {
       const threshold = 150;
       const shouldShow = scrollTop >= threshold;
 
-      console.log('[BackToTop] handleScroll values:', {
-        scrollTop,
-        scrollHeight,
-        clientHeight,
-        maxScrollTop,
-        threshold,
-        shouldShow
-      });
+      console.log(
+        '[BackToTop] SCROLL VALUES:',
+        'scrollTop=', scrollTop,
+        'scrollHeight=', scrollHeight,
+        'clientHeight=', clientHeight,
+        'maxScrollTop=', maxScrollTop,
+        'threshold=', threshold,
+        'shouldShow=', shouldShow
+      );
 
-      console.log('[BackToTop] element:', container);
+      console.log(
+        '[BackToTop] MAIN EDITOR:',
+        'id=', container.id,
+        'class=', container.className,
+        'overflowY=', getComputedStyle(container).overflowY,
+        'height=', getComputedStyle(container).height
+      );
+
+      // Direct test
+      const atBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 2;
+      console.log(
+        '[BackToTop] DIRECT TEST:',
+        'scrollTop=', scrollTop,
+        'scrollHeight=', scrollHeight,
+        'clientHeight=', clientHeight,
+        'atBottom=', atBottom
+      );
 
       // Show button after scrolling down 150px
       if (scrollTop >= 150) {
