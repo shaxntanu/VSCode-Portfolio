@@ -5,7 +5,6 @@ import { VscChevronRight } from 'react-icons/vsc';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { useFolderContext } from '@/contexts/FolderContext';
 import { rootFile, portfolioFiles, navFolders } from '@/data/navigation';
-import BackToTop from '@/components/BackToTop';
 
 import styles from '@/styles/Explorer.module.css';
 
@@ -225,7 +224,6 @@ const Explorer = () => {
             </span>
           </div>
         </button>
-        <BackToTop />
       </div>
     </div>
     </>
