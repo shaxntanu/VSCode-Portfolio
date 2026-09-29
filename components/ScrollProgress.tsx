@@ -9,6 +9,7 @@ const ScrollProgress = () => {
 
   useEffect(() => {
     const updateProgress = () => {
+      // Always use main-editor as the scroll container since that's where internal scrolling happens
       const mainEditor = document.getElementById('main-editor');
       const container = mainEditor || window;
       const isWindow = container === window;

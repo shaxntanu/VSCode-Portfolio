@@ -5,9 +5,10 @@ const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [opacity, setOpacity] = useState(1);
 
-  // Get the actual scroll container
+  // Get the actual scroll container - prioritize internal scroll container
   const getScrollContainer = useCallback((): Window | HTMLElement => {
     const mainEditor = document.getElementById('main-editor');
+    // Always use main-editor if it exists, since that's the actual scroll container
     return mainEditor || window;
   }, []);
 
@@ -44,7 +45,7 @@ const BackToTop = () => {
     
     if (!mainEditor) return false;
 
-    // Get all major content elements
+    // Get all major content elements within the main editor
     const contentElements = mainEditor.querySelectorAll('h1, h2, h3, p, div, section, article');
     
     for (const element of contentElements) {
@@ -70,8 +71,8 @@ const BackToTop = () => {
     const container = getScrollContainer();
     const scrollTop = getScrollTop(container);
 
-    // Show button after scrolling down 200px
-    if (scrollTop > 200) {
+    // Show button after scrolling down 100px (reduced threshold for internal scrolling)
+    if (scrollTop > 100) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
