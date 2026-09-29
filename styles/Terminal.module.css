@@ -6,7 +6,7 @@
     flex-direction: column;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
     overflow: hidden;
     min-height: 100px;
     max-height: 800px;
@@ -25,21 +25,21 @@
 
 .title {
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
     font-size: 0.85rem;
 }
 
 .closeBtn {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.5));
     cursor: pointer;
     padding: 0 0.5rem;
     transition: color 0.2s ease;
 }
 
 .closeBtn:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
 }
 
 .resizeHandle {
@@ -102,7 +102,7 @@
 }
 
 .command {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
 }
 
 .entry.input .prompt {
@@ -110,7 +110,7 @@
 }
 
 .outputLine {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
     margin-bottom: 0.5rem;
 }
 
@@ -140,13 +140,13 @@
     background: transparent;
     border: none;
     outline: none;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
 }
 
 .input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted, rgba(255, 255, 255, 0.3));
 }
 
 @media (max-width: 600px) {
