@@ -9,9 +9,14 @@ const BackToTop = () => {
   const rafRef = useRef<number | null>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Log component mount
+  console.log('[BackToTop] Component mounted');
+
   // Get the actual scroll container - #main-editor
   const getScrollContainer = useCallback((): HTMLElement | null => {
-    return document.getElementById('main-editor');
+    const container = document.getElementById('main-editor');
+    console.log('[BackToTop] getScrollContainer called, found:', !!container, container?.id, container?.className);
+    return container;
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -52,23 +57,37 @@ const BackToTop = () => {
 
   useEffect(() => {
     const container = getScrollContainer();
-    if (!container) return;
+    if (!container) {
+      console.log('[BackToTop] useEffect: No container found, aborting');
+      return;
+    }
 
+    console.log('[BackToTop] useEffect: Container found, attaching listener');
     scrollContainerRef.current = container;
+
+    // Log initial scroll state
+    console.log('[BackToTop] Initial scroll state:', {
+      scrollTop: container.scrollTop,
+      scrollHeight: container.scrollHeight,
+      clientHeight: container.clientHeight
+    });
 
     // Add scroll listener to main-editor
     container.addEventListener('scroll', handleScroll, { passive: true });
+    console.log('[BackToTop] Scroll listener attached to:', container.id);
 
     // Initial check
     handleScroll();
 
     // Reset on route change
     const handleRouteChange = () => {
+      console.log('[BackToTop] Route change detected, resetting');
       setIsVisible(false);
       // Re-attach to new container after route change
       setTimeout(() => {
         const newContainer = getScrollContainer();
         if (newContainer && newContainer !== scrollContainerRef.current) {
+          console.log('[BackToTop] Re-attaching to new container after route change');
           if (scrollContainerRef.current) {
             scrollContainerRef.current.removeEventListener('scroll', handleScroll);
           }
@@ -82,6 +101,7 @@ const BackToTop = () => {
     router.events.on('routeChangeComplete', handleRouteChange);
 
     return () => {
+      console.log('[BackToTop] Cleanup: removing listener');
       if (scrollContainerRef.current) {
         scrollContainerRef.current.removeEventListener('scroll', handleScroll);
       }
@@ -94,6 +114,8 @@ const BackToTop = () => {
       }
     };
   }, [getScrollContainer, handleScroll, router]);
+
+  console.log('[BackToTop] Render: isVisible =', isVisible);
 
   return (
     <button
