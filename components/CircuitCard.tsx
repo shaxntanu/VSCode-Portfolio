@@ -135,7 +135,7 @@ const CircuitCard = ({ circuit }: CircuitCardProps) => {
       
       {/* Logo Wrapper - Fixed to card, not content */}
       <div className={styles.logoWrapper}>
-        {circuit.technologies.map((tech, index) => (
+        {circuit.technologies.slice(0, 2).map((tech, index) => (
           <Image
             key={index}
             src={getTechIcon(tech)}

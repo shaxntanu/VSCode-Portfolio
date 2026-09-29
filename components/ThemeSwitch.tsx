@@ -7,7 +7,7 @@ const ThemeSwitch = () => {
   useEffect(() => {
     // Check current theme - if it's a light theme, set to false
     const currentTheme = document.documentElement.getAttribute('data-theme');
-    const lightThemes = ['light', 'light-plus', 'github-light'];
+    const lightThemes = ['light', 'light-plus', 'github-light', 'vscode-light'];
     setIsDark(!lightThemes.includes(currentTheme || ''));
   }, []);
 
@@ -15,13 +15,13 @@ const ThemeSwitch = () => {
     const newIsDark = !isDark;
     setIsDark(newIsDark);
     
-    // Toggle between a dark and light theme from existing themes
+    // Toggle between a real light theme and dark theme
     if (newIsDark) {
       document.documentElement.setAttribute('data-theme', 'ayu-dark');
       localStorage.setItem('theme', 'ayu-dark');
     } else {
-      document.documentElement.setAttribute('data-theme', 'github-dark');
-      localStorage.setItem('theme', 'github-dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
     }
     
     // Dispatch theme change event
