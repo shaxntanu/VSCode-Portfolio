@@ -3,7 +3,7 @@
     width: 200px;
     min-width: 200px;
     max-width: 200px;
-    color: rgb(225, 228, 232);
+    color: var(--text-color, rgb(225, 228, 232));
     font-family: 'Source Sans Pro', sans-serif;
     border-right: 1px solid var(--explorer-border);
     flex-shrink: 0;
@@ -59,12 +59,12 @@
 }
 
 .scrollableContent::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--scrollbar-thumb-bg, rgba(255, 255, 255, 0.2));
     border-radius: 3px;
 }
 
 .scrollableContent::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: var(--scrollbar-thumb-hover, rgba(255, 255, 255, 0.3));
 }
 
 .title {
