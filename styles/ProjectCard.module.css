@@ -118,7 +118,7 @@
 .dateRange {
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
     margin-bottom: 0.75rem;
     letter-spacing: 0.5px;
 }
@@ -126,10 +126,10 @@
 .description {
     font-size: 0.9rem;
     line-height: 1.5;
-    color: rgba(255, 255, 255, 1);
+    color: var(--text-color, rgba(255, 255, 255, 1));
     margin-bottom: 1rem;
     opacity: 1;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 4px var(--shadow, rgba(0, 0, 0, 0.8));
     transition: all 0.3s ease;
     flex: 1;
     overflow: hidden;

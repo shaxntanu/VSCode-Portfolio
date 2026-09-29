@@ -63,7 +63,7 @@
 
 .statLabel {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.6));
 }
 
 .contributionSection {
@@ -168,7 +168,7 @@
 
 .sectionSubtitle {
   margin-bottom: 2rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.6));
 }
 
 .chartSection {
@@ -219,7 +219,7 @@
 }
 
 .bytes {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-muted, rgba(255, 255, 255, 0.5));
   font-size: 0.875rem;
 }
 
@@ -264,5 +264,5 @@
 [data-theme="light"] .statLabel,
 [data-theme="light"] .sectionSubtitle,
 [data-theme="light"] .bytes {
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-secondary, rgba(0, 0, 0, 0.6));
 }
