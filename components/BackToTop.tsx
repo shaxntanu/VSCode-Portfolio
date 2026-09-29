@@ -21,14 +21,20 @@ const BackToTop = () => {
 
     rafRef.current = requestAnimationFrame(() => {
       const container = getScrollContainer();
-      if (!container) return;
+      if (!container) {
+        console.log('[BackToTop] No container found');
+        return;
+      }
 
       const scrollTop = container.scrollTop;
+      console.log('[BackToTop] Scroll:', scrollTop, 'Container:', container.id, 'Class:', container.className);
 
       // Show button after scrolling down 150px
       if (scrollTop >= 150) {
+        console.log('[BackToTop] Setting visible');
         setIsVisible(true);
       } else {
+        console.log('[BackToTop] Setting hidden');
         setIsVisible(false);
       }
     });
