@@ -31,8 +31,20 @@ const BackToTop = () => {
       const scrollTop = container.scrollTop;
       const scrollHeight = container.scrollHeight;
       const clientHeight = container.clientHeight;
+      const maxScrollTop = scrollHeight - clientHeight;
+      const threshold = 150;
+      const shouldShow = scrollTop >= threshold;
 
-      console.log('[BackToTop] handleScroll:', { scrollTop, scrollHeight, clientHeight });
+      console.log('[BackToTop] handleScroll values:', {
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+        maxScrollTop,
+        threshold,
+        shouldShow
+      });
+
+      console.log('[BackToTop] element:', container);
 
       // Show button after scrolling down 150px
       if (scrollTop >= 150) {
