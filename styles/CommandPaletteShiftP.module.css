@@ -74,15 +74,15 @@
 }
 
 .input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted, rgba(255, 255, 255, 0.3));
 }
 
 .escKey {
     font-size: 0.7rem;
     padding: 2px 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
     border-radius: 4px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted, rgba(255, 255, 255, 0.4));
     font-family: 'JetBrains Mono', monospace;
     flex-shrink: 0;
 }
@@ -109,7 +109,7 @@
 .empty {
     padding: 2rem;
     text-align: center;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted, rgba(255, 255, 255, 0.3));
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
 }
@@ -126,7 +126,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.7rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted, rgba(255, 255, 255, 0.4));
     font-family: 'JetBrains Mono', monospace;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -189,7 +189,7 @@
 .itemDesc {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--text-muted, rgba(255, 255, 255, 0.35));
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -207,7 +207,7 @@
 .footer span {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--text-muted, rgba(255, 255, 255, 0.35));
     display: flex;
     align-items: center;
     gap: 0.3rem;
@@ -216,9 +216,9 @@
 .footer kbd {
     font-size: 0.65rem;
     padding: 1px 5px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
     border-radius: 3px;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.5));
     font-family: 'JetBrains Mono', monospace;
 }
 
@@ -243,7 +243,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
     animation: slideInRight 0.3s ease;
     pointer-events: auto;
 }
