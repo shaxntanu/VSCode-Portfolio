@@ -7,7 +7,7 @@
     border-bottom: 1px solid var(--explorer-border);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.5));
     flex-shrink: 0;
     overflow-x: auto;
     white-space: nowrap;
@@ -19,12 +19,12 @@
 }
 
 .segment {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.5));
     cursor: default;
 }
 
 .separator {
-    color: rgba(255, 255, 255, 0.25);
+    color: var(--text-muted, rgba(255, 255, 255, 0.25));
     font-size: 0.7rem;
     padding: 0 0.1rem;
 }
@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
 }
 
 @media screen and (max-width: 600px) {
