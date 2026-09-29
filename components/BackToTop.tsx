@@ -2,18 +2,51 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/BackToTop.module.css';
 
+// Reusable function to find the actual page scroll container
+const findPageScrollContainer = (): HTMLElement | null => {
+  const mainEditor = document.getElementById('main-editor');
+  if (!mainEditor) return null;
+
+  // First check if main-editor itself is scrollable
+  if (mainEditor.scrollHeight > mainEditor.clientHeight) {
+    return mainEditor;
+  }
+
+  // Otherwise, find the scrollable descendant with the largest vertical scroll range
+  let bestCandidate: HTMLElement | null = null;
+  let maxScrollRange = 0;
+
+  const allElements = mainEditor.querySelectorAll('*');
+  allElements.forEach((el: any) => {
+    const computed = getComputedStyle(el);
+    const overflowY = computed.overflowY;
+    const scrollHeight = el.scrollHeight;
+    const clientHeight = el.clientHeight;
+    const scrollRange = scrollHeight - clientHeight;
+
+    // Only consider elements with meaningful vertical scroll
+    if (
+      (overflowY === 'auto' || overflowY === 'scroll') &&
+      scrollRange > maxScrollRange &&
+      scrollRange > 50 // Minimum meaningful scroll range
+    ) {
+      maxScrollRange = scrollRange;
+      bestCandidate = el;
+    }
+  });
+
+  return bestCandidate;
+};
+
 const BackToTop = () => {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const scrollContainerRef = useRef<HTMLElement | null>(null);
   const rafRef = useRef<number | null>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Get the actual scroll container - #main-editor
+  // Get the actual scroll container using the discovery function
   const getScrollContainer = useCallback((): HTMLElement | null => {
-    const container = document.getElementById('main-editor');
-    console.log('[BackToTop] getScrollContainer:', !!container, container?.id);
-    return container;
+    return findPageScrollContainer();
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -23,52 +56,14 @@ const BackToTop = () => {
 
     rafRef.current = requestAnimationFrame(() => {
       const container = getScrollContainer();
-      if (!container) {
-        console.log('[BackToTop] handleScroll: No container');
-        return;
-      }
+      if (!container) return;
 
       const scrollTop = container.scrollTop;
-      const scrollHeight = container.scrollHeight;
-      const clientHeight = container.clientHeight;
-      const maxScrollTop = scrollHeight - clientHeight;
-      const threshold = 150;
-      const shouldShow = scrollTop >= threshold;
-
-      console.log(
-        '[BackToTop] SCROLL VALUES:',
-        'scrollTop=', scrollTop,
-        'scrollHeight=', scrollHeight,
-        'clientHeight=', clientHeight,
-        'maxScrollTop=', maxScrollTop,
-        'threshold=', threshold,
-        'shouldShow=', shouldShow
-      );
-
-      console.log(
-        '[BackToTop] MAIN EDITOR:',
-        'id=', container.id,
-        'class=', container.className,
-        'overflowY=', getComputedStyle(container).overflowY,
-        'height=', getComputedStyle(container).height
-      );
-
-      // Direct test
-      const atBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 2;
-      console.log(
-        '[BackToTop] DIRECT TEST:',
-        'scrollTop=', scrollTop,
-        'scrollHeight=', scrollHeight,
-        'clientHeight=', clientHeight,
-        'atBottom=', atBottom
-      );
 
       // Show button after scrolling down 150px
       if (scrollTop >= 150) {
-        console.log('[BackToTop] Setting isVisible = true');
         setIsVisible(true);
       } else {
-        console.log('[BackToTop] Setting isVisible = false');
         setIsVisible(false);
       }
     });
@@ -76,94 +71,33 @@ const BackToTop = () => {
 
   const scrollToTop = useCallback(() => {
     const container = getScrollContainer();
-    console.log('[BackToTop] scrollToTop clicked, container:', !!container, container?.id);
     if (container) {
-      console.log('[BackToTop] Before scroll, scrollTop:', container.scrollTop);
       container.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
-      console.log('[BackToTop] Scroll initiated');
     }
   }, [getScrollContainer]);
 
   useEffect(() => {
     const container = getScrollContainer();
-    if (!container) {
-      console.log('[BackToTop] useEffect: No container found');
-      return;
-    }
+    if (!container) return;
 
-    console.log('[BackToTop] useEffect: Container found, attaching listener');
     scrollContainerRef.current = container;
 
-    // Log initial state
-    console.log('[BackToTop] Initial state:', {
-      scrollTop: container.scrollTop,
-      scrollHeight: container.scrollHeight,
-      clientHeight: container.clientHeight
-    });
-
-    // DIAGNOSTIC: Find all scrollable elements in the DOM
-    console.log('[BackToTop] === DIAGNOSTIC: Finding all scrollable elements ===');
-    const allElements = document.querySelectorAll('*');
-    const scrollableElements: HTMLElement[] = [];
-
-    allElements.forEach((el: any) => {
-      const computed = getComputedStyle(el);
-      const overflowY = computed.overflowY;
-      const scrollHeight = el.scrollHeight;
-      const clientHeight = el.clientHeight;
-
-      if ((overflowY === 'auto' || overflowY === 'scroll') && scrollHeight > clientHeight) {
-        scrollableElements.push(el);
-        console.log(
-          '[SCROLLABLE ELEMENT]',
-          el.tagName,
-          'id=', el.id,
-          'class=', el.className,
-          'scrollTop=', el.scrollTop,
-          'scrollHeight=', scrollHeight,
-          'clientHeight=', clientHeight,
-          'overflowY=', overflowY
-        );
-      }
-    });
-
-    console.log('[BackToTop] Found', scrollableElements.length, 'scrollable elements');
-
-    // Attach scroll listeners to all scrollable elements to see which one actually changes
-    const scrollListeners: { element: HTMLElement; handler: () => void }[] = [];
-    scrollableElements.forEach((el) => {
-      const handler = () => {
-        console.log(
-          '[ACTUAL SCROLL]',
-          el.tagName,
-          'id=', el.id,
-          'class=', el.className,
-          'scrollTop=', el.scrollTop
-        );
-      };
-      el.addEventListener('scroll', handler, { passive: true });
-      scrollListeners.push({ element: el, handler });
-    });
-
-    // Add scroll listener to main-editor (existing behavior)
+    // Add scroll listener to the discovered container
     container.addEventListener('scroll', handleScroll, { passive: true });
-    console.log('[BackToTop] Scroll listener attached to', container.id);
 
     // Initial check
     handleScroll();
 
     // Reset on route change
     const handleRouteChange = () => {
-      console.log('[BackToTop] Route change, resetting visibility');
       setIsVisible(false);
       // Re-attach to new container after route change
       setTimeout(() => {
         const newContainer = getScrollContainer();
         if (newContainer && newContainer !== scrollContainerRef.current) {
-          console.log('[BackToTop] Re-attaching to new container');
           if (scrollContainerRef.current) {
             scrollContainerRef.current.removeEventListener('scroll', handleScroll);
           }
@@ -177,12 +111,6 @@ const BackToTop = () => {
     router.events.on('routeChangeComplete', handleRouteChange);
 
     return () => {
-      console.log('[BackToTop] Cleanup: removing listeners');
-      // Remove diagnostic listeners
-      scrollListeners.forEach(({ element, handler }) => {
-        element.removeEventListener('scroll', handler);
-      });
-      // Remove main listener
       if (scrollContainerRef.current) {
         scrollContainerRef.current.removeEventListener('scroll', handleScroll);
       }
@@ -190,13 +118,8 @@ const BackToTop = () => {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
     };
   }, [getScrollContainer, handleScroll, router]);
-
-  console.log('[BackToTop] Render: isVisible =', isVisible, 'className will be:', `${styles.button} ${isVisible ? styles.visible : ''}`);
 
   return (
     <button
