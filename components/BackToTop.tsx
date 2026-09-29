@@ -4,7 +4,6 @@ import styles from '@/styles/BackToTop.module.css';
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [opacity, setOpacity] = useState(1);
-  const [isOverlapping, setIsOverlapping] = useState(false);
 
   // Get the actual scroll container
   const getScrollContainer = useCallback(() => {
@@ -49,12 +48,6 @@ const BackToTop = () => {
     const scrollTop = container === window 
       ? window.scrollY 
       : container.scrollTop;
-    const scrollHeight = container === window 
-      ? document.documentElement.scrollHeight 
-      : container.scrollHeight;
-    const clientHeight = container === window 
-      ? window.innerHeight 
-      : container.clientHeight;
 
     // Show button after scrolling down 200px
     if (scrollTop > 200) {
@@ -66,7 +59,6 @@ const BackToTop = () => {
     // Check overlap using requestAnimationFrame for performance
     requestAnimationFrame(() => {
       const overlapping = checkOverlap();
-      setIsOverlapping(overlapping);
       setOpacity(overlapping ? 0.5 : 1);
     });
   }, [getScrollContainer, checkOverlap]);

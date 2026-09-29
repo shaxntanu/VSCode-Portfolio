@@ -15,14 +15,15 @@ const ScrollProgress = () => {
 
   const updateProgress = useCallback(() => {
     const container = getScrollContainer();
+    const isWindow = container === window;
     
-    const scrollTop = container === window 
+    const scrollTop = isWindow 
       ? window.scrollY 
       : container.scrollTop;
-    const scrollHeight = container === window 
+    const scrollHeight = isWindow 
       ? document.documentElement.scrollHeight 
       : container.scrollHeight;
-    const clientHeight = container === window 
+    const clientHeight = isWindow 
       ? window.innerHeight 
       : container.clientHeight;
 
@@ -47,8 +48,6 @@ const ScrollProgress = () => {
   }, [getScrollContainer]);
 
   useEffect(() => {
-    const container = getScrollContainer();
-    
     // Start animation loop
     animationFrameRef.current = requestAnimationFrame(updateProgress);
 
@@ -68,7 +67,7 @@ const ScrollProgress = () => {
       // Clean up CSS variable
       document.documentElement.style.removeProperty('--scroll-progress');
     };
-  }, [router, getScrollContainer, updateProgress]);
+  }, [router, updateProgress]);
 
   return <div className={styles.progressBar} />;
 };
