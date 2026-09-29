@@ -45,7 +45,7 @@
     gap: 0;
     padding: 0;
     border-bottom: 1px solid var(--explorer-border);
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--explorer-bg, rgba(0, 0, 0, 0.2));
     flex-shrink: 0;
     overflow-x: auto;
 }

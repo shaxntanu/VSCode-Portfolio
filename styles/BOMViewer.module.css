@@ -84,7 +84,7 @@
 
 .architectureDiagram {
     padding: 0.5rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--explorer-bg, rgba(0, 0, 0, 0.2));
     border-left: 2px solid var(--accent-color);
     font-family: 'Fira Code', monospace;
     font-size: 0.65rem;
@@ -335,7 +335,7 @@
     flex: 1;
     padding: 1.5rem;
     overflow-y: auto;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--explorer-bg, rgba(0, 0, 0, 0.2));
     position: relative;
     z-index: 1;
 }

@@ -114,7 +114,7 @@
 
 .themeSwitchSpot {
   position: absolute;
-  background: rgba(0, 0, 0, 0.15);
+  background: var(--explorer-hover-bg, rgba(0, 0, 0, 0.15));
   border-radius: 50%;
   opacity: 0;
   transition: opacity var(--anim-duration) ease;
