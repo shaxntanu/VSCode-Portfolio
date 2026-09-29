@@ -88,6 +88,21 @@
   min-width: 0;
 }
 
+.heatmapGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmapRow {
+  display: flex;
+  gap: 3px;
+}
+
+.heatmapCell {
+  border-radius: 2px;
+}
+
 .select {
   flex-shrink: 0;
 }

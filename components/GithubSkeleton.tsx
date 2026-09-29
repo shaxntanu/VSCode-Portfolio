@@ -30,7 +30,21 @@ const GithubSkeleton = () => {
           <Skeleton variant="text" width="180px" height="20px" className={styles.sectionTitle} />
           <div className={styles.contributionWrapper}>
             <div className={styles.contributionGraph}>
-              <Skeleton variant="rectangular" width="100%" height="120px" />
+              <div className={styles.heatmapGrid}>
+                {[...Array(7)].map((_, row) => (
+                  <div key={row} className={styles.heatmapRow}>
+                    {[...Array(52)].map((_, col) => (
+                      <Skeleton
+                        key={col}
+                        variant="rectangular"
+                        width="10px"
+                        height="10px"
+                        className={styles.heatmapCell}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
             <Skeleton variant="rectangular" width="120px" height="32px" className={styles.select} />
           </div>
