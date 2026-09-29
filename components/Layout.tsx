@@ -14,7 +14,6 @@ import Terminal from '@/components/Terminal/Terminal';
 import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
 import PortfolioStatsModal from '@/components/PortfolioStatsModal';
 import PortfolioCompanion from '@/components/PortfolioCompanion';
-import BackToTop from '@/components/BackToTop';
 import ScrollProgress from '@/components/ScrollProgress';
 import { FolderProvider } from '@/contexts/FolderContext';
 import { UIStateProvider, useUIState } from '@/contexts/UIStateContext';
