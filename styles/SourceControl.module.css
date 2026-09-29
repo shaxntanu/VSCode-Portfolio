@@ -4,7 +4,7 @@
     border-radius: 8px;
     overflow: hidden;
     font-family: 'JetBrains Mono', monospace;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
     max-height: 600px;
     overflow-y: auto;
 }
@@ -21,20 +21,20 @@
 .title {
     font-weight: 600;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
 }
 
 .closeBtn {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.5));
     cursor: pointer;
     padding: 0 0.5rem;
     transition: color 0.2s ease;
 }
 
 .closeBtn:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
 }
 
 .stats {
@@ -53,7 +53,7 @@
 }
 
 .label {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.5));
 }
 
 .value {
@@ -96,15 +96,15 @@
 
 .commitContent {
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.05));
     border-radius: 4px;
     transition: all 0.2s ease;
 }
 
 .commitContent:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--explorer-active-bg, rgba(255, 255, 255, 0.08));
+    border-color: var(--border, rgba(255, 255, 255, 0.1));
 }
 
 .commitHeader {
@@ -123,7 +123,7 @@
 
 .date {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted, rgba(255, 255, 255, 0.4));
     white-space: nowrap;
 }
 
@@ -137,16 +137,16 @@
 .tag {
     display: inline-block;
     padding: 0.25rem 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.1));
     border-radius: 3px;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
 }
 
 .expandedDetails {
     margin-top: 0.75rem;
     padding-top: 0.75rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.05));
 }
 
 .impact,
@@ -167,7 +167,7 @@
 
 .impact .text,
 .details .text {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
 }
 
 @media (max-width: 600px) {
