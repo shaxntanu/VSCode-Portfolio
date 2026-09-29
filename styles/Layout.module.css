@@ -39,6 +39,7 @@
 .content {
     scrollbar-width: 10px;
     scrollbar-color: var(--accent-color);
+    position: relative;
 }
 
 .content::-webkit-scrollbar {
