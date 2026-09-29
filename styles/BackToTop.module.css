@@ -1,23 +1,24 @@
 .button {
   position: absolute;
-  left: 16px;
-  bottom: 24px;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  left: 212px;
+  bottom: 16px;
+  width: 168px;
+  height: 36px;
+  border-radius: 4px;
   background-color: rgb(30, 30, 30);
   border: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   cursor: pointer;
   overflow: hidden;
   z-index: 10;
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
-  transition: opacity 220ms ease, transform 220ms ease, background-color 180ms ease, border-color 180ms ease;
+  transition: opacity 200ms ease, transform 200ms ease, background-color 150ms ease, border-color 150ms ease;
 }
 
 .button.visible {
@@ -36,13 +37,20 @@
 }
 
 .svgIcon {
-  width: 16px;
-  height: 16px;
-  transition: transform 180ms ease;
+  width: 14px;
+  height: 14px;
+  transition: transform 150ms ease;
 }
 
 .svgIcon path {
   fill: rgba(255, 255, 255, 0.9);
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
 }
 
 .button:hover .svgIcon {
