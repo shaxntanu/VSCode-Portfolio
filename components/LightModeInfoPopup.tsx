@@ -27,7 +27,7 @@ const LightModeInfoPopup = ({ onClose }: LightModeInfoPopupProps) => {
           </p>
           
           <p className={styles.paragraph}>
-            This implementation maintains the portfolio's original structure and functionality while offering an alternative visual experience. All dark themes remain available and can be restored at any time through the Settings page.
+            This implementation maintains the portfolio&apos;s original structure and functionality while offering an alternative visual experience. All dark themes remain available and can be restored at any time through the Settings page.
           </p>
           
           <div className={styles.divider}></div>
