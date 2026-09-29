@@ -104,7 +104,51 @@ const BackToTop = () => {
       clientHeight: container.clientHeight
     });
 
-    // Add scroll listener to main-editor
+    // DIAGNOSTIC: Find all scrollable elements in the DOM
+    console.log('[BackToTop] === DIAGNOSTIC: Finding all scrollable elements ===');
+    const allElements = document.querySelectorAll('*');
+    const scrollableElements: HTMLElement[] = [];
+
+    allElements.forEach((el: any) => {
+      const computed = getComputedStyle(el);
+      const overflowY = computed.overflowY;
+      const scrollHeight = el.scrollHeight;
+      const clientHeight = el.clientHeight;
+
+      if ((overflowY === 'auto' || overflowY === 'scroll') && scrollHeight > clientHeight) {
+        scrollableElements.push(el);
+        console.log(
+          '[SCROLLABLE ELEMENT]',
+          el.tagName,
+          'id=', el.id,
+          'class=', el.className,
+          'scrollTop=', el.scrollTop,
+          'scrollHeight=', scrollHeight,
+          'clientHeight=', clientHeight,
+          'overflowY=', overflowY
+        );
+      }
+    });
+
+    console.log('[BackToTop] Found', scrollableElements.length, 'scrollable elements');
+
+    // Attach scroll listeners to all scrollable elements to see which one actually changes
+    const scrollListeners: { element: HTMLElement; handler: () => void }[] = [];
+    scrollableElements.forEach((el) => {
+      const handler = () => {
+        console.log(
+          '[ACTUAL SCROLL]',
+          el.tagName,
+          'id=', el.id,
+          'class=', el.className,
+          'scrollTop=', el.scrollTop
+        );
+      };
+      el.addEventListener('scroll', handler, { passive: true });
+      scrollListeners.push({ element: el, handler });
+    });
+
+    // Add scroll listener to main-editor (existing behavior)
     container.addEventListener('scroll', handleScroll, { passive: true });
     console.log('[BackToTop] Scroll listener attached to', container.id);
 
@@ -133,7 +177,12 @@ const BackToTop = () => {
     router.events.on('routeChangeComplete', handleRouteChange);
 
     return () => {
-      console.log('[BackToTop] Cleanup: removing listener');
+      console.log('[BackToTop] Cleanup: removing listeners');
+      // Remove diagnostic listeners
+      scrollListeners.forEach(({ element, handler }) => {
+        element.removeEventListener('scroll', handler);
+      });
+      // Remove main listener
       if (scrollContainerRef.current) {
         scrollContainerRef.current.removeEventListener('scroll', handleScroll);
       }
