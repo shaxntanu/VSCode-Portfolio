@@ -6,23 +6,28 @@ import styles from '@/styles/SettingsPage.module.css';
 
 const SettingsPage = () => {
   const [liteMode, setLiteMode] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
 
   useEffect(() => {
     const savedLiteMode = localStorage.getItem('liteMode') === 'true';
     setLiteMode(savedLiteMode);
+
+    const savedTheme = localStorage.getItem('theme') || 'ayu-dark';
+    const lightThemes = ['light', 'light-plus', 'github-light', 'vscode-light'];
+    setIsLightMode(lightThemes.includes(savedTheme));
   }, []);
 
   const toggleLiteMode = () => {
     const newLiteMode = !liteMode;
     setLiteMode(newLiteMode);
     localStorage.setItem('liteMode', String(newLiteMode));
-    
+
     if (newLiteMode) {
       document.documentElement.setAttribute('data-lite-mode', 'true');
     } else {
       document.documentElement.removeAttribute('data-lite-mode');
     }
-    
+
     // Reload to apply changes
     window.location.reload();
   };
@@ -36,7 +41,7 @@ const SettingsPage = () => {
             <h3>Lite Mode</h3>
             <p>Disable animations and effects for better performance</p>
           </div>
-          <button 
+          <button
             onClick={toggleLiteMode}
             className={`${styles.toggleButton} ${liteMode ? styles.active : ''}`}
           >
@@ -92,6 +97,11 @@ const SettingsPage = () => {
             theme="night-owl"
           />
         </div>
+        {isLightMode && (
+          <p className={styles.lightModeNotice}>
+            Themes are only available in Dark Mode.
+          </p>
+        )}
       </div>
     </div>
   );

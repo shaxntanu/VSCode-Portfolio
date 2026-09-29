@@ -1,0 +1,118 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: var(--card-bg, #1f2430);
+  border: 1px solid var(--border, #2a3342);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 32px var(--shadow, rgba(0, 0, 0, 0.3));
+}
+
+.icon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: var(--text-color, #efefef);
+  text-align: center;
+}
+
+.message {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.cancelButton,
+.confirmButton {
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
+  border: none;
+}
+
+.cancelButton {
+  background: var(--explorer-hover-bg, #242b38);
+  color: var(--text-color, #efefef);
+  border: 1px solid var(--border, #2a3342);
+}
+
+.cancelButton:hover {
+  background: var(--explorer-active-bg, #2a3342);
+  transform: translateY(-1px);
+}
+
+.confirmButton {
+  background: var(--button-bg, #e6b450);
+  color: var(--button-text, #0a0e14);
+}
+
+.confirmButton:hover {
+  background: var(--button-hover, #d4a23e);
+  transform: translateY(-1px);
+}
+
+/* Light mode overrides */
+[data-theme='light'] .modal {
+  background: var(--card-bg, #ffffff);
+  border-color: var(--border, #e0e0e0);
+  box-shadow: 0 8px 32px var(--shadow, rgba(0, 0, 0, 0.15));
+}
+
+[data-theme='light'] .title {
+  color: var(--text-color, #333333);
+}
+
+[data-theme='light'] .message {
+  color: var(--text-secondary, #666666);
+}
+
+[data-theme='light'] .cancelButton {
+  background: var(--explorer-hover-bg, #f5f5f5);
+  color: var(--text-color, #333333);
+  border-color: var(--border, #e0e0e0);
+}
+
+[data-theme='light'] .cancelButton:hover {
+  background: var(--explorer-active-bg, #e8e8e8);
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cancelButton,
+  .confirmButton {
+    transition: none;
+  }
+
+  .cancelButton:hover,
+  .confirmButton:hover {
+    transform: none;
+  }
+}

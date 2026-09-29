@@ -42,8 +42,17 @@
 .info h5 {
     font-size: 0.75rem;
     margin: 0 0 0.75rem 0;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
     font-weight: 400;
+}
+
+.container.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.container.disabled button {
+    cursor: not-allowed;
 }
 
 .info button {

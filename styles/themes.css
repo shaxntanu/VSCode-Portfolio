@@ -160,29 +160,57 @@
     --article-bg: #031d33;
 }
 
-/* Light Theme */
+/* Light Theme - Complete VS Code Light+ inspired */
 [data-theme='light'] {
     --main-bg: #ffffff;
-    --bg-text: #f0f0f0;
-    --text-color: #1a1a1a;
+    --bg-text: #f5f5f5;
+    --text-color: #333333;
+    --text-secondary: #666666;
+    --text-muted: #999999;
     --accent-color: #0066cc;
     --accent-color-rgb: 0, 102, 204;
+    --accent-hover: #0052a3;
     --titlebar-bg: #f3f3f3;
+    --titlebar-border: #e0e0e0;
     --sidebar-bg: #f3f3f3;
     --sidebar-hover-bg: #e8e8e8;
     --explorer-bg: #ffffff;
     --explorer-hover-bg: #f5f5f5;
     --explorer-border: #e0e0e0;
+    --explorer-active-bg: #e8f4fd;
     --tabs-bg: #f3f3f3;
-    --tab-bg: #ffffff;
+    --tab-bg: #f3f3f3;
     --tab-active-bg: #ffffff;
     --tab-border: #d4d4d4;
-    --bottombar-bg: #f3f3f3;
-    --bottombar-border: #e0e0e0;
+    --tab-active-border: #0066cc;
+    --bottombar-bg: #007acc;
+    --bottombar-border: #005a9e;
+    --bottombar-text: #ffffff;
     --button-bg: #0066cc;
     --button-text: #ffffff;
-    --bottombar-hover-bg: #e0e0e0;
+    --button-hover: #0052a3;
+    --bottombar-hover-bg: #005a9e;
     --scrollbar-track-bg: #f0f0f0;
     --scrollbar-thumb-bg: #c0c0c0;
+    --scrollbar-thumb-hover: #a0a0a0;
     --article-bg: #ffffff;
+    --card-bg: #ffffff;
+    --card-border: #e0e0e0;
+    --card-hover-bg: #f9f9f9;
+    --input-bg: #ffffff;
+    --input-border: #d0d0d0;
+    --input-focus: #0066cc;
+    --border: #e0e0e0;
+    --border-subtle: #f0f0f0;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-subtle: rgba(0, 0, 0, 0.05);
+    --code-bg: #f5f5f5;
+    --code-text: #333333;
+    --link-color: #0066cc;
+    --link-hover: #0052a3;
+    --success: #28a745;
+    --warning: #ffc107;
+    --error: #dc3545;
+    --badge-bg: #e8f4fd;
+    --badge-text: #0066cc;
 }

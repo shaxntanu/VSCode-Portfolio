@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import LightModeWarningModal from './LightModeWarningModal';
 import styles from '@/styles/ThemeSwitch.module.css';
 
 const ThemeSwitch = () => {
   const [isDark, setIsDark] = useState(true);
+  const [showWarning, setShowWarning] = useState(false);
+  const [pendingTheme, setPendingTheme] = useState<'dark' | 'light' | null>(null);
 
   useEffect(() => {
     // Check current theme - if it's a light theme, set to false
@@ -13,24 +16,60 @@ const ThemeSwitch = () => {
 
   const handleThemeToggle = () => {
     const newIsDark = !isDark;
-    setIsDark(newIsDark);
-    
-    // Toggle between a real light theme and dark theme
-    if (newIsDark) {
-      document.documentElement.setAttribute('data-theme', 'ayu-dark');
-      localStorage.setItem('theme', 'ayu-dark');
+
+    if (!newIsDark) {
+      // Switching to Light Mode - show warning
+      setPendingTheme('light');
+      setShowWarning(true);
     } else {
+      // Switching to Dark Mode - immediate
+      applyTheme('dark');
+    }
+  };
+
+  const applyTheme = (theme: 'dark' | 'light') => {
+    if (theme === 'dark') {
+      // Restore the previously saved dark theme, or default to ayu-dark
+      const savedDarkTheme = localStorage.getItem('savedDarkTheme') || 'ayu-dark';
+      document.documentElement.setAttribute('data-theme', savedDarkTheme);
+      localStorage.setItem('theme', savedDarkTheme);
+      setIsDark(true);
+    } else {
+      // Save current dark theme before switching
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme && !['light', 'light-plus', 'github-light', 'vscode-light'].includes(currentTheme)) {
+        localStorage.setItem('savedDarkTheme', currentTheme);
+      }
       document.documentElement.setAttribute('data-theme', 'light');
       localStorage.setItem('theme', 'light');
+      setIsDark(false);
     }
-    
+
     // Dispatch theme change event
     window.dispatchEvent(new Event('themeChange'));
     window.dispatchEvent(new Event('themeChanged'));
   };
 
+  const handleConfirmLightMode = () => {
+    setShowWarning(false);
+    if (pendingTheme === 'light') {
+      applyTheme('light');
+    }
+    setPendingTheme(null);
+  };
+
+  const handleCancelLightMode = () => {
+    setShowWarning(false);
+    setPendingTheme(null);
+  };
+
   return (
     <>
+      <LightModeWarningModal
+        isOpen={showWarning}
+        onConfirm={handleConfirmLightMode}
+        onCancel={handleCancelLightMode}
+      />
       <svg
         style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}
         aria-hidden="true"
