@@ -1,5 +1,5 @@
 import { VscClose, VscFile } from 'react-icons/vsc';
-import styles from '@/styles/SoftwareInfoPopup.module.css';
+import styles from '@/styles/LightModeInfoPopup.module.css';
 
 interface LightModeInfoPopupProps {
   onClose: () => void;
