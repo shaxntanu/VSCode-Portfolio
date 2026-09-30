@@ -102,6 +102,19 @@ const SettingsPage = () => {
             Themes are only available in Dark Mode.
           </p>
         )}
+        {isLightMode && (
+          <p className={styles.themeCredit}>
+            Light Mode inspired by{' '}
+            <a 
+              href="https://github.com/atom/one-light-ui" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.creditLink}
+            >
+              atom/one-light-ui
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );
