@@ -130,6 +130,7 @@ const GithubPage = ({
     },
     scales: {
       x: {
+        type: 'linear' as const,
         beginAtZero: true,
         ticks: {
           callback: (value: any) => value + '%',
