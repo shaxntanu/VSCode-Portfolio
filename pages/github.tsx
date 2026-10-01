@@ -4,9 +4,18 @@ import GitHubCalendar from 'react-github-calendar';
 import GithubSkeleton from '@/components/GithubSkeleton';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
-import { useState, useRef } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { useState, useRef, useEffect } from 'react';
 import { getLanguageColor, formatBytes } from '@/utils/languageColors';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
 interface LanguageData {
   name: string;
@@ -39,6 +48,11 @@ const GithubPage = ({
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Register Chart.js components
+  useEffect(() => {
+    ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+  }, []);
   
   const calendarTheme = {
     dark: [
@@ -78,23 +92,50 @@ const GithubPage = ({
     }, 500); // 0.5 second delay
   };
 
-  // Custom tooltip for language chart
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className={styles.tooltip}>
-          <p className={styles.tooltipLabel}>{data.name}</p>
-          <p className={styles.tooltipValue}>
-            {data.percentage >= 0.01 
-              ? `${data.percentage.toFixed(2)}%` 
-              : `${data.percentage.toFixed(4)}%`}
-          </p>
-          <p className={styles.tooltipBytes}>{formatBytes(data.bytes)}</p>
-        </div>
-      );
-    }
-    return null;
+  // Prepare chart data for all languages
+  const chartData = {
+    labels: languages.map((lang) => lang.name),
+    datasets: [
+      {
+        label: 'Percentage',
+        data: languages.map((lang) => lang.percentage),
+        backgroundColor: languages.map((lang) => lang.color),
+        borderColor: languages.map((lang) => lang.color),
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    indexAxis: 'y' as const,
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: (context: any) => {
+            const value = context.raw;
+            const langIndex = context.dataIndex;
+            const bytes = languages[langIndex].bytes;
+            return [
+              `Percentage: ${value >= 0.01 ? value.toFixed(2) + '%' : value.toFixed(4) + '%'}`,
+              `Bytes: ${formatBytes(bytes)}`,
+            ];
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        ticks: {
+          callback: (value: any) => value + '%',
+        },
+      },
+    },
   };
 
   // Show skeleton if no user data is available
@@ -230,30 +271,11 @@ const GithubPage = ({
               Languages detected across my repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes.
             </p>
             
-            {/* Pie Chart */}
+            {/* Bar Chart - All Languages */}
             <div className={styles.chartSection}>
-              <ResponsiveContainer width="100%" height={400}>
-                <PieChart>
-                  <Pie
-                    data={languages.slice(0, 10)}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={(props: any) => {
-                      const { name, percentage } = props;
-                      return percentage > 3 ? `${name} ${percentage.toFixed(1)}%` : '';
-                    }}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    dataKey="percentage"
-                  >
-                    {languages.slice(0, 10).map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip content={<CustomTooltip />} />
-                </PieChart>
-              </ResponsiveContainer>
+              <div style={{ height: `${Math.max(400, languages.length * 35)}px` }}>
+                <Bar data={chartData} options={chartOptions} />
+              </div>
             </div>
 
             {/* Language List */}
