@@ -126,14 +126,6 @@ const GithubPage = ({
         },
       },
     },
-    scales: {
-      x: {
-        beginAtZero: true,
-        ticks: {
-          callback: (value: any) => value + '%',
-        },
-      },
-    },
   };
 
   // Show skeleton if no user data is available
