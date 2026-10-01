@@ -23,7 +23,8 @@ const certificateData: CertificateCategory[] = [
       {
         provider: "ELC Thapar",
         courses: [
-          { name: "Geometrical Shape Detection Using Python", url: "https://drive.google.com/file/d/1REfRVbNwPe1F2IFPOBTny1fCYRTbOdnq/view?usp=sharing", tags: ["#ComputerVision", "#OpenCV", "#ImageProcessing"] }
+          { name: "Geometrical Shape Detection Using Python", url: "https://drive.google.com/file/d/1REfRVbNwPe1F2IFPOBTny1fCYRTbOdnq/view?usp=sharing", tags: ["#ComputerVision", "#OpenCV", "#ImageProcessing"] },
+          { name: "DC Power Supply Design", url: "https://drive.google.com/file/d/1FSywrxY8VtJcr7fklcgQwK2qmxjC2p16/view?usp=sharing", tags: ["#PowerElectronics", "#CircuitDesign", "#DC PowerSupply"] }
         ]
       },
       {
