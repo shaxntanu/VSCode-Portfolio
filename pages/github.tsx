@@ -9,7 +9,7 @@ import { getLanguageColor, formatBytes } from '@/utils/languageColors';
 import {
   Chart as ChartJS,
   CategoryScale,
-  LinearScale,
+  LogarithmicScale,
   BarElement,
   Title,
   Tooltip,
@@ -18,7 +18,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 
 // Register Chart.js components at module level
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LogarithmicScale, BarElement, Title, Tooltip, Legend);
 
 interface LanguageData {
   name: string;
@@ -123,6 +123,15 @@ const GithubPage = ({
               `Bytes: ${formatBytes(bytes)}`,
             ];
           },
+        },
+      },
+    },
+    scales: {
+      x: {
+        type: 'logarithmic' as const,
+        beginAtZero: false,
+        ticks: {
+          callback: (value: any) => value + '%',
         },
       },
     },
