@@ -4,7 +4,7 @@ import GitHubCalendar from 'react-github-calendar';
 import GithubSkeleton from '@/components/GithubSkeleton';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { getLanguageColor, formatBytes } from '@/utils/languageColors';
 import {
   Chart as ChartJS,
@@ -16,6 +16,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+
+// Register Chart.js components at module level
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 interface LanguageData {
   name: string;
@@ -48,11 +51,6 @@ const GithubPage = ({
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  // Register Chart.js components
-  useEffect(() => {
-    ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-  }, []);
   
   const calendarTheme = {
     dark: [
@@ -130,7 +128,6 @@ const GithubPage = ({
     },
     scales: {
       x: {
-        type: 'linear' as const,
         beginAtZero: true,
         ticks: {
           callback: (value: any) => value + '%',
