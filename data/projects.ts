@@ -745,7 +745,7 @@ export const projects: Project[] = [
   },
   {
     title: 'RoleForge',
-    description: 'AI-powered resume generation pipeline with schema-driven templates, ATS optimization, and multi-format output support.',
+    description: 'Agentic career compiler that transforms portfolio codebases into job-specific applications. Analyzes repositories, extracts verifiable evidence, matches to job requirements, and generates tailored resumes and CVs with truth validation.',
     logo: '/logos/claude_icon.svg',
     link: 'https://github.com/shaxntanu/roleforge',
     slug: 'roleforge',
