@@ -743,6 +743,16 @@ export const projects: Project[] = [
     fundedPrototype: true,
     badgeType: 'college'
   },
+  {
+    title: 'RoleForge',
+    description: 'AI-powered resume generation pipeline with schema-driven templates, ATS optimization, and multi-format output support.',
+    logo: '/logos/claude_icon.svg',
+    link: 'https://github.com/shaxntanu/roleforge',
+    slug: 'roleforge',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Sep 2026 - Present',
+    year: 2026,
+  },
   // Mini Builds
   {
     title: 'Computer Always Awake',
