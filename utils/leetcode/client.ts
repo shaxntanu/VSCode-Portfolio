@@ -20,34 +20,38 @@ export async function fetchLeetCodeUser(): Promise<LeetCodeUserResponse | null> 
   // Check cache first
   const cached = getCached<LeetCodeUserResponse>(CACHE_KEY_USER);
   if (cached) {
+    console.log('Returning cached user data');
     return cached;
   }
 
   try {
     // Fetch user data using leetcode-query
+    // This returns UserProfile type which includes matchedUser and recentSubmissionList
     const userData = await leetcode.user(LEETCODE_USERNAME);
     
-    if (!userData) {
+    console.log('LeetCode user() response:', JSON.stringify(userData, null, 2));
+    
+    if (!userData || !userData.matchedUser) {
+      console.log('No matched user in response');
       return null;
     }
 
-    // The leetcode-query library returns data with the structure we need
-    // Transform to our response format for consistency
+    // Transform to our response format
     const response: LeetCodeUserResponse = {
       data: {
         matchedUser: {
-          username: userData.matchedUser?.username || LEETCODE_USERNAME,
+          username: userData.matchedUser.username || LEETCODE_USERNAME,
           submitStats: {
-            acSubmissionNum: (userData.matchedUser?.submitStats?.acSubmissionNum || []).map((stat: any) => ({
+            acSubmissionNum: (userData.matchedUser.submitStats?.acSubmissionNum || []).map((stat: any) => ({
               difficulty: stat.difficulty as 'All' | 'Easy' | 'Medium' | 'Hard',
               count: stat.count,
               submissions: stat.submissions
             }))
           },
           profile: {
-            realName: userData.matchedUser?.profile?.realName,
-            userAvatar: userData.matchedUser?.profile?.userAvatar || '',
-            userSlug: userData.matchedUser?.username || LEETCODE_USERNAME
+            realName: userData.matchedUser.profile?.realName,
+            userAvatar: userData.matchedUser.profile?.userAvatar || '',
+            userSlug: userData.matchedUser.username || LEETCODE_USERNAME
           }
         }
       }
@@ -70,22 +74,30 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
   // Check cache first
   const cached = getCached<LeetCodeRecentSubmissionsResponse>(CACHE_KEY_SUBMISSIONS);
   if (cached) {
+    console.log('Returning cached submissions');
     return cached;
   }
 
   try {
-    // Fetch recent submissions using leetcode-query
-    // The library returns an array of submissions directly
-    const submissions = await leetcode.recent_submissions(LEETCODE_USERNAME, limit);
+    // Fetch user data which includes recent submissions
+    const userData = await leetcode.user(LEETCODE_USERNAME);
     
-    console.log('LeetCode recent_submissions response:', submissions);
+    console.log('User data for submissions:', JSON.stringify(userData?.recentSubmissionList, null, 2));
     
-    if (!submissions || !Array.isArray(submissions)) {
-      console.log('Invalid submissions response:', submissions);
-      return null;
+    if (!userData || !userData.recentSubmissionList) {
+      console.log('No recent submissions in user response');
+      // Return empty array structure instead of null
+      return {
+        data: {
+          recentAcSubmissionList: []
+        }
+      };
     }
 
-    // Even if empty array, return valid structure
+    // The recent_submissions() method returns RecentSubmission[] directly
+    // But user() method has recentSubmissionList in the response
+    const submissions = userData.recentSubmissionList.slice(0, limit);
+
     // Transform to our response format
     const response: LeetCodeRecentSubmissionsResponse = {
       data: {
@@ -94,7 +106,8 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
           titleSlug: sub.titleSlug || '',
           status: sub.statusDisplay || 'Accepted',
           lang: sub.lang || '',
-          difficulty: (sub.difficulty || 'Medium') as 'Easy' | 'Medium' | 'Hard',
+          // Try to infer difficulty from the title or default to Medium
+          difficulty: 'Medium' as 'Easy' | 'Medium' | 'Hard',
           timestamp: sub.timestamp ? parseInt(sub.timestamp) : Date.now()
         }))
       }
@@ -107,6 +120,11 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
     return response;
   } catch (error) {
     console.error('Error fetching LeetCode recent submissions:', error);
-    return null;
+    // Return empty array instead of null
+    return {
+      data: {
+        recentAcSubmissionList: []
+      }
+    };
   }
 }
