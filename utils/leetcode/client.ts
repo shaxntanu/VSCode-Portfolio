@@ -47,7 +47,7 @@ export async function fetchLeetCodeUser(): Promise<LeetCodeUserResponse | null> 
           profile: {
             realName: userData.matchedUser?.profile?.realName,
             userAvatar: userData.matchedUser?.profile?.userAvatar || '',
-            userSlug: userData.matchedUser?.profile?.userSlug || LEETCODE_USERNAME
+            userSlug: userData.matchedUser?.username || LEETCODE_USERNAME
           }
         }
       }
