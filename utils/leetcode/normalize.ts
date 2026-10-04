@@ -24,7 +24,7 @@ export function normalizeUserData(userData: LeetCodeUserResponse): LeetCodeStats
     ? (allStat.count / allStat.submissions) * 100
     : undefined;
 
-  return {
+  const stats: LeetCodeStats = {
     username: matchedUser.username,
     totalSolved: allStat?.count || 0,
     easySolved: easyStat?.count || 0,
@@ -36,13 +36,14 @@ export function normalizeUserData(userData: LeetCodeUserResponse): LeetCodeStats
     easyTotal: 800,
     mediumTotal: 1700,
     hardTotal: 700,
-    acceptanceRate,
-    // Additional fields that may be populated later
-    ranking: undefined,
-    rating: undefined,
-    currentStreak: undefined,
-    longestStreak: undefined,
   };
+
+  // Only add optional fields if they have values (Next.js doesn't allow undefined in props)
+  if (acceptanceRate !== undefined) {
+    stats.acceptanceRate = acceptanceRate;
+  }
+
+  return stats;
 }
 
 /**
