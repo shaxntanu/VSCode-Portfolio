@@ -132,7 +132,7 @@ const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePag
             <p className={styles.placeholderText}>
               {error
                 ? 'Unable to load recent problems.'
-                : 'No recent submissions available.'}
+                : 'Recent submissions are not publicly available through LeetCode\'s API. Visit your profile to see detailed submission history.'}
             </p>
           )}
         </div>

@@ -20,7 +20,6 @@ export async function fetchLeetCodeUser(): Promise<LeetCodeUserResponse | null> 
   // Check cache first
   const cached = getCached<LeetCodeUserResponse>(CACHE_KEY_USER);
   if (cached) {
-    console.log('Returning cached user data');
     return cached;
   }
 
@@ -29,10 +28,7 @@ export async function fetchLeetCodeUser(): Promise<LeetCodeUserResponse | null> 
     // This returns UserProfile type which includes matchedUser and recentSubmissionList
     const userData = await leetcode.user(LEETCODE_USERNAME);
     
-    console.log('LeetCode user() response:', JSON.stringify(userData, null, 2));
-    
     if (!userData || !userData.matchedUser) {
-      console.log('No matched user in response');
       return null;
     }
 
@@ -74,7 +70,6 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
   // Check cache first
   const cached = getCached<LeetCodeRecentSubmissionsResponse>(CACHE_KEY_SUBMISSIONS);
   if (cached) {
-    console.log('Returning cached submissions');
     return cached;
   }
 
@@ -82,10 +77,7 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
     // Fetch user data which includes recent submissions
     const userData = await leetcode.user(LEETCODE_USERNAME);
     
-    console.log('User data for submissions:', JSON.stringify(userData?.recentSubmissionList, null, 2));
-    
     if (!userData || !userData.recentSubmissionList) {
-      console.log('No recent submissions in user response');
       // Return empty array structure instead of null
       return {
         data: {
@@ -112,8 +104,6 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
         }))
       }
     };
-
-    console.log('Normalized submissions:', response);
 
     // Cache the response
     setCached(CACHE_KEY_SUBMISSIONS, response);
