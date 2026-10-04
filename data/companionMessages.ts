@@ -75,6 +75,10 @@ export const routeMessages: Record<string, RouteMessage> = {
   '/keysprint': {
     message: "Testing typing speed. Developer productivity matters.",
     animation: 'curious'
+  },
+  '/leetcode': {
+    message: "Let's see how you're doing on the algorithm side.",
+    animation: 'curious'
   }
 };
 

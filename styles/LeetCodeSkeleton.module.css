@@ -1,0 +1,181 @@
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    align-self: flex-start;
+    height: var(--page-height);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.profileSection {
+    margin-bottom: 3rem;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    border-radius: 50%;
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.name {
+    margin-bottom: 0.5rem;
+}
+
+.bio {
+    margin-top: 0.5rem;
+}
+
+.statsGrid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.statCard {
+    background: var(--article-bg);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+}
+
+.statNumber {
+    margin-bottom: 0.25rem;
+}
+
+.statLabel {
+    margin-top: 0.25rem;
+}
+
+.progressSection {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    margin-bottom: 1rem;
+}
+
+.progressContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progressBar {
+    flex: 1;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.progressText {
+    min-width: 60px;
+}
+
+.activitySection {
+    margin-bottom: 2rem;
+}
+
+.heatmapPlaceholder {
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.problemsSection {
+    margin-top: 2rem;
+}
+
+.problemList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.problemItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--article-bg);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+}
+
+.problemTitle {
+    margin-bottom: 0.25rem;
+}
+
+.problemDifficulty {
+    margin-top: 0.25rem;
+}
+
+.repositorySection {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+}
+
+.repoLink {
+    width: 200px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .statsGrid {
+        justify-content: center;
+    }
+
+    .statCard {
+        min-width: 80px;
+        padding: 0.75rem 1rem;
+    }
+
+    .progressContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .progressText {
+        text-align: center;
+    }
+
+    .problemItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}

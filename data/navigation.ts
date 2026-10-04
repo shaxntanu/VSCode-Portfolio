@@ -33,6 +33,7 @@ export const navFolders: NavFolder[] = [
       { name: 'circuits.sch', path: '/circuits', icon: '/logos/circuit_icon.svg' },
       { name: 'coursework.log', path: '/coursework', icon: '/logos/log_icon.svg' },
       { name: 'github.md', path: '/github', icon: '/logos/markdown_icon.svg' },
+      { name: 'leetcode.stats', path: '/leetcode', icon: '/logos/leetcode_icon.svg' },
     ],
   },
   {

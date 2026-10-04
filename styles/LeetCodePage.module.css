@@ -1,0 +1,267 @@
+.container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    align-self: flex-start;
+    height: var(--page-height);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.profileSection {
+    margin-bottom: 3rem;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leetcodeLogo {
+    filter: drop-shadow(0 0 8px rgba(255, 161, 22, 0.3));
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.bio {
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 1rem;
+    margin: 0.5rem 0 0 0;
+    max-width: 500px;
+}
+
+.statsGrid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.statCard {
+    background: var(--article-bg);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+}
+
+.statNumber {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.statLabel {
+    font-size: 0.85rem;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+    margin-top: 0.25rem;
+}
+
+.progressSection {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.progressContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progressBar {
+    flex: 1;
+    height: 20px;
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffa116, #ff8c00);
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressText {
+    font-size: 0.9rem;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+    font-weight: 500;
+    min-width: 60px;
+    text-align: right;
+}
+
+.activitySection {
+    margin-bottom: 2rem;
+}
+
+.heatmapPlaceholder {
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+    border-radius: 8px;
+    padding: 2rem;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholderText {
+    color: var(--text-muted, rgba(255, 255, 255, 0.4));
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0;
+}
+
+.problemsSection {
+    margin-top: 2rem;
+}
+
+.problemList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.problemItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--article-bg);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+}
+
+.problemTitle {
+    font-size: 0.95rem;
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
+    font-weight: 500;
+}
+
+.problemDifficulty {
+    font-size: 0.8rem;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
+}
+
+.repositorySection {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+}
+
+.repoLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--article-bg);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    color: var(--text-color, rgba(255, 255, 255, 0.9));
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.repoLink:hover {
+    border-color: var(--accent-color);
+    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.05));
+    transform: translateY(-2px);
+}
+
+.githubIcon {
+    fill: var(--text-color, rgba(255, 255, 255, 0.9));
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .name {
+        font-size: 1.5rem;
+    }
+
+    .statsGrid {
+        justify-content: center;
+    }
+
+    .statCard {
+        min-width: 80px;
+        padding: 0.75rem 1rem;
+    }
+
+    .statNumber {
+        font-size: 1.2rem;
+    }
+
+    .progressContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .progressText {
+        text-align: center;
+    }
+
+    .problemItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}

@@ -150,3 +150,23 @@ export interface ActivityBadge {
   count: number;
   show: boolean;
 }
+
+// LeetCode types for future API integration
+export interface LeetCodeStats {
+  username: string;
+  totalSolved: number;
+  easySolved: number;
+  mediumSolved: number;
+  hardSolved: number;
+  ranking?: number;
+  rating?: number;
+  currentStreak?: number;
+  longestStreak?: number;
+}
+
+export interface LeetCodeProblem {
+  title: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  acceptanceRate?: number;
+  topicTags?: string[];
+}
