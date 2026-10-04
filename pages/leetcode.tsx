@@ -165,7 +165,7 @@ export async function getStaticProps() {
   try {
     // Fetch user data
     const userData = await fetchLeetCodeUser();
-    const recentData = await fetchRecentSubmissions(5);
+    const recentData = await fetchRecentSubmissions(10);
 
     let stats: LeetCodeStats | undefined;
     let recentProblems: LeetCodeProblem[] = [];
