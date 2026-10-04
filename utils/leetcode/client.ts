@@ -38,7 +38,11 @@ export async function fetchLeetCodeUser(): Promise<LeetCodeUserResponse | null> 
         matchedUser: {
           username: userData.matchedUser?.username || LEETCODE_USERNAME,
           submitStats: {
-            acSubmissionNum: userData.matchedUser?.submitStats?.acSubmissionNum || []
+            acSubmissionNum: (userData.matchedUser?.submitStats?.acSubmissionNum || []).map((stat: any) => ({
+              difficulty: stat.difficulty as 'All' | 'Easy' | 'Medium' | 'Hard',
+              count: stat.count,
+              submissions: stat.submissions
+            }))
           },
           profile: {
             realName: userData.matchedUser?.profile?.realName,
