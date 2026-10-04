@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import LeetCodeSkeleton from '@/components/LeetCodeSkeleton';
 import styles from '@/styles/LeetCodePage.module.css';
 import { LeetCodeStats } from '@/types';
 
