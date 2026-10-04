@@ -1,13 +1,34 @@
 import styles from '@/styles/LeetCodePage.module.css';
-import { LeetCodeStats, LeetCodeProblem } from '@/types';
+import { LeetCodeStats } from '@/types';
+import { Doughnut, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
 
 interface LeetCodePageProps {
   stats?: LeetCodeStats;
-  recentProblems?: LeetCodeProblem[];
   error?: boolean;
 }
 
-const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePageProps) => {
+// Register Chart.js components
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
   // Calculate progress percentages
   const easyProgress = stats?.easyTotal && stats.easyTotal > 0
     ? (stats.easySolved / stats.easyTotal) * 100
@@ -32,6 +53,134 @@ const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePag
     hardSolved: 0,
   };
 
+  // Doughnut Chart Data - Difficulty Distribution
+  const doughnutData = {
+    labels: ['Easy', 'Medium', 'Hard'],
+    datasets: [
+      {
+        label: 'Problems Solved',
+        data: [displayStats.easySolved, displayStats.mediumSolved, displayStats.hardSolved],
+        backgroundColor: ['#00b8a3', '#ffc01e', '#ef4743'],
+        borderColor: ['#00b8a3', '#ffc01e', '#ef4743'],
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        position: 'bottom' as const,
+        labels: {
+          color: '#d4d4d4',
+          font: {
+            size: 12,
+            family: "'Fira Code', monospace",
+          },
+          padding: 15,
+        },
+      },
+      tooltip: {
+        backgroundColor: '#1e1e1e',
+        titleColor: '#d4d4d4',
+        bodyColor: '#d4d4d4',
+        borderColor: '#3c3c3c',
+        borderWidth: 1,
+        padding: 12,
+        bodyFont: {
+          family: "'Fira Code', monospace",
+        },
+        titleFont: {
+          family: "'Fira Code', monospace",
+        },
+      },
+    },
+  };
+
+  // Bar Chart Data - Progress by Difficulty
+  const barData = {
+    labels: ['Easy', 'Medium', 'Hard'],
+    datasets: [
+      {
+        label: 'Solved',
+        data: [displayStats.easySolved, displayStats.mediumSolved, displayStats.hardSolved],
+        backgroundColor: ['rgba(0, 184, 163, 0.8)', 'rgba(255, 192, 30, 0.8)', 'rgba(239, 71, 67, 0.8)'],
+        borderColor: ['#00b8a3', '#ffc01e', '#ef4743'],
+        borderWidth: 2,
+      },
+      {
+        label: 'Total Available',
+        data: [
+          stats?.easyTotal || 0,
+          stats?.mediumTotal || 0,
+          stats?.hardTotal || 0,
+        ],
+        backgroundColor: ['rgba(0, 184, 163, 0.2)', 'rgba(255, 192, 30, 0.2)', 'rgba(239, 71, 67, 0.2)'],
+        borderColor: ['#00b8a3', '#ffc01e', '#ef4743'],
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#d4d4d4',
+          font: {
+            family: "'Fira Code', monospace",
+          },
+        },
+        grid: {
+          color: '#3c3c3c',
+        },
+      },
+      x: {
+        ticks: {
+          color: '#d4d4d4',
+          font: {
+            family: "'Fira Code', monospace",
+          },
+        },
+        grid: {
+          color: '#3c3c3c',
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'top' as const,
+        labels: {
+          color: '#d4d4d4',
+          font: {
+            size: 12,
+            family: "'Fira Code', monospace",
+          },
+          padding: 15,
+        },
+      },
+      tooltip: {
+        backgroundColor: '#1e1e1e',
+        titleColor: '#d4d4d4',
+        bodyColor: '#d4d4d4',
+        borderColor: '#3c3c3c',
+        borderWidth: 1,
+        padding: 12,
+        bodyFont: {
+          family: "'Fira Code', monospace",
+        },
+        titleFont: {
+          family: "'Fira Code', monospace",
+        },
+      },
+    },
+  };
+
   return (
     <div className={styles.container}>
       {/* Error State */}
@@ -53,9 +202,13 @@ const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePag
           <div className={styles.profileInfo}>
             <h1 className={styles.name}>leetcode.stats</h1>
             <p className={styles.bio}>
-              {stats?.acceptanceRate
-                ? `Algorithmic problem-solving statistics. Acceptance rate: ${stats.acceptanceRate.toFixed(1)}%`
-                : 'Algorithmic problem-solving statistics and progress tracking.'}
+              Algorithmic problem-solving statistics.
+              {stats?.acceptanceRate && (
+                <>
+                  <br />
+                  Acceptance rate: {stats.acceptanceRate.toFixed(1)}%
+                </>
+              )}
             </p>
           </div>
         </div>
@@ -113,54 +266,43 @@ const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePag
             </p>
           </div>
         </div>
-      </div>
 
-      {/* Recent Problems Section */}
-      <div className={styles.problemsSection}>
-        <h2 className={styles.sectionTitle}>Latest Solved</h2>
-        <div className={styles.problemList}>
-          {recentProblems.length > 0 ? (
-            recentProblems.map((problem, index) => (
-              <div key={index} className={styles.problemItem}>
-                <span className={styles.problemTitle}>{problem.title}</span>
-                <span className={styles.problemDifficulty}>{problem.difficulty}</span>
-              </div>
-            ))
-          ) : (
-            <p className={styles.placeholderText}>
-              {error
-                ? 'Unable to load recent problems.'
-                : 'Recent submissions are not publicly available through LeetCode\'s API. Visit your profile to see detailed submission history.'}
-            </p>
-          )}
+        {/* Charts Section */}
+        <div className={styles.chartsSection}>
+          <div className={styles.chartContainer}>
+            <h3 className={styles.sectionTitle}>Difficulty Distribution</h3>
+            <div className={styles.chartWrapper}>
+              <Doughnut data={doughnutData} options={doughnutOptions} />
+            </div>
+          </div>
+          
+          <div className={styles.chartContainer}>
+            <h3 className={styles.sectionTitle}>Progress Overview</h3>
+            <div className={styles.chartWrapper}>
+              <Bar data={barData} options={barOptions} />
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   );
 };
 
 export async function getStaticProps() {
-  const { fetchLeetCodeUser, fetchRecentSubmissions } = await import('@/utils/leetcode/client');
-  const { normalizeUserData, normalizeRecentSubmissions } = await import('@/utils/leetcode/normalize');
+  const { fetchLeetCodeUser } = await import('@/utils/leetcode/client');
+  const { normalizeUserData } = await import('@/utils/leetcode/normalize');
 
   try {
     // Fetch user data
     const userData = await fetchLeetCodeUser();
-    const recentData = await fetchRecentSubmissions(10);
 
     let stats: LeetCodeStats | undefined;
-    let recentProblems: LeetCodeProblem[] = [];
     let error = false;
 
     if (userData) {
       stats = normalizeUserData(userData);
-    }
-
-    if (recentData) {
-      recentProblems = normalizeRecentSubmissions(recentData);
-    }
-
-    if (!userData && !recentData) {
+    } else {
       error = true;
     }
 
@@ -169,7 +311,6 @@ export async function getStaticProps() {
         title: 'LeetCode',
         ogDescription: 'LeetCode statistics and problem-solving progress for shaxntanu.',
         stats,
-        recentProblems,
         error,
       },
       revalidate: 3600, // Revalidate every hour
