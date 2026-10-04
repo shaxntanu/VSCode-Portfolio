@@ -112,7 +112,7 @@ const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePag
           <h3 className={styles.sectionTitle}>Submission Activity</h3>
           <div className={styles.heatmapPlaceholder}>
             <p className={styles.placeholderText}>
-              Activity calendar is not available through LeetCode's GraphQL API.
+              Activity calendar is not available through LeetCode&apos;s GraphQL API.
               Visit your <a href="https://leetcode.com/u/shaxntanu/" target="_blank" rel="noopener noreferrer" className={styles.externalLink}>LeetCode profile</a> for detailed activity.
             </p>
           </div>
