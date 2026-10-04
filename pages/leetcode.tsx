@@ -256,17 +256,6 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
           </div>
         </div>
 
-        {/* Activity Heatmap - Placeholder */}
-        <div className={styles.activitySection}>
-          <h3 className={styles.sectionTitle}>Submission Activity</h3>
-          <div className={styles.heatmapPlaceholder}>
-            <p className={styles.placeholderText}>
-              Activity calendar is not available through LeetCode&apos;s GraphQL API.
-              Visit your <a href="https://leetcode.com/u/shaxntanu/" target="_blank" rel="noopener noreferrer" className={styles.externalLink}>LeetCode profile</a> for detailed activity.
-            </p>
-          </div>
-        </div>
-
         {/* Charts Section */}
         <div className={styles.chartsSection}>
           <div className={styles.chartContainer}>

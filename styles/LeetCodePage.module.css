@@ -135,21 +135,6 @@
     text-align: right;
 }
 
-.activitySection {
-    margin-bottom: 2rem;
-}
-
-.heatmapPlaceholder {
-    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
-    border-radius: 8px;
-    padding: 2rem;
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .placeholderText {
     color: var(--text-muted, rgba(255, 255, 255, 0.4));
     font-size: 0.9rem;
