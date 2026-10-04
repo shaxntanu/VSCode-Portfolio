@@ -1,9 +1,32 @@
 import styles from '@/styles/LeetCodePage.module.css';
-import { LeetCodeStats } from '@/types';
+import { LeetCodeStats, LeetCodeProblem } from '@/types';
 
-const LeetCodePage = () => {
-  // Placeholder data for UI development - will be replaced with API data later
-  const placeholderStats: LeetCodeStats = {
+interface LeetCodePageProps {
+  stats?: LeetCodeStats;
+  recentProblems?: LeetCodeProblem[];
+  error?: boolean;
+}
+
+const LeetCodePage = ({ stats, recentProblems = [], error = false }: LeetCodePageProps) => {
+  const solutionsRepoUrl = 'https://github.com/shaxntanu/leetcode-shaxntanu';
+
+  // Calculate progress percentages
+  const easyProgress = stats?.easyTotal && stats.easyTotal > 0
+    ? (stats.easySolved / stats.easyTotal) * 100
+    : 0;
+  const mediumProgress = stats?.mediumTotal && stats.mediumTotal > 0
+    ? (stats.mediumSolved / stats.mediumTotal) * 100
+    : 0;
+  const hardProgress = stats?.hardTotal && stats.hardTotal > 0
+    ? (stats.hardSolved / stats.hardTotal) * 100
+    : 0;
+  const totalProgress = stats?.easyTotal && stats.mediumTotal && stats.hardTotal
+    ? ((stats.easySolved + stats.mediumSolved + stats.hardSolved) / 
+       (stats.easyTotal + stats.mediumTotal + stats.hardTotal)) * 100
+    : 0;
+
+  // Use stats if available, otherwise use empty state
+  const displayStats = stats || {
     username: 'shaxntanu',
     totalSolved: 0,
     easySolved: 0,
@@ -11,10 +34,15 @@ const LeetCodePage = () => {
     hardSolved: 0,
   };
 
-  const solutionsRepoUrl = 'https://github.com/shaxntanu/leetcode-shaxntanu';
-
   return (
     <div className={styles.container}>
+      {/* Error State */}
+      {error && (
+        <div className={styles.errorBanner}>
+          <p>Unable to retrieve LeetCode statistics right now. Please try again later.</p>
+        </div>
+      )}
+
       {/* Profile Section */}
       <div className={styles.profileSection}>
         <div className={styles.profileHeader}>
@@ -28,26 +56,39 @@ const LeetCodePage = () => {
           </div>
           <div className={styles.profileInfo}>
             <h1 className={styles.name}>leetcode.stats</h1>
-            <p className={styles.bio}>Algorithmic problem-solving statistics and progress tracking.</p>
+            <p className={styles.bio}>
+              {stats?.acceptanceRate
+                ? `Algorithmic problem-solving statistics. Acceptance rate: ${stats.acceptanceRate.toFixed(1)}%`
+                : 'Algorithmic problem-solving statistics and progress tracking.'}
+            </p>
           </div>
         </div>
 
         {/* Stats Grid - Easy/Medium/Hard */}
         <div className={styles.statsGrid}>
           <div className={styles.statCard}>
-            <span className={styles.statNumber}>{placeholderStats.easySolved}</span>
+            <span className={styles.statNumber}>{displayStats.easySolved}</span>
             <span className={styles.statLabel}>Easy</span>
+            {stats?.easyTotal && (
+              <span className={styles.statSublabel}>{easyProgress.toFixed(1)}%</span>
+            )}
           </div>
           <div className={styles.statCard}>
-            <span className={styles.statNumber}>{placeholderStats.mediumSolved}</span>
+            <span className={styles.statNumber}>{displayStats.mediumSolved}</span>
             <span className={styles.statLabel}>Medium</span>
+            {stats?.mediumTotal && (
+              <span className={styles.statSublabel}>{mediumProgress.toFixed(1)}%</span>
+            )}
           </div>
           <div className={styles.statCard}>
-            <span className={styles.statNumber}>{placeholderStats.hardSolved}</span>
+            <span className={styles.statNumber}>{displayStats.hardSolved}</span>
             <span className={styles.statLabel}>Hard</span>
+            {stats?.hardTotal && (
+              <span className={styles.statSublabel}>{hardProgress.toFixed(1)}%</span>
+            )}
           </div>
           <div className={styles.statCard}>
-            <span className={styles.statNumber}>{placeholderStats.totalSolved}</span>
+            <span className={styles.statNumber}>{displayStats.totalSolved}</span>
             <span className={styles.statLabel}>Total Solved</span>
           </div>
         </div>
@@ -59,10 +100,10 @@ const LeetCodePage = () => {
             <div className={styles.progressBar}>
               <div 
                 className={styles.progressFill}
-                style={{ width: '0%' }}
+                style={{ width: `${totalProgress}%` }}
               />
             </div>
-            <span className={styles.progressText}>0% Complete</span>
+            <span className={styles.progressText}>{totalProgress.toFixed(1)}% Complete</span>
           </div>
         </div>
 
@@ -70,7 +111,10 @@ const LeetCodePage = () => {
         <div className={styles.activitySection}>
           <h3 className={styles.sectionTitle}>Submission Activity</h3>
           <div className={styles.heatmapPlaceholder}>
-            <p className={styles.placeholderText}>Activity heatmap will be populated with LeetCode submission data.</p>
+            <p className={styles.placeholderText}>
+              Activity calendar is not available through LeetCode's GraphQL API.
+              Visit your <a href="https://leetcode.com/u/shaxntanu/" target="_blank" rel="noopener noreferrer" className={styles.externalLink}>LeetCode profile</a> for detailed activity.
+            </p>
           </div>
         </div>
       </div>
@@ -79,7 +123,20 @@ const LeetCodePage = () => {
       <div className={styles.problemsSection}>
         <h2 className={styles.sectionTitle}>Latest Solved</h2>
         <div className={styles.problemList}>
-          <p className={styles.placeholderText}>Recent problems will appear here after API integration.</p>
+          {recentProblems.length > 0 ? (
+            recentProblems.map((problem, index) => (
+              <div key={index} className={styles.problemItem}>
+                <span className={styles.problemTitle}>{problem.title}</span>
+                <span className={styles.problemDifficulty}>{problem.difficulty}</span>
+              </div>
+            ))
+          ) : (
+            <p className={styles.placeholderText}>
+              {error
+                ? 'Unable to load recent problems.'
+                : 'No recent submissions available.'}
+            </p>
+          )}
         </div>
       </div>
 
@@ -102,13 +159,51 @@ const LeetCodePage = () => {
 };
 
 export async function getStaticProps() {
-  return {
-    props: {
-      title: 'LeetCode',
-      ogDescription: 'LeetCode statistics and problem-solving progress for shaxntanu.',
-    },
-    revalidate: 3600,
-  };
+  const { fetchLeetCodeUser, fetchRecentSubmissions } = await import('@/utils/leetcode/client');
+  const { normalizeUserData, normalizeRecentSubmissions } = await import('@/utils/leetcode/normalize');
+
+  try {
+    // Fetch user data
+    const userData = await fetchLeetCodeUser();
+    const recentData = await fetchRecentSubmissions(5);
+
+    let stats: LeetCodeStats | undefined;
+    let recentProblems: LeetCodeProblem[] = [];
+    let error = false;
+
+    if (userData) {
+      stats = normalizeUserData(userData);
+    }
+
+    if (recentData) {
+      recentProblems = normalizeRecentSubmissions(recentData);
+    }
+
+    if (!userData && !recentData) {
+      error = true;
+    }
+
+    return {
+      props: {
+        title: 'LeetCode',
+        ogDescription: 'LeetCode statistics and problem-solving progress for shaxntanu.',
+        stats,
+        recentProblems,
+        error,
+      },
+      revalidate: 3600, // Revalidate every hour
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps for LeetCode page:', error);
+    return {
+      props: {
+        title: 'LeetCode',
+        ogDescription: 'LeetCode statistics and problem-solving progress for shaxntanu.',
+        error: true,
+      },
+      revalidate: 60, // Retry more frequently on error
+    };
+  }
 }
 
 export default LeetCodePage;

@@ -158,10 +158,14 @@ export interface LeetCodeStats {
   easySolved: number;
   mediumSolved: number;
   hardSolved: number;
+  easyTotal?: number;
+  mediumTotal?: number;
+  hardTotal?: number;
   ranking?: number;
   rating?: number;
   currentStreak?: number;
   longestStreak?: number;
+  acceptanceRate?: number;
 }
 
 export interface LeetCodeProblem {
@@ -169,4 +173,6 @@ export interface LeetCodeProblem {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   acceptanceRate?: number;
   topicTags?: string[];
+  titleSlug?: string;
+  status?: string;
 }
