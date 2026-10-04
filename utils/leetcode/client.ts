@@ -75,14 +75,12 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
 
   try {
     // Fetch recent submissions using leetcode-query
-    // The library returns an object with recentSubmissions array
-    const submissionsData = await leetcode.recent_submissions(LEETCODE_USERNAME, limit);
+    // The library returns an array of submissions directly
+    const submissions = await leetcode.recent_submissions(LEETCODE_USERNAME, limit);
     
-    if (!submissionsData || !submissionsData.recentSubmissions) {
+    if (!submissions || !Array.isArray(submissions) || submissions.length === 0) {
       return null;
     }
-
-    const submissions = submissionsData.recentSubmissions;
 
     // Transform to our response format
     const response: LeetCodeRecentSubmissionsResponse = {
