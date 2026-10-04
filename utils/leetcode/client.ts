@@ -78,10 +78,14 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
     // The library returns an array of submissions directly
     const submissions = await leetcode.recent_submissions(LEETCODE_USERNAME, limit);
     
-    if (!submissions || !Array.isArray(submissions) || submissions.length === 0) {
+    console.log('LeetCode recent_submissions response:', submissions);
+    
+    if (!submissions || !Array.isArray(submissions)) {
+      console.log('Invalid submissions response:', submissions);
       return null;
     }
 
+    // Even if empty array, return valid structure
     // Transform to our response format
     const response: LeetCodeRecentSubmissionsResponse = {
       data: {
@@ -95,6 +99,8 @@ export async function fetchRecentSubmissions(limit: number = 10): Promise<LeetCo
         }))
       }
     };
+
+    console.log('Normalized submissions:', response);
 
     // Cache the response
     setCached(CACHE_KEY_SUBMISSIONS, response);
