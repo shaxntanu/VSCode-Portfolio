@@ -77,7 +77,7 @@ export const routeMessages: Record<string, RouteMessage> = {
     animation: 'curious'
   },
   '/leetcode': {
-    message: "Let's see how you're doing on the algorithm side.",
+    message: "LeetCode stats. Problem-solving skills across Easy, Medium, and Hard challenges. Real data from the LeetCode platform.",
     animation: 'curious'
   }
 };
