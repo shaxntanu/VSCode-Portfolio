@@ -1,9 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import Image from 'next/image';
 import { Book } from '@/data/journal';
-
-const COVER_W = 178;
 
 interface BookSpineProps {
   book: Book;
@@ -275,89 +272,6 @@ const BookSpine = ({ book, onClick }: BookSpineProps) => {
               }}
             />
           </div>
-          
-          {/* Front cover face */}
-          <div
-            className="front-cover-face"
-            style={{
-              position: 'absolute',
-              left: '100%',
-              top: 0,
-              width: `${COVER_W}px`,
-              height: '100%',
-              transformOrigin: 'left center',
-              transform: 'rotateY(90deg)',
-              backgroundColor: '#f5f5f5',
-              borderRadius: '0 2px 2px 0',
-              overflow: 'hidden',
-            }}
-          >
-            {book.cover ? (
-              <Image
-                src={book.cover}
-                alt={book.title}
-                width={COVER_W}
-                height={book.height}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '16px',
-                  backgroundColor: book.spine,
-                  color: book.ink,
-                  fontFamily: faceFont,
-                  fontSize: '14px',
-                  textAlign: 'center',
-                }}
-              >
-                {book.title}
-              </div>
-            )}
-          </div>
-          
-          {/* Page block */}
-          <div
-            className="page-block"
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: '100%',
-              width: `${COVER_W}px`,
-              height: '12px',
-              transformOrigin: 'left center',
-              transform: 'rotateX(78deg) translateZ(-6px)',
-              backgroundColor: '#faf7f0',
-              borderRadius: '0 2px 0 0',
-            }}
-          />
-          
-          {/* Headband for hardcovers */}
-          {book.binding === 'hardcover' && (
-            <div
-              className="headband"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: '100%',
-                width: `${COVER_W}px`,
-                height: '8px',
-                transformOrigin: 'left center',
-                transform: 'rotateX(78deg) translateZ(-6px)',
-                backgroundColor: book.band || '#584f46',
-                borderRadius: '0 2px 0 0',
-              }}
-            />
-          )}
         </span>
       </button>
       {metadataCard}
