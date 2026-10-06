@@ -484,7 +484,6 @@ export default function PortfolioCompanion() {
       }
     };
 
-    const nHead = { ...neutral.head };
     const nLeft = { ...neutral.eyes.left };
     const nRight = { ...neutral.eyes.right };
     const nSpacing = neutral.eyes.spacing;
