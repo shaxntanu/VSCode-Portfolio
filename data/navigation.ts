@@ -3,6 +3,7 @@ export interface NavFile {
   path: string;
   icon: string;
   external?: boolean;
+  iconType?: 'image' | 'component' | 'svg';
 }
 
 export interface NavFolder {
@@ -58,6 +59,14 @@ export const navFolders: NavFolder[] = [
     label: 'PUBLICATIONS',
     files: [
       { name: 'whitepapers.pdf', path: '/publications', icon: '/logos/pdf_icon.svg' },
+    ],
+  },
+  {
+    id: 'journal',
+    label: 'JOURNAL',
+    files: [
+      { name: 'medium.md', path: '/journal', icon: 'medium', iconType: 'component' },
+      { name: 'library.md', path: '/journal/library', icon: '/icons/library.svg', iconType: 'svg' },
     ],
   },
   {

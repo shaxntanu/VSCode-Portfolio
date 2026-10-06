@@ -8,6 +8,7 @@ interface FolderContextType {
   skillsOpen: boolean;
   careerOpen: boolean;
   publicationsOpen: boolean;
+  journalOpen: boolean;
   resumeOpen: boolean;
   setPortfolioOpen: (open: boolean) => void;
   setMobileMenuOpen: (open: boolean) => void;
@@ -15,6 +16,7 @@ interface FolderContextType {
   setSkillsOpen: (open: boolean) => void;
   setCareerOpen: (open: boolean) => void;
   setPublicationsOpen: (open: boolean) => void;
+  setJournalOpen: (open: boolean) => void;
   setResumeOpen: (open: boolean) => void;
 }
 
@@ -27,6 +29,7 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const [skillsOpen, setSkillsOpen] = useState(false);
   const [careerOpen, setCareerOpen] = useState(false);
   const [publicationsOpen, setPublicationsOpen] = useState(false);
+  const [journalOpen, setJournalOpen] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const router = useRouter();
 
@@ -51,6 +54,7 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
         skillsOpen,
         careerOpen,
         publicationsOpen,
+        journalOpen,
         resumeOpen,
         setPortfolioOpen,
         setMobileMenuOpen,
@@ -58,6 +62,7 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
         setSkillsOpen,
         setCareerOpen,
         setPublicationsOpen,
+        setJournalOpen,
         setResumeOpen,
       }}
     >

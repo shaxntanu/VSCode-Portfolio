@@ -109,61 +109,6 @@ const PublicationsPage = () => {
           <p>Coming Soon</p>
         </div>
       </div>
-
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Personal & Blogs</h2>
-        <div className={styles.grid}>
-          <a
-            href="https://medium.com/@shaxntanu/how-a-robotics-class-shaped-my-engineering-journey-19acd8f99bb4"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <div className={styles.cardIcon}>
-              <SiMedium />
-            </div>
-            <div className={styles.cardContent}>
-              <h3 className={styles.cardTitle}>How a Robotics Class Shaped My Engineering Journey</h3>
-              <div className={styles.cardMeta}>
-                <span className={styles.cardId}>BLG-001</span>
-                <span className={styles.cardType}>Personal Article</span>
-              </div>
-              <div className={styles.cardFooter}>
-                <span className={styles.cardDate}>2026-05-31</span>
-                <span className={styles.statusBadge}>PUBLISHED</span>
-              </div>
-            </div>
-            <div className={styles.cardLink}>
-              <VscLinkExternal />
-            </div>
-          </a>
-
-          <a
-            href="https://shaxntanu.medium.com/qwen-cli-has-a-sense-of-humour-159506bd0840"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <div className={styles.cardIcon}>
-              <SiMedium />
-            </div>
-            <div className={styles.cardContent}>
-              <h3 className={styles.cardTitle}>Qwen CLI has a sense of humour</h3>
-              <div className={styles.cardMeta}>
-                <span className={styles.cardId}>BLG-002</span>
-                <span className={styles.cardType}>Personal Article</span>
-              </div>
-              <div className={styles.cardFooter}>
-                <span className={styles.cardDate}>2026-09-29</span>
-                <span className={styles.statusBadge}>PUBLISHED</span>
-              </div>
-            </div>
-            <div className={styles.cardLink}>
-              <VscLinkExternal />
-            </div>
-          </a>
-        </div>
-      </div>
     </div>
   );
 };

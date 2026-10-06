@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { VscChevronRight } from 'react-icons/vsc';
+import { SiMedium } from 'react-icons/si';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { useFolderContext } from '@/contexts/FolderContext';
 import { rootFile, portfolioFiles, navFolders } from '@/data/navigation';
@@ -22,6 +23,8 @@ const Explorer = () => {
     setCareerOpen,
     publicationsOpen,
     setPublicationsOpen,
+    journalOpen,
+    setJournalOpen,
     resumeOpen,
     setResumeOpen,
   } = useFolderContext();
@@ -38,6 +41,8 @@ const Explorer = () => {
         return { open: careerOpen, setOpen: setCareerOpen };
       case 'publications':
         return { open: publicationsOpen, setOpen: setPublicationsOpen };
+      case 'journal':
+        return { open: journalOpen, setOpen: setJournalOpen };
       case 'resume':
         return { open: resumeOpen, setOpen: setResumeOpen };
       default:
@@ -167,12 +172,25 @@ const Explorer = () => {
                             <motion.div key={item.name} variants={itemVariants}>
                               <Link href={item.path} prefetch={true} onClick={(e) => handleNavigation(e, item.path)}>
                                 <div className={`${styles.file} ${router.pathname === item.path ? styles.activeFile : ''}`}>
-                                  <Image
-                                    src={item.icon}
-                                    alt={item.name}
-                                    height={18}
-                                    width={18}
-                                  />
+                                  {item.iconType === 'component' ? (
+                                    item.icon === 'medium' ? (
+                                      <SiMedium />
+                                    ) : null
+                                  ) : item.iconType === 'svg' ? (
+                                    <Image
+                                      src={item.icon}
+                                      alt={item.name}
+                                      height={18}
+                                      width={18}
+                                    />
+                                  ) : (
+                                    <Image
+                                      src={item.icon}
+                                      alt={item.name}
+                                      height={18}
+                                      width={18}
+                                    />
+                                  )}
                                   <p>{item.name}</p>
                                 </div>
                               </Link>
@@ -196,13 +214,14 @@ const Explorer = () => {
         <button 
           className={styles.expandButton}
           onClick={() => {
-            const allExpanded = portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && resumeOpen;
+            const allExpanded = portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && journalOpen && resumeOpen;
             if (allExpanded) {
               setPortfolioOpen(false);
               setDevelopmentOpen(false);
               setSkillsOpen(false);
               setCareerOpen(false);
               setPublicationsOpen(false);
+              setJournalOpen(false);
               setResumeOpen(false);
             } else {
               setPortfolioOpen(true);
@@ -210,6 +229,7 @@ const Explorer = () => {
               setSkillsOpen(true);
               setCareerOpen(true);
               setPublicationsOpen(true);
+              setJournalOpen(true);
               setResumeOpen(true);
             }
           }}
@@ -218,7 +238,7 @@ const Explorer = () => {
           <span className={styles.buttonEdge}></span>
           <div className={styles.buttonFront}>
             <span className={styles.buttonText}>
-              {portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && resumeOpen 
+              {portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && journalOpen && resumeOpen 
                 ? 'Collapse All' 
                 : 'Expand All'}
             </span>

@@ -2,7 +2,7 @@ import { ActivityBadge } from '@/types/statusbar';
 import { projects } from './projects';
 
 // Count publications from the publications page data
-const publicationsCount = 9; // 8 papers + 1 blog
+const publicationsCount = 7; // 5 technical reports + 2 placeholder research papers
 
 // Count certificates from certificates page data
 const certificatesCount = 13; // Total courses across all categories

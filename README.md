@@ -35,8 +35,10 @@ Built with Next.js for fast performance and SEO optimization. The web developmen
 - **Projects** - Hardware modules, IoT systems, and web applications with integrated BOM viewer
 - **Resume** - Terminal-style CV that auto-updates from my LaTeX repository
 - **Experience** - Work history and role descriptions
-- **Publications** - Technical reports and documentation
+- **Publications** - Technical reports, research papers, and formal documentation
+- **Journal** - Personal writing, Medium articles, and reading library
 - **GitHub** - Live statistics from GitHub API
+- **LeetCode** - Algorithmic problem-solving statistics and progress
 - **Tech Stack** - Technologies in CSV format with skill proficiency matrix
 - **Contact** - Contact information in JSON format
 
