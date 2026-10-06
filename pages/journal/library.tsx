@@ -5,7 +5,7 @@ import TypedTitle from '@/components/TypedTitle';
 import Shelf from '@/components/Shelf';
 import BookDetail from '@/components/BookDetail';
 import LibraryFilter from '@/components/LibraryFilter';
-import styles from '@/styles/LibraryPage.module.css';
+import styles from '@/styles/ResearchPage.module.css';
 
 const LibraryPage = () => {
   const [shownBooks, setShownBooks] = useState<Book[] | null>(null);
@@ -69,39 +69,34 @@ const LibraryPage = () => {
 
   return (
     <div className={styles.container}>
-      {/* Background effects */}
-      <div className={styles.grain} />
-      <div className={styles.warmGradient} />
-      
-      {/* Header */}
-      <header className={styles.header}>
+      <h1 className={styles.pageTitle}>Library</h1>
+      <p className={styles.pageSubtitle}>
+        A personal archive of books and reading exploration.
+      </p>
+
+      <div className={styles.section}>
         <div className={styles.subtitle}>A personal archive</div>
-        <div className={styles.titleContainer}>
+        <div style={{ marginBottom: '16px' }}>
           <TypedTitle />
         </div>
-        <div className={styles.volumeCounter}>{books.length} volumes</div>
-      </header>
-      
-      {/* Filter */}
-      <div className={styles.filterSection}>
-        <LibraryFilter books={books} onChange={setShownBooks} />
-      </div>
-      
-      {/* Shelf */}
-      <div className={styles.shelfWrapper}>
-        <div className={styles.shelfContainer}>
-          {displayBooks.length > 0 ? (
-            <Shelf books={displayBooks} onBookClick={handleBookClick} />
-          ) : (
-            <div className={styles.emptyState}>
-              <h3>No books match</h3>
-              <p>Try adjusting your search or genre filter</p>
-            </div>
-          )}
+        <div style={{ fontSize: '12px', fontFamily: 'Space Mono, monospace', textTransform: 'uppercase', opacity: 0.6, marginBottom: '24px' }}>
+          {books.length} volumes
         </div>
+        
+        <LibraryFilter books={books} onChange={setShownBooks} />
+        
+        {displayBooks.length > 0 ? (
+          <Shelf books={displayBooks} onBookClick={handleBookClick} />
+        ) : (
+          <div style={{ textAlign: 'center', padding: '48px 24px', opacity: 0.6 }}>
+            <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontStyle: 'italic', margin: '0 0 8px 0' }}>
+              No books match
+            </h3>
+            <p>Try adjusting your search or genre filter</p>
+          </div>
+        )}
       </div>
       
-      {/* Book detail modal */}
       {selectedBook && bookRect && (
         <BookDetail
           book={selectedBook}
@@ -111,6 +106,13 @@ const LibraryPage = () => {
           onPrevious={displayBooks.length > 1 ? handlePrevious : undefined}
         />
       )}
+      
+      <div className={`${styles.jpMatrix} jp-matrix`}>
+        {Array.from({ length: 700 }).map((_, i) => {
+          const chars = ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','ユ','ヨ','ラ','リ','ル','レ','ロ','ワ','ヲ','ン','ガ','ギ','グ','ゲ','ゴ','ザ','ジ','ズ','ゼ','ゾ','ダ','ヂ','ヅ','デ','ド','バ','ビ','ブ','ベ','ボ','パ','ピ','プ','ペ','ポ'];
+          return <span key={i}>{chars[i % chars.length]}</span>;
+        })}
+      </div>
     </div>
   );
 };

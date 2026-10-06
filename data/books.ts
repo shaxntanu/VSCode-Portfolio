@@ -5,7 +5,7 @@ import { Book } from '@/data/journal';
 export const books: Book[] = [
   {
     id: 'harry-potter-complete',
-    title: 'Harry Potter — Complete Series',
+    title: 'Harry Potter - Complete Series',
     author: 'J.K. Rowling',
     genres: ['Fantasy'],
     cover: 'https://covers.openlibrary.org/b/id/8441851-L.jpg',
