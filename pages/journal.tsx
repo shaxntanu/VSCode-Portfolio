@@ -8,7 +8,7 @@ const JournalPage = () => {
     <div className={styles.container}>
       <h1 className={styles.pageTitle}>Journal</h1>
       <p className={styles.pageSubtitle}>
-        Personal writing, reflections, and things I've written along the way.
+        Personal writing, reflections, and things I&apos;ve written along the way.
       </p>
 
       <div className={styles.section}>
