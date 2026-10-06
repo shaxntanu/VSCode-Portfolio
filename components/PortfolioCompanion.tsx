@@ -31,6 +31,19 @@ const INACTIVITY_ANGRY_MS = 150000; // 2.5 minutes
 const FACT_INTERVAL_MIN_MS = 60000; // 1 minute
 const FACT_INTERVAL_MAX_MS = 120000; // 2 minutes
 
+// Enhanced gaze configuration from Sunee's interaction system
+const GAZE_CONFIG = {
+  enabled: true,
+  throttleMs: 200,           // Throttle mousemove evaluations (rAF loop eases between them)
+  easeFactor: 0.16,          // Per-frame easing (0..1, higher = snappier)
+  steadyMs: 1400,            // After cursor still this long, look away (idle)
+  blink: {
+    minMs: 2600,
+    maxMs: 6200,
+    durationMs: 170
+  }
+};
+
 export default function PortfolioCompanion() {
   const router = useRouter();
   const { zenMode } = useUIState();
@@ -57,7 +70,7 @@ export default function PortfolioCompanion() {
   const currentMessageIdRef = useRef<string>('');
   const boredMessageShownRef = useRef(false);
   
-  // Mouse tracking state
+  // Mouse tracking state (wrapper movement - REQUIRED layer)
   const mouseStateRef = useRef({
     targetX: 0,
     targetY: 0,
@@ -66,10 +79,11 @@ export default function PortfolioCompanion() {
     lastMoveAt: Date.now()
   });
 
-  // Eye gaze live-tracking state (see the gaze effect below)
+  // Enhanced eye gaze live-tracking state with blink management
   const gazeStateRef = useRef({
     on: false,
     armed: false,
+    lastEval: 0,
     lastMoveAt: 0,
     targetX: 0,
     targetY: 0,
@@ -146,6 +160,17 @@ export default function PortfolioCompanion() {
     if (messageTimerRef.current) {
       clearTimeout(messageTimerRef.current);
       messageTimerRef.current = null;
+    }
+
+    // Stop gaze work when message shows (will re-arm on next move)
+    const gaze = gazeStateRef.current;
+    if (gaze) {
+      if (gazeFrameRef.current) {
+        cancelAnimationFrame(gazeFrameRef.current);
+        gazeFrameRef.current = null;
+      }
+      gaze.on = false;
+      gaze.armed = false;
     }
 
     setMessage(candidate);
@@ -353,10 +378,6 @@ export default function PortfolioCompanion() {
   }, [zenMode, mood]);
 
   // Mouse tracking - visible physical wrapper movement (REQUIRED layer).
-  // Transform is applied to avatarContainerRef's element - the same element
-  // the rect is measured from - and only that element receives JS transforms,
-  // so no other system can overwrite them. The avatarMotionLayer above it adds
-  // perspective so the 3D rotations actually render.
   useEffect(() => {
     if (zenMode || liteMode) return;
 
@@ -364,18 +385,15 @@ export default function PortfolioCompanion() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    // Capture the tracking layer once: the same node is measured in the mouse
-    // handler and transformed in the rAF loop. A local avoids a stale
-    // avatarContainerRef.current read when this cleanup later runs.
     const element = avatarContainerRef.current;
     if (!element) return;
 
-    const EASE_FACTOR = 0.14; // per-frame ease toward the cursor target
-    const STEADY_MS = 1800; // Return to neutral after 1.8s
-    const MAX_TRANSLATE_X = 26; // pixels - body steps toward the cursor
-    const MAX_TRANSLATE_Y = 18; // pixels
-    const MAX_ROTATE_X = 8; // degrees - body leans toward the cursor
-    const MAX_ROTATE_Y = 10; // degrees
+    const EASE_FACTOR = 0.14;
+    const STEADY_MS = 1800;
+    const MAX_TRANSLATE_X = 26;
+    const MAX_TRANSLATE_Y = 18;
+    const MAX_ROTATE_X = 8;
+    const MAX_ROTATE_Y = 10;
 
     let lastMouseUpdate = Date.now();
     const THROTTLE_MS = 50;
@@ -392,7 +410,6 @@ export default function PortfolioCompanion() {
       const deltaX = e.clientX - avatarCenterX;
       const deltaY = e.clientY - avatarCenterY;
 
-      // Normalize based on distance
       const maxDist = Math.max(window.innerWidth, window.innerHeight) / 2;
       const normalizedX = Math.max(-1, Math.min(1, deltaX / maxDist));
       const normalizedY = Math.max(-1, Math.min(1, deltaY / maxDist));
@@ -402,31 +419,25 @@ export default function PortfolioCompanion() {
       mouseStateRef.current.lastMoveAt = now;
     };
 
-    // Animation loop - apply visible transform to the tracking layer
+    // Animation loop
     const animateTracking = () => {
       const now = Date.now();
       const state = mouseStateRef.current;
       const timeSinceMove = now - state.lastMoveAt;
 
-      // Fade back to neutral if cursor hasn't moved
       if (timeSinceMove > STEADY_MS) {
         state.targetX = 0;
         state.targetY = 0;
       }
 
-      // Smooth interpolation
       state.currentX += (state.targetX - state.currentX) * EASE_FACTOR;
       state.currentY += (state.targetY - state.currentY) * EASE_FACTOR;
 
-      // Calculate transforms. Positive rotateY turns the face toward screen
-      // right; positive rotateX nods the face down, so a cursor below the
-      // avatar (positive currentY) leans it down toward the cursor.
       const translateX = state.currentX * MAX_TRANSLATE_X;
       const translateY = state.currentY * MAX_TRANSLATE_Y;
       const rotateX = state.currentY * MAX_ROTATE_X;
       const rotateY = state.currentX * MAX_ROTATE_Y;
 
-      // Apply transform to the layer measured in handleMouseMove
       element.style.transform = `
         translate3d(${translateX}px, ${translateY}px, 0)
         rotateX(${rotateX}deg)
@@ -445,21 +456,16 @@ export default function PortfolioCompanion() {
         cancelAnimationFrame(mouseAnimFrameRef.current);
         mouseAnimFrameRef.current = null;
       }
-      // Reset transform
       element.style.transform = '';
     };
   }, [zenMode, liteMode]);
 
-  // Optional eye-gaze tracking (ENHANCEMENT layer).
-  // Mutates byteAvatarDefinition.expressions['gaze-live'] every frame, which
-  // bible-strong/runtime.js's sampleAvatarFrame re-samples live. Durable live
-  // repaint is achieved by holding the runtime on a 'gaze-follow' loop over
-  // the single 'gaze-live' step (blink disabled, so the frame loop never idles).
-  // Independent from the wrapper movement above: a gaze failure never breaks it.
+  // Enhanced eye-gaze tracking with improved throttling and blinking from Sunee
   useEffect(() => {
-    if (zenMode || liteMode) return
-    if (typeof window === 'undefined') return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (zenMode || liteMode) return;
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!GAZE_CONFIG.enabled) return;
 
     const neutral = byteAvatarDefinition.expressions['neutral'] as unknown as {
       head: { x: number; y: number; z: number }
@@ -468,7 +474,7 @@ export default function PortfolioCompanion() {
         left: { width: number; height: number; x: number; y: number; angle: number }
         right: { width: number; height: number; x: number; y: number; angle: number }
       }
-    }
+    };
     const slot = byteAvatarDefinition.expressions['gaze-live'] as unknown as {
       head: { x: number; y: number; z: number }
       eyes: {
@@ -476,34 +482,26 @@ export default function PortfolioCompanion() {
         left: { width: number; height: number; x: number; y: number; angle: number }
         right: { width: number; height: number; x: number; y: number; angle: number }
       }
-    }
+    };
 
-    // Copy of neutral captured at mount; writePose always lerps from this.
-    const nHead = { ...neutral.head }
-    const nLeft = { ...neutral.eyes.left }
-    const nRight = { ...neutral.eyes.right }
-    const nSpacing = neutral.eyes.spacing
+    const nHead = { ...neutral.head };
+    const nLeft = { ...neutral.eyes.left };
+    const nRight = { ...neutral.eyes.right };
+    const nSpacing = neutral.eyes.spacing;
 
-    // Four synthesized gaze directions derived parametrically from the neutral
-    // head range (covers all screen quadrants with no dependency on editorial
-    // glance expressions - and validates cleanly for any data update).
-    // head.x/head.y rotate Byte's WHOLE body (poseFromExpression builds the
-    // orientation quaternion applied to every rendered point), so YAW/PITCH are
-    // the facing amplitudes: the body turns so its face points at the cursor,
-    // and the eyes follow inside the same rotation. Values sit at the top of
-    // Freddy's editorial range (~20-35 deg) so the turn reads as facing.
-    const GAZE_YAW = 24
-    const GAZE_PITCH = 18
-    const GAZE_ROLL = 16
+    const GAZE_YAW = 24;
+    const GAZE_PITCH = 18;
+    const GAZE_ROLL = 16;
 
-    type Vec = [number, number]
+    type Vec = [number, number];
     type Guide = {
       dir: Vec
       head: { x: number; y: number; z: number }
       left: { width: number; height: number; x: number; y: number; angle: number }
       right: { width: number; height: number; x: number; y: number; angle: number }
       spacing: number
-    }
+    };
+
     const guides: Record<string, Guide> = {
       left: {
         dir: [-1, 0],
@@ -533,179 +531,199 @@ export default function PortfolioCompanion() {
         right: { ...nRight, y: nRight.y + 1.8 },
         spacing: nSpacing,
       },
-    }
+    };
 
-    const suppressed = () => Boolean(messageRef.current) || moodRef.current !== 'idle'
+    const blink = GAZE_CONFIG.blink;
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(max, Math.max(min, value));
+    const randBetween = (min: number, max: number) =>
+      Math.floor(min + Math.random() * (max - min));
 
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+    const suppressed = () =>
+      Boolean(messageRef.current) || moodRef.current !== 'idle';
+
+    const state = gazeStateRef.current;
 
     const writePose = (
-      weight: number,
-      blend: { head: { x: number; y: number; z: number }; left: { width: number; height: number; x: number; y: number; angle: number }; right: { width: number; height: number; x: number; y: number; angle: number }; spacing: number } | null,
+      t: number,
+      mixes: Record<string, number> | null,
       blinking: boolean
     ) => {
-      const b = blend ?? { head: nHead, left: nLeft, right: nRight, spacing: nSpacing }
-      slot.head.x = lerp(nHead.x, b.head.x, weight)
-      slot.head.y = lerp(nHead.y, b.head.y, weight)
-      slot.head.z = lerp(nHead.z, b.head.z, weight)
-      slot.eyes.spacing = lerp(nSpacing, b.spacing, weight)
-      slot.eyes.left.width = lerp(nLeft.width, b.left.width, weight)
-      slot.eyes.right.width = lerp(nRight.width, b.right.width, weight)
-      const hL = lerp(nLeft.height, b.left.height, weight)
-      const hR = lerp(nRight.height, b.right.height, weight)
-      // Autonomous micro-blink written directly into eye heights (gaze-follow
-      // disables blink playback, so this is the only blink during tracking).
+      const blend = { hx: 0, hy: 0, hz: 0, wL: 0, hL: 0, xL: 0, yL: 0, aL: 0, wR: 0, hR: 0, xR: 0, yR: 0, aR: 0, sp: 0 };
+      let total = 0;
+
+      if (mixes) {
+        for (const guideKey of Object.keys(guides)) {
+          const weight = mixes[guideKey];
+          if (weight <= 0) continue;
+          total += weight;
+          const guide = guides[guideKey];
+          const l = guide.left;
+          const r = guide.right;
+          blend.hx += weight * guide.head.x;
+          blend.hy += weight * guide.head.y;
+          blend.hz += weight * guide.head.z;
+          blend.wL += weight * l.width;
+          blend.hL += weight * l.height;
+          blend.xL += weight * l.x;
+          blend.yL += weight * l.y;
+          blend.aL += weight * l.angle;
+          blend.wR += weight * r.width;
+          blend.hR += weight * r.height;
+          blend.xR += weight * r.x;
+          blend.yR += weight * r.y;
+          blend.aR += weight * r.angle;
+          blend.sp += weight * guide.spacing;
+        }
+        if (total > 0) {
+          const inv = 1 / total;
+          for (const key of Object.keys(blend)) {
+            blend[key as keyof typeof blend] *= inv;
+          }
+        }
+      }
+
+      const hasBlend = total > 0;
+      slot.head.x = lerp(neutral.head.x, blend.hx, t);
+      slot.head.y = lerp(neutral.head.y, blend.hy, t);
+      slot.head.z = lerp(neutral.head.z, blend.hz, t);
+      slot.eyes.left.width = lerp(nLeft.width, blend.wL, t * Number(hasBlend));
+      slot.eyes.left.height = lerp(nLeft.height, blend.hL, t * Number(hasBlend));
+      slot.eyes.left.x = lerp(nLeft.x, blend.xL, t * Number(hasBlend));
+      slot.eyes.left.y = lerp(nLeft.y, blend.yL, t * Number(hasBlend));
+      slot.eyes.left.angle = lerp(nLeft.angle, blend.aL, t * Number(hasBlend));
+      slot.eyes.right.width = lerp(nRight.width, blend.wR, t * Number(hasBlend));
+      slot.eyes.right.height = lerp(nRight.height, blend.hR, t * Number(hasBlend));
+      slot.eyes.right.x = lerp(nRight.x, blend.xR, t * Number(hasBlend));
+      slot.eyes.right.y = lerp(nRight.y, blend.yR, t * Number(hasBlend));
+      slot.eyes.right.angle = lerp(nRight.angle, blend.aR, t * Number(hasBlend));
+      slot.eyes.spacing = lerp(nSpacing, blend.sp, t * Number(hasBlend));
+
+      // Autonomous micro-blink (the gaze hold disables the animation blink)
       if (blinking) {
-        slot.eyes.left.height = 14
-        slot.eyes.right.height = 14
-      } else {
-        slot.eyes.left.height = hL
-        slot.eyes.right.height = hR
+        const progress =
+          (performance.now() - (state.blinkUntil - blink.durationMs)) /
+          blink.durationMs;
+        const dip = Math.sin(Math.PI * clamp(progress, 0, 1));
+        slot.eyes.left.height = lerp(slot.eyes.left.height, 14, dip);
+        slot.eyes.right.height = lerp(slot.eyes.right.height, 14, dip);
       }
-      slot.eyes.left.x = lerp(nLeft.x, b.left.x, weight)
-      slot.eyes.right.x = lerp(nRight.x, b.right.x, weight)
-      slot.eyes.left.y = lerp(nLeft.y, b.left.y, weight)
-      slot.eyes.right.y = lerp(nRight.y, b.right.y, weight)
-      slot.eyes.left.angle = lerp(nLeft.angle, b.left.angle, weight)
-      slot.eyes.right.angle = lerp(nRight.angle, b.right.angle, weight)
-    }
-
-    const state = gazeStateRef.current
-
-    const scheduleBlink = (now: number) => {
-      const gap = 2600 + Math.random() * 3600
-      state.nextBlinkAt = now + gap
-    }
-    scheduleBlink(Date.now())
-
-    const stop = () => {
-      if (state.on) state.on = false
-      if (gazeFrameRef.current !== null) {
-        cancelAnimationFrame(gazeFrameRef.current)
-        gazeFrameRef.current = null
-      }
-      state.armed = false
-    }
+    };
 
     const start = () => {
-      if (state.on) return
-      state.on = true
-      const tick = (now: number) => {
-        gazeFrameRef.current = requestAnimationFrame(tick)
-        const active = !suppressed() && !(now - state.lastMoveAt > 1800 && Math.hypot(state.u, state.v) < 0.02)
-        const wantU = active ? Math.max(-1, Math.min(1, state.targetX / (window.innerWidth / 2 || 1))) : 0
-        const wantV = active ? Math.max(-1, Math.min(1, state.targetY / (window.innerHeight / 2 || 1))) : 0
-        // Target blend weight grows with radial distance so the gaze reaches
-        // corner blends near screen edges and merges smoothly between axes.
-        const wantT = active ? Math.min(1, Math.hypot(wantU, wantV) * 0.95 + 0.15) : 0
-        state.u += (wantU - state.u) * 0.16
-        state.v += (wantV - state.v) * 0.16
-        state.t += (wantT - state.t) * 0.16
+      if (state.on) return;
+      state.on = true;
 
-        const nowAbs = now
-        let blinking = false
-        if (nowAbs >= state.nextBlinkAt && !state.blinkUntil) {
-          state.blinkUntil = nowAbs + 170
-          blinking = true
-        } else if (state.blinkUntil) {
-          if (nowAbs >= state.blinkUntil) {
-            state.blinkUntil = 0
-            scheduleBlink(nowAbs)
-          } else {
-            // Eye is held closed for the blink window; scheduleBlink seeds the
-            // next one when the window ends.
-            const p = (nowAbs - (state.blinkUntil - 170)) / 170
-            blinking = p > 0.35 && p < 0.65
+      const tick = () => {
+        gazeFrameRef.current = requestAnimationFrame(tick);
+        const now = performance.now();
+        const suppressed_ = suppressed();
+        const active =
+          !suppressed_ && state.armed && now - state.lastMoveAt <= GAZE_CONFIG.steadyMs;
+
+        const wantU = active
+          ? clamp(state.targetX / (window.innerWidth / 2), -1, 1)
+          : 0;
+        const wantV = active
+          ? clamp(state.targetY / (window.innerHeight / 2), -1, 1)
+          : 0;
+        const wantT = active ? clamp(Math.hypot(wantU, wantV), 0, 1) : 0;
+
+        state.u += (wantU - state.u) * GAZE_CONFIG.easeFactor;
+        state.v += (wantV - state.v) * GAZE_CONFIG.easeFactor;
+        state.t += (wantT - state.t) * GAZE_CONFIG.easeFactor;
+
+        // Autonomous micro-blink
+        if (now >= state.nextBlinkAt) {
+          state.nextBlinkAt =
+            now + randBetween(blink.minMs, blink.maxMs);
+          state.blinkUntil = now + blink.durationMs;
+        }
+        const blinking = now < state.blinkUntil;
+
+        // Converged on neutral: may resume idle loop
+        if (
+          state.t < 0.015 &&
+          Math.abs(state.u) < 0.02 &&
+          Math.abs(state.v) < 0.02
+        ) {
+          writePose(0, null, blinking);
+          if (
+            !active &&
+            !suppressed_ &&
+            !messageRef.current &&
+            moodRef.current === 'idle'
+          ) {
+            state.armed = false;
+            state.on = false;
+            try {
+              avatarRef.current?.play?.('idle');
+            } catch {}
           }
+          return;
         }
 
-        // Angular kernel over the four parametric guides (same recipe the
-        // reference Sunee companion uses, tuned for these guide dirs).
-        type Blend = Guide
-        const dirs: Array<{ key: string; guide: Blend }> = [
-          { key: 'left', guide: guides.left },
-          { key: 'right', guide: guides.right },
-          { key: 'up', guide: guides.up },
-          { key: 'down', guide: guides.down },
-        ]
-        let total = 0
-        const weights: Record<string, number> = {}
-        for (const { key, guide } of dirs) {
-          const w = Math.max(0, state.u * guide.dir[0] + state.v * guide.dir[1])
-          weights[key] = w
-          total += w
+        // Angular kernels (blend directions)
+        const weights: Record<string, number> = {};
+        let weightTotal = 0;
+        for (const guideKey of Object.keys(guides)) {
+          const guide = guides[guideKey];
+          const w = clamp(state.u * guide.dir[0] + state.v * guide.dir[1], 0, 1);
+          weights[guideKey] = w;
+          weightTotal += w;
         }
-        let blend: Blend | null = null
-        if (total > 0.0001 && state.t > 0.01) {
-          const hx = dirs.reduce((s, { key, guide }) => s + (weights[key] / total) * guide.head.x, 0)
-          const hy = dirs.reduce((s, { key, guide }) => s + (weights[key] / total) * guide.head.y, 0)
-          const hz = dirs.reduce((s, { key, guide }) => s + (weights[key] / total) * guide.head.z, 0)
-          const wl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.width, 0)
-          const wr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.width, 0)
-          const hl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.height, 0)
-          const hr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.height, 0)
-          const xl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.x, 0)
-          const xr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.x, 0)
-          const yl = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.y, 0)
-          const yr = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.y, 0)
-          const al = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].left.angle, 0)
-          const ar = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].right.angle, 0)
-          const sp = dirs.reduce((s, { key }) => s + (weights[key] / total) * guides[key as keyof typeof guides].spacing, 0)
-          blend = {
-            dir: [0, 0],
-            head: { x: hx, y: hy, z: hz },
-            left: { width: wl, height: hl, x: xl, y: yl, angle: al },
-            right: { width: wr, height: hr, x: xr, y: yr, angle: ar },
-            spacing: sp,
-          }
-        }
+        const mixes = weightTotal > 1e-6 ? weights : null;
+        writePose(state.t, mixes, blinking);
+      };
 
-        writePose(state.t, blend ? { head: blend.head, left: blend.left, right: blend.right, spacing: blend.spacing } : null, blinking)
+      gazeFrameRef.current = requestAnimationFrame(tick);
+    };
 
-        // Converged back to neutral -> disarm cleanly. Only replay idle if
-        // the companion has no visible priority of its own.
-        const converged = state.t < 0.015 && Math.abs(state.u) < 0.02 && Math.abs(state.v) < 0.02
-        if (converged && !active) {
-          writePose(0, null, blinking)
-          if (!messageRef.current && moodRef.current === 'idle') {
-            stop()
-            try { avatarRef.current?.play?.('idle') } catch {}
-          } else {
-            stop()
-          }
+    const stop = () => {
+      if (state.on) {
+        state.on = false;
+        if (gazeFrameRef.current) {
+          cancelAnimationFrame(gazeFrameRef.current);
+          gazeFrameRef.current = null;
         }
       }
-      gazeFrameRef.current = requestAnimationFrame(tick)
-    }
+    };
 
-    const handleMove = (e: MouseEvent) => {
-      if (suppressed()) return
-      const now = Date.now()
-      // Throttle high-frequency mousemoves matching the wrapper's 50 ms rhythm.
-      if (now - state.lastMoveAt < 50) return
-      const el = avatarContainerRef.current
-      if (!el) return
-      const rect = el.getBoundingClientRect()
-      const cx = rect.left + rect.width / 2
-      const cy = rect.top + rect.height / 2
-      state.targetX = e.clientX - cx
-      state.targetY = e.clientY - cy
-      state.lastMoveAt = now
+    const onMove = (event: MouseEvent) => {
+      const now = performance.now();
+      if (now - state.lastEval < GAZE_CONFIG.throttleMs) return;
+      state.lastEval = now;
+      if (suppressed()) return;
+
+      const host = avatarContainerRef.current;
+      if (!host) return;
+
+      const rect = host.getBoundingClientRect();
+      state.targetX = event.clientX - (rect.left + rect.width / 2);
+      state.targetY = event.clientY - (rect.top + rect.height / 2);
+      state.lastMoveAt = now;
+
       if (!state.armed) {
-        state.armed = true
-        try { avatarRef.current?.play?.('gaze-follow') } catch {}
-        start()
+        state.armed = true;
+        try {
+          avatarRef.current?.play?.('gaze-follow');
+        } catch {}
+        start();
       }
-    }
+    };
 
-    window.addEventListener('mousemove', handleMove, { passive: true })
+    window.addEventListener('mousemove', onMove, { passive: true });
+
     return () => {
-      window.removeEventListener('mousemove', handleMove)
-      stop()
-      // Leave the gaze slot neutral so the next idle playback paints cleanly.
-      try { writePose(0, null, false) } catch {}
-    }
-  }, [zenMode, liteMode])
+      window.removeEventListener('mousemove', onMove);
+      stop();
+      // Leave gaze slot neutral for clean idle playback
+      try {
+        writePose(0, null, false);
+      } catch {}
+    };
+  }, [zenMode, liteMode]);
 
   // Click interaction
   const handleAvatarClick = useCallback(() => {
