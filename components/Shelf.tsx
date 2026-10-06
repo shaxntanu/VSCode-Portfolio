@@ -209,7 +209,7 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
               top: 0,
               bottom: 0,
               width: '80px',
-              background: 'linear-gradient(to right, var(--background), transparent)',
+              background: 'linear-gradient(to right, rgba(250, 247, 240, 1), transparent)',
               pointerEvents: 'none',
             }}
           />
@@ -221,7 +221,7 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
               top: 0,
               bottom: 0,
               width: '80px',
-              background: 'linear-gradient(to left, var(--background), transparent)',
+              background: 'linear-gradient(to left, rgba(250, 247, 240, 1), transparent)',
               pointerEvents: 'none',
             }}
           />

@@ -79,6 +79,14 @@ export const routeMessages: Record<string, RouteMessage> = {
   '/leetcode': {
     message: "LeetCode stats. Problem-solving skills across Easy, Medium, and Hard challenges. Real data from the LeetCode platform.",
     animation: 'curious'
+  },
+  '/journal': {
+    message: "Personal writing and reflections. The creative side of engineering.",
+    animation: 'curious'
+  },
+  '/journal/library': {
+    message: "A virtual library of books. 3D book spines with real cover art.",
+    animation: 'excited'
   }
 };
 
