@@ -17,10 +17,30 @@ export interface LibraryProject {
 }
 
 export interface Book {
+  id: string;
   title: string;
-  author?: string;
-  category?: 'CHILDHOOD' | 'GENERAL';
-  series?: string;
+  author: string;
+  genres?: string[];
+  cover: string;
+  year: number;
+  blurb: string;
+  rating: number;
+  finished: string;
+  recommender?: string;
+  publisher: string;
+  binding: "hardcover" | "paperback" | "mass";
+  finish: "cloth" | "gloss" | "matte";
+  spine: string;
+  band?: string;
+  ink: string;
+  face: "serif" | "sans" | "mono";
+  caps?: boolean;
+  width: number;
+  height: number;
+  lean: number;
+  depth: number;
+  wear: number;
+  spineImage?: string;
 }
 
 export const mediumArticles: MediumArticle[] = [
@@ -48,42 +68,3 @@ export const libraryProject: LibraryProject = {
   url: 'https://github.com/carollia99/virtual-library-guide',
   demoUrl: 'https://carollia-library.lovable.app/',
 };
-
-export const readingList: Book[] = [
-  // Childhood / Series
-  {
-    title: 'Harry Potter — Complete Series',
-    category: 'CHILDHOOD',
-  },
-  {
-    title: 'Geronimo Stilton',
-    category: 'CHILDHOOD',
-  },
-  {
-    title: 'Kingdom of Fantasy',
-    series: 'Geronimo Stilton Series',
-    category: 'CHILDHOOD',
-  },
-  // Recent / General Reading
-  {
-    title: 'The Silent Patient',
-    category: 'GENERAL',
-  },
-  {
-    title: 'Atomic Habits',
-    category: 'GENERAL',
-  },
-  {
-    title: 'The Subtle Art of Not Giving a F*ck',
-    category: 'GENERAL',
-  },
-  {
-    title: 'Punk 57',
-    category: 'GENERAL',
-  },
-  {
-    title: 'Meditations',
-    author: 'Marcus Aurelius',
-    category: 'GENERAL',
-  },
-];

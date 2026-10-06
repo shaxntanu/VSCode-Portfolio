@@ -18,6 +18,10 @@ export default function Document() {
         <meta name="apple-mobile-web-app-title" content="Shantanu" />
         <meta name="build-date" content={buildDate} />
         <link rel="apple-touch-icon" href="/logos/vscode_icon.svg" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Karla:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <Script
