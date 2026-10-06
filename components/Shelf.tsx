@@ -127,26 +127,8 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
   }, [needsLoop, totalWidth]);
   
   // Calculate perspective rotation for each book
-  const getRotation = (index: number) => {
-    if (!containerRef.current || !overflowing) return 0;
-    
-    const bookElement = containerRef.current.children[index] as HTMLElement;
-    if (!bookElement) return 0;
-    
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const bookRect = bookElement.getBoundingClientRect();
-    
-    const bookCenter = bookRect.left + bookRect.width / 2;
-    const containerCenter = containerRect.left + containerRect.width / 2;
-    
-    const distance = bookCenter - containerCenter;
-    const maxDistance = containerRect.width / 2;
-    const normalized = distance / maxDistance;
-    
-    // Eased rotation up to ±34 degrees
-    const rotation = Math.pow(Math.abs(normalized), 1.35) * Math.sign(normalized) * 34;
-    
-    return rotation;
+  const getRotation = () => {
+    return 0; // Keep books vertical
   };
   
   return (
@@ -168,8 +150,6 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
           paddingBottom: '24px',
           overflowX: 'auto',
           overflowY: 'hidden',
-          perspective: '1400px',
-          perspectiveOrigin: '50% 65%',
           cursor: isDragging ? 'grabbing' : 'grab',
           userSelect: 'none',
           scrollbarWidth: 'none',
@@ -178,7 +158,7 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
         }}
       >
         {displayBooks.map((book, index) => {
-          const rotation = getRotation(index);
+          const rotation = getRotation();
           const isNewlyAdded = book.id === justAdded;
           
           return (
