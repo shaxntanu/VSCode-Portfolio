@@ -27,7 +27,7 @@
 .title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-color);
     margin: 0 0 0.5rem 0;
 }
 
@@ -77,7 +77,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: #ff6b6b;
+    color: var(--error, #ff6b6b);
 }
 
 .errorIcon {
@@ -93,7 +93,7 @@
 /* Streak Card */
 .streakCard {
     background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 1.25rem;
     display: flex;
@@ -143,7 +143,7 @@
 
 .section {
     background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 1.5rem;
 }
@@ -151,12 +151,12 @@
 .sectionTitle {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-color);
     margin: 0 0 1.5rem 0;
 }
 
 .keyword {
-    color: #c586c0;
+    color: var(--syntax-function, #c586c0);
 }
 
 /* Chart Container */
@@ -226,7 +226,7 @@
 
 .statAcc {
     font-size: 0.8rem;
-    color: #4ec9b0;
+    color: var(--syntax-call, #4ec9b0);
     margin-top: 0.5rem;
 }
 
@@ -254,7 +254,7 @@
 }
 
 .envKey {
-    color: #9cdcfe;
+    color: var(--syntax-variable, #9cdcfe);
 }
 
 .envEquals {
@@ -262,7 +262,7 @@
 }
 
 .envValue {
-    color: #ce9178;
+    color: var(--syntax-string, #ce9178);
 }
 
 .envValue a {

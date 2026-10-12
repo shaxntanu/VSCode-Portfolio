@@ -25,6 +25,7 @@ const Titlebar = () => {
         'ayu-mirage': 'Ayu Mirage',
         'nord': 'Nord',
         'night-owl': 'Night Owl',
+        'light': 'Light',
       };
       setCurrentTheme(themeNames[theme] || 'Ayu Dark');
     };

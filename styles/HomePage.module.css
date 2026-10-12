@@ -21,7 +21,7 @@
 }
 
 .function {
-    color: #dcdcaa;
+    color: var(--syntax-constant, #dcdcaa);
 }
 
 .heroLayout {
@@ -58,7 +58,7 @@
     width: 100%;
     max-width: 600px;
     height: 550px;
-    background: var(--main-bg);
+    background: var(--code-bg, var(--main-bg));
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
@@ -76,8 +76,8 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background-color: #353434;
-    color: #CCCCCC;
+    background-color: var(--code-control-bg, #353434);
+    color: var(--code-control-text, #CCCCCC);
     border: none;
     cursor: pointer;
     outline: none;
@@ -85,11 +85,11 @@
 }
 
 .copyButton:hover {
-    background-color: #464646;
+    background-color: var(--code-control-hover-bg, #464646);
 }
 
 .copyButton:hover svg {
-    color: #8bb9fe;
+    color: var(--accent-color);
 }
 
 .copyButton:active {
@@ -128,7 +128,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
-    scrollbar-color: #444 var(--main-bg);
+    scrollbar-color: var(--scrollbar-thumb-bg) var(--code-bg, var(--main-bg));
     padding: 16px 0;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .editorContent::-webkit-scrollbar-thumb {
-    background-color: #444;
+    background-color: var(--scrollbar-thumb-bg);
     border-radius: 10px;
 }
 
@@ -158,7 +158,7 @@
     width: 50px;
     text-align: right;
     padding-right: 16px;
-    color: #636e83;
+    color: var(--line-number, #636e83);
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     user-select: none;
@@ -167,7 +167,7 @@
 }
 
 .activeLine {
-    color: var(--text-color);
+    color: var(--code-text, var(--text-color));
 }
 
 .codeText {
@@ -198,49 +198,49 @@
 
 /* Syntax Highlighting */
 .function {
-    color: #c586c0;
+    color: var(--syntax-function, #c586c0);
 }
 
 .variable {
-    color: #9cdcfe;
+    color: var(--syntax-variable, #9cdcfe);
 }
 
 .array-start,
 .array-end {
-    color: #dcdcaa;
+    color: var(--syntax-constant, #dcdcaa);
 }
 
 .array-item {
-    color: #ce9178;
+    color: var(--syntax-string, #ce9178);
 }
 
 .nested-function {
-    color: #c586c0;
+    color: var(--syntax-function, #c586c0);
 }
 
 .return {
-    color: #dcdcaa;
+    color: var(--syntax-constant, #dcdcaa);
 }
 
 .function-call {
-    color: #4ec9b0;
+    color: var(--syntax-call, #4ec9b0);
 }
 
 .close,
 .close-function {
-    color: #808080;
+    color: var(--syntax-punctuation, #808080);
 }
 
 .return-object {
-    color: #9cdcfe;
+    color: var(--syntax-variable, #9cdcfe);
 }
 
 .object-method {
-    color: #dcdcaa;
+    color: var(--syntax-constant, #dcdcaa);
 }
 
 .comment {
-    color: #6a9955;
+    color: var(--syntax-comment, #6a9955);
 }
 
 .blank {

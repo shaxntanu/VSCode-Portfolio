@@ -2,7 +2,7 @@
     background: var(--bottombar-bg);
     height: 25px;
     border-top: 1px solid var(--bottombar-border);
-    color: rgb(225, 228, 232);
+    color: var(--bottombar-text, rgb(225, 228, 232));
     padding: 0 0.5rem;
     display: flex;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .bottomBar a {
-    color: rgb(225, 228, 232);
+    color: var(--bottombar-text, rgb(225, 228, 232));
     text-decoration: none;
 }
 
@@ -45,7 +45,7 @@
 .modeButton {
     background: none;
     border: none;
-    color: rgb(225, 228, 232);
+    color: var(--bottombar-text, rgb(225, 228, 232));
     font-family: 'Source Sans Pro', sans-serif;
     cursor: pointer;
     display: flex;
@@ -58,16 +58,16 @@
 
 .modeButton:hover {
     background: var(--bottombar-hover-bg);
-    color: rgb(100, 200, 255);
+    color: var(--bottombar-highlight, rgb(100, 200, 255));
 }
 
 .modeButton.active {
-    background: rgb(30, 120, 200);
-    color: rgb(255, 255, 255);
+    background: var(--bottombar-active-bg, rgb(30, 120, 200));
+    color: var(--bottombar-text, rgb(255, 255, 255));
 }
 
 .modeButton.active:hover {
-    background: rgb(50, 140, 220);
+    background: var(--bottombar-active-hover-bg, rgb(50, 140, 220));
 }
 
 /* Telemetry display with smooth animations */
@@ -78,15 +78,15 @@
     max-width: 150px;
     height: 24px;
     justify-content: center;
-    background: rgba(100, 200, 255, 0.1);
+    background: var(--bottombar-telemetry-bg, rgba(100, 200, 255, 0.1));
     border-left: 2px solid var(--accent-color);
-    color: rgb(100, 200, 255);
+    color: var(--bottombar-highlight, rgb(100, 200, 255));
     font-weight: 500;
     overflow: hidden;
 }
 
 .telemetry:hover {
-    background: rgba(100, 200, 255, 0.15);
+    background: var(--bottombar-telemetry-hover-bg, rgba(100, 200, 255, 0.15));
 }
 
 /* Ensure smooth transitions without layout shift */

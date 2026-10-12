@@ -39,13 +39,13 @@
 
 .subtitle {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     font-family: 'JetBrains Mono', monospace;
 }
 
 .tableWrapper {
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     background: var(--article-bg);
 }
 
@@ -68,11 +68,11 @@
 }
 
 .tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--table-row-even, rgba(255, 255, 255, 0.02));
 }
 
 .tr:nth-child(odd) {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--table-row-odd, rgba(255, 255, 255, 0.05));
 }
 
 .tr:hover {
@@ -82,17 +82,17 @@
 
 .td {
     padding: 0.875rem 1rem;
-    color: rgba(255, 255, 255, 0.9);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .statusGreen {
-    color: #00ff00;
+    color: var(--success, #00ff00);
     font-weight: 600;
 }
 
 .statusYellow {
-    color: #ffff00;
+    color: var(--warning, #ffff00);
     font-weight: 600;
 }
 

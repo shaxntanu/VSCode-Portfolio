@@ -45,7 +45,7 @@
 .name {
     font-size: 2rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-color);
     margin: 0;
     font-family: 'JetBrains Mono', monospace;
 }
@@ -116,7 +116,7 @@
     cursor: pointer;
     position: relative;
     transition: 300ms;
-    color: white;
+    color: var(--text-color);
     overflow: visible;
     font-family: 'JetBrains Mono', monospace;
     flex-shrink: 0;
@@ -350,7 +350,7 @@
 .chartSection {
     margin-bottom: 2rem;
     padding: 2rem;
-    background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));
+    background: var(--card-bg, var(--explorer-hover-bg));
     border-radius: 8px;
     border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
 }

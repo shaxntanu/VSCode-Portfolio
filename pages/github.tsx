@@ -4,7 +4,7 @@ import GitHubCalendar from 'react-github-calendar';
 import GithubSkeleton from '@/components/GithubSkeleton';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getLanguageColor, formatBytes } from '@/utils/languageColors';
 import {
   Chart as ChartJS,
@@ -50,7 +50,23 @@ const GithubPage = ({
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLightTheme, setIsLightTheme] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      setIsLightTheme(document.documentElement.getAttribute('data-theme') === 'light');
+    };
+
+    updateTheme();
+    window.addEventListener('themeChanged', updateTheme);
+    window.addEventListener('storage', updateTheme);
+
+    return () => {
+      window.removeEventListener('themeChanged', updateTheme);
+      window.removeEventListener('storage', updateTheme);
+    };
+  }, []);
   
   const calendarTheme = {
     dark: [
@@ -60,6 +76,7 @@ const GithubPage = ({
       'rgba(0, 212, 255, 0.7)',
       'rgba(0, 212, 255, 1)',
     ],
+    light: ['#edf1f7', '#cfe1ff', '#91bdff', '#5595f5', '#1f6feb'],
   };
 
   // Generate year options (from current year down to 2025 when account started)
@@ -131,7 +148,19 @@ const GithubPage = ({
         type: 'logarithmic' as const,
         beginAtZero: false,
         ticks: {
+          color: isLightTheme ? '#475569' : '#d4d4d4',
           callback: (value: any) => value + '%',
+        },
+        grid: {
+          color: isLightTheme ? 'rgba(71, 85, 105, 0.16)' : 'rgba(255, 255, 255, 0.12)',
+        },
+      },
+      y: {
+        ticks: {
+          color: isLightTheme ? '#475569' : '#d4d4d4',
+        },
+        grid: {
+          color: isLightTheme ? 'rgba(71, 85, 105, 0.12)' : 'rgba(255, 255, 255, 0.08)',
         },
       },
     },
@@ -192,7 +221,7 @@ const GithubPage = ({
                 <div className={styles.contributionGraph}>
                   <GitHubCalendar 
                     username={username}
-                    colorScheme="dark"
+                    colorScheme={isLightTheme ? 'light' : 'dark'}
                     blockSize={10}
                     blockMargin={3}
                     blockRadius={2}
@@ -200,7 +229,7 @@ const GithubPage = ({
                     theme={calendarTheme}
                     year={selectedYear === 'last-year' ? undefined : selectedYear}
                     style={{
-                      color: 'rgba(255, 255, 255, 0.7)',
+                      color: isLightTheme ? '#475569' : 'rgba(255, 255, 255, 0.7)',
                     }}
                     labels={{
                       totalCount: selectedYear === 'last-year' 
@@ -315,16 +344,6 @@ const GithubPage = ({
 export async function getStaticProps() {
   const username = 'shaxntanu';
   
-  // Allowlist of Arceus-Labs repositories
-  const arceusLabsRepos = [
-    'Jolt-Locator',
-    'The-Ruin-Machine',
-    'RFID-Attendance-System',
-    'Servo-Light-Switch-Control-ESP8266-and-HC06',
-    'esp8266-inductance-meter',
-    'Arduino-Electromagnet-Turns-Controller',
-  ];
-  
   try {
     const [reposRes, userRes] = await Promise.all([
       fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`),
@@ -338,21 +357,16 @@ export async function getStaticProps() {
     const totalStars = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0) : 0;
     const totalForks = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.forks || 0), 0) : 0;
 
-    // Fetch language data
-    const ownRepos = Array.isArray(repos) ? repos.filter((repo: any) => !repo.fork) : [];
-    
-    const arceusRepoPromises = arceusLabsRepos.map((repoName) =>
-      fetch(`https://api.github.com/repos/Arceus-Labs/${repoName}`).then((res) =>
-        res.ok ? res.json() : null
-      )
-    );
-
-    const arceusRepos = (await Promise.all(arceusRepoPromises)).filter(Boolean);
-    const allRepos = [...ownRepos, ...arceusRepos];
-
-    const languagePromises = allRepos.map((repo: any) =>
-      fetch(repo.languages_url).then((res) => (res.ok ? res.json() : {}))
-    );
+    // Analyze the same public repositories counted in the profile, including forks.
+    const profileRepos = Array.isArray(repos) ? repos : [];
+    const languagePromises = profileRepos.map(async (repo) => {
+      try {
+        const response = await fetch(repo.languages_url);
+        return response.ok ? response.json() : {};
+      } catch {
+        return {};
+      }
+    });
 
     const languageResults = await Promise.all(languagePromises);
 
@@ -371,7 +385,7 @@ export async function getStaticProps() {
       .map(([name, bytes]) => ({
         name,
         bytes,
-        percentage: (bytes / totalBytes) * 100,
+        percentage: totalBytes > 0 ? (bytes / totalBytes) * 100 : 0,
         color: getLanguageColor(name),
       }))
       .sort((a, b) => b.percentage - a.percentage);
@@ -385,7 +399,7 @@ export async function getStaticProps() {
         totalStars,
         totalForks,
         languages,
-        repositoriesAnalyzed: allRepos.length,
+        repositoriesAnalyzed: profileRepos.length,
         languagesDetected: languages.length,
       },
       revalidate: 3600,

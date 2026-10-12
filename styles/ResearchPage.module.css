@@ -35,7 +35,7 @@
 .pageSubtitle {
     font-size: 1rem;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     margin-bottom: 2.5rem;
     max-width: 600px;
     line-height: 1.6;
@@ -51,7 +51,7 @@
 .sectionTitle {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 1.5rem;
     font-family: 'JetBrains Mono', monospace;
     padding-left: 0.5rem;
@@ -70,7 +70,7 @@
     gap: 1rem;
     padding: 1.25rem;
     background: var(--article-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     border-radius: 8px;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -85,7 +85,7 @@
 
 .cardIcon {
     font-size: 2.5rem;
-    color: #fff;
+    color: var(--accent-color);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -100,7 +100,7 @@
 .cardTitle {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #f3f4f6;
+    color: var(--text-color);
     margin: 0 0 0.5rem 0;
     font-family: 'JetBrains Mono', monospace;
 }
@@ -114,12 +114,12 @@
 .cardId {
     font-size: 0.8rem;
     font-family: 'JetBrains Mono', monospace;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .cardType {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
 }
 
 .cardFooter {
@@ -130,7 +130,7 @@
 
 .cardDate {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--text-muted);
 }
 
 .statusBadge {
@@ -145,7 +145,7 @@
 
 .cardLink {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     flex-shrink: 0;
     transition: color 0.2s ease;
 }
@@ -158,13 +158,13 @@
     padding: 3rem;
     text-align: center;
     background: var(--article-bg);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border: 1px dashed var(--border);
     border-radius: 8px;
 }
 
 .comingSoon p {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     font-family: 'JetBrains Mono', monospace;
     margin: 0;
 }

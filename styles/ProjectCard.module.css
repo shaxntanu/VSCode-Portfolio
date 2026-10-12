@@ -144,7 +144,7 @@
     margin: 1rem 0;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -410,8 +410,8 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background-color: #353434;
-    color: #CCCCCC;
+    background-color: var(--code-control-bg, #353434);
+    color: var(--code-control-text, #CCCCCC);
     border: none;
     cursor: pointer;
     outline: none;
@@ -421,11 +421,11 @@
 }
 
 .copyButton:hover {
-    background-color: #464646;
+    background-color: var(--code-control-hover-bg, #464646);
 }
 
 .copyButton:hover svg {
-    color: #8bb9fe;
+    color: var(--accent-color);
 }
 
 .copyButton:active {
