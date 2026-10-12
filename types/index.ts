@@ -120,6 +120,7 @@ export interface Repo {
   stargazers_count: number;
   html_url: string;
   homepage: string;
+  languages_url: string;
 }
 
 export interface User {
