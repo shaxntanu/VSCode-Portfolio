@@ -10,6 +10,7 @@ export interface Article {
 }
 
 export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT' | 'MINI_BUILDS' | 'CREATIVE_LAB';
+export type MiniBuildType = 'ELECTRONICS' | 'SOFTWARE';
 
 export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS' | 'POWER_ELECTRONICS' | 'COMMUNICATION' | 'PCB' | 'EDUCATIONAL';
 
@@ -58,6 +59,7 @@ export interface Project {
   link: string;
   slug: string;
   category: ProjectCategory;
+  miniBuildType?: MiniBuildType;
   dateRange: string;
   year: number;
   background?: string;

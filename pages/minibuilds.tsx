@@ -4,37 +4,61 @@ import { projects, categoryConfig } from '@/data/projects';
 import styles from '@/styles/ProjectsPage.module.css';
 
 const MiniBuildsPage = () => {
-  // Filter only MINI_BUILDS projects
   const miniBuildsProjects = projects.filter(project => project.category === 'MINI_BUILDS');
-  
-  // Sort by year (oldest to newest)
-  miniBuildsProjects.sort((a, b) => a.year - b.year);
-  
   const config = categoryConfig['MINI_BUILDS'];
+  const sections = [
+    {
+      type: 'ELECTRONICS',
+      title: 'ELECTRONICS',
+      color: categoryConfig.HARDWARE_MODULES.color,
+    },
+    {
+      type: 'SOFTWARE',
+      title: 'SOFTWARE',
+      color: categoryConfig.SOFTWARE_SYSTEMS.color,
+    },
+  ] as const;
 
   return (
     <div className={styles.layout}>
       <h1 className={styles.pageTitle}>minibuilds.cfg</h1>
       <p className={styles.pageSubtitle}>
-        Quick experiments, utility scripts, and small hardware builds. These are the learning ground projects where ideas are tested before becoming full-scale implementations. From PowerShell utilities to Arduino starter projects and IoT measurement tools.
+        Small experiments and learning projects, organized into electronics builds and software tools.
       </p>
 
-      <div className={styles.categorySection}>
-        <div className={styles.categoryHeader}>
-          <span className={styles.comment}>{config.title}</span>
-          <span style={{ color: config.color }}>{config.titleHighlight}</span>
-        </div>
-        <div className={styles.container}>
-          {miniBuildsProjects.map((project) => (
-            <div key={project.slug} id={project.slug}>
-              <ProjectCard 
-                project={project} 
-                categoryConfig={config}
-              />
+      {sections.map((section) => {
+        const sectionProjects = miniBuildsProjects
+          .filter(project => project.miniBuildType === section.type)
+          .sort((a, b) => a.year - b.year);
+
+        return (
+          <section
+            key={section.type}
+            className={styles.categorySection}
+            aria-labelledby={`mini-builds-${section.type.toLowerCase()}`}
+          >
+            <div
+              className={styles.categoryHeader}
+              id={`mini-builds-${section.type.toLowerCase()}`}
+              role="heading"
+              aria-level={2}
+            >
+              <span className={styles.comment}>{config.title}</span>
+              <span style={{ color: section.color }}>{section.title}</span>
             </div>
-          ))}
-        </div>
-      </div>
+            <div className={styles.container}>
+              {sectionProjects.map((project) => (
+                <div key={project.slug} id={project.slug}>
+                  <ProjectCard
+                    project={project}
+                    categoryConfig={config}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
 };
