@@ -30,6 +30,7 @@ const MiniBuildsPage = () => {
         const sectionProjects = miniBuildsProjects
           .filter(project => project.miniBuildType === section.type)
           .sort((a, b) => a.year - b.year);
+        const sectionConfig = { ...config, color: section.color };
 
         return (
           <section
@@ -51,7 +52,8 @@ const MiniBuildsPage = () => {
                 <div key={project.slug} id={project.slug}>
                   <ProjectCard
                     project={project}
-                    categoryConfig={config}
+                    categoryConfig={sectionConfig}
+                    accented
                   />
                 </div>
               ))}

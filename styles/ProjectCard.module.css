@@ -21,6 +21,15 @@
     border-color: var(--card-accent-color, rgba(var(--accent-color-rgb), 0.2));
 }
 
+.accentedCard {
+    border-color: color-mix(in srgb, var(--card-accent-color) 42%, transparent);
+    background-color: color-mix(in srgb, var(--card-accent-color) 6%, var(--article-bg));
+}
+
+.accentedCard:hover {
+    border-color: var(--card-accent-color);
+}
+
 .cardGlow {
     position: absolute;
     inset: -10px;

@@ -31,9 +31,10 @@ const KaggleIcon = () => (
 interface ProjectCardProps {
   project: Project;
   categoryConfig: CategoryConfig;
+  accented?: boolean;
 }
 
-const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
+const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardProps) => {
   const router = useRouter();
   const [bomOpen, setBomOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
@@ -99,7 +100,7 @@ const ProjectCard = ({ project, categoryConfig }: ProjectCardProps) => {
   
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} ${accented ? styles.accentedCard : ''}`}
       style={{
         '--card-accent-color': categoryConfig.color,
       } as React.CSSProperties}
