@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Book } from '@/data/journal';
 import { books } from '@/data/books';
-import TypedTitle from '@/components/TypedTitle';
 import Shelf from '@/components/Shelf';
 import LibraryFilter from '@/components/LibraryFilter';
 import styles from '@/styles/ResearchPage.module.css';
@@ -19,10 +18,6 @@ const LibraryPage = () => {
       </p>
 
       <div className={styles.section}>
-        <div className={styles.subtitle}>A personal archive</div>
-        <div style={{ marginBottom: '16px' }}>
-          <TypedTitle />
-        </div>
         <div style={{ fontSize: '12px', fontFamily: 'Space Mono, monospace', textTransform: 'uppercase', opacity: 0.6, marginBottom: '24px' }}>
           {books.length} volumes
         </div>
