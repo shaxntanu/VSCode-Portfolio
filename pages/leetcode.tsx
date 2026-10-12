@@ -204,7 +204,7 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
           <div className={styles.profileInfo}>
             <h1 className={styles.name}>leetcode.stats</h1>
             <p className={styles.bio}>
-              Algorithmic problem-solving statistics.
+              Problems solved across Easy, Medium, and Hard.
             </p>
           </div>
         </div>
