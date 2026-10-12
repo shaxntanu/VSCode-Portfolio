@@ -166,13 +166,11 @@ export interface LeetCodeStats {
   rating?: number;
   currentStreak?: number;
   longestStreak?: number;
-  acceptanceRate?: number;
 }
 
 export interface LeetCodeProblem {
   title: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  acceptanceRate?: number;
   topicTags?: string[];
   titleSlug?: string;
   status?: string;

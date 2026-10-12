@@ -205,12 +205,6 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
             <h1 className={styles.name}>leetcode.stats</h1>
             <p className={styles.bio}>
               Algorithmic problem-solving statistics.
-              {stats?.acceptanceRate && (
-                <>
-                  <br />
-                  Acceptance rate: {stats.acceptanceRate.toFixed(1)}%
-                </>
-              )}
             </p>
           </div>
         </div>

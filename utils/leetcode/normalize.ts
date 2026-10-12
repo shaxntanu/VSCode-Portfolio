@@ -19,11 +19,6 @@ export function normalizeUserData(userData: LeetCodeUserResponse): LeetCodeStats
   const mediumStat = submitStats.find(s => s.difficulty === 'Medium');
   const hardStat = submitStats.find(s => s.difficulty === 'Hard');
 
-  // Calculate acceptance rate
-  const acceptanceRate = allStat && allStat.submissions > 0
-    ? (allStat.count / allStat.submissions) * 100
-    : undefined;
-
   const stats: LeetCodeStats = {
     username: matchedUser.username,
     totalSolved: allStat?.count || 0,
@@ -37,11 +32,6 @@ export function normalizeUserData(userData: LeetCodeUserResponse): LeetCodeStats
     mediumTotal: 1700,
     hardTotal: 700,
   };
-
-  // Only add optional fields if they have values (Next.js doesn't allow undefined in props)
-  if (acceptanceRate !== undefined) {
-    stats.acceptanceRate = acceptanceRate;
-  }
 
   return stats;
 }
@@ -61,7 +51,6 @@ export function normalizeRecentSubmissions(
     difficulty: submission.difficulty,
     titleSlug: submission.titleSlug,
     status: submission.status,
-    acceptanceRate: undefined, // Not provided in recent submissions API
     topicTags: undefined, // Not provided in recent submissions API
   }));
 }
