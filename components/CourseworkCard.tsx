@@ -157,6 +157,12 @@ const CourseworkCard = ({ coursework }: CourseworkCardProps) => {
         >
           YEAR {coursework.year}
         </div>
+
+        {coursework.csMinorSemester && (
+          <div className={styles.csMinorBadge}>
+            CS MINOR · SEM {coursework.csMinorSemester}
+          </div>
+        )}
         
         {/* Title */}
         <h3 className={styles.title} style={{ color: yearColor }}>

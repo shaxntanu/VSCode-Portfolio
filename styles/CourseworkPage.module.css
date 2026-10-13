@@ -179,6 +179,25 @@
     gap: 1.5rem;
 }
 
+.csMinorSection {
+    margin-top: 2.5rem;
+}
+
+.csMinorHeader {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    padding-left: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.csMinorTitle {
+    color: #a078ff;
+    font-weight: 800;
+}
+
 /* Empty state */
 .emptyState {
     background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.02));

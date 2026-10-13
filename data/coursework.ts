@@ -114,6 +114,18 @@ export const courseworkData: CourseworkItem[] = [
     logo: '/logos/claude_icon.svg'
   },
   {
+    id: 'CW-010',
+    title: 'Mangonel Engineering Design Project',
+    description: 'Engineering design project resources and a spreadsheet model for a Mangonel. Includes the Lab 0 workbook for documenting and analyzing the design.',
+    year: 2,
+    type: 'College Project',
+    area: 'Engineering Design',
+    technologies: ['Engineering Design', 'Mechanical Systems', 'Spreadsheet Modeling'],
+    repositoryUrl: 'https://github.com/shaxntanu/Mangonel-EDP',
+    slug: 'mangonel-edp',
+    logo: '/logos/circuit_icon.svg'
+  },
+  {
     id: 'CW-008',
     title: 'Operating System Shell Commands',
     description: 'Comprehensive shell command documentation for Unix/Linux systems. Includes basic commands, file operations, process management, and shell scripting fundamentals covered in CS-Minor 1st semester.',

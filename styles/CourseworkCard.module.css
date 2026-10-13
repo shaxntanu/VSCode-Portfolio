@@ -49,6 +49,15 @@
     margin-bottom: 0.75rem;
 }
 
+.csMinorBadge {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #a078ff;
+    margin-bottom: 0.15rem;
+}
+
 /* Logo wrapper - positioned in bottom right corner like ProjectCard */
 .logoWrapper {
     background: var(--explorer-hover-bg, rgba(255, 255, 255, 0.15));

@@ -134,6 +134,8 @@ const CourseworkPage = () => {
       {yearsToShow.map((year) => {
         const yearCoursework = groupedCoursework[year];
         const hasContent = yearCoursework.length > 0;
+        const standardCoursework = yearCoursework.filter(item => !item.csMinorSemester);
+        const csMinorCoursework = yearCoursework.filter(item => item.csMinorSemester);
 
         return (
           <div key={year} className={styles.yearSection}>
@@ -148,11 +150,32 @@ const CourseworkPage = () => {
             </div>
 
             {hasContent ? (
-              <div className={styles.courseworkGrid}>
-                {yearCoursework.map((item) => (
-                  <CourseworkCard key={item.id} coursework={item} />
-                ))}
-              </div>
+              <>
+                {standardCoursework.length > 0 && (
+                  <div className={styles.courseworkGrid}>
+                    {standardCoursework.map((item) => (
+                      <CourseworkCard key={item.id} coursework={item} />
+                    ))}
+                  </div>
+                )}
+
+                {csMinorCoursework.length > 0 && (
+                  <div className={styles.csMinorSection}>
+                    <div className={styles.csMinorHeader}>
+                      <span className={styles.comment}>{'// '}</span>
+                      <span className={styles.csMinorTitle}>CS_MINOR</span>
+                      <span className={styles.yearCount}>
+                        ({csMinorCoursework.length} entries)
+                      </span>
+                    </div>
+                    <div className={styles.courseworkGrid}>
+                      {csMinorCoursework.map((item) => (
+                        <CourseworkCard key={item.id} coursework={item} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
               renderEmptyState(year)
             )}
