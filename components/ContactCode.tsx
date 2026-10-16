@@ -147,7 +147,7 @@ const ContactCode = () => {
           {category.items.map((item, itemIndex) => (
             <p className={`${styles.line} ${styles.property}`} key={itemIndex}>
               <span className={styles.indent}>{item.social}:</span>{' '}
-              <a href={item.href} target="_blank" rel="noopener">
+              <a href={item.href} target="_blank" rel="noopener noreferrer">
                 {item.link}
               </a>
               ;

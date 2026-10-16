@@ -43,6 +43,11 @@
 
 .username {
     color: var(--accent-color);
+    text-decoration: none;
+}
+
+.username:hover {
+    text-decoration: underline;
 }
 
 .loading {

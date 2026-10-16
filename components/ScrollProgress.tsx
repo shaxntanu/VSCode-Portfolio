@@ -8,7 +8,11 @@ const ScrollProgress = () => {
   const rafRef = useRef<number | null>(null);
 
   const updateProgress = useCallback(() => {
-    if (!scrollContainer) return;
+    if (!scrollContainer) {
+      progressRef.current = 0;
+      document.documentElement.style.setProperty('--scroll-progress', '0%');
+      return;
+    }
 
     const scrollTop = scrollContainer.scrollTop;
     const scrollHeight = scrollContainer.scrollHeight;
@@ -21,7 +25,6 @@ const ScrollProgress = () => {
     // Clamp between 0 and 1
     const clampedProgress = Math.max(0, Math.min(1, progress));
 
-    // Only update if changed significantly
     if (Math.abs(clampedProgress - progressRef.current) > 0.001) {
       progressRef.current = clampedProgress;
       document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);

@@ -434,7 +434,16 @@ const KeysprintPage = () => {
           </h1>
           <p className={styles.subtitle}>
             MonkeyType Performance Metrics
-            {profile?.name && <span className={styles.username}> • @{profile.name}</span>}
+            {profile?.name && (
+              <a
+                className={styles.username}
+                href="https://monkeytype.com/profile/shaxntanu"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {' • @'}{profile.name}
+              </a>
+            )}
           </p>
         </div>
 

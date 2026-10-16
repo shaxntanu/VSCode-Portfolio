@@ -6,28 +6,21 @@ const findPageScrollContainer = (): HTMLElement | null => {
   const mainEditor = document.getElementById('main-editor');
   if (!mainEditor) return null;
 
-  // First check if main-editor itself is scrollable
-  if (mainEditor.scrollHeight > mainEditor.clientHeight) {
-    return mainEditor;
-  }
-
-  // Otherwise, find the scrollable descendant with the largest vertical scroll range
   let bestCandidate: HTMLElement | null = null;
   let maxScrollRange = 0;
+  const candidates = [mainEditor, ...Array.from(mainEditor.querySelectorAll<HTMLElement>('*'))];
 
-  const allElements = mainEditor.querySelectorAll('*');
-  allElements.forEach((el: any) => {
+  candidates.forEach((el) => {
     const computed = getComputedStyle(el);
     const overflowY = computed.overflowY;
     const scrollHeight = el.scrollHeight;
     const clientHeight = el.clientHeight;
     const scrollRange = scrollHeight - clientHeight;
 
-    // Only consider elements with meaningful vertical scroll
     if (
       (overflowY === 'auto' || overflowY === 'scroll') &&
       scrollRange > maxScrollRange &&
-      scrollRange > 50 // Minimum meaningful scroll range
+      scrollRange > 1
     ) {
       maxScrollRange = scrollRange;
       bestCandidate = el;
@@ -44,29 +37,53 @@ export const usePageScrollContainer = () => {
 
   const refreshScrollContainer = useCallback(() => {
     const container = findPageScrollContainer();
-    if (container && container !== scrollContainerRef.current) {
+    if (container !== scrollContainerRef.current) {
       scrollContainerRef.current = container;
       setScrollContainer(container);
     }
   }, []);
 
   useEffect(() => {
-    // Initial discovery
+    const mainEditor = document.getElementById('main-editor');
+    if (!mainEditor) return;
+
+    let refreshFrame: number | null = null;
+    const scheduleRefresh = () => {
+      if (refreshFrame !== null) return;
+      refreshFrame = window.requestAnimationFrame(() => {
+        refreshFrame = null;
+        refreshScrollContainer();
+      });
+    };
+
     refreshScrollContainer();
 
-    // Re-discover on route change
+    // Pages such as KeySprint become scrollable after their API data loads.
+    const mutationObserver = new MutationObserver(scheduleRefresh);
+    mutationObserver.observe(mainEditor, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style'],
+    });
+
     const handleRouteChange = () => {
-      setTimeout(() => {
-        refreshScrollContainer();
-      }, 100);
+      scheduleRefresh();
+      window.setTimeout(scheduleRefresh, 100);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
+    window.addEventListener('resize', scheduleRefresh);
 
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
+      window.removeEventListener('resize', scheduleRefresh);
+      mutationObserver.disconnect();
+      if (refreshFrame !== null) {
+        window.cancelAnimationFrame(refreshFrame);
+      }
     };
-  }, [refreshScrollContainer, router]);
+  }, [refreshScrollContainer, router.events]);
 
   return { scrollContainer, refreshScrollContainer };
 };

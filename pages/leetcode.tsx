@@ -110,17 +110,6 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
         borderColor: ['#00b8a3', '#ffc01e', '#ef4743'],
         borderWidth: 2,
       },
-      {
-        label: 'Total Available',
-        data: [
-          stats?.easyTotal || 0,
-          stats?.mediumTotal || 0,
-          stats?.hardTotal || 0,
-        ],
-        backgroundColor: ['rgba(0, 184, 163, 0.2)', 'rgba(255, 192, 30, 0.2)', 'rgba(239, 71, 67, 0.2)'],
-        borderColor: ['#00b8a3', '#ffc01e', '#ef4743'],
-        borderWidth: 2,
-      },
     ],
   };
 
@@ -232,8 +221,10 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
               <span className={styles.statSublabel}>{hardProgress.toFixed(1)}%</span>
             )}
           </div>
-          <div className={styles.statCard}>
-            <span className={styles.statNumber}>{displayStats.totalSolved}</span>
+          <div className={`${styles.statCard} ${styles.totalSolvedCard}`}>
+            <span className={`${styles.statNumber} ${styles.totalSolvedNumber}`}>
+              {displayStats.totalSolved}
+            </span>
             <span className={styles.statLabel}>Total Solved</span>
           </div>
         </div>
@@ -262,7 +253,7 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
           </div>
           
           <div className={styles.chartContainer}>
-            <h3 className={styles.sectionTitle}>Progress Overview</h3>
+            <h3 className={styles.sectionTitle}>Solved by Difficulty</h3>
             <div className={styles.chartWrapper}>
               <Bar data={barData} options={barOptions} />
             </div>
