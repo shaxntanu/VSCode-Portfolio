@@ -13,6 +13,7 @@ const BackToTop = () => {
     }
 
     rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
       if (!scrollContainer) {
         setIsVisible(false);
         return;

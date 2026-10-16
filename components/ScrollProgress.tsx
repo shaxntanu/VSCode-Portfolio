@@ -27,7 +27,10 @@ const ScrollProgress = () => {
       cancelAnimationFrame(rafRef.current);
     }
 
-    rafRef.current = requestAnimationFrame(updateProgress);
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      updateProgress();
+    });
   }, [updateProgress]);
 
   useEffect(() => {

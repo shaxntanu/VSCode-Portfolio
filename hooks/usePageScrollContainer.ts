@@ -55,6 +55,11 @@ export const usePageScrollContainer = () => {
   const [scrollContainer, setScrollContainer] = useState<HTMLElement | null>(null);
   const [layoutVersion, setLayoutVersion] = useState(0);
   const scrollContainerRef = useRef<HTMLElement | null>(null);
+  const layoutMetricsRef = useRef({
+    container: null as HTMLElement | null,
+    scrollHeight: 0,
+    clientHeight: 0,
+  });
 
   const refreshScrollContainer = useCallback(() => {
     const container = findPageScrollContainer();
@@ -62,7 +67,18 @@ export const usePageScrollContainer = () => {
       scrollContainerRef.current = container;
       setScrollContainer(container);
     }
-    setLayoutVersion((version) => version + 1);
+
+    const scrollHeight = container?.scrollHeight ?? 0;
+    const clientHeight = container?.clientHeight ?? 0;
+    const metricsChanged =
+      container !== layoutMetricsRef.current.container ||
+      scrollHeight !== layoutMetricsRef.current.scrollHeight ||
+      clientHeight !== layoutMetricsRef.current.clientHeight;
+
+    if (metricsChanged) {
+      layoutMetricsRef.current = { container, scrollHeight, clientHeight };
+      setLayoutVersion((version) => version + 1);
+    }
   }, []);
 
   useEffect(() => {
