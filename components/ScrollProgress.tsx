@@ -3,13 +3,11 @@ import { usePageScrollContainer } from '@/hooks/usePageScrollContainer';
 import styles from '@/styles/ScrollProgress.module.css';
 
 const ScrollProgress = () => {
-  const { scrollContainer } = usePageScrollContainer();
-  const progressRef = useRef(0);
+  const { scrollContainer, layoutVersion } = usePageScrollContainer();
   const rafRef = useRef<number | null>(null);
 
   const updateProgress = useCallback(() => {
     if (!scrollContainer) {
-      progressRef.current = 0;
       document.documentElement.style.setProperty('--scroll-progress', '0%');
       return;
     }
@@ -18,21 +16,14 @@ const ScrollProgress = () => {
     const scrollHeight = scrollContainer.scrollHeight;
     const clientHeight = scrollContainer.clientHeight;
 
-    // Calculate progress (0 to 1)
     const maxScroll = scrollHeight - clientHeight;
     const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
-
-    // Clamp between 0 and 1
     const clampedProgress = Math.max(0, Math.min(1, progress));
-
-    if (Math.abs(clampedProgress - progressRef.current) > 0.001) {
-      progressRef.current = clampedProgress;
-      document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);
-    }
+    document.documentElement.style.setProperty('--scroll-progress', `${clampedProgress * 100}%`);
   }, [scrollContainer]);
 
   const handleScroll = useCallback(() => {
-    if (rafRef.current) {
+    if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
     }
 
@@ -40,7 +31,10 @@ const ScrollProgress = () => {
   }, [updateProgress]);
 
   useEffect(() => {
-    if (!scrollContainer) return;
+    if (!scrollContainer) {
+      updateProgress();
+      return;
+    }
 
     // Add scroll listener
     scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
@@ -52,11 +46,11 @@ const ScrollProgress = () => {
       if (scrollContainer) {
         scrollContainer.removeEventListener('scroll', handleScroll);
       }
-      if (rafRef.current) {
+      if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [scrollContainer, handleScroll, updateProgress]);
+  }, [scrollContainer, handleScroll, updateProgress, layoutVersion]);
 
   return <div className={styles.progressBar} />;
 };

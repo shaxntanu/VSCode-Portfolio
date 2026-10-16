@@ -3,26 +3,23 @@ import { usePageScrollContainer } from '@/hooks/usePageScrollContainer';
 import styles from '@/styles/BackToTop.module.css';
 
 const BackToTop = () => {
-  const { scrollContainer } = usePageScrollContainer();
+  const { scrollContainer, layoutVersion } = usePageScrollContainer();
   const [isVisible, setIsVisible] = useState(false);
   const rafRef = useRef<number | null>(null);
 
   const handleScroll = useCallback(() => {
-    if (rafRef.current) {
+    if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
     }
 
     rafRef.current = requestAnimationFrame(() => {
-      if (!scrollContainer) return;
+      if (!scrollContainer) {
+        setIsVisible(false);
+        return;
+      }
 
       const scrollTop = scrollContainer.scrollTop;
-
-      // Show button after scrolling down 150px
-      if (scrollTop >= 150) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(scrollTop >= 150);
     });
   }, [scrollContainer]);
 
@@ -36,7 +33,10 @@ const BackToTop = () => {
   }, [scrollContainer]);
 
   useEffect(() => {
-    if (!scrollContainer) return;
+    if (!scrollContainer) {
+      setIsVisible(false);
+      return;
+    }
 
     // Add scroll listener to the discovered container
     scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
@@ -48,11 +48,11 @@ const BackToTop = () => {
       if (scrollContainer) {
         scrollContainer.removeEventListener('scroll', handleScroll);
       }
-      if (rafRef.current) {
+      if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [scrollContainer, handleScroll]);
+  }, [scrollContainer, handleScroll, layoutVersion]);
 
   return (
     <button
