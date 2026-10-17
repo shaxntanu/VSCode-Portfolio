@@ -198,34 +198,23 @@
 @media screen and (max-width: 600px) {
     .explorer {
         position: fixed;
-        z-index: 1002;
-        top: 30px;
-        right: auto;
-        bottom: calc(60px + env(safe-area-inset-bottom, 0px));
-        left: 0;
-        width: min(86vw, 320px);
-        min-width: 0;
-        max-width: calc(100vw - 24px);
-        height: auto;
-        max-height: none;
-        border-right: 1px solid var(--explorer-border);
-        border-radius: 0 14px 14px 0;
-        box-shadow: 16px 0 40px rgba(0, 0, 0, 0.3);
-        transform: translateX(-105%);
-        transition: transform 0.24s ease;
+        top: 35px;
+        left: -200px;
+        height: calc(100vh - 35px - 22px);
+        z-index: 1000;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
         display: flex;
         flex-direction: column;
-        overscroll-behavior: contain;
     }
 
     .explorer.open {
-        transform: translateX(0);
+        left: 50px;
     }
 
     .scrollableContent {
         flex: 1;
         overflow-y: auto;
-        padding-bottom: 0.75rem;
     }
 }
 
@@ -237,12 +226,12 @@
     .overlay {
         display: block;
         position: fixed;
-        top: 30px;
+        top: 0;
         left: 0;
         right: 0;
-        bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+        bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
+        z-index: 999;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;

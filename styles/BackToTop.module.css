@@ -53,21 +53,6 @@
   letter-spacing: 0.3px;
 }
 
-@media (max-width: 600px) {
-  .button {
-    left: auto;
-    right: 12px;
-    bottom: 12px;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-  }
-
-  .label {
-    display: none;
-  }
-}
-
 .button:hover .svgIcon {
   transform: translateY(-1px);
 }

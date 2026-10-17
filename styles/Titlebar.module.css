@@ -120,38 +120,3 @@
         flex: 4;
     }
 }
-
-@media screen and (max-width: 600px) {
-    .titlebar {
-        height: 30px;
-        min-height: 30px;
-        padding: 0 0.75rem;
-        justify-content: flex-start;
-    }
-
-    .icon {
-        flex-shrink: 0;
-    }
-
-    .items,
-    .windowButtons {
-        display: none;
-    }
-
-    .title {
-        position: static;
-        left: auto;
-        transform: none;
-        flex: 1;
-        justify-content: center;
-        min-width: 0;
-        overflow: hidden;
-        font-size: 0.75rem;
-        white-space: nowrap;
-    }
-
-    .themeIndicator,
-    .modeIndicator {
-        display: none;
-    }
-}

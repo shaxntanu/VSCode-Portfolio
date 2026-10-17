@@ -9,6 +9,7 @@ import Tabsbar from '@/components/Tabsbar';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CommandPalette from '@/components/CommandPalette';
 import CommandPaletteShiftP from '@/components/CommandPaletteShiftP';
+import MobileNotification from '@/components/MobileNotification';
 import Terminal from '@/components/Terminal/Terminal';
 import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
 import PortfolioStatsModal from '@/components/PortfolioStatsModal';
@@ -108,7 +109,8 @@ const LayoutContent = ({ children }: LayoutProps) => {
 
   return (
     <>
-      {!zenMode && <ScrollProgress />}
+      <ScrollProgress />
+      {!zenMode && <MobileNotification />}
       {!zenMode && <Titlebar />}
       <div className={`${styles.main} ${zenMode ? styles.zenMode : ''}`} id="window-container">
         {sidebarVisible && !zenMode && <Sidebar />}

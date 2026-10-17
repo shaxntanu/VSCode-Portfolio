@@ -1,6 +1,5 @@
 .sidebar {
     background: var(--sidebar-bg);
-    color: var(--text-muted, #6a737d);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -11,21 +10,10 @@
     flex-shrink: 0;
 }
 
-.sidebarTop,
-.sidebarBottom {
-    display: flex;
-    flex-direction: column;
-}
-
 .iconContainer {
     cursor: pointer;
     width: 100%;
     position: relative;
-}
-
-.iconContainer a {
-    display: block;
-    color: inherit;
 }
 
 .iconContainer:hover {
@@ -34,15 +22,6 @@
 
 .active {
     border-left: 2px solid var(--accent-color);
-}
-
-.iconContainer.active a {
-    color: var(--text-color, #e1e4e8);
-}
-
-.navLabel,
-.menuLabel {
-    display: none;
 }
 
 .icon {
@@ -113,98 +92,18 @@
 
 @media screen and (max-width: 600px) {
     .sidebar {
-        position: fixed;
-        z-index: 1003;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        min-width: 0;
-        max-width: none;
-        height: calc(60px + env(safe-area-inset-bottom, 0px));
-        padding-bottom: env(safe-area-inset-bottom, 0px);
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: stretch;
-        border-top: 1px solid var(--explorer-border);
-        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.18);
-        backdrop-filter: blur(16px);
-    }
-
-    .sidebarTop {
-        display: flex;
-        flex: 1;
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: space-around;
-        min-width: 0;
-    }
-
-    .sidebarTop > a:nth-of-type(n + 4),
-    .sidebarBottom > .iconContainer:first-child {
-        display: none;
-    }
-
-    .sidebarBottom {
-        display: flex;
-        flex: 0 0 58px;
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: center;
-        border-left: 1px solid var(--explorer-border);
-    }
-
-    .iconContainer {
-        display: flex;
-        flex: 1;
-        width: auto;
-        min-width: 0;
-        height: 100%;
-        align-items: stretch;
-        justify-content: stretch;
-    }
-
-    .iconContainer a {
-        display: flex;
-        width: 100%;
-        min-width: 0;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 3px;
-        color: var(--text-secondary, var(--text-color));
+        width: 10vw;
     }
 
     .icon {
-        height: 20px;
-        width: 20px;
-        padding: 0;
-        color: currentColor;
-        fill: currentColor;
-    }
-
-    .navLabel,
-    .menuLabel {
-        display: block;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 0.65rem;
-        line-height: 1;
-        white-space: nowrap;
-    }
-
-    .iconContainer.active {
-        border-left: 0;
-        border-top: 2px solid var(--accent-color);
-        background: var(--sidebar-hover-bg);
-    }
-
-    .iconContainer.active a {
-        color: var(--text-color);
+        height: 40px;
+        width: 40px;
+        padding: 0.6rem;
     }
 
     .badge {
-        top: 5px;
-        right: calc(50% - 19px);
+        top: 6px;
+        right: 6px;
         font-size: 8px;
         min-width: 14px;
         height: 14px;
@@ -223,23 +122,6 @@
 
 @media screen and (max-width: 600px) {
     .mobileMenuBtn {
-        display: flex;
-        width: 58px;
-        min-width: 58px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 3px;
-        border: 0;
-        border-left: 1px solid var(--explorer-border);
-        background: transparent;
-        color: var(--text-secondary, var(--text-color));
-        font: inherit;
+        display: block;
     }
-}
-
-.mobileMenuBtn:focus-visible,
-.iconContainer a:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: -3px;
 }

@@ -56,42 +56,8 @@
 }
 
 @media screen and (max-width: 600px) {
-    .main {
-        height: calc(100dvh - 115px - env(safe-area-inset-bottom, 0px));
-    }
-
-    .main.zenMode {
-        height: calc(100dvh - 25px);
-        --page-height: calc(100dvh - 104px);
-    }
-
     .content {
-        height: auto;
-        min-height: 0;
-        padding: 0.5rem 0.75rem;
-        align-items: stretch;
-        justify-content: flex-start;
-        overscroll-behavior-y: contain;
-        scrollbar-width: thin;
-    }
-
-    .content > :first-child {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-    }
-
-    .content::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    .jpMatrix {
-        display: none;
-    }
-
-    .main.zenMode .content {
-        height: auto;
-        min-height: 0;
+        padding: 2rem 1rem;
     }
 }
 

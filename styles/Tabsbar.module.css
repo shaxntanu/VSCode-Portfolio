@@ -164,34 +164,3 @@ The close button provides the visual right-side spacing instead. */
         width: 20px;
     }
 }
-
-@media screen and (max-width: 600px) {
-    .tabsContainer {
-        height: 35px;
-        min-height: 35px;
-    }
-
-    .tabs {
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain;
-    }
-
-    .tabs::-webkit-scrollbar {
-        display: none;
-    }
-
-    .scrollButton,
-    .leftShadow,
-    .rightShadow {
-        display: none;
-    }
-
-    .recentTab :global(div[class*="tab"]) {
-        max-width: 120px;
-    }
-
-    .closeTab {
-        opacity: 0.75;
-    }
-}
