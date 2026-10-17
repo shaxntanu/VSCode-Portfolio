@@ -42,6 +42,7 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
       return matchesQuery && matchesGenre;
     });
     
+    setSearchResults(filtered.map((book) => book.id));
     onChange(filtered);
   }, [books, onChange]);
   
@@ -71,21 +72,24 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
   // Debounced AI search
   useEffect(() => {
     if (query.length < 2) {
+      reqIdRef.current += 1;
       setSearchResults(null);
       setSearchError(null);
-      onChange(null);
+      setIsSearching(false);
+      applyFilters(null, selectedGenre);
       return;
     }
+
+    const currentReqId = ++reqIdRef.current;
     
     setIsSearching(true);
+    setSearchResults(null);
     
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
     
     debounceRef.current = setTimeout(async () => {
-      const currentReqId = ++reqIdRef.current;
-      
       try {
         const response = await fetch('/api/library-search', {
           method: 'POST',
@@ -127,6 +131,7 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);
       }
+      reqIdRef.current += 1;
     };
   }, [query, selectedGenre, books, fallbackFilter, applyFilters, onChange]);
   
@@ -187,6 +192,7 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
             <button
               key={genre}
               onClick={() => handleGenreClick(genre)}
+              aria-pressed={selectedGenre === genre}
               style={{
                 padding: '6px 12px',
                 fontSize: '12px',

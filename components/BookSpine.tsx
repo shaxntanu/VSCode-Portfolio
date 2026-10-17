@@ -1,26 +1,29 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Book } from '@/data/journal';
 
 interface BookSpineProps {
   book: Book;
   onClick: () => void;
+  isHovered: boolean;
+  onHoverChange: (isHovered: boolean) => void;
+  isHighlighted: boolean;
+  isDimmed: boolean;
 }
 
-const BookSpine = ({ book, onClick }: BookSpineProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showCard, setShowCard] = useState(false);
+const BookSpine = ({
+  book,
+  onClick,
+  isHovered,
+  onHoverChange,
+  isHighlighted,
+  isDimmed,
+}: BookSpineProps) => {
   const [cardPosition, setCardPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const leaveTimerRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
-    setShowCard(true);
-    
-    if (leaveTimerRef.current) {
-      clearTimeout(leaveTimerRef.current);
-    }
+    onHoverChange(true);
     
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
@@ -32,26 +35,13 @@ const BookSpine = ({ book, onClick }: BookSpineProps) => {
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    
-    // 90ms leave grace to prevent flicker
-    leaveTimerRef.current = setTimeout(() => {
-      setShowCard(false);
-    }, 90);
+    onHoverChange(false);
   };
 
   const handleClick = () => {
+    onHoverChange(false);
     onClick();
   };
-
-  // Clean up timer on unmount
-  useEffect(() => {
-    return () => {
-      if (leaveTimerRef.current) {
-        clearTimeout(leaveTimerRef.current);
-      }
-    };
-  }, []);
 
   const pull = isHovered ? 96 : 0;
   const lift = isHovered ? -26 : 0;
@@ -63,7 +53,7 @@ const BookSpine = ({ book, onClick }: BookSpineProps) => {
     mono: "'Space Mono', monospace",
   }[book.face];
 
-  const metadataCard = showCard && (
+  const metadataCard = isHovered && (
     createPortal(
       <div
         className="book-metadata-card"
@@ -109,7 +99,11 @@ const BookSpine = ({ book, onClick }: BookSpineProps) => {
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onFocus={handleMouseEnter}
+        onBlur={handleMouseLeave}
         data-book-id={book.id}
+        data-filter-match={isHighlighted || undefined}
+        aria-label={`${book.title} by ${book.author}${isHighlighted ? ', matches the selected filter' : isDimmed ? ', does not match the selected filter' : ''}`}
         style={{
           position: 'relative',
           border: 'none',
@@ -118,6 +112,18 @@ const BookSpine = ({ book, onClick }: BookSpineProps) => {
           cursor: 'pointer',
           zIndex: isHovered ? 40 : 1,
           outline: 'none',
+          borderRadius: '2px',
+          outlineOffset: '4px',
+          outlineColor: isHighlighted ? 'rgba(184, 121, 60, 0.9)' : 'transparent',
+          outlineStyle: isHighlighted ? 'solid' : 'none',
+          outlineWidth: isHighlighted ? '2px' : '0',
+          opacity: isDimmed ? 0.32 : 1,
+          filter: isHighlighted
+            ? 'drop-shadow(0 0 12px rgba(184, 121, 60, 0.8))'
+            : isDimmed
+              ? 'grayscale(0.75)'
+              : 'none',
+          transition: 'opacity 220ms ease, filter 220ms ease, outline-color 220ms ease',
         }}
       >
         <span

@@ -6,13 +6,15 @@ interface ShelfProps {
   books: Book[];
   onBookClick: (book: Book, index: number) => void;
   justAdded?: string;
+  highlightedBookIds?: Set<string> | null;
 }
 
-const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
+const Shelf = ({ books, onBookClick, justAdded, highlightedBookIds = null }: ShelfProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [overflowing, setOverflowing] = useState(false);
+  const [hoveredBookIndex, setHoveredBookIndex] = useState<number | null>(null);
   
   // Calculate total shelf width
   const totalWidth = books.reduce((sum, book) => sum + book.width + 2, 0); // 2px gap
@@ -160,6 +162,8 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
         {displayBooks.map((book, index) => {
           const rotation = getRotation();
           const isNewlyAdded = book.id === justAdded;
+          const isHighlighted = highlightedBookIds?.has(book.id) ?? false;
+          const isDimmed = highlightedBookIds !== null && !isHighlighted;
           
           return (
             <div
@@ -172,6 +176,15 @@ const Shelf = ({ books, onBookClick, justAdded }: ShelfProps) => {
               <BookSpine
                 book={book}
                 onClick={() => onBookClick(book, index % books.length)}
+                isHovered={hoveredBookIndex === index}
+                onHoverChange={(isHovered) => {
+                  setHoveredBookIndex((current) => {
+                    if (isHovered) return index;
+                    return current === index ? null : current;
+                  });
+                }}
+                isHighlighted={isHighlighted}
+                isDimmed={isDimmed}
               />
             </div>
           );
