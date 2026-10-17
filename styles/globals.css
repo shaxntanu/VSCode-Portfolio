@@ -12,6 +12,20 @@
     --page-height: calc(100vh - 182px);
 }
 
+@media (max-width: 600px) {
+    :root {
+        --page-height: calc(100dvh - 194px - env(safe-area-inset-bottom, 0px));
+    }
+
+    html,
+    body,
+    #__next {
+        height: 100%;
+        min-height: 100%;
+        overflow: hidden;
+    }
+}
+
 /* Make all text unselectable */
 body {
     -webkit-user-select: none;

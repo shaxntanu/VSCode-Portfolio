@@ -9,7 +9,6 @@ import Tabsbar from '@/components/Tabsbar';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import CommandPalette from '@/components/CommandPalette';
 import CommandPaletteShiftP from '@/components/CommandPaletteShiftP';
-import MobileNotification from '@/components/MobileNotification';
 import Terminal from '@/components/Terminal/Terminal';
 import ProblemsPanel from '@/components/ProblemsPanel/ProblemsPanel';
 import PortfolioStatsModal from '@/components/PortfolioStatsModal';
@@ -76,6 +75,10 @@ const LayoutContent = ({ children }: LayoutProps) => {
     const main = document.getElementById('main-editor');
     if (main) {
       main.scrollTop = 0;
+      const pageRoot = main.firstElementChild;
+      if (pageRoot instanceof HTMLElement) {
+        pageRoot.scrollTop = 0;
+      }
     }
   }, [router.pathname]);
 
@@ -105,8 +108,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
 
   return (
     <>
-      <ScrollProgress />
-      {!zenMode && <MobileNotification />}
+      {!zenMode && <ScrollProgress />}
       {!zenMode && <Titlebar />}
       <div className={`${styles.main} ${zenMode ? styles.zenMode : ''}`} id="window-container">
         {sidebarVisible && !zenMode && <Sidebar />}

@@ -135,7 +135,8 @@
     .priority9,
     .priority10,
     .priority11,
-    .priority12 {
+    .priority12,
+    .priority13 {
         display: none;
     }
 }
@@ -144,6 +145,11 @@
     .bottomBar {
         font-size: 0.65rem;
         padding: 0 0.3rem;
+        height: 25px;
+        min-height: 25px;
+        overflow: hidden;
+        position: relative;
+        z-index: 30;
     }
 
     .section {
@@ -162,11 +168,16 @@
     /* Hide medium priority items on mobile */
     .priority4,
     .priority5,
-    .priority6 {
+    .priority6,
+    .priority13,
+    .telemetry {
         display: none;
     }
 
-    /* Only show critical items (1-3) on mobile */
+    .priority2,
+    .priority3 {
+        display: none;
+    }
 }
 
 /* Build Info Modal */

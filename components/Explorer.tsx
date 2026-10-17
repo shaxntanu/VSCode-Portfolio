@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { VscChevronRight } from 'react-icons/vsc';
 import { SiMedium } from 'react-icons/si';
@@ -29,6 +30,20 @@ const Explorer = () => {
     setResumeOpen,
   } = useFolderContext();
   const router = useRouter();
+
+  useEffect(() => {
+    const closeMenu = () => setMobileMenuOpen(false);
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeMenu();
+    };
+
+    router.events.on('routeChangeComplete', closeMenu);
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      router.events.off('routeChangeComplete', closeMenu);
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [router.events, setMobileMenuOpen]);
 
   // Get the appropriate open/set functions for each folder
   const getFolderState = (folderId: string) => {

@@ -18,16 +18,16 @@ import { getBadgeForPath, formatBadgeCount } from '@/data/badges';
 import styles from '@/styles/Sidebar.module.css';
 
 const sidebarTopItems = [
-  { Icon: VscFiles, path: '/' },
-  { Icon: VscGithubAlt, path: '/github' },
-  { Icon: VscCode, path: '/projects' },
-  { Icon: VscEdit, path: '/publications' },
-  { Icon: VscMail, path: '/contact' },
+  { Icon: VscFiles, path: '/', label: 'Home' },
+  { Icon: VscGithubAlt, path: '/github', label: 'GitHub' },
+  { Icon: VscCode, path: '/projects', label: 'Projects' },
+  { Icon: VscEdit, path: '/publications', label: 'Publications' },
+  { Icon: VscMail, path: '/contact', label: 'Contact' },
 ];
 
 const sidebarBottomItems = [
-  { Icon: VscAccount, path: '/about' },
-  { Icon: VscSettings, path: '/settings' },
+  { Icon: VscAccount, path: '/about', label: 'About' },
+  { Icon: VscSettings, path: '/settings', label: 'Settings' },
 ];
 
 const Sidebar = () => {
@@ -53,9 +53,9 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <aside className={styles.sidebar}>
+    <nav className={styles.sidebar} aria-label="Primary navigation">
       <div className={styles.sidebarTop}>
-        {sidebarTopItems.map(({ Icon, path }) => {
+        {sidebarTopItems.map(({ Icon, path, label }) => {
           const badge = getBadgeForPath(path);
           // Use dynamic GitHub count if it's the GitHub path
           const badgeCount = path === '/github' && githubRepoCount > 0 
@@ -63,10 +63,16 @@ const Sidebar = () => {
             : badge?.count || 0;
           
           return (
-            <Link href={path} key={path}>
+            <Link
+              href={path}
+              key={path}
+              aria-label={label}
+              aria-current={router.pathname === path ? 'page' : undefined}
+              title={label}
+            >
               <div
                 className={`${styles.iconContainer} ${
-                  router.pathname === path && styles.active
+                  router.pathname === path ? styles.active : ''
                 }`}
               >
                 {path === '/' ? (
@@ -88,6 +94,7 @@ const Sidebar = () => {
                     className={styles.icon}
                   />
                 )}
+                <span className={styles.navLabel}>{label}</span>
                 {badge && badge.show && badgeCount > 0 && (
                   <span className={styles.badge}>{formatBadgeCount(badgeCount)}</span>
                 )}
@@ -95,31 +102,32 @@ const Sidebar = () => {
             </Link>
           );
         })}
-        <div className={styles.mobileMenuBtn} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        <button
+          className={styles.mobileMenuBtn}
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          title="All pages"
+        >
           <VscMenu
             size={16}
-            fill="rgb(106, 115, 125)"
             className={styles.icon}
           />
-        </div>
+          <span className={styles.menuLabel}>Menu</span>
+        </button>
       </div>
       <div className={styles.sidebarBottom}>
-        {sidebarBottomItems.map(({ Icon, path }) => (
-          <div className={styles.iconContainer} key={path}>
-            <Link href={path}>
-              <Icon
-                fill={
-                  router.pathname === path
-                    ? 'rgb(225, 228, 232)'
-                    : 'rgb(106, 115, 125)'
-                }
-                className={styles.icon}
-              />
+        {sidebarBottomItems.map(({ Icon, path, label }) => (
+          <div className={`${styles.iconContainer} ${router.pathname === path ? styles.active : ''}`} key={path}>
+            <Link href={path} aria-label={label} title={label} aria-current={router.pathname === path ? 'page' : undefined}>
+              <Icon className={styles.icon} />
+              <span className={styles.navLabel}>{label}</span>
             </Link>
           </div>
         ))}
       </div>
-    </aside>
+    </nav>
   );
 };
 
