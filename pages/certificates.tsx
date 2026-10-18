@@ -2,7 +2,7 @@ import styles from '@/styles/CertificatesPage.module.css';
 
 interface Course {
   name: string;
-  url: string;
+  url?: string;
   tags: string[];
 }
 
@@ -94,6 +94,12 @@ const certificateData: CertificateCategory[] = [
           { name: "Interpersonal Skills", url: "https://drive.google.com/file/d/1q1TTpTJ41ckRn_qqkyE-U8yYXceFFcNW/view?usp=drive_link", tags: ["#SocialIntelligence", "#InterpersonalSkills", "#CommunicationSkills"] },
           { name: "Stress Management", url: "https://drive.google.com/file/d/1q1TTpTJ41ckRn_qqkyE-U8yYXceFFcNW/view?usp=drive_link", tags: ["#LifelongLearning", "#SkillBuilding", "#ProfessionalGrowth"] }
         ]
+      },
+      {
+        provider: "InAmigos Foundation",
+        courses: [
+          { name: "CoS", tags: ["#InAmigosFoundation", "#ProfessionalDevelopment"] }
+        ]
       }
     ]
   },
@@ -122,7 +128,7 @@ const CertificatesPage = () => {
           <span className={styles.comment}># Professional Certifications & Training Programs</span>
         </div>
         <div className={styles.yamlLine}>
-          <span className={styles.comment}># Last Updated: January 2026</span>
+          <span className={styles.comment}># Last Updated: October 2026</span>
         </div>
         <div className={styles.yamlLine}></div>
         
@@ -148,9 +154,13 @@ const CertificatesPage = () => {
                     <div className={styles.yamlLine}>
                       <span className={styles.indent}>      </span>
                       <span className={styles.listItem}>- </span>
-                      <a href={course.url} className={styles.link} target="_blank" rel="noopener noreferrer">
-                        {course.name}
-                      </a>
+                      {course.url ? (
+                        <a href={course.url} className={styles.link} target="_blank" rel="noopener noreferrer">
+                          {course.name}
+                        </a>
+                      ) : (
+                        <span className={styles.string}>&quot;{course.name}&quot;</span>
+                      )}
                     </div>
                     <div className={styles.yamlLine}>
                       <span className={styles.indent}>        </span>
