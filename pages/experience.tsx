@@ -191,7 +191,7 @@ Executive member of TIET's technical society focused on electronics and innovati
 
 ### Team Oorja
 **Role:** Member  
-**Timeline:** April 2026 - Present · ${calculateDuration('2026-04-01', 'Present')}  
+**Timeline:** April 2026 - October 2026
 **Location:** Patiala, Punjab
 
 Learning and contributing in **Electronics and Data Acquisition (DAQ)** systems as part of a student-driven technical team.
