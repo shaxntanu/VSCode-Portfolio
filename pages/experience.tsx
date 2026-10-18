@@ -34,9 +34,9 @@ const ExperiencePage = () => {
 ---
 
 ## [Project / Research Initiative] Ragastra
-**Timeline:** September 2025 - Present · ${calculateDuration('2025-09-01', 'Present')}  
+**Timeline:** September 2025 - August 2026
 **Location:** Patiala, Punjab  
-**Roles:** Project Engineer (Sep 2025 - Present) • Project Manager (May 2026 - Present)
+**Roles:** Project Engineer (Sep 2025 - Aug 2026) • Project Manager (May 2026 - Aug 2026)
 
 ### WHAT WE'RE BUILDING
 **Ragastra** is a modular maglev-inspired mobility system for controlled environments—campuses, industrial zones, and urban corridors. We're translating high-level transportation concepts into buildable subsystems with clear mechanical, electrical, and control boundaries.
@@ -54,9 +54,9 @@ const ExperiencePage = () => {
 *   Led **technical justification** for competition pitches, balancing innovation with engineering constraints.
 
 ### PROJECT MANAGEMENT
-*   Maintain source repository including all **firmware, hardware files, and research documentation**.
-*   Coordinate cross-functional work between electronics, mechanical, and software subsystems.
-*   Ensure technical decisions are documented, reproducible, and aligned with project milestones.
+*   Maintained the source repository for **firmware, hardware files, and research documentation**.
+*   Coordinated cross-functional work between electronics, mechanical, and software subsystems.
+*   Ensured technical decisions were documented, reproducible, and aligned with project milestones.
 
 ### ACHIEVEMENTS
 *   **🏆 1st Prize – Ideastorm Prelims (Punjab Zonals)**, E-Summit '26, IIT Roorkee (hosted at TIET).
