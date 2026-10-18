@@ -28,6 +28,13 @@ const AboutPage = () => {
           </section>
 
           <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Languages</h2>
+            <p className={styles.paragraph}>
+              English, Hindi, and Punjabi — Native or bilingual proficiency. Japanese — Elementary proficiency.
+            </p>
+          </section>
+
+          <section className={styles.section}>
             <h2 className={styles.sectionTitle}>01. Origin Story</h2>
             <p className={styles.paragraph}>
               My interest in engineering started when robotics was introduced in school. It wasn&apos;t just another subject — it was the first time I actually got pulled into how things work.
