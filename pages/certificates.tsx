@@ -95,10 +95,15 @@ const certificateData: CertificateCategory[] = [
           { name: "Stress Management", url: "https://drive.google.com/file/d/1q1TTpTJ41ckRn_qqkyE-U8yYXceFFcNW/view?usp=drive_link", tags: ["#LifelongLearning", "#SkillBuilding", "#ProfessionalGrowth"] }
         ]
       },
+    ]
+  },
+  {
+    category: "Internship & Selection",
+    certificates: [
       {
-        provider: "InAmigos Foundation",
+        provider: "Internshala",
         courses: [
-          { name: "CoS", tags: ["#InAmigosFoundation", "#ProfessionalDevelopment"] }
+          { name: "Certificate of Selection (CoS)", tags: ["#InAmigosFoundation", "#InternshipSelection"] }
         ]
       }
     ]
