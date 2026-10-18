@@ -1,13 +1,22 @@
 import { useState, useEffect } from 'react';
 import styles from '@/styles/ResumePage.module.css';
+import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
 
 const RESUME_PDF_URL = 'https://shaxntanu.github.io/LaTeX-Resume-Shantanu/resume.pdf';
 const GITHUB_API_URL = 'https://api.github.com/repos/shaxntanu/LaTeX-Resume-Shantanu/commits/main';
 
 const ResumePage = () => {
   const [lastUpdated, setLastUpdated] = useState('Loading...');
+  const [isPreviewLoading, setIsPreviewLoading] = useState(true);
+  const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const isPageLoading = lastUpdated === 'Loading...' || isPreviewLoading || isDownloading;
+
+  useMainAreaLoading('resume-page', isPageLoading);
 
   useEffect(() => {
+    setIsPreviewEnabled(true);
+
     // Fetch last commit date from GitHub
     const fetchLastUpdated = async () => {
       try {
@@ -31,6 +40,7 @@ const ResumePage = () => {
   }, []);
 
   const handleDownload = async () => {
+    setIsDownloading(true);
     try {
       const response = await fetch(RESUME_PDF_URL);
       const blob = await response.blob();
@@ -45,11 +55,13 @@ const ResumePage = () => {
       console.error('Download failed:', error);
       // Fallback to direct link
       window.open(RESUME_PDF_URL, '_blank');
+    } finally {
+      setIsDownloading(false);
     }
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} inert={isPageLoading} aria-busy={isPageLoading}>
       <div className={styles.terminal}>
         <div className={styles.terminalHeader}>
           <div className={styles.terminalDots}>
@@ -114,9 +126,15 @@ const ResumePage = () => {
               <span className={styles.previewLabel}>[ PREVIEW MODE ]</span>
             </div>
             <iframe
-              src={RESUME_PDF_URL}
+              src={isPreviewEnabled ? RESUME_PDF_URL : undefined}
               className={styles.pdfPreview}
               title="Resume Preview"
+              onLoad={() => {
+                if (isPreviewEnabled) setIsPreviewLoading(false);
+              }}
+              onError={() => {
+                if (isPreviewEnabled) setIsPreviewLoading(false);
+              }}
             />
           </div>
 

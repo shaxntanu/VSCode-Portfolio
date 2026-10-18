@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import RepoCard from '@/components/RepoCard';
-import GitHubCalendar from 'react-github-calendar';
+import ActivityCalendar, { type Activity } from 'react-activity-calendar';
 import GithubSkeleton from '@/components/GithubSkeleton';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
 import { useEffect, useState, useRef } from 'react';
+import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
 import { getLanguageColor, formatBytes } from '@/utils/languageColors';
 import {
   Chart as ChartJS,
@@ -25,6 +26,11 @@ interface LanguageData {
   bytes: number;
   percentage: number;
   color: string;
+}
+
+interface ContributionCalendarResponse {
+  contributions: Activity[];
+  total: Record<string, number> & { lastYear: number };
 }
 
 interface GithubPageProps {
@@ -51,7 +57,53 @@ const GithubPage = ({
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLightTheme, setIsLightTheme] = useState(false);
+  const [calendarData, setCalendarData] = useState<ContributionCalendarResponse | null>(null);
+  const [calendarLoading, setCalendarLoading] = useState(true);
+  const [calendarError, setCalendarError] = useState<string | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useMainAreaLoading('github-contribution-calendar', calendarLoading);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+    const year = selectedYear === 'last-year' ? 'last' : String(selectedYear);
+
+    setCalendarLoading(true);
+    setCalendarError(null);
+
+    const fetchContributions = async () => {
+      try {
+        const response = await fetch(
+          `https://github-contributions-api.jogruber.de/v4/${username}?y=${year}`,
+          { signal: controller.signal }
+        );
+        const result = await response.json() as ContributionCalendarResponse;
+
+        if (!response.ok) {
+          throw new Error('Unable to fetch GitHub contributions.');
+        }
+        if (!Array.isArray(result.contributions) || !result.total) {
+          throw new Error('GitHub returned invalid contribution data.');
+        }
+
+        if (active) setCalendarData(result);
+      } catch (error) {
+        if (!active) return;
+        setCalendarData(null);
+        setCalendarError(error instanceof Error ? error.message : 'Unable to fetch GitHub contributions.');
+      } finally {
+        if (active) setCalendarLoading(false);
+      }
+    };
+
+    fetchContributions();
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [selectedYear, username]);
 
   useEffect(() => {
     const updateTheme = () => {
@@ -78,6 +130,14 @@ const GithubPage = ({
     ],
     light: ['#edf1f7', '#cfe1ff', '#91bdff', '#5595f5', '#1f6feb'],
   };
+
+  const calendarTotal = selectedYear === 'last-year'
+    ? calendarData?.total.lastYear
+    : calendarData?.total[String(selectedYear)];
+  const contributionTotal = calendarTotal ?? calendarData?.contributions.reduce(
+    (total, activity) => total + activity.count,
+    0
+  ) ?? 0;
 
   // Generate year options (from current year down to 2025 when account started)
   const yearOptions: (number | 'last-year')[] = ['last-year'];
@@ -172,7 +232,7 @@ const GithubPage = ({
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} inert={calendarLoading} aria-busy={calendarLoading}>
         {user && (
           <div className={styles.profileSection}>
             <div className={styles.profileHeader}>
@@ -219,24 +279,29 @@ const GithubPage = ({
               <h3 className={styles.sectionTitle}>Contribution Graph</h3>
               <div className={styles.contributionWrapper}>
                 <div className={styles.contributionGraph}>
-                  <GitHubCalendar 
-                    username={username}
-                    colorScheme={isLightTheme ? 'light' : 'dark'}
-                    blockSize={10}
-                    blockMargin={3}
-                    blockRadius={2}
-                    fontSize={12}
-                    theme={calendarTheme}
-                    year={selectedYear === 'last-year' ? undefined : selectedYear}
-                    style={{
-                      color: isLightTheme ? '#475569' : 'rgba(255, 255, 255, 0.7)',
-                    }}
-                    labels={{
-                      totalCount: selectedYear === 'last-year' 
-                        ? '{{count}} contributions in the last 12 months'
-                        : `{{count}} contributions in ${selectedYear}`,
-                    }}
-                  />
+                  {calendarError ? (
+                    <p role="alert">{calendarError}</p>
+                  ) : (
+                    <ActivityCalendar
+                      data={calendarData?.contributions ?? []}
+                      loading={calendarLoading || !calendarData}
+                      colorScheme={isLightTheme ? 'light' : 'dark'}
+                      blockSize={10}
+                      blockMargin={3}
+                      blockRadius={2}
+                      fontSize={12}
+                      theme={calendarTheme}
+                      style={{
+                        color: isLightTheme ? '#475569' : 'rgba(255, 255, 255, 0.7)',
+                      }}
+                      labels={{
+                        totalCount: selectedYear === 'last-year'
+                          ? '{{count}} contributions in the last 12 months'
+                          : `{{count}} contributions in ${selectedYear}`,
+                      }}
+                      totalCount={contributionTotal}
+                    />
+                  )}
                 </div>
                 <div 
                   className={styles.select}

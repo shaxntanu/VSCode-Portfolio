@@ -50,30 +50,6 @@
     text-decoration: underline;
 }
 
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem;
-}
-
-.loadingText {
-    color: var(--accent-color);
-    animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 0.5;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
 .error {
     background: var(--error-bg, rgba(255, 100, 100, 0.1));
     border: 1px solid var(--error-border, rgba(255, 100, 100, 0.3));

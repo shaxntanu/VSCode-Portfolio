@@ -1,12 +1,65 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Book } from '@/data/journal';
 import { books } from '@/data/books';
 import Shelf from '@/components/Shelf';
 import LibraryFilter from '@/components/LibraryFilter';
+import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
 import styles from '@/styles/ResearchPage.module.css';
 
 const LibraryPage = () => {
   const [shownBooks, setShownBooks] = useState<Book[] | null>(null);
+  const [isLoadingCovers, setIsLoadingCovers] = useState(() => books.some((book) => Boolean(book.cover)));
+
+  useMainAreaLoading('library-covers', isLoadingCovers);
+
+  useEffect(() => {
+    let cancelled = false;
+    const coverUrls = Array.from(new Set(books.map((book) => book.cover).filter(Boolean)));
+
+    if (coverUrls.length === 0) {
+      setIsLoadingCovers(false);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const coverLoads = coverUrls.map((url) => new Promise<void>((resolve) => {
+      const image = new window.Image();
+      let settled = false;
+
+      const settle = () => {
+        if (settled) return;
+        settled = true;
+        resolve();
+      };
+
+      image.onload = () => {
+        if (typeof image.decode === 'function') {
+          image.decode().then(settle, settle);
+        } else {
+          settle();
+        }
+      };
+      image.onerror = settle;
+      image.src = url;
+
+      if (image.complete) {
+        if (image.naturalWidth > 0 && typeof image.decode === 'function') {
+          image.decode().then(settle, settle);
+        } else {
+          settle();
+        }
+      }
+    }));
+
+    Promise.all(coverLoads).then(() => {
+      if (!cancelled) setIsLoadingCovers(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const highlightedBookIds = useMemo(
     () => shownBooks === null ? null : new Set(shownBooks.map((book) => book.id)),
@@ -14,7 +67,7 @@ const LibraryPage = () => {
   );
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} inert={isLoadingCovers} aria-busy={isLoadingCovers}>
       <h1 className={styles.pageTitle}>Library</h1>
       <p className={styles.pageSubtitle}>
         A personal archive of books and reading exploration.

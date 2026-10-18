@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Book } from '@/data/journal';
+import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
 
 interface LibraryFilterProps {
   books: Book[];
@@ -10,10 +11,13 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
   const [query, setQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [isFetchingSearch, setIsFetchingSearch] = useState(false);
   const [searchResults, setSearchResults] = useState<string[] | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
   const debounceRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const reqIdRef = useRef(0);
+
+  useMainAreaLoading('library-search', isFetchingSearch);
   
   // Extract unique genres from books
   const allGenres = Array.from(
@@ -76,6 +80,7 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
       setSearchResults(null);
       setSearchError(null);
       setIsSearching(false);
+      setIsFetchingSearch(false);
       applyFilters(null, selectedGenre);
       return;
     }
@@ -90,6 +95,8 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
     }
     
     debounceRef.current = setTimeout(async () => {
+      setIsFetchingSearch(true);
+
       try {
         const response = await fetch('/api/library-search', {
           method: 'POST',
@@ -124,6 +131,8 @@ const LibraryFilter = ({ books, onChange }: LibraryFilterProps) => {
         
         // Fall back to client-side filtering
         fallbackFilter(query, selectedGenre);
+      } finally {
+        if (currentReqId === reqIdRef.current) setIsFetchingSearch(false);
       }
     }, 600);
     

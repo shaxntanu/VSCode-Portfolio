@@ -18,6 +18,7 @@ import BackToTop from '@/components/BackToTop';
 import ScrollProgress from '@/components/ScrollProgress';
 import { FolderProvider } from '@/contexts/FolderContext';
 import { UIStateProvider, useUIState } from '@/contexts/UIStateContext';
+import { MainAreaLoadingProvider } from '@/contexts/MainAreaLoadingContext';
 
 import styles from '@/styles/Layout.module.css';
 
@@ -159,7 +160,9 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <FolderProvider>
       <UIStateProvider>
-        <LayoutContent>{children}</LayoutContent>
+        <MainAreaLoadingProvider>
+          <LayoutContent>{children}</LayoutContent>
+        </MainAreaLoadingProvider>
       </UIStateProvider>
     </FolderProvider>
   );

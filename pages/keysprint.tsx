@@ -1,5 +1,6 @@
 import styles from '@/styles/KeysprintPage.module.css';
 import { useState, useEffect } from 'react';
+import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
 import { Radar, Doughnut, Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -92,6 +93,8 @@ const KeysprintPage = () => {
   const [data, setData] = useState<MonkeyTypeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useMainAreaLoading('keysprint-api', loading);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -426,7 +429,7 @@ const KeysprintPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container} inert={loading} aria-busy={loading}>
         <div className={styles.header}>
           <h1 className={styles.title}>
             <span className={styles.comment}># </span>
@@ -446,12 +449,6 @@ const KeysprintPage = () => {
             )}
           </p>
         </div>
-
-        {loading && (
-          <div className={styles.loading}>
-            <span className={styles.loadingText}>Fetching typing data...</span>
-          </div>
-        )}
 
         {error && !loading && (
           <div className={styles.error}>
