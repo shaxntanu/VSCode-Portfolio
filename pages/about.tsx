@@ -19,6 +19,15 @@ const AboutPage = () => {
           </section>
 
           <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Top Skills</h2>
+            <p className={styles.paragraph}>
+              <span className={styles.highlight}>PCB Design</span> ·{' '}
+              <span className={styles.highlight}>Soldering</span> ·{' '}
+              <span className={styles.highlight}>Electrical Engineering</span>
+            </p>
+          </section>
+
+          <section className={styles.section}>
             <h2 className={styles.sectionTitle}>01. Origin Story</h2>
             <p className={styles.paragraph}>
               My interest in engineering started when robotics was introduced in school. It wasn&apos;t just another subject — it was the first time I actually got pulled into how things work.
