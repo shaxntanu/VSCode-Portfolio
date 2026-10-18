@@ -173,11 +173,11 @@ Mentoring students in electronics and embedded systems at the Institution of Ele
 ---
 
 ### ElectroFusion TIET
-**Role:** Executive Member  
+**Role:** Core Member
 **Timeline:** December 2025 - Present · ${calculateDuration('2025-12-01', 'Present')}  
 **Location:** Patiala, Punjab
 
-Executive member of TIET's technical society focused on electronics and innovation. Assisting core members in organizing events, research work, and technical activities.
+Core member of TIET's technical society focused on electronics and innovation. Supporting the organization of events, research work, and technical activities.
 
 **Contributions:**
 *   Event coordination, logistics, and technical engagement
