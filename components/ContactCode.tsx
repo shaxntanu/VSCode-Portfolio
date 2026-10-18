@@ -15,6 +15,16 @@ const contactCategories = [
         href: 'mailto:sshantanu_be25@thapar.edu',
       },
       {
+        social: 'E-Mail (LinkedIn)',
+        link: 'i.am.shantanu07@gmail.com',
+        href: 'mailto:i.am.shantanu07@gmail.com',
+      },
+      {
+        social: 'Mobile',
+        link: '+91 94181 09763',
+        href: 'tel:+919418109763',
+      },
+      {
         social: 'X (Twitter)',
         link: 'shaxntanu',
         href: 'https://x.com/shaxntanu',
