@@ -9,6 +9,16 @@ const AboutPage = () => {
 
         <div className={styles.aboutContent}>
           <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>00. Professional Snapshot</h2>
+            <p className={styles.paragraph}>
+              I&apos;m an engineering sophomore at Thapar Institute working at the intersection of hardware and software. I build systems that sense and respond to the real world, with a current focus on IoT and embedded systems.
+            </p>
+            <p className={styles.paragraph}>
+              My core stack includes Embedded C, ESP32, IoT architecture, Python, and the Google Gemini API. I explore how embedded devices can work with modern AI services, with Zephyr Station as one example of my environmental-monitoring work.
+            </p>
+          </section>
+
+          <section className={styles.section}>
             <h2 className={styles.sectionTitle}>01. Origin Story</h2>
             <p className={styles.paragraph}>
               My interest in engineering started when robotics was introduced in school. It wasn&apos;t just another subject — it was the first time I actually got pulled into how things work.
