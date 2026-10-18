@@ -15,12 +15,6 @@ export default async function handler(
   };
 
   try {
-    // Fetch public profile (doesn't require auth)
-    const profileResponse = await fetch(`${MONKEYTYPE_API}/users/${USERNAME}/profile`, {
-      headers: { 'Accept': 'application/json' },
-      cache: 'no-store', // Don't cache
-    });
-
     // These require API key
     const fetchWithAuth = async (endpoint: string) => {
       if (!apiKey) return null;
@@ -35,14 +29,18 @@ export default async function handler(
       return response.json();
     };
 
-    const [pbData, statsData, streakData, activityData] = await Promise.all([
+    // Fetch the public profile alongside the authenticated endpoints to avoid
+    // serial network waits on a cache miss.
+    const [profileData, pbData, statsData, streakData, activityData] = await Promise.all([
+      fetch(`${MONKEYTYPE_API}/users/${USERNAME}/profile`, {
+        headers: { 'Accept': 'application/json' },
+        cache: 'no-store',
+      }).then((response) => response.ok ? response.json() : null),
       fetchWithAuth('/users/personalBests?mode=time'),
       fetchWithAuth('/users/stats'),
       fetchWithAuth('/users/streak'),
       fetchWithAuth('/users/currentTestActivity'),
     ]);
-
-    const profileData = profileResponse.ok ? await profileResponse.json() : null;
 
     // Log activity data for debugging
     if (activityData?.data) {
@@ -99,6 +97,7 @@ export default async function handler(
       return res.status(500).json({ error: 'Unable to fetch any data from MonkeyType' });
     }
 
+    res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     res.status(200).json(responseData);
   } catch (error) {
     console.error('MonkeyType API error:', error);
