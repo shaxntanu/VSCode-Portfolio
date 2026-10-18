@@ -125,6 +125,19 @@ const ExperiencePage = () => {
 
 ---
 
+## [Current Role] InAmigos Foundation
+**Role:** Prompt Engineer · **Timeline:** October 2026 - Present · ${calculateDuration('2026-10-01', 'Present')} · **Location:** India
+
+Developing and refining prompts for the foundation's content and communication workflows.
+
+### RESPONSIBILITIES
+*   Designing structured prompts for content creation, research assistance, and summarization.
+*   Testing and improving prompts for clarity, relevance, and consistency.
+*   Reviewing AI-generated responses for accuracy, tone, and alignment with organizational requirements.
+*   Documenting reusable prompt templates to support efficient workflows.
+
+---
+
 ## [Community & Technical Leadership]
 
 ### GirlScript Summer of Code (GSSoC)
@@ -312,7 +325,7 @@ export async function getStaticProps() {
   return {
     props: { 
       title: 'Experience',
-      ogDescription: 'Work experience as Core Engineer at Ragastra, Founder of Arceus Labs, and Early-Stage Engineer at Grosity.'
+      ogDescription: 'Experience in prompt engineering at InAmigos Foundation, product development at Grosity, and engineering at Ragastra and Arceus Labs.'
     },
   };
 }
