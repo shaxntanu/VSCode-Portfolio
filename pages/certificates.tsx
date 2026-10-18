@@ -118,17 +118,6 @@ const certificateData: CertificateCategory[] = [
         ]
       }
     ]
-  },
-  {
-    category: "Training & Events",
-    certificates: [
-      {
-        provider: "CRACCON '26",
-        courses: [
-          { name: "The Cardwell Doctrine: Phase I — scheduled Oct 24, 2026", url: "https://craccon.com/schedule.html", tags: ["#Conference", "#ScheduledTraining"] }
-        ]
-      }
-    ]
   }
 ];
 
