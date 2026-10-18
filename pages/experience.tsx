@@ -142,7 +142,7 @@ Developing and refining prompts for the foundation's content and communication w
 
 ### GirlScript Summer of Code (GSSoC)
 **Role:** Contributor & Mentee  
-**Timeline:** May 2026 - Present · ${calculateDuration('2026-05-01', 'Present')}  
+**Timeline:** May 2026 - October 2026
 **Location:** Remote
 
 Selected for GirlScript Summer of Code, an open-source program focused on collaborative development and learning. Contributing to open-source projects by working on issues, improving codebases, and collaborating with maintainers and fellow contributors.
