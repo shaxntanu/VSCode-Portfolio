@@ -42,12 +42,45 @@
 }
 
 .traceFlow {
-  stroke-width: 1.8;
+  stroke-width: 2.4;
+  stroke-linecap: round;
   fill: none;
-  stroke-dasharray: 40 400;
-  stroke-dashoffset: 438;
-  filter: drop-shadow(0 0 6px currentColor);
-  animation: flow 3s cubic-bezier(0.5, 0, 0.9, 1) infinite;
+  stroke-dasharray: 12 18 36 262;
+  stroke-dashoffset: 328;
+  filter: drop-shadow(0 0 5px currentColor) drop-shadow(0 0 11px currentColor);
+  animation: current-flow 1.25s linear infinite;
+}
+
+.traceFlow:nth-of-type(2) {
+  animation-delay: 0s;
+}
+
+.traceFlow:nth-of-type(4) {
+  animation-delay: 0.16s;
+}
+
+.traceFlow:nth-of-type(6) {
+  animation-delay: 0.32s;
+}
+
+.traceFlow:nth-of-type(8) {
+  animation-delay: 0.48s;
+}
+
+.traceFlow:nth-of-type(10) {
+  animation-delay: 0.08s;
+}
+
+.traceFlow:nth-of-type(12) {
+  animation-delay: 0.24s;
+}
+
+.traceFlow:nth-of-type(14) {
+  animation-delay: 0.4s;
+}
+
+.traceFlow:nth-of-type(16) {
+  animation-delay: 0.56s;
 }
 
 .yellow {
@@ -75,9 +108,19 @@
   color: #ff3300;
 }
 
-@keyframes flow {
+@keyframes current-flow {
+  0% {
+    stroke-dashoffset: 328;
+    opacity: 0.55;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
   to {
     stroke-dashoffset: 0;
+    opacity: 0.7;
   }
 }
 
