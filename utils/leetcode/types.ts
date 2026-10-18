@@ -6,6 +6,11 @@ export interface LeetCodeSubmissionStat {
   submissions: number;
 }
 
+export interface LeetCodeQuestionCount {
+  difficulty: string;
+  count: number;
+}
+
 export interface LeetCodeUserMatchedUser {
   username: string;
   submitStats: {
@@ -20,6 +25,7 @@ export interface LeetCodeUserMatchedUser {
 
 export interface LeetCodeUserResponse {
   data: {
+    allQuestionsCount?: LeetCodeQuestionCount[];
     matchedUser: LeetCodeUserMatchedUser;
   };
 }

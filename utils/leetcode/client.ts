@@ -6,7 +6,7 @@ import type {
 } from './types';
 
 const LEETCODE_USERNAME = 'shaxntanu';
-const CACHE_KEY_USER = 'leetcode_user_data';
+const CACHE_KEY_USER = 'leetcode_user_data_v2';
 const CACHE_KEY_SUBMISSIONS = 'leetcode_recent_submissions';
 
 // Initialize LeetCode client
@@ -35,6 +35,10 @@ export async function fetchLeetCodeUser(): Promise<LeetCodeUserResponse | null> 
     // Transform to our response format
     const response: LeetCodeUserResponse = {
       data: {
+        allQuestionsCount: (userData.allQuestionsCount || []).map((questionCount) => ({
+          difficulty: questionCount.difficulty,
+          count: questionCount.count,
+        })),
         matchedUser: {
           username: userData.matchedUser.username || LEETCODE_USERNAME,
           submitStats: {

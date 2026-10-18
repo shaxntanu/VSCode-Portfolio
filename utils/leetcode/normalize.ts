@@ -18,6 +18,9 @@ export function normalizeUserData(userData: LeetCodeUserResponse): LeetCodeStats
   const easyStat = submitStats.find(s => s.difficulty === 'Easy');
   const mediumStat = submitStats.find(s => s.difficulty === 'Medium');
   const hardStat = submitStats.find(s => s.difficulty === 'Hard');
+  const questionCounts = userData.data.allQuestionsCount || [];
+  const getQuestionCount = (difficulty: 'Easy' | 'Medium' | 'Hard') =>
+    questionCounts.find(questionCount => questionCount.difficulty === difficulty)?.count;
 
   const stats: LeetCodeStats = {
     username: matchedUser.username,
@@ -25,12 +28,9 @@ export function normalizeUserData(userData: LeetCodeUserResponse): LeetCodeStats
     easySolved: easyStat?.count || 0,
     mediumSolved: mediumStat?.count || 0,
     hardSolved: hardStat?.count || 0,
-    // Total counts for each difficulty
-    // LeetCode API doesn't provide total questions per difficulty directly
-    // These are approximate values based on LeetCode's current problem count
-    easyTotal: 800,
-    mediumTotal: 1700,
-    hardTotal: 700,
+    easyTotal: getQuestionCount('Easy'),
+    mediumTotal: getQuestionCount('Medium'),
+    hardTotal: getQuestionCount('Hard'),
   };
 
   return stats;

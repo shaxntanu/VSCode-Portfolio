@@ -45,7 +45,7 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
     : 0;
 
   // Use stats if available, otherwise use empty state
-  const displayStats = stats || {
+  const displayStats: LeetCodeStats = stats || {
     username: 'shaxntanu',
     totalSolved: 0,
     easySolved: 0,
@@ -108,6 +108,13 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
         data: [displayStats.easySolved, displayStats.mediumSolved, displayStats.hardSolved],
         backgroundColor: ['rgba(0, 184, 163, 0.8)', 'rgba(255, 192, 30, 0.8)', 'rgba(239, 71, 67, 0.8)'],
         borderColor: ['#00b8a3', '#ffc01e', '#ef4743'],
+        borderWidth: 2,
+      },
+      {
+        label: 'Total Questions',
+        data: [displayStats.easyTotal ?? 0, displayStats.mediumTotal ?? 0, displayStats.hardTotal ?? 0],
+        backgroundColor: ['rgba(0, 184, 163, 0.2)', 'rgba(255, 192, 30, 0.2)', 'rgba(239, 71, 67, 0.2)'],
+        borderColor: ['rgba(0, 184, 163, 0.65)', 'rgba(255, 192, 30, 0.65)', 'rgba(239, 71, 67, 0.65)'],
         borderWidth: 2,
       },
     ],
@@ -253,7 +260,7 @@ const LeetCodePage = ({ stats, error = false }: LeetCodePageProps) => {
           </div>
           
           <div className={styles.chartContainer}>
-            <h3 className={styles.sectionTitle}>Solved by Difficulty</h3>
+            <h3 className={styles.sectionTitle}>Solved vs Total Questions by Difficulty</h3>
             <div className={styles.chartWrapper}>
               <Bar data={barData} options={barOptions} />
             </div>
