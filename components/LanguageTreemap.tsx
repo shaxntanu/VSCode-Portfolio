@@ -14,6 +14,7 @@ export interface LanguageData {
   percentage: number;
   color: string;
   repositories: LanguageRepositoryUsage[];
+  groupedLanguages?: LanguageData[];
 }
 
 interface Dimensions {
@@ -34,6 +35,31 @@ interface WeightedLanguage {
   language: LanguageData;
   area: number;
 }
+
+const MAX_INDIVIDUAL_TILES = 6;
+
+const getTreemapLanguages = (languages: LanguageData[]) => {
+  const rankedLanguages = languages
+    .filter((language) => language.bytes > 0)
+    .sort((a, b) => b.bytes - a.bytes);
+
+  if (rankedLanguages.length <= MAX_INDIVIDUAL_TILES) return rankedLanguages;
+
+  const visibleLanguages = rankedLanguages.slice(0, MAX_INDIVIDUAL_TILES);
+  const groupedLanguages = rankedLanguages.slice(MAX_INDIVIDUAL_TILES);
+
+  return [
+    ...visibleLanguages,
+    {
+      name: 'Other languages',
+      bytes: groupedLanguages.reduce((sum, language) => sum + language.bytes, 0),
+      percentage: groupedLanguages.reduce((sum, language) => sum + language.percentage, 0),
+      color: '#7b8497',
+      repositories: [],
+      groupedLanguages,
+    },
+  ];
+};
 
 const getWorstAspectRatio = (row: WeightedLanguage[], side: number) => {
   if (row.length === 0 || side <= 0) return Number.POSITIVE_INFINITY;
@@ -163,7 +189,10 @@ const LanguageTreemap = ({ languages }: LanguageTreemapProps) => {
     return () => observer.disconnect();
   }, []);
 
-  const tiles = useMemo(() => createTreemap(languages, dimensions), [languages, dimensions]);
+  const tiles = useMemo(
+    () => createTreemap(getTreemapLanguages(languages), dimensions),
+    [languages, dimensions],
+  );
 
   return (
     <>
@@ -172,7 +201,7 @@ const LanguageTreemap = ({ languages }: LanguageTreemapProps) => {
           <div>
             <h3 className={styles.treemapTitle}>Language map</h3>
             <p className={styles.treemapHint}>
-              Tile area represents code bytes. Hover or focus a tile to see its repositories; on touch screens, use the list below.
+              Tile area represents code bytes. Smaller languages are grouped in Other; use the list below for each language&apos;s repository details.
             </p>
           </div>
           <span className={styles.treemapScale}>Larger tile = more code</span>
@@ -185,6 +214,7 @@ const LanguageTreemap = ({ languages }: LanguageTreemapProps) => {
             const tileHeight = tile.height;
             const compact = tileWidth < 138 || tileHeight < 82;
             const showName = tileWidth >= 62 && tileHeight >= 38;
+            const groupedLanguages = language.groupedLanguages;
             const tooltipId = `language-repositories-${language.name.replace(/[^a-zA-Z0-9_-]/g, '-')}-${tileIndex}`;
 
             return (
@@ -203,39 +233,70 @@ const LanguageTreemap = ({ languages }: LanguageTreemapProps) => {
                 role="group"
                 tabIndex={0}
                 aria-describedby={tooltipId}
-                aria-label={`${language.name}, ${formatPercentage(language.percentage)}, ${formatBytes(language.bytes)}, used in ${language.repositories.length} repositories. Focus to browse repositories.`}
+                aria-label={groupedLanguages
+                  ? `${formatPercentage(language.percentage)} of code across ${groupedLanguages.length} smaller languages. Focus for the language breakdown.`
+                  : `${language.name}, ${formatPercentage(language.percentage)}, ${formatBytes(language.bytes)}, used in ${language.repositories.length} repositories. Focus to browse repositories.`}
               >
                 <div className={`${styles.treemapTile} ${compact ? styles.treemapTileCompact : ''}`}>
-                  {showName && <span className={styles.treemapLanguageName}>{compact ? language.name.slice(0, 2) : language.name}</span>}
+                  {showName && (
+                    <span className={styles.treemapLanguageName}>
+                      {groupedLanguages ? 'Other' : compact ? language.name.slice(0, 2) : language.name}
+                    </span>
+                  )}
                   {!compact && (
                     <>
                       <span className={styles.treemapPercentage}>{formatPercentage(language.percentage)}</span>
-                      <span className={styles.treemapRepoCount}>{language.repositories.length} repos</span>
+                      <span className={styles.treemapRepoCount}>
+                        {groupedLanguages ? `${groupedLanguages.length} languages` : `${language.repositories.length} repos`}
+                      </span>
                     </>
                   )}
                 </div>
 
-                <div id={tooltipId} className={styles.languageTooltip} role="group" aria-label={`${language.name} repositories`}>
+                <div
+                  id={tooltipId}
+                  className={styles.languageTooltip}
+                  role="group"
+                  aria-label={groupedLanguages ? 'Smaller language breakdown' : `${language.name} repositories`}
+                >
                   <div className={styles.languageTooltipHeader}>
                     <strong>{language.name}</strong>
                     <span>{formatPercentage(language.percentage)} · {formatBytes(language.bytes)}</span>
                   </div>
-                  <div className={styles.languageTooltipSubhead}>
-                    Used in {language.repositories.length} {language.repositories.length === 1 ? 'repository' : 'repositories'}
-                  </div>
-                  {language.repositories.length > 0 ? (
-                    <ul className={styles.languageTooltipRepos}>
-                      {language.repositories.map((repository) => (
-                        <li key={repository.url}>
-                          <a href={repository.url} target="_blank" rel="noopener noreferrer">
-                            <span>{repository.name}</span>
-                            <span>{formatBytes(repository.bytes)}</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                  {groupedLanguages ? (
+                    <>
+                      <div className={styles.languageTooltipSubhead}>
+                        {groupedLanguages.length} smaller languages · full repository details are listed below
+                      </div>
+                      <ul className={styles.languageBreakdownList}>
+                        {groupedLanguages.map((groupedLanguage) => (
+                          <li key={groupedLanguage.name}>
+                            <span>{groupedLanguage.name}</span>
+                            <span>{formatPercentage(groupedLanguage.percentage)} · {groupedLanguage.repositories.length} repos</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
                   ) : (
-                    <p className={styles.languageTooltipEmpty}>Repository details are unavailable.</p>
+                    <>
+                      <div className={styles.languageTooltipSubhead}>
+                        Used in {language.repositories.length} {language.repositories.length === 1 ? 'repository' : 'repositories'}
+                      </div>
+                      {language.repositories.length > 0 ? (
+                        <ul className={styles.languageTooltipRepos}>
+                          {language.repositories.map((repository) => (
+                            <li key={repository.url}>
+                              <a href={repository.url} target="_blank" rel="noopener noreferrer">
+                                <span>{repository.name}</span>
+                                <span>{formatBytes(repository.bytes)}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className={styles.languageTooltipEmpty}>Repository details are unavailable.</p>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
