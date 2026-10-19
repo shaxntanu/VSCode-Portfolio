@@ -15,40 +15,13 @@ const Explorer = () => {
     setPortfolioOpen, 
     mobileMenuOpen, 
     setMobileMenuOpen,
-    developmentOpen,
-    setDevelopmentOpen,
-    skillsOpen,
-    setSkillsOpen,
-    careerOpen,
-    setCareerOpen,
-    publicationsOpen,
-    setPublicationsOpen,
-    journalOpen,
-    setJournalOpen,
-    resumeOpen,
-    setResumeOpen,
+    folderStates,
+    setFolderOpen,
   } = useFolderContext();
   const router = useRouter();
 
-  // Get the appropriate open/set functions for each folder
-  const getFolderState = (folderId: string) => {
-    switch (folderId) {
-      case 'development':
-        return { open: developmentOpen, setOpen: setDevelopmentOpen };
-      case 'skills':
-        return { open: skillsOpen, setOpen: setSkillsOpen };
-      case 'career':
-        return { open: careerOpen, setOpen: setCareerOpen };
-      case 'publications':
-        return { open: publicationsOpen, setOpen: setPublicationsOpen };
-      case 'journal':
-        return { open: journalOpen, setOpen: setJournalOpen };
-      case 'resume':
-        return { open: resumeOpen, setOpen: setResumeOpen };
-      default:
-        return { open: false, setOpen: () => {} };
-    }
-  };
+  const allFoldersExpanded = navFolders.every((folder) => folderStates[folder.id]);
+  const allExpanded = portfolioOpen && allFoldersExpanded;
 
   // No animations - instant open/close
   const containerVariants = {
@@ -146,12 +119,12 @@ const Explorer = () => {
               
               {/* Dynamic Folders */}
               {navFolders.map((folder) => {
-                const { open, setOpen } = getFolderState(folder.id);
+                const open = folderStates[folder.id] ?? false;
                 return (
                   <motion.div key={folder.id} variants={itemVariants}>
                     <div
                       className={styles.folder}
-                      onClick={() => setOpen(!open)}
+                      onClick={() => setFolderOpen(folder.id, !open)}
                     >
                       <VscChevronRight
                         className={styles.chevron}
@@ -214,33 +187,16 @@ const Explorer = () => {
         <button 
           className={styles.expandButton}
           onClick={() => {
-            const allExpanded = portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && journalOpen && resumeOpen;
-            if (allExpanded) {
-              setPortfolioOpen(false);
-              setDevelopmentOpen(false);
-              setSkillsOpen(false);
-              setCareerOpen(false);
-              setPublicationsOpen(false);
-              setJournalOpen(false);
-              setResumeOpen(false);
-            } else {
-              setPortfolioOpen(true);
-              setDevelopmentOpen(true);
-              setSkillsOpen(true);
-              setCareerOpen(true);
-              setPublicationsOpen(true);
-              setJournalOpen(true);
-              setResumeOpen(true);
-            }
+            const shouldExpand = !allExpanded;
+            setPortfolioOpen(shouldExpand);
+            navFolders.forEach((folder) => setFolderOpen(folder.id, shouldExpand));
           }}
         >
           <span className={styles.buttonShadow}></span>
           <span className={styles.buttonEdge}></span>
           <div className={styles.buttonFront}>
             <span className={styles.buttonText}>
-              {portfolioOpen && developmentOpen && skillsOpen && careerOpen && publicationsOpen && journalOpen && resumeOpen 
-                ? 'Collapse All' 
-                : 'Expand All'}
+              {allExpanded ? 'Collapse All' : 'Expand All'}
             </span>
           </div>
         </button>

@@ -33,7 +33,6 @@ export const navFolders: NavFolder[] = [
       { name: 'circuits.sch', path: '/circuits', icon: '/logos/circuit_icon.svg' },
       { name: 'coursework.log', path: '/coursework', icon: '/logos/log_icon.svg' },
       { name: 'github.md', path: '/github', icon: '/logos/markdown_icon.svg' },
-      { name: 'leetcode.stats', path: '/leetcode', icon: '/logos/leetcode_icon.svg' },
     ],
   },
   {
@@ -57,20 +56,15 @@ export const navFolders: NavFolder[] = [
     files: [
       { name: 'sm_techstack.csv', path: '/techstack', icon: '/logos/csv_icon.svg' },
       { name: 'skillmatrix.ipynb', path: '/skillmatrix', icon: '/logos/jupyter_icon.svg' },
-      { name: 'keysprint.env', path: '/keysprint', icon: '/logos/env_icon.svg' },
-    ],
-  },
-  {
-    id: 'publications',
-    label: 'PUBLICATIONS',
-    files: [
-      { name: 'whitepapers.pdf', path: '/publications', icon: '/logos/pdf_icon.svg' },
     ],
   },
   {
     id: 'more',
     label: 'MORE TO EXPLORE',
     files: [
+      { name: 'leetcode.stats', path: '/leetcode', icon: '/logos/leetcode_icon.svg' },
+      { name: 'keysprint.env', path: '/keysprint', icon: '/logos/env_icon.svg' },
+      { name: 'whitepapers.pdf', path: '/publications', icon: '/logos/pdf_icon.svg' },
       { name: 'creative.lab', path: '/creativelab', icon: '/icons/creative_lab_icon.svg' },
       { name: 'medium.md', path: '/journal', icon: 'medium', iconType: 'component' },
       { name: 'library.md', path: '/journal/library', icon: '/icons/library.svg', iconType: 'svg' },

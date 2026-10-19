@@ -1,23 +1,14 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 import { useRouter } from 'next/router';
+import { navFolders } from '@/data/navigation';
 
 interface FolderContextType {
   portfolioOpen: boolean;
   mobileMenuOpen: boolean;
-  developmentOpen: boolean;
-  skillsOpen: boolean;
-  careerOpen: boolean;
-  publicationsOpen: boolean;
-  journalOpen: boolean;
-  resumeOpen: boolean;
+  folderStates: Record<string, boolean>;
   setPortfolioOpen: (open: boolean) => void;
   setMobileMenuOpen: (open: boolean) => void;
-  setDevelopmentOpen: (open: boolean) => void;
-  setSkillsOpen: (open: boolean) => void;
-  setCareerOpen: (open: boolean) => void;
-  setPublicationsOpen: (open: boolean) => void;
-  setJournalOpen: (open: boolean) => void;
-  setResumeOpen: (open: boolean) => void;
+  setFolderOpen: (folderId: string, open: boolean) => void;
 }
 
 const FolderContext = createContext<FolderContextType | undefined>(undefined);
@@ -25,16 +16,13 @@ const FolderContext = createContext<FolderContextType | undefined>(undefined);
 export const FolderProvider = ({ children }: { children: ReactNode }) => {
   const [portfolioOpen, setPortfolioOpenState] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [developmentOpen, setDevelopmentOpen] = useState(false);
-  const [skillsOpen, setSkillsOpen] = useState(false);
-  const [careerOpen, setCareerOpen] = useState(false);
-  const [publicationsOpen, setPublicationsOpen] = useState(false);
-  const [journalOpen, setJournalOpen] = useState(false);
-  const [resumeOpen, setResumeOpen] = useState(false);
+  const [folderStates, setFolderStates] = useState<Record<string, boolean>>(() => (
+    navFolders.reduce((states, folder) => {
+      states[folder.id] = false;
+      return states;
+    }, {} as Record<string, boolean>)
+  ));
   const router = useRouter();
-
-  // Portfolio folder paths
-  const portfolioPaths = ['/', '/about', '/contact'];
 
   const setPortfolioOpen = (open: boolean) => {
     setPortfolioOpenState(open);
@@ -45,25 +33,19 @@ export const FolderProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const setFolderOpen = (folderId: string, open: boolean) => {
+    setFolderStates((current) => ({ ...current, [folderId]: open }));
+  };
+
   return (
     <FolderContext.Provider
       value={{
         portfolioOpen,
         mobileMenuOpen,
-        developmentOpen,
-        skillsOpen,
-        careerOpen,
-        publicationsOpen,
-        journalOpen,
-        resumeOpen,
+        folderStates,
         setPortfolioOpen,
         setMobileMenuOpen,
-        setDevelopmentOpen,
-        setSkillsOpen,
-        setCareerOpen,
-        setPublicationsOpen,
-        setJournalOpen,
-        setResumeOpen,
+        setFolderOpen,
       }}
     >
       {children}
