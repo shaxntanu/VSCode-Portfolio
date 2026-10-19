@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import { VscArrowLeft, VscArrowRight, VscCircuitBoard, VscExternalLink } from 'react-icons/vsc';
+import { VscArrowLeft, VscArrowRight, VscCircuitBoard, VscLinkExternal } from 'react-icons/vsc';
 import { projects, categoryConfig } from '@/data/projects';
 import { projectCaseStudies, type ProjectCaseStudy } from '@/data/projectCaseStudies';
 import type { Project } from '@/types';
@@ -40,12 +40,12 @@ const ProjectCaseStudyPage = ({ project, caseStudy }: ProjectCaseStudyPageProps)
         </div>
         <nav className={styles.resourceLinks} aria-label={`${project.title} links`}>
           <a href={project.link} target="_blank" rel="noopener noreferrer">
-            <VscExternalLink aria-hidden="true" />
+            <VscLinkExternal aria-hidden="true" />
             GitHub repository
           </a>
           {project.reportLink && (
             <a href={project.reportLink} target="_blank" rel="noopener noreferrer">
-              <VscExternalLink aria-hidden="true" />
+              <VscLinkExternal aria-hidden="true" />
               Technical report
             </a>
           )}
@@ -139,11 +139,11 @@ const ProjectCaseStudyPage = ({ project, caseStudy }: ProjectCaseStudyPageProps)
         <p>Explore the code and project documentation.</p>
         <div className={styles.resourceLinks}>
           <a href={project.link} target="_blank" rel="noopener noreferrer">
-            GitHub repository <VscExternalLink aria-hidden="true" />
+            GitHub repository <VscLinkExternal aria-hidden="true" />
           </a>
           {project.reportLink && (
             <a href={project.reportLink} target="_blank" rel="noopener noreferrer">
-              Technical report <VscExternalLink aria-hidden="true" />
+              Technical report <VscLinkExternal aria-hidden="true" />
             </a>
           )}
           <Link href="/projects">Back to projects</Link>
