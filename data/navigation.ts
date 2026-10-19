@@ -30,11 +30,25 @@ export const navFolders: NavFolder[] = [
     files: [
       { name: 'firmware.ino', path: '/projects', icon: '/logos/arduino_icon.svg' },
       { name: 'minibuilds.cfg', path: '/minibuilds', icon: '/logos/minibuilds_icon.svg' },
-      { name: 'creative.lab', path: '/creativelab', icon: '/icons/creative_lab_icon.svg' },
       { name: 'circuits.sch', path: '/circuits', icon: '/logos/circuit_icon.svg' },
       { name: 'coursework.log', path: '/coursework', icon: '/logos/log_icon.svg' },
       { name: 'github.md', path: '/github', icon: '/logos/markdown_icon.svg' },
       { name: 'leetcode.stats', path: '/leetcode', icon: '/logos/leetcode_icon.svg' },
+    ],
+  },
+  {
+    id: 'career',
+    label: 'CAREER',
+    files: [
+      { name: 'experience_log.md', path: '/experience', icon: '/logos/markdown_icon.svg' },
+      { name: 'upgrades.yaml', path: '/certificates', icon: '/logos/yaml_icon.svg' },
+    ],
+  },
+  {
+    id: 'resume',
+    label: 'RESUME',
+    files: [
+      { name: 'sysdrive_cv.iso', path: '/resume', icon: '/logos/iso_icon.svg' },
     ],
   },
   {
@@ -47,14 +61,6 @@ export const navFolders: NavFolder[] = [
     ],
   },
   {
-    id: 'career',
-    label: 'CAREER',
-    files: [
-      { name: 'experience_log.md', path: '/experience', icon: '/logos/markdown_icon.svg' },
-      { name: 'upgrades.yaml', path: '/certificates', icon: '/logos/yaml_icon.svg' },
-    ],
-  },
-  {
     id: 'publications',
     label: 'PUBLICATIONS',
     files: [
@@ -62,18 +68,12 @@ export const navFolders: NavFolder[] = [
     ],
   },
   {
-    id: 'journal',
-    label: 'JOURNAL',
+    id: 'more',
+    label: 'MORE TO EXPLORE',
     files: [
+      { name: 'creative.lab', path: '/creativelab', icon: '/icons/creative_lab_icon.svg' },
       { name: 'medium.md', path: '/journal', icon: 'medium', iconType: 'component' },
       { name: 'library.md', path: '/journal/library', icon: '/icons/library.svg', iconType: 'svg' },
-    ],
-  },
-  {
-    id: 'resume',
-    label: 'RESUME',
-    files: [
-      { name: 'sysdrive_cv.iso', path: '/resume', icon: '/logos/iso_icon.svg' },
     ],
   },
 ];
