@@ -1,0 +1,357 @@
+.page {
+    --case-accent: var(--accent-color, #75beff);
+    width: min(100%, 1080px);
+    margin: 0 auto;
+    padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
+    color: var(--text-color, #d4d4d4);
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+    color: var(--text-secondary, #a6a6a6);
+    text-decoration: none;
+    transition: color 160ms ease;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+    color: var(--case-accent);
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 2rem;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    border-radius: 20px;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--case-accent) 13%, var(--article-bg)), var(--article-bg) 68%);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.14);
+}
+
+.heroCopy {
+    min-width: 0;
+}
+
+.eyebrow,
+.sectionKicker {
+    margin: 0 0 0.5rem;
+    color: var(--case-accent);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    margin: 0;
+    color: var(--text-color, #f4f4f4);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    line-height: 1.08;
+}
+
+.description {
+    max-width: 720px;
+    margin: 1rem 0 0;
+    color: var(--text-secondary, #c0c0c0);
+    font-size: 1.08rem;
+    line-height: 1.75;
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    margin-top: 1.25rem;
+    color: var(--text-secondary, #9d9d9d);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.78rem;
+}
+
+.meta span + span::before {
+    content: '•';
+    margin-right: 1rem;
+    color: var(--case-accent);
+}
+
+.resourceLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.resourceLinks a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 42px;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--case-accent) 45%, transparent);
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--case-accent) 8%, var(--article-bg));
+    color: var(--text-color, #e5e5e5);
+    font-size: 0.84rem;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.resourceLinks a:hover,
+.resourceLinks a:focus-visible {
+    border-color: var(--case-accent);
+    background: color-mix(in srgb, var(--case-accent) 18%, var(--article-bg));
+    transform: translateY(-2px);
+}
+
+.section {
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.sectionHeading {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-bottom: 1.25rem;
+}
+
+.sectionIndex {
+    padding-top: 0.15rem;
+    color: var(--case-accent);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+}
+
+.sectionHeading h2 {
+    margin: 0;
+    color: var(--text-color, #f0f0f0);
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+}
+
+.architecture {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 1.1rem;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    border-radius: 12px;
+    background: var(--article-bg);
+}
+
+.architectureStep {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    max-width: 100%;
+}
+
+.architectureNode {
+    padding: 0.55rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--case-accent) 32%, transparent);
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--case-accent) 8%, var(--article-bg));
+    color: var(--text-color, #dedede);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.architectureArrow {
+    flex: 0 0 auto;
+    color: var(--case-accent);
+}
+
+.designGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.designCard,
+.componentCard {
+    min-width: 0;
+    padding: 1.15rem;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    border-radius: 12px;
+    background: var(--article-bg);
+}
+
+.designCard h3,
+.componentCard h3 {
+    margin: 0;
+    color: var(--text-color, #ededed);
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+.designCard p,
+.componentCard > p {
+    margin: 0.7rem 0 0;
+    color: var(--text-secondary, #b4b4b4);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.inventoryIntro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: -0.2rem 0 1rem 2.1rem;
+    color: var(--text-secondary, #b4b4b4);
+    font-size: 0.85rem;
+}
+
+.inventoryIntro svg {
+    color: var(--case-accent);
+}
+
+.inventoryIntro strong {
+    margin-left: auto;
+    color: var(--text-color, #e5e5e5);
+    font-weight: 600;
+}
+
+.componentGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.componentTitle {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.componentTitle > span {
+    flex: 0 0 auto;
+    color: var(--case-accent);
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.76rem;
+}
+
+.componentCard dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 1rem 0 0;
+}
+
+.componentCard dl div {
+    min-width: 0;
+}
+
+.componentCard dt {
+    color: var(--text-secondary, #888);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.componentCard dd {
+    margin: 0.25rem 0 0;
+    color: var(--text-color, #dedede);
+    font-size: 0.82rem;
+    overflow-wrap: anywhere;
+}
+
+.componentCard small {
+    display: block;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    color: var(--text-secondary, #a4a4a4);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.footer {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--case-accent) 7%, var(--article-bg));
+}
+
+.footer p {
+    margin: 0 0 1rem;
+    color: var(--text-color, #e5e5e5);
+}
+
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+
+    .designGrid,
+    .componentGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding-top: 1.25rem;
+    }
+
+    .hero {
+        gap: 1.4rem;
+        padding: 1.25rem;
+        border-radius: 14px;
+    }
+
+    .description {
+        font-size: 0.98rem;
+    }
+
+    .meta {
+        flex-direction: column;
+        gap: 0.45rem;
+    }
+
+    .meta span + span::before {
+        content: none;
+    }
+
+    .resourceLinks {
+        width: 100%;
+    }
+
+    .resourceLinks a {
+        flex: 1 1 100%;
+    }
+
+    .designGrid,
+    .componentGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .inventoryIntro {
+        margin-left: 0;
+    }
+
+    .inventoryIntro strong {
+        width: 100%;
+        margin-left: 1.45rem;
+    }
+
+    .architecture {
+        align-items: flex-start;
+    }
+
+    .architectureStep {
+        align-items: flex-start;
+    }
+
+    .architectureArrow {
+        margin-top: 0.65rem;
+    }
+}
