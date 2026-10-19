@@ -2,31 +2,12 @@ import Image from 'next/image';
 import RepoCard from '@/components/RepoCard';
 import ActivityCalendar, { type Activity } from 'react-activity-calendar';
 import GithubSkeleton from '@/components/GithubSkeleton';
+import LanguageTreemap, { type LanguageData, type LanguageRepositoryUsage } from '@/components/LanguageTreemap';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
 import { useEffect, useState, useRef } from 'react';
 import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
-import { getLanguageColor, formatBytes } from '@/utils/languageColors';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LogarithmicScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-
-// Register Chart.js components at module level
-ChartJS.register(CategoryScale, LogarithmicScale, BarElement, Title, Tooltip, Legend);
-
-interface LanguageData {
-  name: string;
-  bytes: number;
-  percentage: number;
-  color: string;
-}
+import { getLanguageColor } from '@/utils/languageColors';
 
 interface ContributionCalendarResponse {
   contributions: Activity[];
@@ -167,65 +148,6 @@ const GithubPage = ({
     }, 500); // 0.5 second delay
   };
 
-  // Prepare chart data for all languages
-  const chartData = {
-    labels: languages.map((lang) => lang.name),
-    datasets: [
-      {
-        label: 'Percentage',
-        data: languages.map((lang) => lang.percentage),
-        backgroundColor: languages.map((lang) => lang.color),
-        borderColor: languages.map((lang) => lang.color),
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    indexAxis: 'y' as const,
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: (context: any) => {
-            const value = context.raw;
-            const langIndex = context.dataIndex;
-            const bytes = languages[langIndex].bytes;
-            return [
-              `Percentage: ${value >= 0.01 ? value.toFixed(2) + '%' : value.toFixed(4) + '%'}`,
-              `Bytes: ${formatBytes(bytes)}`,
-            ];
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        type: 'logarithmic' as const,
-        beginAtZero: false,
-        ticks: {
-          color: isLightTheme ? '#475569' : '#d4d4d4',
-          callback: (value: any) => value + '%',
-        },
-        grid: {
-          color: isLightTheme ? 'rgba(71, 85, 105, 0.16)' : 'rgba(255, 255, 255, 0.12)',
-        },
-      },
-      y: {
-        ticks: {
-          color: isLightTheme ? '#475569' : '#d4d4d4',
-        },
-        grid: {
-          color: isLightTheme ? 'rgba(71, 85, 105, 0.12)' : 'rgba(255, 255, 255, 0.08)',
-        },
-      },
-    },
-  };
-
   // Show skeleton if no user data is available
   if (!user) {
     return <GithubSkeleton />;
@@ -364,42 +286,7 @@ const GithubPage = ({
               Languages detected across my repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes.
             </p>
             
-            {/* Bar Chart - All Languages */}
-            <div className={styles.chartSection}>
-              <div style={{ height: `${Math.max(400, languages.length * 35)}px` }}>
-                <Bar data={chartData} options={chartOptions} />
-              </div>
-            </div>
-
-            {/* Language List */}
-            <div className={styles.languageList}>
-              {languages.map((language) => (
-                <div key={language.name} className={styles.languageItem}>
-                  <div className={styles.languageRow}>
-                    <div
-                      className={styles.languageIcon}
-                      style={{ backgroundColor: language.color }}
-                    />
-                    <span className={styles.languageName}>{language.name}</span>
-                    <div className={styles.barContainer}>
-                      <div
-                        className={styles.bar}
-                        style={{
-                          width: `${language.percentage}%`,
-                          backgroundColor: language.color,
-                        }}
-                      />
-                    </div>
-                    <span className={styles.percentage} title={`Exact: ${language.percentage.toFixed(4)}%`}>
-                      {language.percentage >= 0.01 
-                        ? `${language.percentage.toFixed(2)}%` 
-                        : `${language.percentage.toFixed(4)}%`}
-                    </span>
-                  </div>
-                  <div className={styles.bytes}>{formatBytes(language.bytes)}</div>
-                </div>
-              ))}
-            </div>
+            <LanguageTreemap languages={languages} />
           </div>
         )}
     </div>
@@ -435,23 +322,34 @@ export async function getStaticProps() {
 
     const languageResults = await Promise.all(languagePromises);
 
-    const languageMap = new Map<string, number>();
+    const languageMap = new Map<string, { bytes: number; repositories: LanguageRepositoryUsage[] }>();
     let totalBytes = 0;
 
-    languageResults.forEach((languages) => {
-      Object.entries(languages).forEach(([language, bytes]) => {
-        const currentBytes = languageMap.get(language) || 0;
-        languageMap.set(language, currentBytes + (bytes as number));
-        totalBytes += bytes as number;
+    languageResults.forEach((repositoryLanguages, repoIndex) => {
+      const repo = profileRepos[repoIndex];
+      Object.entries(repositoryLanguages).forEach(([language, bytes]) => {
+        const byteCount = typeof bytes === 'number' && Number.isFinite(bytes) ? bytes : 0;
+        if (byteCount <= 0) return;
+
+        const current = languageMap.get(language) || { bytes: 0, repositories: [] };
+        current.bytes += byteCount;
+        current.repositories.push({
+          name: repo.name,
+          url: repo.html_url,
+          bytes: byteCount,
+        });
+        languageMap.set(language, current);
+        totalBytes += byteCount;
       });
     });
 
     const languages = Array.from(languageMap.entries())
-      .map(([name, bytes]) => ({
+      .map(([name, languageData]) => ({
         name,
-        bytes,
-        percentage: totalBytes > 0 ? (bytes / totalBytes) * 100 : 0,
+        bytes: languageData.bytes,
+        percentage: totalBytes > 0 ? (languageData.bytes / totalBytes) * 100 : 0,
         color: getLanguageColor(name),
+        repositories: languageData.repositories.sort((a, b) => b.bytes - a.bytes),
       }))
       .sort((a, b) => b.percentage - a.percentage);
 
