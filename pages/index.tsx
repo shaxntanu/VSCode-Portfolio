@@ -296,14 +296,26 @@ export default function HomePage() {
           </p>
 
           <div className={styles.actionLinks}>
-            <Link href="/projects">
-              <button className={styles.button}>
-                <span className={styles.shadow}></span>
-                <span className={styles.edge}></span>
-                <div className={styles.front}>
-                  <span>View Projects</span>
-                </div>
-              </button>
+            <Link href="/projects" className={styles.button}>
+              <span className={styles.shadow}></span>
+              <span className={styles.edge}></span>
+              <span className={styles.front}>
+                <span>View Projects</span>
+              </span>
+            </Link>
+            <Link href="/resume" className={styles.button}>
+              <span className={styles.shadow}></span>
+              <span className={styles.edge}></span>
+              <span className={styles.front}>
+                <span>Resume</span>
+              </span>
+            </Link>
+            <Link href="/contact" className={styles.button}>
+              <span className={styles.shadow}></span>
+              <span className={styles.edge}></span>
+              <span className={styles.front}>
+                <span>Contact</span>
+              </span>
             </Link>
           </div>
         </div>
