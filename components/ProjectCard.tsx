@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 import { VscGithubInverted, VscCircuitBoard, VscMortarBoard, VscCode } from 'react-icons/vsc';
 import { SiVercel, SiNotion, SiStreamlit } from 'react-icons/si';
@@ -8,6 +9,7 @@ import BOMViewer from '@/components/BOMViewer';
 import { getProjectSkills, normalizeSkillName } from '@/utils/skillsMapper';
 
 import { Project, CategoryConfig } from '@/types';
+import { projectCaseStudies } from '@/data/projectCaseStudies';
 
 import styles from '@/styles/ProjectCard.module.css';
 
@@ -62,7 +64,14 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
     if (project.link.includes('github.com')) return <VscGithubInverted />;
     if (project.link.includes('vercel.app')) return <SiVercel />;
     if (project.link.includes('notion.site')) return <SiNotion />;
-    return <VscGithubInverted />; // default
+    return <VscCode />;
+  };
+
+  const getLinkLabel = () => {
+    if (project.link.includes('github.com')) return 'GitHub';
+    if (project.link.includes('vercel.app')) return 'Live demo';
+    if (project.link.includes('notion.site')) return 'Project page';
+    return 'Project site';
   };
 
   const getReportIcon = () => {
@@ -97,6 +106,7 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
   const streamlitIcon = getStreamlitIcon();
   const notebookIcon = getNotebookIcon();
   const datasetIcon = getDatasetIcon();
+  const hasCaseStudy = Boolean(projectCaseStudies[project.slug]);
   
   return (
     <div
@@ -172,8 +182,18 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
           );
         })()}
         
-        {(linkIcon || reportIcon || certificateIcon || streamlitIcon || notebookIcon || datasetIcon || project.projectReference || (project.components && project.components.length > 0)) && (
+        {(hasCaseStudy || linkIcon || reportIcon || certificateIcon || streamlitIcon || notebookIcon || datasetIcon || project.projectReference || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
+            {hasCaseStudy && (
+              <Link
+                href={`/projects/${project.slug}`}
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+              >
+                <VscCode aria-hidden="true" />
+                <span>Case study</span>
+              </Link>
+            )}
             {linkIcon && (
               <a
                 href={project.link}
@@ -181,9 +201,10 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 rel="noopener noreferrer"
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title={`View on ${project.link.includes('github') ? 'GitHub' : project.link.includes('vercel') ? 'Vercel' : 'Notion'}`}
+                title={getLinkLabel()}
               >
-                {linkIcon}
+                <span aria-hidden="true">{linkIcon}</span>
+                <span>{getLinkLabel()}</span>
               </a>
             )}
             {streamlitIcon && (
@@ -193,9 +214,10 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 rel="noopener noreferrer"
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title="View Streamlit App"
+                title="Open Streamlit app"
               >
-                {streamlitIcon}
+                <span aria-hidden="true">{streamlitIcon}</span>
+                <span>Streamlit app</span>
               </a>
             )}
             {notebookIcon && (
@@ -205,9 +227,10 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 rel="noopener noreferrer"
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title="View Jupyter Notebook"
+                title="Open Jupyter notebook"
               >
-                {notebookIcon}
+                <span aria-hidden="true">{notebookIcon}</span>
+                <span>Notebook</span>
               </a>
             )}
             {datasetIcon && (
@@ -217,9 +240,10 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 rel="noopener noreferrer"
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title="View Dataset"
+                title="Open dataset"
               >
-                {datasetIcon}
+                <span aria-hidden="true">{datasetIcon}</span>
+                <span>Dataset</span>
               </a>
             )}
             {reportIcon && (
@@ -229,9 +253,10 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 rel="noopener noreferrer"
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title="View Technical Report"
+                title="Open technical report"
               >
-                {reportIcon}
+                <span aria-hidden="true">{reportIcon}</span>
+                <span>Report</span>
               </a>
             )}
             {certificateIcon && (
@@ -241,9 +266,10 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 rel="noopener noreferrer"
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title="View Certificate"
+                title="Open certificate"
               >
-                {certificateIcon}
+                <span aria-hidden="true">{certificateIcon}</span>
+                <span>Certificate</span>
               </a>
             )}
             {project.projectReference && (
@@ -251,19 +277,22 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
                 onClick={handleProjectReference}
                 className={styles.iconLink}
                 style={{ color: categoryConfig.color }}
-                title="View in Main Projects"
+                title="View related project in the main projects list"
               >
-                <VscCode />
+                <VscCode aria-hidden="true" />
+                <span>Related project</span>
               </button>
             )}
             {project.components && project.components.length > 0 && (
               <button
                 onClick={() => setBomOpen(!bomOpen)}
                 className={`${styles.iconLink} ${styles.bomButton}`}
-                style={{ color: bomOpen ? categoryConfig.color : 'rgba(255, 255, 255, 0.6)' }}
+                style={{ color: categoryConfig.color }}
                 title="View Bill of Materials"
+                aria-expanded={bomOpen}
               >
-                <VscCircuitBoard />
+                <VscCircuitBoard aria-hidden="true" />
+                <span>Bill of materials</span>
               </button>
             )}
           </div>

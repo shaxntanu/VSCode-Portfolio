@@ -76,8 +76,8 @@ const ProjectCaseStudyPage = ({ project, caseStudy }: ProjectCaseStudyPageProps)
         <div className={styles.sectionHeading}>
           <span className={styles.sectionIndex}>02</span>
           <div>
-            <p className={styles.sectionKicker}>Engineering decisions</p>
-            <h2 id="design-heading">Design breakdown</h2>
+            <p className={styles.sectionKicker}>Engineering design</p>
+            <h2 id="design-heading">Subsystem breakdown</h2>
           </div>
         </div>
         <div className={styles.designGrid}>
