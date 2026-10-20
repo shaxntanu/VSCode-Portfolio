@@ -23,7 +23,7 @@ routeMessages =
     message: "Time to meet the engineer behind all this."
     animation: 'curious'
   '/projects':
-    message: "Now we're getting to the good stuff. Hardware and software experiments."
+    message: "Long project descriptions scroll inside their own text area. Scroll over the description to keep reading; the scrollbar stays hidden."
     animation: 'excited'
   '/minibuilds':
     message: "Small experiments and quick builds. The learning ground for bigger projects."
@@ -44,7 +44,7 @@ routeMessages =
     message: "Learning credentials. Always shipping, always learning."
     animation: 'happy'
   '/coursework':
-    message: "Academic foundations. Building from the ground up."
+    message: "Long coursework descriptions scroll inside their own text area. Scroll over the description to read the rest."
     animation: 'curious'
   '/publications':
     message: "Research work. The deeper technical contributions."
@@ -86,20 +86,30 @@ clickMessages = [
   "Built with Next.js and way too much attention to detail."
   "Lite mode disables my animations. Toggle it off in Settings to see me move!"
   "My name is Byte. Watch me track your cursor."
+  "If a project description is cut off, scroll inside its text to read the rest. The scrollbar is hidden!"
+  "Long coursework descriptions scroll inside their own card area too."
+  "Use the links at the bottom of a card to open its project page or GitHub repository."
+  "Try the filters to narrow down the project list."
+  "Some cards have a case study with more details than the card preview."
+  "Hardware project cards can include a bill of materials."
+  "You can click me again for another tip."
+  "The hidden scrollbar keeps the card tidy, but the description is still scrollable."
 ]
 
 # Portfolio facts
 portfolioFacts = [
-  "This portfolio contains 16 hardware and software projects spanning 2018-2026."
-  "The flagship project is Zephyr Station - an ESP32 environmental monitoring system."
-  "Most projects use ESP32/ESP8266 microcontrollers with various sensors."
-  "The tech stack focuses heavily on embedded systems and IoT development."
-  "Multiple projects feature real-time data visualization with OLED displays."
-  "The portfolio includes both funded college projects and community work."
-  "Several projects integrate I2C, SPI, UART, and 1-Wire communication protocols."
-  "Projects include RFID attendance systems, GPS navigation, and air quality monitoring."
-  "Hardware costs range from ₹1,103 to ₹6,080 per project with full BOM documentation."
-  "The portfolio website itself is styled as VS Code and built with React/Next.js."
+  "Long project descriptions scroll inside the card, even though the scrollbar is hidden."
+  "Some project cards link to both a project page and the source repository."
+  "Project cards use category colors to distinguish different kinds of work."
+  "Zephyr Station is an ESP32 environmental monitoring project."
+  "Marcus Omega offers 23 philosophical conversation modes."
+  "Marcus Omega keeps conversations in the browser session and supports text export."
+  "Marcus Omega uses a 10-turn context window to keep a conversation coherent."
+  "Skill tags on project cards show technologies used in each project."
+  "Some hardware project cards include a bill of materials."
+  "The portfolio is built with Next.js and styled like a VS Code workspace."
+  "The project list includes hardware builds as well as software projects."
+  "Open a project card's GitHub link to inspect its source code."
 ]
 
 # Inactivity messages
