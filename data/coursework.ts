@@ -7,7 +7,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-001',
     title: 'Android Studio Apps Collection',
-    description: 'Collection of Android applications built with Android Studio including EncoderDecoderApp and Twitter App. Demonstrates mobile app development fundamentals and UI/UX design principles.',
+    description: 'Year 1 college event project containing two Android Studio apps: EncoderDecoderApp and a Twitter-style social app.',
     year: 1,
     type: 'College Event Project',
     area: 'Software Development',
@@ -20,7 +20,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-002',
     title: 'Geometrical Shape Detection and Recognition',
-    description: 'Six-module image analysis project using OpenCV for shape detection including geometric shapes, cookies, traffic cones, ice cream cones, trees, and watch displays. Features contour detection, color segmentation, and morphological operations.',
+    description: 'Six Python image-analysis exercises using OpenCV: contour-based geometric shape classification plus image analyses for cookies, cones, trees, and smartwatch displays using thresholding, color segmentation, and circle detection.',
     year: 1,
     type: 'College Project',
     area: 'Image Processing',
@@ -33,7 +33,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-003',
     title: 'Malus and Maglev Simulation',
-    description: 'Interactive physics simulations demonstrating Malus\'s Law for light polarization and magnetic levitation dynamics. Features mathematical modeling of electromagnetic wave polarization and force equilibrium in magnetic systems.',
+    description: 'Two interactive Python simulations: a slider-controlled Malus’s Law polarization display and an animated magnetic-levitation model with adjustable magnet strength and mass.',
     year: 1,
     type: 'Academic Simulation',
     area: 'Scientific Computing',
@@ -45,7 +45,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-004',
     title: 'C Mini Projects',
-    description: 'Collection of C programming mini projects demonstrating fundamental programming concepts and problem-solving skills. Includes practical implementations of algorithms, data manipulation, and core C language features.',
+    description: 'Standalone C console exercises including calculators, a number-guessing game, password-attempt logic, prime and parity checks, BMI and age tools, quadratic roots, and ASCII conversion.',
     year: 1,
     type: 'Course Repository',
     area: 'Programming Fundamentals',
@@ -59,7 +59,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-005',
     title: 'Optimization Techniques Lab',
-    description: 'MATLAB implementations for optimization algorithms including linear programming and plotting techniques. Covers mathematical optimization methods used in engineering problem-solving.',
+    description: 'MATLAB lab scripts exploring linear programming, including a basic-feasible-solution search and plots of constraints and corner points to compare objective values.',
     year: 2,
     type: 'Course Repository',
     subject: 'UMA035 - Optimization Techniques',
@@ -72,7 +72,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-006',
     title: 'AI for Engineers Lab',
-    description: 'Python programming labs covering AI and machine learning fundamentals. Includes Python basics, data preprocessing, missing value handling, linear regression implementation, and data science techniques.',
+    description: 'Python labs progressing from fundamentals and house-price linear regression to missing-data preprocessing, list operations, and McCulloch–Pitts neuron models for logic gates.',
     year: 2,
     type: 'Course Repository',
     subject: 'UCS321 - AI For Engineers',
@@ -85,7 +85,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-007',
     title: 'Digital System Design Lab',
-    description: 'Hardware design experiments covering digital logic fundamentals including Half Adder, 4:1 MUX, Ripple Carry Adder (RCA), ALU, and Shift Register (SIPO) implementations.',
+    description: 'UEC612 Verilog collection with a Boolean-logic module, behavioral and structural 4:1 multiplexers, a 4-bit ripple-carry adder, ALU, and SIPO shift registers, plus testbenches and FPGA files.',
     year: 2,
     type: 'Course Repository',
     subject: 'UEC612 - Digital System Design',
@@ -99,7 +99,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-007A',
     title: 'Energy Consumption Pattern Analysis',
-    description: 'ML pipeline using PCA and K-Means clustering to analyze household energy consumption patterns. Features dark-mode visualizations, SHAP explainability, seasonal modeling, longitudinal stability checks, and interactive Vercel explorer with React.',
+    description: 'Python research pipeline for shape-first segmentation of synthetic household load profiles: engineers 51 scale-invariant behavior features, applies PCA and stability-informed K-means, and includes validation, explainability, and interactive dashboards.',
     year: 2,
     type: 'College Project',
     subject: 'UCS321 - AI For Engineers Mini Project',
@@ -116,7 +116,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-010',
     title: 'Mangonel Engineering Design Project',
-    description: 'Engineering design project resources and a spreadsheet model for a Mangonel. Includes the Lab 0 workbook for documenting and analyzing the design.',
+    description: 'Engineering Design Project resource repository containing the Lab 0 Mangonel spreadsheet workbook.',
     year: 2,
     type: 'College Project',
     area: 'Engineering Design',
@@ -128,7 +128,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-008',
     title: 'Operating System Shell Commands',
-    description: 'Comprehensive shell command documentation for Unix/Linux systems. Includes basic commands, file operations, process management, and shell scripting fundamentals covered in CS-Minor 1st semester.',
+    description: 'Lab-wise Linux shell notes and runnable shell/C examples covering navigation, file operations and redirection, process system calls, and pthread-based concurrency.',
     year: 2,
     type: 'Course Repository',
     subject: 'UCM002 - Operating Systems',
@@ -142,7 +142,7 @@ export const courseworkData: CourseworkItem[] = [
   {
     id: 'CW-009',
     title: 'Data Structures Implementation',
-    description: 'Complete implementation of fundamental data structures in C/C++. Covers arrays, linked lists, stacks, queues, trees, graphs, and associated algorithms from CS-Minor 1st semester coursework.',
+    description: 'Data Structures coursework repository containing an array-backed C++ queue exercise and a PDF assignment focused on arrays.',
     year: 2,
     type: 'Course Repository',
     subject: 'UCM004 - Data Structures',
