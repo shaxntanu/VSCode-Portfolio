@@ -854,7 +854,7 @@ void loop() {
   },
   {
     title: 'Digital System Design Lab',
-    description: 'Hardware design experiments covering digital logic fundamentals. Includes Half Adder, 4:1 MUX, Ripple Carry Adder (RCA), ALU, and Shift Register (SIPO) implementations in Verilog.',
+    description: 'UEC612 Verilog collection with a Boolean-logic module, behavioral and structural 4:1 multiplexers, a 4-bit ripple-carry adder, ALU, and SIPO shift registers, plus testbenches and FPGA files.',
     platform: 'Verilog HDL',
     software: 'Verilog HDL',
     technologies: ['Verilog', 'Digital Logic', 'HDL', 'Hardware Design'],
@@ -866,16 +866,16 @@ void loop() {
     slug: 'digital-system-design',
     year: 2024,
     dateRange: 'Jan 2024 - Jun 2024',
-    overview: 'This repository contains Verilog implementations of fundamental digital logic circuits from the UEC612 Digital System Design course. It covers combinational circuits (Half Adder, 4:1 Multiplexer, Ripple Carry Adder), arithmetic units (ALU), and sequential circuits (Shift Registers). Each module includes testbenches for simulation and verification.',
-    workingPrinciple: 'Hardware Description Language (HDL) allows designers to model digital circuits at various abstraction levels. Verilog uses module definitions to describe circuit behavior and structure. Combinational logic is implemented using continuous assignments (assign) and always blocks, while sequential logic uses clocked always blocks with sensitivity lists. The designs are synthesizable and can be implemented on FPGAs or ASICs.',
+    overview: 'This UEC612 repository contains Verilog experiments for a Boolean-logic module, behavioral and structural 4:1 multiplexers, a ripple-carry adder, an ALU, and SIPO shift registers. It also includes simulation testbenches and a SIPO implementation with FPGA constraint files.',
+    workingPrinciple: 'The modules describe combinational logic for selection and arithmetic operations, plus clocked flip-flops for serial-in, parallel-out data movement. Testbenches exercise several modules in simulation, and the FPGA SIPO experiment includes its pin-constraint file.',
     components: [
       {
-        name: 'Half Adder',
-        role: 'Basic Arithmetic',
+        name: 'Boolean Logic Module',
+        role: 'Logic Design',
         interface: 'Combinational Logic',
         voltage: 'N/A',
         quantity: 1,
-        notes: 'Adds two single bits producing sum and carry',
+        notes: 'Experiment 1 implements a combinational Boolean expression in Verilog',
         price: 'Free'
       },
       {
