@@ -758,7 +758,7 @@ export const projects: Project[] = [
     title: 'Unicode Clean',
     description: 'Dependency-free Python text sanitizer, browser app, and Codex skill for conservative Unicode and whitespace cleanup. It preserves common Markdown code and URL spans, records its changes, and flags meaning-sensitive edits for human review.',
     logo: '/logos/python_icon.svg',
-    link: 'https://shaxntanu.github.io/unicodeClean/',
+    link: 'https://unicodeclean.vercel.app',
     repositoryUrl: 'https://github.com/shaxntanu/unicodeClean',
     slug: 'unicode-clean',
     category: 'SOFTWARE_SYSTEMS',
