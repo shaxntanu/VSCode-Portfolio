@@ -79,7 +79,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Zephyr Station',
-    description: 'ESP32-based IoT station for environmental monitoring.',
+    description: 'ESP32 smart-room monitor combining temperature, humidity, pressure, and air-quality sensors with an OLED readout, RTC-timestamped SD-card logs, and threshold alerts.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/shaxntanu/Zephyr-Station',
     slug: 'zephyr-station',
@@ -193,7 +193,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Jolt Locator',
-    description: 'Offline GPS navigation device with compass guidance.',
+    description: 'ESP32 GPS-and-compass prototype that displays coordinates and heading on an OLED and guides users toward a configured Jolt store location; the project also includes its first KiCad PCB design.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/Jolt-Locator',
     slug: 'jolt-locator',
@@ -307,7 +307,7 @@ export const projects: Project[] = [
   },
   {
     title: 'The Ruin Machine',
-    description: 'ESP32 device that proves gambling always leads to loss through math.',
+    description: 'ESP32 gambling simulator using hardware-generated randomness to compare Martingale and flat betting, track bankroll and win statistics, and demonstrate house-edge probability on an OLED.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/The-Ruin-Machine',
     slug: 'the-ruin-machine',
@@ -377,7 +377,7 @@ export const projects: Project[] = [
   // 2026
   {
     title: 'Electromagnet Controller',
-    description: 'Arduino-based electromagnet turns controller for precise coil winding.',
+    description: 'Arduino Uno and CNC Shield V3 firmware pulses two stepper motors together to wind an electromagnet coil, with pulse timing controlling the winding speed.',
     logo: '/logos/arduino_icon.svg',
     link: 'https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller',
     slug: 'electromagnet-controller',
@@ -438,7 +438,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Inductance Meter',
-    description: 'ESP8266-based inductance measurement tool with OLED display using RL time constant method.',
+    description: 'ESP8266 meter samples an RL circuit step response, estimates its time constant and total resistance, then calculates coil inductance and displays the readings on an SSD1306 OLED.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/esp8266-inductance-meter',
     slug: 'inductance-meter',
@@ -515,7 +515,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Servo Light Switch',
-    description: 'Bluetooth-controlled servo automation for physical light switches via ESP8266 and HC-06.',
+    description: 'ESP8266 receives serial commands from an HC-06 Bluetooth link and moves two servos to toggle wall switches, returning each arm to its center position after a command.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/Servo-Light-Switch-Control-ESP8266-and-HC06',
     slug: 'servo-light-switch',
@@ -574,7 +574,7 @@ export const projects: Project[] = [
   },
   {
     title: 'RFID Attendance System',
-    description: 'Automated attendance tracking with RFID cards, ESP32 and Arduino.',
+    description: 'Two-board attendance logger: an Arduino Nano reads RFID cards and RTC timestamps, while an ESP32 manages registration and duplicate checks, OLED/LED/buzzer feedback, and CSV records on an SD card.',
     logo: ['/logos/arduino_icon.svg', '/logos/espressif_icon.svg'],
     link: 'https://github.com/Arceus-Labs/RFID-Attendance-System',
     slug: 'rfid-attendance-system',
@@ -778,7 +778,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Arduino Nano Mini Projects',
-    description: 'Collection of beginner Arduino Nano projects including OLED display text and RGB LED color cycling with PWM control.',
+    description: 'Two Arduino Nano starter sketches: an SSD1306 I²C OLED text display and an RGB LED color-cycling demo using PWM.',
     logo: '/logos/arduino_icon.svg',
     link: 'https://github.com/shaxntanu/Arduino-NANO-Mini-Projects',
     slug: 'arduino-nano-mini-projects',
@@ -789,7 +789,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Arduino Electromagnet Turns Controller',
-    description: 'Arduino firmware for controlling stepper motors to wind turns onto electromagnetic mild steel core with CNC Shield V3.',
+    description: 'Arduino Uno and CNC Shield V3 firmware pulses two stepper motors together to wind an electromagnet coil, with pulse timing controlling the winding speed.',
     logo: '/logos/arduino_icon.svg',
     link: 'https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller',
     slug: 'electromagnet-turns-controller-mini',
@@ -800,7 +800,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Servo Light Switch Control',
-    description: 'Bluetooth-controlled servo automation for physical light switches using ESP8266 and HC-06 module.',
+    description: 'ESP8266 receives serial commands from an HC-06 Bluetooth link and moves two servos to toggle wall switches, returning each arm to its center position after a command.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/Servo-Light-Switch-Control-ESP8266-and-HC06',
     slug: 'servo-light-switch-mini',
@@ -811,7 +811,7 @@ export const projects: Project[] = [
   },
   {
     title: 'ESP8266 Inductance Meter',
-    description: 'Inductance measurement tool with OLED display using RL time constant method and ESP8266.',
+    description: 'ESP8266 meter samples an RL circuit step response, estimates its time constant and total resistance, then calculates coil inductance and displays the readings on an SSD1306 OLED.',
     logo: '/logos/espressif_icon.svg',
     link: 'https://github.com/Arceus-Labs/esp8266-inductance-meter',
     slug: 'inductance-meter-mini',

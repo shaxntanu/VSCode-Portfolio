@@ -9,7 +9,7 @@ export interface ProjectCaseStudy {
 export const projectCaseStudies: Record<string, ProjectCaseStudy> = {
   'zephyr-station': {
     overview:
-      'Zephyr Station brings environmental sensing, on-device feedback, local logging, and Wi-Fi cloud upload together around an ESP32. Its component map documents the sensors and peripherals alongside the buses used to connect them.',
+      'Zephyr Station is an ESP32 indoor monitor combining environmental sensors, OLED feedback, RTC timestamping, SD-card CSV logging, and buzzer alerts. Its initialization logic keeps the monitor running when an individual sensor is unavailable.',
     designSections: [
       {
         title: 'Environmental sensing',
@@ -30,7 +30,7 @@ export const projectCaseStudies: Record<string, ProjectCaseStudy> = {
   },
   'jolt-locator': {
     overview:
-      'Jolt Locator is an offline GPS navigation device that combines satellite positioning and compass guidance with a small on-device display and physical controls.',
+      'Jolt Locator is an ESP32 GPS-and-compass prototype that displays coordinates and heading on an OLED and guides users toward a configured Jolt store location.',
     designSections: [
       {
         title: 'Position and heading',
@@ -45,7 +45,7 @@ export const projectCaseStudies: Record<string, ProjectCaseStudy> = {
       {
         title: 'Physical controls',
         description:
-          'Two tactile buttons are assigned to mode switching and calibration. The architecture connects GPS, compass, display, status LED, and buttons directly to the ESP32.',
+          'One tactile button starts navigation and another stops it. The GPS, compass, OLED, status LED, and buttons connect directly to the ESP32.',
       },
     ],
   },
