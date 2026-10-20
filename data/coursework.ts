@@ -9,7 +9,7 @@ export const courseworkData: CourseworkItem[] = [
     title: 'Android Studio Apps Collection',
     description: 'Collection of Android applications built with Android Studio including EncoderDecoderApp and Twitter App. Demonstrates mobile app development fundamentals and UI/UX design principles.',
     year: 1,
-    type: 'College Project',
+    type: 'College Event Project',
     area: 'Software Development',
     technologies: ['Android Studio', 'Java', 'Kotlin', 'XML'],
     repositoryUrl: 'https://github.com/shaxntanu/Android-Studio-Apps_Shantanu',

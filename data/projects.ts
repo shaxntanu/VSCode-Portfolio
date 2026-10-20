@@ -723,7 +723,7 @@ export const projects: Project[] = [
     link: 'https://github.com/shaxntanu/Android-Studio-Apps_Shantanu',
     slug: 'android-studio-apps',
     category: 'SOFTWARE_SYSTEMS',
-    dateRange: 'Year 1 - College Project',
+    dateRange: 'Year 1 - College Event Project',
     year: 2026, // Using 2026 as the portfolio year, actual academic year is stored in coursework
     fundedPrototype: true,
     badgeType: 'college'

@@ -20,7 +20,7 @@ export type CircuitStatus = 'VERIFIED' | 'IN_PROGRESS' | 'EXPERIMENTAL';
 
 export type CourseworkYear = 1 | 2 | 3 | 4;
 
-export type CourseworkType = 'College Project' | 'Course Repository' | 'Academic Simulation' | 'Laboratory Work' | 'Subject Implementation';
+export type CourseworkType = 'College Project' | 'College Event Project' | 'Course Repository' | 'Academic Simulation' | 'Laboratory Work' | 'Subject Implementation';
 
 export interface CourseworkItem {
   id: string;
