@@ -153,11 +153,18 @@
     margin-bottom: 1rem;
     opacity: 1;
     text-shadow: 0 1px 2px var(--shadow, rgba(0, 0, 0, 0.6));
-    flex: 1;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    flex: 0 1 auto;
+    max-height: 9rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.description::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 /* Technology tags */
@@ -270,7 +277,6 @@
 
     .description {
         font-size: 0.85rem;
-        -webkit-line-clamp: 4;
     }
 
     .techTags {
