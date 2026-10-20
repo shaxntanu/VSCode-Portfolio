@@ -754,6 +754,17 @@ export const projects: Project[] = [
     dateRange: 'Sep 2026 - Present',
     year: 2026,
   },
+  {
+    title: 'Unicode Clean',
+    description: 'Dependency-free Python text sanitizer, browser app, and Codex skill for conservative Unicode and whitespace cleanup. It preserves common Markdown code and URL spans, records its changes, and flags meaning-sensitive edits for human review.',
+    logo: '/logos/python_icon.svg',
+    link: 'https://shaxntanu.github.io/unicodeClean/',
+    repositoryUrl: 'https://github.com/shaxntanu/unicodeClean',
+    slug: 'unicode-clean',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Oct 2026 - Present',
+    year: 2026,
+  },
   // Mini Builds
   {
     title: 'Computer Always Awake',
@@ -764,17 +775,6 @@ export const projects: Project[] = [
     category: 'MINI_BUILDS',
     miniBuildType: 'SOFTWARE',
     dateRange: 'Utility Script',
-    year: 2026,
-  },
-  {
-    title: 'Unicode-Aware Text Sanitizer',
-    description: 'Dependency-free Python utility that cleans selected Unicode and whitespace artifacts in prose, preserves common Markdown and URL spans, supports exact replacements, and reports edits for human review.',
-    logo: '/logos/github_icon.svg',
-    link: 'https://github.com/shaxntanu/unicodeClean',
-    slug: 'bypassing-ai-detection-documents',
-    category: 'MINI_BUILDS',
-    miniBuildType: 'SOFTWARE',
-    dateRange: 'Software Project',
     year: 2026,
   },
   {

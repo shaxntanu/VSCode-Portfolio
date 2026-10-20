@@ -79,6 +79,7 @@ export const projectSkillMappings: Record<string, string[]> = {
   'shape-detection-system': ['Python', 'OpenCV', 'NumPy', 'Matplotlib'],
   'vs-code-portfolio': ['React', 'Next.js', 'TypeScript', 'Vercel', 'CSS'],
   'marcus-omega': ['React', 'Next.js', 'JavaScript', 'Vercel'],
+  'unicode-clean': ['Python', 'HTML', 'CSS', 'JavaScript'],
   'blind-stick': ['Arduino', 'Ultrasonic', 'C++'],
   'android-studio-apps': ['Android Studio', 'Java', 'Kotlin']
 };
