@@ -705,7 +705,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Shape Detection System',
-    description: 'OpenCV-based geometric shape detection and recognition system.',
+    description: 'Six Python image-analysis exercises using OpenCV: contour-based geometric shape classification plus image analyses for cookies, cones, trees, and smartwatch displays using thresholding, color segmentation, and circle detection.',
     logo: ['/logos/python_icon.svg', '/logos/jupyter_icon.svg'],
     link: 'https://github.com/shaxntanu/Geometrical-Shape-Detection-and-Recognition-using-Python-in-Image-Processing-ELC-TIET-2029-ECE',
     slug: 'shape-detection-system',
@@ -718,7 +718,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Android Studio Apps Collection',
-    description: 'Mobile application suite including EncoderDecoderApp and Twitter-style social app. Features user interface design, data handling, and mobile development fundamentals using Android Studio.',
+    description: 'Year 1 college event project containing two Android Studio apps: EncoderDecoderApp and a Twitter-style social app.',
     logo: '/logos/android_icon.svg',
     link: 'https://github.com/shaxntanu/Android-Studio-Apps_Shantanu',
     slug: 'android-studio-apps',
@@ -730,7 +730,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Energy Consumption Pattern Analysis',
-    description: 'Machine learning pipeline using PCA and K-Means clustering to analyze household energy patterns. Features SHAP explainability, seasonal analysis, and interactive Vercel explorer.',
+    description: 'Python research pipeline for shape-first segmentation of synthetic household load profiles: engineers 51 scale-invariant behavior features, applies PCA and stability-informed K-means, and includes validation, explainability, and interactive dashboards.',
     logo: '/logos/claude_icon.svg',
     link: 'https://github.com/shaxntanu/Energy-Consumption-Pattern-Analysis-using-PCA-and-K-Means',
     streamlitLink: 'https://energy-pattern-analysis.streamlit.app/',
@@ -745,7 +745,7 @@ export const projects: Project[] = [
   },
   {
     title: 'RoleForge',
-    description: 'Agentic career compiler that transforms portfolio codebases into job-specific applications. Analyzes repositories, extracts verifiable evidence, matches to job requirements, and generates tailored resumes and CVs with truth validation.',
+    description: 'TypeScript career-preparation CLI and skill that analyzes repositories for sourced candidate evidence, matches that evidence to job requirements, and prepares tailored resumes and CVs with validation and human review.',
     logo: '/logos/claude_icon.svg',
     link: 'https://github.com/shaxntanu/roleforge',
     slug: 'roleforge',
@@ -756,7 +756,7 @@ export const projects: Project[] = [
   // Mini Builds
   {
     title: 'Computer Always Awake',
-    description: 'PowerShell script that prevents computer sleep and hibernation by simulating keypress activity.',
+    description: 'Small PowerShell utility that keeps a Windows PC awake by briefly moving the mouse cursor every ten seconds; stop it with Ctrl+C.',
     logo: '/logos/bash_icon.svg',
     link: 'https://github.com/shaxntanu/Computer-Always-Awake',
     slug: 'computer-always-awake',
@@ -766,10 +766,10 @@ export const projects: Project[] = [
     year: 2026,
   },
   {
-    title: 'Bypassing AI Detection on AI-Generated Documents',
-    description: 'Scripts and methods for bypassing AI detection on AI-generated documents.',
+    title: 'Unicode-Aware Text Sanitizer',
+    description: 'Dependency-free Python utility that cleans selected Unicode and whitespace artifacts in prose, preserves common Markdown and URL spans, supports exact replacements, and reports edits for human review.',
     logo: '/logos/github_icon.svg',
-    link: 'https://github.com/shaxntanu/Bypassing-AI-detection-on-AI-Generated-Document',
+    link: 'https://github.com/shaxntanu/unicodeClean',
     slug: 'bypassing-ai-detection-documents',
     category: 'MINI_BUILDS',
     miniBuildType: 'SOFTWARE',
@@ -823,7 +823,7 @@ export const projects: Project[] = [
   // Creative Lab
   {
     title: 'Pixelated Mask',
-    description: 'TouchDesigner project that tracks thumb and index finger to create a dynamic quadrilateral filled with pixels for real-time visual experimentation.',
+    description: 'TouchDesigner and MediaPipe project that tracks hand landmarks and positions a live pixelated mask between the thumb and index finger, using a webcam and reusable tracking components.',
     logo: '/logos/touchdesigner_hand_icon.svg',
     link: 'https://github.com/shaxntanu/TouchDesigner-Projects',
     slug: 'pixelated-mask-touchdesigner',
