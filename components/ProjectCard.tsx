@@ -182,7 +182,7 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
           );
         })()}
         
-        {(hasCaseStudy || linkIcon || reportIcon || certificateIcon || streamlitIcon || notebookIcon || datasetIcon || project.projectReference || (project.components && project.components.length > 0)) && (
+        {(hasCaseStudy || linkIcon || project.repositoryUrl || reportIcon || certificateIcon || streamlitIcon || notebookIcon || datasetIcon || project.projectReference || (project.components && project.components.length > 0)) && (
           <div className={styles.linkIcons}>
             {hasCaseStudy && (
               <Link
@@ -205,6 +205,19 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
               >
                 <span aria-hidden="true">{linkIcon}</span>
                 <span>{getLinkLabel()}</span>
+              </a>
+            )}
+            {project.repositoryUrl && (
+              <a
+                href={project.repositoryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.iconLink}
+                style={{ color: categoryConfig.color }}
+                title="Open source repository on GitHub"
+              >
+                <VscGithubInverted aria-hidden="true" />
+                <span>GitHub</span>
               </a>
             )}
             {streamlitIcon && (

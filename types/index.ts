@@ -57,6 +57,7 @@ export interface Project {
   description: string;
   logo: string | string[]; // Support single or multiple logos
   link: string;
+  repositoryUrl?: string; // Optional source repository link
   slug: string;
   category: ProjectCategory;
   miniBuildType?: MiniBuildType;

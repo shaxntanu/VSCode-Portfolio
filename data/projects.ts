@@ -59,9 +59,10 @@ export const projects: Project[] = [
   // 2025
   {
     title: 'Marcus Omega',
-    description: 'Philosophical AI chatbot powered by Gemini API.',
+    description: 'A philosophical AI companion with 23 conversation modes, a 10-turn context window, and exportable chats kept only in the browser session.',
     logo: '/logos/vercel_icon.svg',
     link: 'https://glyphthoughts.github.io/Marcus-Landing-Page',
+    repositoryUrl: 'https://github.com/shaxntanu/Marcus',
     slug: 'marcus-omega',
     category: 'SOFTWARE_SYSTEMS',
     dateRange: 'Jul 2025 - Sep 2025',
