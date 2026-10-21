@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "build:freddy-wasm": "node scripts/build-freddy-wasm.mjs",
         "start": "next start",
         "lint": "next lint"
     },

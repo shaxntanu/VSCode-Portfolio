@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# Rust build output
+/rust/freddy-behavior/target/
+
 # production
 /build
 

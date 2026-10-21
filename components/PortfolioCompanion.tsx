@@ -15,6 +15,14 @@ interface Message {
   id: string;
 }
 
+interface FreddyBehaviorWasm {
+  seed_rng(seed: number): void;
+  choose_message_index(count: number, previousIndex: number): number;
+  mood_from_idle(idleMs: number): number;
+  should_show_message(currentPriority: number, candidatePriority: number, sameMessage: number): number;
+  next_fact_delay(liteMode: number): number;
+}
+
 const MESSAGE_PRIORITY = {
   route: 100,
   intro: 90,
@@ -69,6 +77,7 @@ export default function PortfolioCompanion() {
   const messageRef = useRef<Message | null>(null);
   const currentMessageIdRef = useRef<string>('');
   const boredMessageShownRef = useRef(false);
+  const freddyBehaviorRef = useRef<FreddyBehaviorWasm | null>(null);
   
   // Mouse tracking state (wrapper movement - REQUIRED layer)
   const mouseStateRef = useRef({
@@ -97,6 +106,40 @@ export default function PortfolioCompanion() {
   messageRef.current = message;
   moodRef.current = mood;
 
+  const moodFromIdle = useCallback((idleMs: number): ByteMood => {
+    const result = freddyBehaviorRef.current?.mood_from_idle(idleMs);
+    if (result === 2) return 'angry';
+    if (result === 1) return 'bored';
+    if (result === 0) return 'idle';
+
+    if (idleMs >= INACTIVITY_ANGRY_MS) return 'angry';
+    if (idleMs >= INACTIVITY_BORED_MS) return 'bored';
+    return 'idle';
+  }, []);
+
+  const chooseMessageIndex = useCallback((count: number, previousIndex = -1) => {
+    const engineIndex = freddyBehaviorRef.current?.choose_message_index(count, previousIndex);
+    if (typeof engineIndex === 'number' && engineIndex >= 0 && engineIndex < count) {
+      return engineIndex;
+    }
+
+    if (count <= 1) return 0;
+    const hasPrevious = previousIndex >= 0 && previousIndex < count;
+    let index = Math.floor(Math.random() * (hasPrevious ? count - 1 : count));
+    if (hasPrevious && index >= previousIndex) index += 1;
+    return index;
+  }, []);
+
+  const nextFactDelay = useCallback((useLiteMode: boolean) => {
+    const engineDelay = freddyBehaviorRef.current?.next_fact_delay(useLiteMode ? 1 : 0);
+    if (typeof engineDelay === 'number' && engineDelay > 0) return engineDelay;
+
+    const baseDelay = Math.floor(
+      FACT_INTERVAL_MIN_MS + Math.random() * (FACT_INTERVAL_MAX_MS - FACT_INTERVAL_MIN_MS + 1)
+    );
+    return baseDelay * (useLiteMode ? 2 : 1);
+  }, []);
+
   // Clear all timers - defined first to avoid hoisting issues
   const clearAllTimers = useCallback(() => {
     if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
@@ -112,6 +155,52 @@ export default function PortfolioCompanion() {
     const savedLiteMode = localStorage.getItem('liteMode');
     const isLiteMode = savedLiteMode === null ? true : savedLiteMode === 'true';
     setLiteMode(isLiteMode);
+  }, []);
+
+  // Load the Rust behavior engine compiled to WebAssembly. The companion's
+  // message text and React UI stay in TypeScript; Rust owns the decisions.
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadBehaviorEngine = async () => {
+      try {
+        const response = await fetch('/wasm/freddy-behavior.wasm');
+        if (!response.ok) {
+          throw new Error(`Behavior module request failed (${response.status}).`);
+        }
+
+        const { instance } = await WebAssembly.instantiate(await response.arrayBuffer());
+        const engine = instance.exports as unknown as FreddyBehaviorWasm;
+        if (
+          typeof engine.seed_rng !== 'function' ||
+          typeof engine.choose_message_index !== 'function' ||
+          typeof engine.mood_from_idle !== 'function' ||
+          typeof engine.should_show_message !== 'function' ||
+          typeof engine.next_fact_delay !== 'function'
+        ) {
+          throw new Error('Behavior module exports are incomplete.');
+        }
+
+        if (cancelled) return;
+
+        const seed = new Uint32Array(1);
+        if (window.crypto?.getRandomValues) {
+          window.crypto.getRandomValues(seed);
+        } else {
+          seed[0] = Date.now() >>> 0;
+        }
+        engine.seed_rng(seed[0]);
+        freddyBehaviorRef.current = engine;
+      } catch (error) {
+        console.warn('Freddy behavior WASM failed to load; using the lightweight fallback.', error);
+      }
+    };
+
+    void loadBehaviorEngine();
+    return () => {
+      cancelled = true;
+      freddyBehaviorRef.current = null;
+    };
   }, []);
 
   // Hide in zen mode
@@ -134,25 +223,27 @@ export default function PortfolioCompanion() {
     
     // Return to appropriate mood based on activity
     const idleMs = Date.now() - lastActivityRef.current;
-    if (idleMs >= INACTIVITY_ANGRY_MS) {
-      setMood('angry');
-    } else if (idleMs >= INACTIVITY_BORED_MS) {
-      setMood('bored');
-    } else {
-      setMood('idle');
-    }
-  }, []);
+    setMood(moodFromIdle(idleMs));
+  }, [moodFromIdle]);
 
   const showMessage = useCallback((candidate: Message, durationMs: number = MESSAGE_DISPLAY_MS) => {
     const current = messageRef.current;
-    
-    // Priority check - route changes always win
-    if (current && candidate.priority < current.priority) {
-      return false;
-    }
-    
-    // If same priority, check if it's a different message
-    if (current && candidate.priority === current.priority && current.id === candidate.id) {
+
+    const currentPriority = current?.priority ?? -1;
+    const sameMessage = current?.id === candidate.id;
+    const wasmDecision = freddyBehaviorRef.current?.should_show_message(
+      currentPriority,
+      candidate.priority,
+      sameMessage ? 1 : 0,
+    );
+    const shouldShow = typeof wasmDecision === 'number'
+      ? wasmDecision !== 0
+      : !current || (
+        candidate.priority >= current.priority &&
+        !(candidate.priority === current.priority && sameMessage)
+      );
+
+    if (!shouldShow) {
       return false;
     }
 
@@ -266,19 +357,15 @@ export default function PortfolioCompanion() {
     if (zenMode) return;
 
     const scheduleNextFact = () => {
-      const multiplier = liteMode ? 2 : 1;
-      const delay = Math.random() * (FACT_INTERVAL_MAX_MS - FACT_INTERVAL_MIN_MS) + FACT_INTERVAL_MIN_MS;
+      const delay = nextFactDelay(liteMode);
       
       factTimerRef.current = setTimeout(() => {
         if (!messageRef.current && !document.hidden) {
-          let fact = portfolioFacts[Math.floor(Math.random() * portfolioFacts.length)];
-          
-          // Avoid repeating the same fact
-          if (portfolioFacts.length > 1) {
-            while (fact === lastFactRef.current) {
-              fact = portfolioFacts[Math.floor(Math.random() * portfolioFacts.length)];
-            }
-          }
+          const previousFactIndex = lastFactRef.current
+            ? portfolioFacts.indexOf(lastFactRef.current)
+            : -1;
+          const factIndex = chooseMessageIndex(portfolioFacts.length, previousFactIndex);
+          const fact = portfolioFacts[factIndex];
           
           lastFactRef.current = fact;
           showMessage({
@@ -290,7 +377,7 @@ export default function PortfolioCompanion() {
         }
         
         scheduleNextFact();
-      }, delay * multiplier);
+      }, delay);
     };
 
     scheduleNextFact();
@@ -298,7 +385,7 @@ export default function PortfolioCompanion() {
     return () => {
       if (factTimerRef.current) clearTimeout(factTimerRef.current);
     };
-  }, [zenMode, liteMode, showMessage]);
+  }, [zenMode, liteMode, showMessage, nextFactDelay, chooseMessageIndex]);
 
   // Inactivity detection with mood progression
   useEffect(() => {
@@ -306,14 +393,15 @@ export default function PortfolioCompanion() {
 
     const checkInactivity = () => {
       const idleMs = Date.now() - lastActivityRef.current;
+      const idleMood = moodFromIdle(idleMs);
       
-      if (idleMs >= INACTIVITY_ANGRY_MS && mood !== 'angry') {
+      if (idleMood === 'angry' && mood !== 'angry') {
         setMood('angry');
         
         if (!messageRef.current && avatarRef.current) {
           avatarRef.current.play('angry');
         }
-      } else if (idleMs >= INACTIVITY_BORED_MS && mood !== 'bored' && mood !== 'angry') {
+      } else if (idleMood === 'bored' && mood !== 'bored' && mood !== 'angry') {
         setMood('bored');
         
         // Show bored message only once per bored transition
@@ -339,7 +427,7 @@ export default function PortfolioCompanion() {
     return () => {
       if (inactivityCheckRef.current) clearTimeout(inactivityCheckRef.current);
     };
-  }, [zenMode, mood, showMessage]);
+  }, [zenMode, mood, showMessage, moodFromIdle]);
 
   // Activity tracking
   useEffect(() => {
@@ -731,14 +819,14 @@ export default function PortfolioCompanion() {
     lastActivityRef.current = Date.now();
     boredMessageShownRef.current = false;
     
-    const msg = clickMessages[Math.floor(Math.random() * clickMessages.length)];
+    const msg = clickMessages[chooseMessageIndex(clickMessages.length)];
     showMessage({
       text: msg,
       animation: 'excited',
       priority: MESSAGE_PRIORITY.click,
       id: `click-${Date.now()}`
     }, MESSAGE_DISPLAY_MS);
-  }, [zenMode, showMessage]);
+  }, [zenMode, showMessage, chooseMessageIndex]);
 
   // Cleanup on unmount
   useEffect(() => {
