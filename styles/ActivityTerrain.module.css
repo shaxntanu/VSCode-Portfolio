@@ -8,7 +8,7 @@
   --terrain-text: var(--text-muted, #8b98a8);
 
   width: 100%;
-  max-width: 800px;
+  max-width: 920px;
   overflow: hidden;
   color: var(--text-color, #e6edf3);
   background: var(--article-bg, #101820);
@@ -99,7 +99,7 @@
 .canvas {
   display: block;
   width: 100%;
-  height: 288px;
+  height: 320px;
   touch-action: pan-y;
   cursor: grab;
 }
@@ -145,7 +145,7 @@
   }
 
   .canvas {
-    height: 230px;
+    height: 260px;
   }
 
   .legend {

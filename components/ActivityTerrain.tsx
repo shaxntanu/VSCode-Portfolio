@@ -52,7 +52,7 @@ const BUMP = 0.45;
 // Columns rise in a wave from where you grabbed; the far end lags by this
 // share of the whole rise.
 const WAVE = 0.7;
-const PADDING = 28;
+const PADDING = 34;
 const REST_EPSILON = 0.0005;
 const LABELS = ["Mon", "", "Wed", "", "Fri", "", ""];
 
@@ -418,7 +418,7 @@ export default function ActivityTerrain({
       const list = cellsRef.current;
       ctx.globalAlpha = alpha;
       ctx.fillStyle = palette.text;
-      ctx.font = `11px ${palette.font}`;
+      ctx.font = `12px ${palette.font}`;
       ctx.textBaseline = "middle";
       ctx.textAlign = "left";
       let month = -1;
@@ -436,7 +436,7 @@ export default function ActivityTerrain({
       ctx.textAlign = "right";
       for (let row = 0; row < DAYS; row++) {
         if (LABELS[row]) {
-          const [x, y] = project(p, -0.35 - weeks / 2, 0, row + 0.4 - DAYS / 2);
+          const [x, y] = project(p, -0.15 - weeks / 2, 0, row + 0.4 - DAYS / 2);
           ctx.fillText(LABELS[row], x, y);
         }
       }
