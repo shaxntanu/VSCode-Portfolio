@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import RepoCard from '@/components/RepoCard';
-import ActivityCalendar, { type Activity } from 'react-activity-calendar';
+import type { Activity } from 'react-activity-calendar';
+import ActivityTerrain from '@/components/ActivityTerrain';
 import GithubSkeleton from '@/components/GithubSkeleton';
 import LanguageTreemap, { type LanguageData, type LanguageRepositoryUsage } from '@/components/LanguageTreemap';
 import styles from '@/styles/GithubPage.module.css';
 import { Repo, User } from '@/types';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { useMainAreaLoading } from '@/contexts/MainAreaLoadingContext';
 import { getLanguageColor } from '@/utils/languageColors';
 
@@ -37,7 +38,6 @@ const GithubPage = ({
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLightTheme, setIsLightTheme] = useState(false);
   const [calendarData, setCalendarData] = useState<ContributionCalendarResponse | null>(null);
   const [calendarLoading, setCalendarLoading] = useState(true);
   const [calendarError, setCalendarError] = useState<string | null>(null);
@@ -86,39 +86,17 @@ const GithubPage = ({
     };
   }, [selectedYear, username]);
 
-  useEffect(() => {
-    const updateTheme = () => {
-      setIsLightTheme(document.documentElement.getAttribute('data-theme') === 'light');
-    };
-
-    updateTheme();
-    window.addEventListener('themeChanged', updateTheme);
-    window.addEventListener('storage', updateTheme);
-
-    return () => {
-      window.removeEventListener('themeChanged', updateTheme);
-      window.removeEventListener('storage', updateTheme);
-    };
-  }, []);
-  
-  const calendarTheme = {
-    dark: [
-      'rgba(255, 255, 255, 0.05)',
-      'rgba(0, 212, 255, 0.3)',
-      'rgba(0, 212, 255, 0.5)',
-      'rgba(0, 212, 255, 0.7)',
-      'rgba(0, 212, 255, 1)',
-    ],
-    light: ['#edf1f7', '#cfe1ff', '#91bdff', '#5595f5', '#1f6feb'],
-  };
-
-  const calendarTotal = selectedYear === 'last-year'
-    ? calendarData?.total.lastYear
-    : calendarData?.total[String(selectedYear)];
-  const contributionTotal = calendarTotal ?? calendarData?.contributions.reduce(
-    (total, activity) => total + activity.count,
-    0
-  ) ?? 0;
+  const calendarContributions = useMemo(
+    () => [...(calendarData?.contributions ?? [])]
+      .sort((first, second) => first.date.localeCompare(second.date)),
+    [calendarData]
+  );
+  const activityCounts = useMemo(
+    () => calendarContributions.map((activity) => activity.count),
+    [calendarContributions]
+  );
+  const calendarEndDate = calendarContributions.at(-1)?.date
+    ?? new Date().toISOString().slice(0, 10);
 
   // Generate year options (from current year down to 2025 when account started)
   const yearOptions: (number | 'last-year')[] = ['last-year'];
@@ -200,31 +178,20 @@ const GithubPage = ({
             <div className={styles.contributionSection}>
               <h3 className={styles.sectionTitle}>Contribution Graph</h3>
               <div className={styles.contributionWrapper}>
-                <div className={styles.contributionGraph}>
-                  {calendarError ? (
-                    <p role="alert">{calendarError}</p>
-                  ) : (
-                    <ActivityCalendar
-                      data={calendarData?.contributions ?? []}
-                      loading={calendarLoading || !calendarData}
-                      colorScheme={isLightTheme ? 'light' : 'dark'}
-                      blockSize={10}
-                      blockMargin={3}
-                      blockRadius={2}
-                      fontSize={12}
-                      theme={calendarTheme}
-                      style={{
-                        color: isLightTheme ? '#475569' : 'rgba(255, 255, 255, 0.7)',
-                      }}
-                      labels={{
-                        totalCount: selectedYear === 'last-year'
-                          ? '{{count}} contributions in the last 12 months'
-                          : `{{count}} contributions in ${selectedYear}`,
-                      }}
-                      totalCount={contributionTotal}
-                    />
-                  )}
-                </div>
+                {calendarError ? (
+                  <p className={styles.calendarStatus} role="alert">{calendarError}</p>
+                ) : calendarData ? (
+                  <ActivityTerrain
+                    className={styles.activityTerrain}
+                    data={activityCounts}
+                    endDate={calendarEndDate}
+                    title={getYearLabel(selectedYear)}
+                  />
+                ) : (
+                  <p className={styles.calendarStatus} role="status">
+                    {calendarLoading ? 'Loading GitHub contributions…' : 'Contribution data is unavailable.'}
+                  </p>
+                )}
                 <div 
                   className={styles.select}
                   onMouseEnter={handleMouseEnter}

@@ -221,25 +221,20 @@
     font-family: 'JetBrains Mono', monospace;
 }
 
-.contributionGraph {
-    display: inline-block;
-    border-radius: 12px;
+.activityTerrain {
+    flex: 1 1 560px;
+    max-width: 800px;
+}
+
+.calendarStatus {
+    flex: 1 1 560px;
+    max-width: 800px;
+    margin: 0;
+    padding: 1.2rem;
+    color: var(--text-secondary, var(--text-color));
     background: var(--article-bg);
-    padding: 1rem;
     border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
-    box-shadow: 0 4px 6px var(--shadow, rgba(0, 0, 0, 0.1));
-}
-
-/* Make contribution calendar cells interactive */
-.contributionGraph rect {
-    cursor: pointer;
-    transition: filter 0.15s ease;
-}
-
-.contributionGraph rect:hover {
-    filter: brightness(1.4);
-    stroke: var(--text-secondary, rgba(255, 255, 255, 0.6));
-    stroke-width: 1px;
+    border-radius: 12px;
 }
 
 .reposSection {
@@ -289,8 +284,9 @@
         align-self: flex-start;
     }
 
-    .contributionGraph {
-        overflow-x: auto;
+    .activityTerrain,
+    .calendarStatus {
+        flex-basis: auto;
         max-width: 100%;
     }
 

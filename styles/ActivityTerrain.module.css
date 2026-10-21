@@ -1,0 +1,160 @@
+.card {
+  --terrain-0: #1b2630;
+  --terrain-1: #123b50;
+  --terrain-2: #0a698b;
+  --terrain-3: #0a9fc8;
+  --terrain-4: #33c9f3;
+  --terrain-accent: var(--accent-color, #00d4ff);
+  --terrain-text: var(--text-muted, #8b98a8);
+
+  width: 100%;
+  max-width: 800px;
+  overflow: hidden;
+  color: var(--text-color, #e6edf3);
+  background: var(--article-bg, #101820);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 14px;
+  box-shadow: 0 8px 24px var(--shadow, rgba(0, 0, 0, 0.18));
+  font-family: 'JetBrains Mono', monospace;
+  user-select: none;
+}
+
+:global(html[data-theme='light']) .card {
+  --terrain-0: #edf1f7;
+  --terrain-1: #cfe1ff;
+  --terrain-2: #91bdff;
+  --terrain-3: #5595f5;
+  --terrain-4: #1f6feb;
+  --terrain-accent: #0969da;
+  --terrain-text: #64748b;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.2rem 0;
+}
+
+.heading {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  color: var(--text-color, #e6edf3);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.readout {
+  margin: 0.3rem 0 0;
+  overflow: hidden;
+  color: var(--text-secondary, var(--text-muted, #94a3b8));
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewToggle {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 3px;
+  background: var(--explorer-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 999px;
+}
+
+.viewButton {
+  padding: 0.35rem 0.75rem;
+  color: var(--text-secondary, var(--text-muted, #94a3b8));
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.viewButton:hover,
+.viewButtonActive {
+  color: var(--text-color, #e6edf3);
+  background: var(--tab-active-bg, rgba(255, 255, 255, 0.12));
+}
+
+.viewButtonActive {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
+}
+
+.viewButton:focus-visible,
+.canvas:focus-visible {
+  outline: 2px solid var(--accent-color, #00d4ff);
+  outline-offset: 2px;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 288px;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 0 1.2rem 1rem;
+  color: var(--text-secondary, var(--text-muted, #94a3b8));
+  font-size: 0.7rem;
+}
+
+.legendLabel:first-child {
+  margin-right: 2px;
+}
+
+.legendLabel:last-child {
+  margin-left: 2px;
+}
+
+.legendSquare {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+@media (max-width: 560px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1rem 1rem 0;
+  }
+
+  .viewToggle {
+    align-self: flex-end;
+    margin-top: -0.3rem;
+  }
+
+  .canvas {
+    height: 230px;
+  }
+
+  .legend {
+    padding: 0 1rem 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewButton {
+    transition: none;
+  }
+}
