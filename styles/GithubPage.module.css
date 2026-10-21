@@ -406,7 +406,12 @@
 
 .treemapTileWrapper:hover,
 .treemapTileWrapper:focus-within {
-    z-index: 20;
+    z-index: 40;
+}
+
+.treemapStage:has(.treemapTileWrapper:hover) .treemapTileWrapper:not(:hover),
+.treemapStage:has(.treemapTileWrapper:focus-within) .treemapTileWrapper:not(:focus-within) {
+    pointer-events: none;
 }
 
 .treemapTileWrapper:focus-visible .treemapTile {
