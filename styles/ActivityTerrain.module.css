@@ -29,6 +29,47 @@
   --terrain-text: #64748b;
 }
 
+:global(html[data-theme='dracula']) .card {
+  --terrain-0: #282a36;
+  --terrain-1: #44475a;
+  --terrain-2: #6272a4;
+  --terrain-3: #bd93f9;
+  --terrain-4: #ff79c6;
+  --terrain-accent: #8be9fd;
+  --terrain-text: #b8b9c9;
+}
+
+:global(html[data-theme='ayu-dark']) .card,
+:global(html[data-theme='ayu-mirage']) .card {
+  --terrain-0: #171b24;
+  --terrain-1: #343c4a;
+  --terrain-2: #6e633e;
+  --terrain-3: #e6b450;
+  --terrain-4: #ffd580;
+  --terrain-accent: #e6b450;
+  --terrain-text: #a6acb9;
+}
+
+:global(html[data-theme='nord']) .card {
+  --terrain-0: #2e3440;
+  --terrain-1: #3b4252;
+  --terrain-2: #5e81ac;
+  --terrain-3: #88c0d0;
+  --terrain-4: #8fbcbb;
+  --terrain-accent: #88c0d0;
+  --terrain-text: #b8c2d0;
+}
+
+:global(html[data-theme='night-owl']) .card {
+  --terrain-0: #011627;
+  --terrain-1: #122c42;
+  --terrain-2: #2f6f9f;
+  --terrain-3: #82aaff;
+  --terrain-4: #c792ea;
+  --terrain-accent: #c792ea;
+  --terrain-text: #9eb6ce;
+}
+
 .header {
   display: flex;
   align-items: flex-start;

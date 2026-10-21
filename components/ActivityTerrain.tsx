@@ -694,6 +694,11 @@ export default function ActivityTerrain({
     setFlat(nextFlat);
     s.origin = origin ?? { col: nextFlat ? weeks : 0, row: 3 };
     s.pitchTarget = nextFlat ? 0 : PITCH_TERRAIN;
+    if (nextFlat) {
+      // Flat view is the straight-on calendar layout, including in lite mode
+      // where motion is skipped and the terrain's yaw would otherwise remain.
+      s.yaw = 0;
+    }
     s.yawSpeed = 0;
     if (!nextFlat) {
       turnIn();
@@ -810,6 +815,10 @@ export default function ActivityTerrain({
     const nextFlat = projected < PITCH_TERRAIN / 2;
     setFlat(nextFlat);
     s.pitchTarget = nextFlat ? 0 : PITCH_TERRAIN;
+    if (nextFlat) {
+      s.yaw = 0;
+      s.yawSpeed = 0;
+    }
     wake();
   };
 
