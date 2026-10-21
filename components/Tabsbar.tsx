@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
+import { VscChevronLeft, VscChevronRight, VscClose } from 'react-icons/vsc';
 import Tab from '@/components/Tab';
 import { useRecentTabs } from '@/hooks/useRecentTabs';
 import { rootFile } from '@/data/navigation';
@@ -119,7 +119,7 @@ const Tabsbar = () => {
                 }}
                 aria-label={`Close ${tab.name}`}
               >
-                ×
+                <VscClose aria-hidden="true" />
               </button>
             </div>
           </div>
