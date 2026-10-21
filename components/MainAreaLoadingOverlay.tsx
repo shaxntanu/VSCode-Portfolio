@@ -14,17 +14,17 @@ const MainAreaLoadingOverlay = ({ isVisible }: { isVisible: boolean }) => (
       <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
           <linearGradient id="main-loader-chip-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2d2d2d" />
-            <stop offset="100%" stopColor="#0f0f0f" />
+            <stop offset="0%" stopColor="var(--loader-chip-top)" />
+            <stop offset="100%" stopColor="var(--loader-chip-bottom)" />
           </linearGradient>
           <linearGradient id="main-loader-text-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#eeeeee" />
-            <stop offset="100%" stopColor="#888888" />
+            <stop offset="0%" stopColor="var(--loader-text-top)" />
+            <stop offset="100%" stopColor="var(--loader-text-bottom)" />
           </linearGradient>
           <linearGradient id="main-loader-pin-gradient" x1="1" y1="0" x2="0" y2="0">
-            <stop offset="0%" stopColor="#bbbbbb" />
-            <stop offset="50%" stopColor="#888888" />
-            <stop offset="100%" stopColor="#555555" />
+            <stop offset="0%" stopColor="var(--loader-pin-start)" />
+            <stop offset="50%" stopColor="var(--loader-pin-mid)" />
+            <stop offset="100%" stopColor="var(--loader-pin-end)" />
           </linearGradient>
         </defs>
 
@@ -47,7 +47,7 @@ const MainAreaLoadingOverlay = ({ isVisible }: { isVisible: boolean }) => (
           <path d="M680 340 H570 V270 H474" className={`${styles.traceFlow} ${styles.yellow}`} />
         </g>
 
-        <rect x="330" y="190" width="140" height="100" rx="20" ry="20" fill="url(#main-loader-chip-gradient)" stroke="#222" strokeWidth="3" filter="drop-shadow(0 0 6px rgba(0,0,0,0.8))" />
+        <rect x="330" y="190" width="140" height="100" rx="20" ry="20" fill="url(#main-loader-chip-gradient)" stroke="var(--loader-chip-border)" strokeWidth="3" className={styles.chipBody} />
         <g>
           <rect x="322" y="205" width="8" height="10" fill="url(#main-loader-pin-gradient)" rx="2" />
           <rect x="322" y="225" width="8" height="10" fill="url(#main-loader-pin-gradient)" rx="2" />
@@ -65,14 +65,14 @@ const MainAreaLoadingOverlay = ({ isVisible }: { isVisible: boolean }) => (
           Loading
         </text>
 
-        <circle cx="100" cy="100" r="5" fill="black" />
-        <circle cx="80" cy="180" r="5" fill="black" />
-        <circle cx="60" cy="260" r="5" fill="black" />
-        <circle cx="100" cy="350" r="5" fill="black" />
-        <circle cx="700" cy="90" r="5" fill="black" />
-        <circle cx="740" cy="160" r="5" fill="black" />
-        <circle cx="720" cy="250" r="5" fill="black" />
-        <circle cx="680" cy="340" r="5" fill="black" />
+        <circle cx="100" cy="100" r="5" fill="var(--loader-node)" />
+        <circle cx="80" cy="180" r="5" fill="var(--loader-node)" />
+        <circle cx="60" cy="260" r="5" fill="var(--loader-node)" />
+        <circle cx="100" cy="350" r="5" fill="var(--loader-node)" />
+        <circle cx="700" cy="90" r="5" fill="var(--loader-node)" />
+        <circle cx="740" cy="160" r="5" fill="var(--loader-node)" />
+        <circle cx="720" cy="250" r="5" fill="var(--loader-node)" />
+        <circle cx="680" cy="340" r="5" fill="var(--loader-node)" />
       </svg>
     </div>
   </div>

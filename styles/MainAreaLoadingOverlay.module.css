@@ -1,4 +1,22 @@
 .overlay {
+  --loader-overlay-bg: rgba(5, 8, 14, 0.96);
+  --loader-trace-bg: #333;
+  --loader-chip-top: #2d2d2d;
+  --loader-chip-bottom: #0f0f0f;
+  --loader-text-top: #eeeeee;
+  --loader-text-bottom: #888888;
+  --loader-pin-start: #bbbbbb;
+  --loader-pin-mid: #888888;
+  --loader-pin-end: #555555;
+  --loader-chip-border: #222;
+  --loader-chip-shadow: rgba(0, 0, 0, 0.8);
+  --loader-node: #000;
+  --loader-yellow: #ffea00;
+  --loader-blue: #00ccff;
+  --loader-green: #00ff15;
+  --loader-purple: #9900ff;
+  --loader-red: #ff3300;
+
   position: absolute;
   inset: 0;
   z-index: 1000;
@@ -6,11 +24,31 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: rgba(5, 8, 14, 0.96);
+  background: var(--loader-overlay-bg);
   backdrop-filter: blur(8px);
   cursor: wait;
   opacity: 1;
   transition: opacity 240ms ease;
+}
+
+:global(html[data-theme='light']) .overlay {
+  --loader-overlay-bg: rgba(247, 249, 252, 0.96);
+  --loader-trace-bg: #cbd5e1;
+  --loader-chip-top: #ffffff;
+  --loader-chip-bottom: #e8eef6;
+  --loader-text-top: #263247;
+  --loader-text-bottom: #64748b;
+  --loader-pin-start: #64748b;
+  --loader-pin-mid: #94a3b8;
+  --loader-pin-end: #cbd5e1;
+  --loader-chip-border: #c3cfdd;
+  --loader-chip-shadow: rgba(31, 45, 61, 0.16);
+  --loader-node: #64748b;
+  --loader-yellow: #a16207;
+  --loader-blue: #0284c7;
+  --loader-green: #15803d;
+  --loader-purple: #7e22ce;
+  --loader-red: #be123c;
 }
 
 .visible {
@@ -36,7 +74,7 @@
 }
 
 .traceBg {
-  stroke: #333;
+  stroke: var(--loader-trace-bg);
   stroke-width: 1.8;
   fill: none;
 }
@@ -84,28 +122,32 @@
 }
 
 .yellow {
-  stroke: #ffea00;
-  color: #ffea00;
+  stroke: var(--loader-yellow);
+  color: var(--loader-yellow);
 }
 
 .blue {
-  stroke: #00ccff;
-  color: #00ccff;
+  stroke: var(--loader-blue);
+  color: var(--loader-blue);
 }
 
 .green {
-  stroke: #00ff15;
-  color: #00ff15;
+  stroke: var(--loader-green);
+  color: var(--loader-green);
 }
 
 .purple {
-  stroke: #9900ff;
-  color: #9900ff;
+  stroke: var(--loader-purple);
+  color: var(--loader-purple);
 }
 
 .red {
-  stroke: #ff3300;
-  color: #ff3300;
+  stroke: var(--loader-red);
+  color: var(--loader-red);
+}
+
+.chipBody {
+  filter: drop-shadow(0 0 6px var(--loader-chip-shadow));
 }
 
 @keyframes current-flow {
