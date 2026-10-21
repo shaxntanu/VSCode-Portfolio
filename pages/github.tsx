@@ -15,6 +15,11 @@ interface ContributionCalendarResponse {
   total: Record<string, number> & { lastYear: number };
 }
 
+interface LoadedContributionCalendar {
+  year: number | 'last-year';
+  response: ContributionCalendarResponse;
+}
+
 interface GithubPageProps {
   repos?: Repo[];
   user?: User;
@@ -38,7 +43,7 @@ const GithubPage = ({
   const currentYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState<number | 'last-year'>('last-year');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [calendarData, setCalendarData] = useState<ContributionCalendarResponse | null>(null);
+  const [calendarData, setCalendarData] = useState<LoadedContributionCalendar | null>(null);
   const [calendarLoading, setCalendarLoading] = useState(true);
   const [calendarError, setCalendarError] = useState<string | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -68,7 +73,7 @@ const GithubPage = ({
           throw new Error('GitHub returned invalid contribution data.');
         }
 
-        if (active) setCalendarData(result);
+        if (active) setCalendarData({ year: selectedYear, response: result });
       } catch (error) {
         if (!active) return;
         setCalendarData(null);
@@ -87,10 +92,13 @@ const GithubPage = ({
   }, [selectedYear, username]);
 
   const calendarContributions = useMemo(
-    () => [...(calendarData?.contributions ?? [])]
+    () => [...(calendarData?.year === selectedYear ? calendarData.response.contributions : [])]
       .sort((first, second) => first.date.localeCompare(second.date)),
-    [calendarData]
+    [calendarData, selectedYear]
   );
+  const selectedCalendarData = calendarData?.year === selectedYear
+    ? calendarData.response
+    : null;
   const activityCounts = useMemo(
     () => calendarContributions.map((activity) => activity.count),
     [calendarContributions]
@@ -109,8 +117,15 @@ const GithubPage = ({
   };
 
   const handleYearSelect = (year: number | 'last-year') => {
-    setSelectedYear(year);
     setIsDropdownOpen(false);
+    if (year === selectedYear) return;
+
+    // Start the overlay in the same update as the selection, so the old
+    // calendar is never left interactive while the new year is loading.
+    setCalendarLoading(true);
+    setCalendarError(null);
+    setCalendarData(null);
+    setSelectedYear(year);
   };
 
   const handleMouseEnter = () => {
@@ -180,7 +195,7 @@ const GithubPage = ({
               <div className={styles.contributionWrapper}>
                 {calendarError ? (
                   <p className={styles.calendarStatus} role="alert">{calendarError}</p>
-                ) : calendarData ? (
+                ) : selectedCalendarData ? (
                   <ActivityTerrain
                     className={styles.activityTerrain}
                     data={activityCounts}

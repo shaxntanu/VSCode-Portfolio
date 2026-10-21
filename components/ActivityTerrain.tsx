@@ -677,6 +677,15 @@ export default function ActivityTerrain({
     };
   }, [draw, turnIn, wake]);
 
+  // The canvas is drawn imperatively, so repaint when a parent supplies a
+  // different year even if its week count and canvas dimensions stay the same.
+  useEffect(() => {
+    sim.current.hovered = -1;
+    setActive(null);
+    draw();
+    wake();
+  }, [cells, draw, wake]);
+
   const setView = (
     nextFlat: boolean,
     origin?: { col: number; row: number }
