@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&family=Playwrite+CU:wght@100;200;300;400&family=Source+Sans+Pro:wght@400&display=swap');
 
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+    --font-ui: "Source Sans Pro", sans-serif;
+    --font-code: "JetBrains Mono", monospace;
+}
+
+@utility scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@layer base {
 *,
 *::before,
 *::after {
@@ -45,4 +64,5 @@ a {
 /* Lite Mode - Keep Japanese matrix background but pause animation */
 [data-lite-mode="true"] .jpMatrix>span {
     animation: none !important;
+}
 }
