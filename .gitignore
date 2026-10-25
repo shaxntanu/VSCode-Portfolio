@@ -44,3 +44,6 @@ yarn-error.log*
 
 # misc logs (not pushed until commanded)
 /MISC_LOGS
+
+# local design inspection screenshots and reports
+/.taste-skill/
