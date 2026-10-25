@@ -186,6 +186,8 @@ const Explorer = () => {
       <div className={styles.expandButtonWrapper}>
         <button 
           className={styles.expandButton}
+          type="button"
+          aria-label={allExpanded ? 'Collapse all navigation folders' : 'Expand all navigation folders'}
           onClick={() => {
             const shouldExpand = !allExpanded;
             setPortfolioOpen(shouldExpand);
