@@ -67,6 +67,12 @@ const Titlebar = () => {
   }, []);
 
   const allPaths = ['/about', '/contact', '/projects', '/techstack', '/github', '/experience'];
+  const compactThemeName: Record<string, string> = {
+    'GitHub Dark': 'GitHub',
+    'Ayu Dark': 'Ayu',
+    'Ayu Mirage': 'Mirage',
+    'Night Owl': 'Night Owl',
+  };
 
   const handleMaximize = () => {
     if (document.fullscreenElement) {
@@ -119,21 +125,32 @@ const Titlebar = () => {
         <p onClick={() => handleMenuClick('Terminal')}>Terminal</p>
         <p onClick={() => handleMenuClick('Help')}>Help</p>
       </div>
-      <p className={styles.title}>
-        Shantanu - Visual Studio Code
-        <span 
+      <div className={styles.title}>
+        <span className={styles.titleName}>
+          <span className={styles.fullTitleName}>Shantanu - Visual Studio Code</span>
+          <span className={styles.compactTitleName}>Shantanu - VS Code</span>
+        </span>
+        <button
+          type="button"
           className={styles.themeIndicator}
           onClick={() => router.push('/settings')}
+          aria-label={`Open settings. Current theme: ${currentTheme}`}
+          title={`Open settings — current theme: ${currentTheme}`}
         >
-          [{currentTheme}]
-        </span>
-        <span 
+          <span className={styles.fullIndicator}>[{currentTheme}]</span>
+          <span className={styles.compactIndicator}>[{compactThemeName[currentTheme] || currentTheme}]</span>
+        </button>
+        <button
+          type="button"
           className={styles.modeIndicator}
           onClick={() => router.push('/settings')}
+          aria-label={`Open settings. Current mode: ${liteMode ? 'Lite Mode' : 'Full Mode'}`}
+          title={`Open settings — current mode: ${liteMode ? 'Lite Mode' : 'Full Mode'}`}
         >
-          [{liteMode ? 'Lite Mode' : 'Full Mode'}]
-        </span>
-      </p>
+          <span className={styles.fullIndicator}>[{liteMode ? 'Lite Mode' : 'Full Mode'}]</span>
+          <span className={styles.compactIndicator}>[{liteMode ? 'Lite' : 'Full'}]</span>
+        </button>
+      </div>
       <div className={styles.windowButtons}>
         <button 
           className={styles.maximize} 

@@ -27,6 +27,19 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    white-space: nowrap;
+    max-width: calc(100% - 5rem);
+}
+
+.titleName {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.compactTitleName,
+.compactIndicator {
+    display: none;
 }
 
 .modeIndicator {
@@ -37,6 +50,10 @@
     cursor: pointer;
     text-decoration: none;
     transition: opacity 0.2s ease;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
 }
 
 .modeIndicator:hover {
@@ -53,6 +70,17 @@
     text-decoration: none;
     transition: opacity 0.2s ease;
     margin-right: 0.25rem;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+}
+
+.themeIndicator:focus-visible,
+.modeIndicator:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 
 .themeIndicator:hover {
@@ -118,5 +146,43 @@
 
     .title {
         flex: 4;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .items {
+        display: none;
+    }
+
+    .title {
+        position: static;
+        transform: none;
+        flex: 1;
+        justify-content: center;
+        gap: 0.25rem;
+        max-width: none;
+        min-width: 0;
+        font-size: 0.75rem;
+    }
+
+    .titleName {
+        flex: 0 1 auto;
+    }
+
+    .fullTitleName,
+    .fullIndicator {
+        display: none;
+    }
+
+    .compactTitleName,
+    .compactIndicator {
+        display: inline;
+    }
+
+    .themeIndicator,
+    .modeIndicator {
+        flex: 0 0 auto;
+        font-size: 0.68rem;
+        margin: 0;
     }
 }
