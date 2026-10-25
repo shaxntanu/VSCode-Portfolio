@@ -9,6 +9,8 @@
     justify-content: space-between;
     font-size: 0.75rem;
     font-family: 'Source Sans Pro', sans-serif;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .bottomBar a {
@@ -157,6 +159,28 @@
 
     .container {
         gap: 0;
+        min-width: 0;
+    }
+
+    .bottomBar {
+        overflow: hidden;
+    }
+
+    .bottomBar > .container:first-child .telemetry,
+    .bottomBar > .container:last-child .priority13 {
+        display: none;
+    }
+
+    .bottomBar > .container:last-child .modeButton {
+        padding: 0 4px;
+    }
+
+    .bottomBar > .container:last-child .modeButton span {
+        display: none;
+    }
+
+    .bottomBar > .container:last-child .modeButton .icon {
+        margin-right: 0;
     }
 
     /* Hide medium priority items on mobile */
@@ -166,7 +190,7 @@
         display: none;
     }
 
-    /* Only show critical items (1-3) on mobile */
+    /* Keep the essential branch/build details and the Zen icon on mobile. */
 }
 
 /* Build Info Modal */
