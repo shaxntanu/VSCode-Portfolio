@@ -13,7 +13,7 @@ const JournalPage = () => {
 
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Medium Articles</h2>
-        <div className={styles.grid}>
+        <div className={`${styles.grid} ${styles.mediumArticles}`}>
           {mediumArticles.map((article) => (
             <a
               key={article.id}

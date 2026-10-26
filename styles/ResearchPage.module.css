@@ -133,6 +133,12 @@
     color: var(--text-muted);
 }
 
+.mediumArticles .cardId,
+.mediumArticles .cardType,
+.mediumArticles .cardDate {
+    color: var(--text-color);
+}
+
 .statusBadge {
     font-size: 0.7rem;
     font-weight: 600;
