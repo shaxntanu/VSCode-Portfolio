@@ -60,6 +60,14 @@ export const mediumArticles: MediumArticle[] = [
     status: 'PUBLISHED',
     url: 'https://shaxntanu.medium.com/qwen-cli-has-a-sense-of-humour-159506bd0840',
   },
+  {
+    id: 'BLG-003',
+    title: 'What Is My Pico W Connected To?',
+    type: 'Adafruit Open Source Contribution',
+    date: '2026-10-26',
+    status: 'PUBLISHED',
+    url: 'https://shaxntanu.medium.com/what-is-my-pico-w-connected-to-28b5c1d31ada',
+  },
 ];
 
 export const libraryProject: LibraryProject = {
