@@ -101,6 +101,14 @@
     backface-visibility: hidden;
 }
 
+.espressifLogo {
+    filter: brightness(0) invert(1);
+}
+
+:global(html[data-theme='light']) .espressifLogo {
+    filter: none;
+}
+
 .categoryBadge {
     font-family: 'Fira Code', 'Consolas', monospace;
     font-size: 0.65rem;
@@ -142,10 +150,14 @@
     transition: all 0.3s ease;
     flex: 0 1 auto;
     max-height: 9rem;
-    overflow-y: auto;
+    overflow-y: hidden;
     overscroll-behavior: contain;
     scrollbar-width: none;
     -ms-overflow-style: none;
+}
+
+.scrollableDescription {
+    overflow-y: auto;
 }
 
 .description::-webkit-scrollbar {

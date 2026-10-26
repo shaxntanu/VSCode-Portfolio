@@ -4,10 +4,19 @@ export interface MediumArticle {
   id: string;
   title: string;
   type: string;
+  category: MediumArticleCategory;
   date: string;
   status: string;
   url: string;
 }
+
+export type MediumArticleCategory = 'PERSONAL_REFLECTION' | 'OBSERVATION' | 'OPEN_SOURCE_CONTRIBUTION';
+
+export const mediumArticleGroups: { category: MediumArticleCategory; title: string }[] = [
+  { category: 'OPEN_SOURCE_CONTRIBUTION', title: 'Open-Source Contributions' },
+  { category: 'PERSONAL_REFLECTION', title: 'Personal Reflections' },
+  { category: 'OBSERVATION', title: 'Observations' },
+];
 
 export interface LibraryProject {
   title: string;
@@ -47,7 +56,8 @@ export const mediumArticles: MediumArticle[] = [
   {
     id: 'BLG-001',
     title: 'How a Robotics Class Shaped My Engineering Journey',
-    type: 'Personal Article',
+    type: 'Personal Reflection',
+    category: 'PERSONAL_REFLECTION',
     date: '2026-05-31',
     status: 'PUBLISHED',
     url: 'https://medium.com/@shaxntanu/how-a-robotics-class-shaped-my-engineering-journey-19acd8f99bb4',
@@ -55,7 +65,8 @@ export const mediumArticles: MediumArticle[] = [
   {
     id: 'BLG-002',
     title: 'Qwen CLI has a sense of humour',
-    type: 'Personal Article',
+    type: 'Observation',
+    category: 'OBSERVATION',
     date: '2026-09-29',
     status: 'PUBLISHED',
     url: 'https://shaxntanu.medium.com/qwen-cli-has-a-sense-of-humour-159506bd0840',
@@ -63,7 +74,8 @@ export const mediumArticles: MediumArticle[] = [
   {
     id: 'BLG-003',
     title: 'What Is My Pico W Connected To?',
-    type: 'Adafruit Open Source Contribution',
+    type: 'Adafruit Open-Source Contribution',
+    category: 'OPEN_SOURCE_CONTRIBUTION',
     date: '2026-10-26',
     status: 'PUBLISHED',
     url: 'https://shaxntanu.medium.com/what-is-my-pico-w-connected-to-28b5c1d31ada',

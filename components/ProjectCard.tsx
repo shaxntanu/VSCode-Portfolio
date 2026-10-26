@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -40,7 +40,26 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
   const router = useRouter();
   const [bomOpen, setBomOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'name' | 'interface' | 'voltage'>('name');
+  const [descriptionOverflows, setDescriptionOverflows] = useState(false);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
   const logos = Array.isArray(project.logo) ? project.logo : [project.logo];
+
+  useEffect(() => {
+    const descriptionElement = descriptionRef.current;
+    if (!descriptionElement) return;
+
+    const updateOverflowState = () => {
+      setDescriptionOverflows(descriptionElement.scrollHeight > descriptionElement.clientHeight + 1);
+    };
+
+    updateOverflowState();
+
+    if (typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(updateOverflowState);
+    observer.observe(descriptionElement);
+    return () => observer.disconnect();
+  }, [project.description]);
   
   // Handle navigation to main projects page
   const handleProjectReference = () => {
@@ -125,7 +144,7 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
               alt={`${project.title} logo ${index + 1}`}
               width={24}
               height={24}
-              className={styles.logo}
+              className={`${styles.logo} ${logo.includes('espressif_icon.svg') ? styles.espressifLogo : ''}`}
             />
           ))}
         </div>
@@ -139,7 +158,12 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
           {project.title}
         </h3>
         <p className={styles.dateRange}>{project.dateRange}</p>
-        <p className={styles.description}>{project.description}</p>
+        <p
+          ref={descriptionRef}
+          className={`${styles.description} ${descriptionOverflows ? styles.scrollableDescription : ''}`}
+        >
+          {project.description}
+        </p>
         
         {/* Video Embed */}
         {project.videoEmbed && (
