@@ -1,6 +1,6 @@
-import { Project, ProjectCategory, CategoryConfig } from '@/types';
+import { Project, ProjectCategory, ProjectSubsection, CategoryConfig } from '@/types';
 
-export type { Project, ProjectCategory, CategoryConfig };
+export type { Project, ProjectCategory, ProjectSubsection, CategoryConfig };
 
 export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   HARDWARE_MODULES: {
@@ -39,6 +39,15 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
     title: '// ',
     titleHighlight: 'CREATIVE_LAB',
     color: '#ff6b9d', // Pink/Magenta - Creative experimentation
+  },
+};
+
+export const projectSubsectionConfig: Record<ProjectSubsection, CategoryConfig> = {
+  VIGIL_IOT: {
+    title: '// ',
+    titleHighlight: 'VIGIL IoT',
+    color: '#c18a00',
+    link: 'https://github.com/VIGIL-IoT',
   },
 };
 
@@ -191,6 +200,18 @@ export const projects: Project[] = [
     ],
     architecture: 'ESP32 → [I2C Bus 0: OLED] → [I2C Bus 1: BME280] → [I2C Bus 2: RTC] → [SPI: SD Card] → [1-Wire: DS18B20] → [Analog: MQ-135] → [Digital: Buzzer] → WiFi Cloud Upload',
     totalCost: '₹1,202'
+  },
+  {
+    title: 'FUSE — Firmware & Unified Security Engine',
+    description: 'CLI-first embedded firmware security scanner that reports evidence-backed risks in credentials, TLS and network settings, and ESP-IDF image-validation configuration. Exports text, JSON, and SARIF findings, with optional SBOM, advisory, and firmware-signature analysis.',
+    logo: '/logos/python_icon.svg',
+    link: 'https://vigil-fuse.vercel.app',
+    repositoryUrl: 'https://github.com/VIGIL-IoT/VIGIL-FUSE',
+    slug: 'vigil-fuse',
+    category: 'HARDWARE_MODULES',
+    subsection: 'VIGIL_IOT',
+    dateRange: 'Oct 2026 - Present',
+    year: 2026,
   },
   {
     title: 'Jolt Locator',

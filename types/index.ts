@@ -10,6 +10,7 @@ export interface Article {
 }
 
 export type ProjectCategory = 'HARDWARE_MODULES' | 'SOFTWARE_SYSTEMS' | 'MISC_LABS' | 'COMMUNITY_PROJECT' | 'RAGASTRA_PROJECT' | 'MINI_BUILDS' | 'CREATIVE_LAB';
+export type ProjectSubsection = 'VIGIL_IOT';
 export type MiniBuildType = 'ELECTRONICS' | 'SOFTWARE';
 
 export type CircuitCategory = 'EMBEDDED' | 'ANALOG' | 'DIGITAL_LOGIC' | 'SENSORS' | 'POWER_ELECTRONICS' | 'COMMUNICATION' | 'PCB' | 'EDUCATIONAL';
@@ -60,6 +61,7 @@ export interface Project {
   repositoryUrl?: string; // Optional source repository link
   slug: string;
   category: ProjectCategory;
+  subsection?: ProjectSubsection;
   miniBuildType?: MiniBuildType;
   dateRange: string;
   year: number;

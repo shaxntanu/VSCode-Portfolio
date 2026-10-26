@@ -133,7 +133,7 @@ const ProjectCard = ({ project, categoryConfig, accented = false }: ProjectCardP
           className={styles.categoryBadge}
           style={{ backgroundColor: categoryConfig.color }}
         >
-          {project.category.replace('_', ' ')}
+          {project.subsection ? project.subsection.replace('_', ' ') : project.category.replace('_', ' ')}
         </div>
         <h3 className={styles.title} style={{ color: categoryConfig.color }}>
           {project.title}

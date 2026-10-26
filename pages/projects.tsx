@@ -3,7 +3,7 @@ import { VscInfo } from 'react-icons/vsc';
 import ProjectCard from '@/components/ProjectCard';
 import SoftwareInfoPopup from '@/components/SoftwareInfoPopup';
 import LightModeInfoPopup from '@/components/LightModeInfoPopup';
-import { projects, categoryConfig, ProjectCategory } from '@/data/projects';
+import { projects, categoryConfig, projectSubsectionConfig, ProjectCategory } from '@/data/projects';
 
 import styles from '@/styles/ProjectsPage.module.css';
 
@@ -64,6 +64,12 @@ const ProjectsPage = () => {
         if (!categoryProjects || categoryProjects.length === 0) return null;
         
         const config = categoryConfig[category];
+        const vigilProjects = category === 'HARDWARE_MODULES'
+          ? categoryProjects.filter((project) => project.subsection === 'VIGIL_IOT')
+          : [];
+        const primaryProjects = category === 'HARDWARE_MODULES'
+          ? categoryProjects.filter((project) => project.subsection !== 'VIGIL_IOT')
+          : categoryProjects;
         
         return (
           <div key={category} className={styles.categorySection}>
@@ -106,7 +112,7 @@ const ProjectsPage = () => {
               )}
             </div>
             <div className={styles.container}>
-              {categoryProjects.map((project) => (
+              {primaryProjects.map((project) => (
                 <div key={project.slug} id={project.slug}>
                   <ProjectCard 
                     project={project} 
@@ -115,6 +121,32 @@ const ProjectsPage = () => {
                 </div>
               ))}
             </div>
+            {vigilProjects.length > 0 && (
+              <section className={styles.projectSubsection} aria-label="VIGIL IoT projects">
+                <div className={styles.categoryHeader}>
+                  <span className={styles.comment}>{projectSubsectionConfig.VIGIL_IOT.title}</span>
+                  <a
+                    href={projectSubsectionConfig.VIGIL_IOT.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.categoryLink}
+                    style={{ color: projectSubsectionConfig.VIGIL_IOT.color }}
+                  >
+                    {projectSubsectionConfig.VIGIL_IOT.titleHighlight}
+                  </a>
+                </div>
+                <div className={`${styles.container} ${styles.vigilContainer}`}>
+                  {vigilProjects.map((project) => (
+                    <div key={project.slug} id={project.slug}>
+                      <ProjectCard
+                        project={project}
+                        categoryConfig={projectSubsectionConfig.VIGIL_IOT}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         );
       })}
