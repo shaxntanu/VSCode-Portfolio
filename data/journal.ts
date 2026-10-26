@@ -10,10 +10,10 @@ export interface MediumArticle {
   url: string;
 }
 
-export type MediumArticleCategory = 'PERSONAL_WRITING' | 'OPEN_SOURCE_CONTRIBUTION';
+export type MediumArticleCategory = 'PERSONAL_WRITING' | 'TECHNICAL_BLOG';
 
 export const mediumArticleGroups: { category: MediumArticleCategory; title: string }[] = [
-  { category: 'OPEN_SOURCE_CONTRIBUTION', title: 'Open-Source Contributions' },
+  { category: 'TECHNICAL_BLOG', title: 'Technical Blogs' },
   { category: 'PERSONAL_WRITING', title: 'Personal Writing' },
 ];
 
@@ -73,8 +73,8 @@ export const mediumArticles: MediumArticle[] = [
   {
     id: 'BLG-003',
     title: 'What Is My Pico W Connected To?',
-    type: 'Adafruit Open-Source Contribution',
-    category: 'OPEN_SOURCE_CONTRIBUTION',
+    type: 'Technical Blog',
+    category: 'TECHNICAL_BLOG',
     date: '2026-10-26',
     status: 'PUBLISHED',
     url: 'https://shaxntanu.medium.com/what-is-my-pico-w-connected-to-28b5c1d31ada',
