@@ -50,8 +50,8 @@ const ResumePage = () => {
 
         setLastUpdated(`${day}/${month}/${year}`);
 
-        // A commit-specific URL avoids serving a previously cached PDF after the repo updates.
-        const versionedPdfUrl = `${RESUME_PDF_URL}?v=${encodeURIComponent(data.sha)}`;
+        // The commit identifies the source version; the visit token forces a fresh fetch each time this page opens.
+        const versionedPdfUrl = `${RESUME_PDF_URL}?v=${encodeURIComponent(data.sha)}&visit=${Date.now()}`;
         setResumePdfUrl(versionedPdfUrl);
         await updateFileSize(versionedPdfUrl);
       } catch (error) {
