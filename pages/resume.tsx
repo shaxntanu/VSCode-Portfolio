@@ -7,42 +7,72 @@ const GITHUB_API_URL = 'https://api.github.com/repos/shaxntanu/LaTeX-Resume-Shan
 
 const ResumePage = () => {
   const [lastUpdated, setLastUpdated] = useState('Loading...');
+  const [resumePdfUrl, setResumePdfUrl] = useState<string | null>(null);
+  const [fileSize, setFileSize] = useState('CHECKING');
   const [isPreviewLoading, setIsPreviewLoading] = useState(true);
-  const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const isPageLoading = lastUpdated === 'Loading...' || isPreviewLoading || isDownloading;
 
   useMainAreaLoading('resume-page', isPageLoading);
 
   useEffect(() => {
-    setIsPreviewEnabled(true);
-
-    // Fetch last commit date from GitHub
-    const fetchLastUpdated = async () => {
+    const updateFileSize = async (pdfUrl: string) => {
       try {
-        const response = await fetch(GITHUB_API_URL);
+        const response = await fetch(pdfUrl, { method: 'HEAD', cache: 'no-store' });
+        const contentLength = response.headers.get('content-length');
+
+        if (!response.ok || !contentLength) {
+          setFileSize('UNAVAILABLE');
+          return;
+        }
+
+        const bytes = Number(contentLength);
+        setFileSize(`${(bytes / 1024).toFixed(1)} KB (${bytes.toLocaleString()} bytes)`);
+      } catch {
+        setFileSize('UNAVAILABLE');
+      }
+    };
+
+    const syncResume = async () => {
+      try {
+        const response = await fetch(`${GITHUB_API_URL}?t=${Date.now()}`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+
         const data = await response.json();
+        if (!data.sha || !data.commit?.committer?.date) throw new Error('Latest resume commit is unavailable');
+
         const commitDate = new Date(data.commit.committer.date);
-        
+
         // Format to DD/MM/YYYY
         const day = String(commitDate.getDate()).padStart(2, '0');
         const month = String(commitDate.getMonth() + 1).padStart(2, '0');
         const year = commitDate.getFullYear();
-        
+
         setLastUpdated(`${day}/${month}/${year}`);
+
+        // A commit-specific URL avoids serving a previously cached PDF after the repo updates.
+        const versionedPdfUrl = `${RESUME_PDF_URL}?v=${encodeURIComponent(data.sha)}`;
+        setResumePdfUrl(versionedPdfUrl);
+        await updateFileSize(versionedPdfUrl);
       } catch (error) {
-        console.error('Failed to fetch last updated date:', error);
+        console.error('Failed to sync resume metadata:', error);
         setLastUpdated('UNKNOWN');
+        const fallbackPdfUrl = `${RESUME_PDF_URL}?v=${Date.now()}`;
+        setResumePdfUrl(fallbackPdfUrl);
+        await updateFileSize(fallbackPdfUrl);
       }
     };
 
-    fetchLastUpdated();
+    syncResume();
   }, []);
 
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
-      const response = await fetch(RESUME_PDF_URL);
+      const pdfUrl = resumePdfUrl ?? `${RESUME_PDF_URL}?v=${Date.now()}`;
+      const response = await fetch(pdfUrl, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Resume download returned ${response.status}`);
+
       const blob = await response.blob();
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
@@ -54,7 +84,7 @@ const ResumePage = () => {
     } catch (error) {
       console.error('Download failed:', error);
       // Fallback to direct link
-      window.open(RESUME_PDF_URL, '_blank');
+      window.open(resumePdfUrl ?? RESUME_PDF_URL, '_blank');
     } finally {
       setIsDownloading(false);
     }
@@ -80,7 +110,7 @@ const ResumePage = () => {
           <div className={styles.infoBlock}>
             <div className={styles.infoLine}>
               <span className={styles.infoLabel}>File Size:</span>
-              <span className={styles.infoValue}>53.8 KB (55,156 bytes)</span>
+              <span className={styles.infoValue}>{fileSize}</span>
             </div>
             <div className={styles.infoLine}>
               <span className={styles.infoLabel}>Status:</span>
@@ -126,14 +156,14 @@ const ResumePage = () => {
               <span className={styles.previewLabel}>[ PREVIEW MODE ]</span>
             </div>
             <iframe
-              src={isPreviewEnabled ? RESUME_PDF_URL : undefined}
+              src={resumePdfUrl ?? undefined}
               className={styles.pdfPreview}
               title="Resume Preview"
               onLoad={() => {
-                if (isPreviewEnabled) setIsPreviewLoading(false);
+                if (resumePdfUrl) setIsPreviewLoading(false);
               }}
               onError={() => {
-                if (isPreviewEnabled) setIsPreviewLoading(false);
+                if (resumePdfUrl) setIsPreviewLoading(false);
               }}
             />
           </div>

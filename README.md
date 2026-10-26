@@ -72,7 +72,7 @@ The web development was AI-assisted (Claude, GitHub Copilot, Kiro IDE) because m
 
 ## Resume Integration
 
-The resume page pulls the latest PDF from my [LaTeX Resume repository](https://github.com/shaxntanu/LaTeX-Resume-Shantanu). Updates to that repository automatically reflect on this site through Vercel deployment.
+The resume page loads the generated PDF directly from [GitHub Pages](https://shaxntanu.github.io/LaTeX-Resume-Shantanu/resume.pdf). A GitHub Actions workflow in the [LaTeX Resume repository](https://github.com/shaxntanu/LaTeX-Resume-Shantanu) compiles `resume.tex` into `resume.pdf`; the portfolio uses the latest repository commit to refresh its PDF URL and file-size display. This flow does not require a Vercel deployment.
 
 ## License
 
