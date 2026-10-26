@@ -10,12 +10,11 @@ export interface MediumArticle {
   url: string;
 }
 
-export type MediumArticleCategory = 'PERSONAL_REFLECTION' | 'OBSERVATION' | 'OPEN_SOURCE_CONTRIBUTION';
+export type MediumArticleCategory = 'PERSONAL_WRITING' | 'OPEN_SOURCE_CONTRIBUTION';
 
 export const mediumArticleGroups: { category: MediumArticleCategory; title: string }[] = [
   { category: 'OPEN_SOURCE_CONTRIBUTION', title: 'Open-Source Contributions' },
-  { category: 'PERSONAL_REFLECTION', title: 'Personal Reflections' },
-  { category: 'OBSERVATION', title: 'Observations' },
+  { category: 'PERSONAL_WRITING', title: 'Personal Writing' },
 ];
 
 export interface LibraryProject {
@@ -57,7 +56,7 @@ export const mediumArticles: MediumArticle[] = [
     id: 'BLG-001',
     title: 'How a Robotics Class Shaped My Engineering Journey',
     type: 'Personal Reflection',
-    category: 'PERSONAL_REFLECTION',
+    category: 'PERSONAL_WRITING',
     date: '2026-05-31',
     status: 'PUBLISHED',
     url: 'https://medium.com/@shaxntanu/how-a-robotics-class-shaped-my-engineering-journey-19acd8f99bb4',
@@ -66,7 +65,7 @@ export const mediumArticles: MediumArticle[] = [
     id: 'BLG-002',
     title: 'Qwen CLI has a sense of humour',
     type: 'Observation',
-    category: 'OBSERVATION',
+    category: 'PERSONAL_WRITING',
     date: '2026-09-29',
     status: 'PUBLISHED',
     url: 'https://shaxntanu.medium.com/qwen-cli-has-a-sense-of-humour-159506bd0840',
