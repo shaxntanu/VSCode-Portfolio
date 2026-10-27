@@ -69,7 +69,7 @@ export async function getStaticProps() {
   return {
     props: { 
       title: 'Mini Builds',
-      ogDescription: 'Small experiments, utilities, and hardware learning projects - Arduino, ESP8266, and quick builds.'
+      ogDescription: 'Small experiments, utilities, and hardware learning projects - ESP32-C3, Arduino, ESP8266, and quick builds.'
     },
   };
 }

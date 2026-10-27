@@ -823,6 +823,17 @@ export const projects: Project[] = [
     year: 2026,
   },
   {
+    title: 'QUARK',
+    description: 'ESP32-C3 desk display for Codex token usage, quotas, and live PC telemetry. A Windows Python companion reads system stats and sends updates to its 128×64 OLED over USB serial.',
+    logo: '/logos/espressif_icon.svg',
+    link: 'https://github.com/shaxntanu/QUARK',
+    slug: 'quark-esp32-c3-monitor',
+    category: 'MINI_BUILDS',
+    miniBuildType: 'ELECTRONICS',
+    dateRange: 'ESP32-C3 Embedded Build',
+    year: 2026,
+  },
+  {
     title: 'Arduino Electromagnet Turns Controller',
     description: 'Arduino Uno and CNC Shield V3 firmware pulses two stepper motors together to wind an electromagnet coil, with pulse timing controlling the winding speed.',
     logo: '/logos/arduino_icon.svg',
