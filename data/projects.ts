@@ -227,6 +227,18 @@ export const projects: Project[] = [
     year: 2026,
   },
   {
+    title: 'Aether',
+    description: 'Portable 2.4 GHz RF learning platform built around an ESP32 and dual NRF24L01+ radios. It supports controlled frequency-hopping, protocol-coexistence, and signal-propagation experiments, with custom hardware and documentation.',
+    logo: '/logos/espressif_icon.svg',
+    link: 'https://aether-nrf-sim.vercel.app',
+    repositoryUrl: 'https://github.com/VIGIL-IoT/Aether',
+    slug: 'vigil-aether',
+    category: 'HARDWARE_MODULES',
+    subsection: 'VIGIL_IOT',
+    dateRange: 'May 2026 - Jul 2026',
+    year: 2026,
+  },
+  {
     title: 'Jolt Locator',
     description: 'ESP32 GPS-and-compass prototype that displays coordinates and heading on an OLED and guides users toward a configured Jolt store location; the project also includes its first KiCad PCB design.',
     logo: '/logos/espressif_icon.svg',
