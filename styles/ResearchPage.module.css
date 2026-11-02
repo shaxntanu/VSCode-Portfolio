@@ -128,12 +128,12 @@
 .cardId {
     font-size: 0.8rem;
     font-family: 'JetBrains Mono', monospace;
-    color: var(--text-muted);
+    color: var(--text-color);
 }
 
 .cardType {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: var(--text-color);
 }
 
 .cardFooter {
@@ -144,12 +144,6 @@
 
 .cardDate {
     font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.mediumArticles .cardId,
-.mediumArticles .cardType,
-.mediumArticles .cardDate {
     color: var(--text-color);
 }
 
