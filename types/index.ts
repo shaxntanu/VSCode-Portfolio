@@ -118,6 +118,8 @@ export interface Circuit {
 export interface Repo {
   id: number;
   name: string;
+  private: boolean;
+  visibility?: 'public' | 'private' | 'internal';
   description: string;
   language: string;
   watchers: number;

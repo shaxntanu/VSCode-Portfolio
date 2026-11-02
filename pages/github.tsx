@@ -255,7 +255,7 @@ const GithubPage = ({
               <h2 className={styles.sectionTitle}>Language Distribution</h2>
               <div className={styles.languageMetadata}>
                 <div className={styles.metadataItem}>
-                  <span className={styles.metadataLabel}>Repositories</span>
+                  <span className={styles.metadataLabel}>Public repositories</span>
                   <span className={styles.metadataValue}>{repositoriesAnalyzed}</span>
                 </div>
                 <div className={styles.metadataItem}>
@@ -265,7 +265,7 @@ const GithubPage = ({
               </div>
             </div>
             <p className={styles.sectionSubtitle}>
-              Languages detected across my repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes.
+              Languages detected across my public repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes.
             </p>
             
             <LanguageTreemap languages={languages} />
@@ -284,15 +284,23 @@ export async function getStaticProps() {
       fetch(`https://api.github.com/users/${username}`)
     ]);
     
-    const repos: Repo[] = await reposRes.json();
+    const reposResponse: unknown = await reposRes.json();
+    const repos: Repo[] = Array.isArray(reposResponse) ? reposResponse : [];
     const user: User = await userRes.json();
+
+    // Only include repositories GitHub explicitly marks as public. This keeps
+    // private repository names and language data out of the page if API auth is
+    // added later.
+    const publicRepos = repos.filter((repo) => (
+      repo?.private === false && repo.visibility !== 'private' && repo.visibility !== 'internal'
+    ));
     
     // Calculate total stars and forks
-    const totalStars = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0) : 0;
-    const totalForks = Array.isArray(repos) ? repos.reduce((acc, repo) => acc + (repo.forks || 0), 0) : 0;
+    const totalStars = publicRepos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0);
+    const totalForks = publicRepos.reduce((acc, repo) => acc + (repo.forks || 0), 0);
 
-    // Analyze the same public repositories counted in the profile, including forks.
-    const profileRepos = Array.isArray(repos) ? repos : [];
+    // Analyze only the explicitly public repositories, including public forks.
+    const profileRepos = publicRepos;
     const languagePromises = profileRepos.map(async (repo) => {
       try {
         const response = await fetch(repo.languages_url);
@@ -339,7 +347,7 @@ export async function getStaticProps() {
       props: { 
         title: 'Github',
         ogDescription: 'GitHub stats, contribution graph, and repositories for shaxntanu.',
-        repos: Array.isArray(repos) ? repos.slice(0, 10) : [], 
+        repos: publicRepos.slice(0, 10),
         user: user?.login ? user : null,
         totalStars,
         totalForks,
