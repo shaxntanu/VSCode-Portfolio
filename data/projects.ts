@@ -811,6 +811,17 @@ export const projects: Project[] = [
     dateRange: 'Oct 2026 - Present',
     year: 2026,
   },
+  {
+    title: 'Vanta-Morph',
+    description: 'Browser-based image-to-particle art editor with depth-aware WebGL motion effects. Tune depth and movement, then export an embeddable particle-cloud element or standalone HTML; image processing stays local in the browser.',
+    logo: '/logos/js_icon.svg',
+    link: 'https://vanta-morph-beta.vercel.app',
+    repositoryUrl: 'https://github.com/shaxntanu/vantaMorph',
+    slug: 'vanta-morph',
+    category: 'SOFTWARE_SYSTEMS',
+    dateRange: 'Nov 2026 - Present',
+    year: 2026,
+  },
   // Mini Builds
   {
     title: 'Computer Always Awake',
