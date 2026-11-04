@@ -20,8 +20,15 @@ interface LoadedContributionCalendar {
   response: ContributionCalendarResponse;
 }
 
+interface OrganizationRepositoryGroup {
+  name: string;
+  url: string;
+  repos: Repo[];
+}
+
 interface GithubPageProps {
   repos?: Repo[];
+  organizationRepositories?: OrganizationRepositoryGroup[];
   user?: User;
   totalStars?: number;
   totalForks?: number;
@@ -32,6 +39,7 @@ interface GithubPageProps {
 
 const GithubPage = ({ 
   repos = [], 
+  organizationRepositories = [],
   user, 
   totalStars = 0, 
   totalForks = 0,
@@ -246,6 +254,20 @@ const GithubPage = ({
               ))}
             </div>
           )}
+          {organizationRepositories.map((organization) => organization.repos.length > 0 && (
+            <section className={styles.organizationRepoGroup} key={organization.name}>
+              <h3 className={styles.organizationTitle}>
+                <a href={organization.url} target="_blank" rel="noopener noreferrer">
+                  {organization.name}
+                </a>
+              </h3>
+              <div className={styles.grid}>
+                {organization.repos.map((repo) => (
+                  <RepoCard key={repo.id} repo={repo} />
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
 
         {/* Language Distribution Section */}
@@ -255,7 +277,7 @@ const GithubPage = ({
               <h2 className={styles.sectionTitle}>Language Distribution</h2>
               <div className={styles.languageMetadata}>
                 <div className={styles.metadataItem}>
-                  <span className={styles.metadataLabel}>Public repositories</span>
+                  <span className={styles.metadataLabel}>Repositories analyzed</span>
                   <span className={styles.metadataValue}>{repositoriesAnalyzed}</span>
                 </div>
                 <div className={styles.metadataItem}>
@@ -265,7 +287,7 @@ const GithubPage = ({
               </div>
             </div>
             <p className={styles.sectionSubtitle}>
-              Languages detected across my public repositories based on GitHub&apos;s language analysis. These percentages represent the distribution of code bytes.
+              Languages across my public repositories and the public repositories of VIGIL IoT and Arceus Labs, based on GitHub&apos;s language analysis. Percentages represent code-byte distribution.
             </p>
             
             <LanguageTreemap languages={languages} />
@@ -277,11 +299,48 @@ const GithubPage = ({
 
 export async function getStaticProps() {
   const username = 'shaxntanu';
+  const organizations = [
+    { login: 'VIGIL-IoT', name: 'VIGIL IoT', url: 'https://github.com/VIGIL-IoT' },
+    { login: 'Arceus-Labs', name: 'Arceus Labs', url: 'https://github.com/Arceus-Labs' },
+  ];
+  const githubHeaders = process.env.GITHUB_TOKEN
+    ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json' }
+    : { Accept: 'application/vnd.github+json' };
+
+  const fetchOrganizationRepos = async (organization: typeof organizations[number]): Promise<OrganizationRepositoryGroup> => {
+    const organizationRepos: Repo[] = [];
+    const perPage = 100;
+
+    for (let page = 1; ; page++) {
+      try {
+        const response = await fetch(
+          `https://api.github.com/orgs/${organization.login}/repos?type=public&sort=updated&per_page=${perPage}&page=${page}`,
+          { headers: githubHeaders }
+        );
+        if (!response.ok) break;
+
+        const responseRepos: unknown = await response.json();
+        if (!Array.isArray(responseRepos)) break;
+
+        const publicOrganizationRepos = responseRepos.filter((repo): repo is Repo => (
+          repo?.private === false && repo.visibility !== 'private' && repo.visibility !== 'internal'
+        ));
+        organizationRepos.push(...publicOrganizationRepos);
+
+        if (responseRepos.length < perPage) break;
+      } catch {
+        break;
+      }
+    }
+
+    return { name: organization.name, url: organization.url, repos: organizationRepos };
+  };
   
   try {
-    const [reposRes, userRes] = await Promise.all([
-      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`),
-      fetch(`https://api.github.com/users/${username}`)
+    const [reposRes, userRes, organizationRepositories] = await Promise.all([
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`, { headers: githubHeaders }),
+      fetch(`https://api.github.com/users/${username}`, { headers: githubHeaders }),
+      Promise.all(organizations.map(fetchOrganizationRepos)),
     ]);
     
     const reposResponse: unknown = await reposRes.json();
@@ -300,10 +359,13 @@ export async function getStaticProps() {
     const totalForks = publicRepos.reduce((acc, repo) => acc + (repo.forks || 0), 0);
 
     // Analyze only the explicitly public repositories, including public forks.
-    const profileRepos = publicRepos;
-    const languagePromises = profileRepos.map(async (repo) => {
+    const repositoriesForLanguageAnalysis = [
+      ...publicRepos,
+      ...organizationRepositories.flatMap((organization) => organization.repos),
+    ];
+    const languagePromises = repositoriesForLanguageAnalysis.map(async (repo) => {
       try {
-        const response = await fetch(repo.languages_url);
+        const response = await fetch(repo.languages_url, { headers: githubHeaders });
         return response.ok ? response.json() : {};
       } catch {
         return {};
@@ -316,7 +378,7 @@ export async function getStaticProps() {
     let totalBytes = 0;
 
     languageResults.forEach((repositoryLanguages, repoIndex) => {
-      const repo = profileRepos[repoIndex];
+      const repo = repositoriesForLanguageAnalysis[repoIndex];
       Object.entries(repositoryLanguages).forEach(([language, bytes]) => {
         const byteCount = typeof bytes === 'number' && Number.isFinite(bytes) ? bytes : 0;
         if (byteCount <= 0) return;
@@ -324,7 +386,7 @@ export async function getStaticProps() {
         const current = languageMap.get(language) || { bytes: 0, repositories: [] };
         current.bytes += byteCount;
         current.repositories.push({
-          name: repo.name,
+          name: repo.full_name || repo.name,
           url: repo.html_url,
           bytes: byteCount,
         });
@@ -348,11 +410,12 @@ export async function getStaticProps() {
         title: 'Github',
         ogDescription: 'GitHub stats, contribution graph, and repositories for shaxntanu.',
         repos: publicRepos.slice(0, 10),
+        organizationRepositories,
         user: user?.login ? user : null,
         totalStars,
         totalForks,
         languages,
-        repositoriesAnalyzed: profileRepos.length,
+        repositoriesAnalyzed: repositoriesForLanguageAnalysis.length,
         languagesDetected: languages.length,
       },
       revalidate: 3600,
@@ -363,6 +426,7 @@ export async function getStaticProps() {
       props: { 
         title: 'Github', 
         repos: [], 
+        organizationRepositories: [],
         user: null, 
         totalStars: 0, 
         totalForks: 0,

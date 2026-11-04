@@ -247,6 +247,26 @@
     gap: 1.5rem;
 }
 
+.organizationRepoGroup {
+    margin-top: 2rem;
+}
+
+.organizationTitle {
+    margin: 0 0 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.organizationTitle a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.organizationTitle a:hover {
+    color: var(--accent-color);
+}
+
 @media screen and (max-width: 768px) {
     .container {
         padding: 1rem;
