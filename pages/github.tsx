@@ -303,7 +303,7 @@ export async function getStaticProps() {
     { login: 'VIGIL-IoT', name: 'VIGIL IoT', url: 'https://github.com/VIGIL-IoT' },
     { login: 'Arceus-Labs', name: 'Arceus Labs', url: 'https://github.com/Arceus-Labs' },
   ];
-  const githubHeaders = process.env.GITHUB_TOKEN
+  const githubHeaders: Record<string, string> = process.env.GITHUB_TOKEN
     ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json' }
     : { Accept: 'application/vnd.github+json' };
 
