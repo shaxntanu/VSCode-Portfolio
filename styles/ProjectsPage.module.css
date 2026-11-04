@@ -92,8 +92,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.vigilContainer> :last-child:nth-child(2) {
-    grid-column: span 1;
+.vigilContainer> :last-child:nth-child(2n+1) {
+    grid-column: 1 / -1;
 }
 
 /* Tablet: 2 columns */
@@ -205,6 +205,10 @@
 
     .vigilContainer {
         grid-template-columns: 1fr;
+    }
+
+    .vigilContainer> :last-child:nth-child(2n+1) {
+        grid-column: auto;
     }
 
     .infoButton {
