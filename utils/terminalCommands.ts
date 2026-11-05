@@ -39,7 +39,7 @@ EDUCATION:
   B.Tech Electronics & Communication Engineering
 
 EXPERIENCE:
-  Founder @ Arceus Labs (2025-Present)
+  Founder @ Eleven October (2025-Present)
     Leading IoT and embedded systems projects
 
   Co-founder @ Ragastra (2025-Present)
@@ -119,7 +119,7 @@ export const terminalCommands: Record<string, TerminalCommand> = {
   whoami: {
     name: 'whoami',
     description: 'Display user information',
-    execute: () => 'Embedded Systems Engineer | IoT Developer | ECE Student | Builder at Arceus Labs & Ragastra',
+    execute: () => 'Embedded Systems Engineer | IoT Developer | ECE Student | Builder at Eleven October & Ragastra',
   },
   help: {
     name: 'help',

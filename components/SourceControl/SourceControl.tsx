@@ -47,7 +47,7 @@ const commits: Commit[] = [
     date: new Date('2025-03-01'),
     tags: ['collaboration', 'open-source'],
     impact: 'Contributing to community engineering initiatives',
-    details: 'Started contributing to Arceus Labs and Ragastra projects.',
+    details: 'Started contributing to Eleven October and Ragastra projects.',
   },
 ];
 

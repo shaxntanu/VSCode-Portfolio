@@ -66,12 +66,12 @@ const ExperiencePage = () => {
 
 ---
 
-## [Open Source Organization] Founder @ Arceus Labs
+## [Open Source Organization] Founder @ Eleven October
 **Timeline:** December 2025 - Present · ${calculateDuration('2025-12-01', 'Present')}  
 **Location:** Remote
 
 ### MISSION
-**Arceus Labs** is an open-source hardware community for developers who want to go beyond tutorials and actually ship hardware. A collaborative space where schematics are shared, firmware is open sourced, and documentation is written for real-world use.
+**Eleven October** is an open-source hardware community for developers who want to go beyond tutorials and actually ship hardware. A collaborative space where schematics are shared, firmware is open sourced, and documentation is written for real-world use.
 
 ### WHAT WE BUILD
 *   **IoT devices** - ESP32-based environmental sensors, GPS navigation systems, and smart automation.
@@ -85,13 +85,13 @@ const ExperiencePage = () => {
 *   **Public iteration** - Making mistakes in public, learning from them, and building something real.
 *   **Open hardware** - Every project designed to be forked, learned from, and improved upon.
 
-### PROJECTS UNDER ARCEUS LABS
-*   [Jolt Locator](https://github.com/Arceus-Labs/Jolt-Locator) - Offline GPS navigation with compass guidance
-*   [The Ruin Machine](https://github.com/Arceus-Labs/The-Ruin-Machine) - Probability simulator proving gambling math
-*   [Servo Light Switch](https://github.com/Arceus-Labs/Servo-Light-Switch-Control-ESP8266-and-HC06) - Bluetooth home automation
-*   [RFID Attendance System](https://github.com/Arceus-Labs/RFID-Attendance-System) - Smart tracking with Arduino + ESP32
-*   [Electromagnet Controller](https://github.com/Arceus-Labs/Arduino-Electromagnet-Turns-Controller) - Coil winding automation
-*   [Inductance Meter](https://github.com/Arceus-Labs/esp8266-inductance-meter) - ESP8266-based measurement tool
+### PROJECTS UNDER ELEVEN OCTOBER
+*   [Jolt Locator](https://github.com/ElevenOctober/Jolt-Locator) - Offline GPS navigation with compass guidance
+*   [The Ruin Machine](https://github.com/ElevenOctober/The-Ruin-Machine) - Probability simulator proving gambling math
+*   [Servo Light Switch](https://github.com/ElevenOctober/Servo-Light-Switch-Control-ESP8266-and-HC06) - Bluetooth home automation
+*   [RFID Attendance System](https://github.com/ElevenOctober/RFID-Attendance-System) - Smart tracking with Arduino + ESP32
+*   [Electromagnet Controller](https://github.com/ElevenOctober/Arduino-Electromagnet-Turns-Controller) - Coil winding automation
+*   [Inductance Meter](https://github.com/ElevenOctober/esp8266-inductance-meter) - ESP8266-based measurement tool
 
 **Tech Stack:** ESP32, ESP8266, Arduino, Embedded C/C++, IoT Protocols, PCB Design, Git, Open Source Hardware
 
@@ -219,7 +219,7 @@ Dedicated to promoting a culture of mental well-being and psychological safety a
 
 ---
 
-## [HARDWARE PROJECT] Smart Blind Stick | Arceus Labs
+## [HARDWARE PROJECT] Smart Blind Stick | Eleven October
 **Role:** Lead Engineer  
 **Timeline:** Jul 2018 - Aug 2018  
 
@@ -230,7 +230,7 @@ Dedicated to promoting a culture of mental well-being and psychological safety a
 
 **Tech Stack:** Arduino, C++, Ultrasonic Sensors (HC-SR04), Audio Output, Embedded Systems
 
-## [HARDWARE PROJECT] Zephyr-Station | Arceus Labs
+## [HARDWARE PROJECT] Zephyr-Station | Eleven October
 **Role:** Lead Engineer  
 **Timeline:** Aug 2025 - Nov 2025  
 
@@ -241,7 +241,7 @@ Dedicated to promoting a culture of mental well-being and psychological safety a
 
 **Tech Stack:** C++, ESP32, BME280, MQ-135, SSD1306 OLED, I2C, SPI, SD Card Logging, IoT Architecture
 
-## [HARDWARE PROJECT] Jolt-Locator | Arceus Labs
+## [HARDWARE PROJECT] Jolt-Locator | Eleven October
 **Role:** Lead Engineer  
 **Timeline:** Nov 2025 - Dec 2025  
 
@@ -252,7 +252,7 @@ Dedicated to promoting a culture of mental well-being and psychological safety a
 
 **Tech Stack:** C++, ESP32, NEO-6M GPS, QMC5883L Magnetometer, I2C, UART, OLED Display, Offline Navigation
 
-## [HARDWARE PROJECT] The-Ruin-Machine | Arceus Labs
+## [HARDWARE PROJECT] The-Ruin-Machine | Eleven October
 **Role:** Lead Engineer  
 **Timeline:** Jan 2026  
 
@@ -327,7 +327,7 @@ export async function getStaticProps() {
   return {
     props: { 
       title: 'Experience',
-      ogDescription: 'Experience in prompt engineering at InAmigos Foundation, product development at Grosity, and engineering at Ragastra and Arceus Labs.'
+      ogDescription: 'Experience in prompt engineering at InAmigos Foundation, product development at Grosity, and engineering at Ragastra and Eleven October.'
     },
   };
 }

@@ -287,7 +287,7 @@ const GithubPage = ({
               </div>
             </div>
             <p className={styles.sectionSubtitle}>
-              Languages across my public repositories and the public repositories of VIGIL IoT and Arceus Labs, based on GitHub&apos;s language analysis. Percentages represent code-byte distribution.
+              Languages across my public repositories and the public repositories of VIGIL IoT and Eleven October, based on GitHub&apos;s language analysis. Percentages represent code-byte distribution.
             </p>
             
             <LanguageTreemap languages={languages} />
@@ -301,7 +301,7 @@ export async function getStaticProps() {
   const username = 'shaxntanu';
   const organizations = [
     { login: 'VIGIL-IoT', name: 'VIGIL IoT', url: 'https://github.com/VIGIL-IoT' },
-    { login: 'Arceus-Labs', name: 'Arceus Labs', url: 'https://github.com/Arceus-Labs' },
+    { login: 'ElevenOctober', name: 'Eleven October', url: 'https://github.com/ElevenOctober' },
   ];
   const githubHeaders: Record<string, string> = process.env.GITHUB_TOKEN
     ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}`, Accept: 'application/vnd.github+json' }
@@ -324,7 +324,18 @@ export async function getStaticProps() {
 
         const publicOrganizationRepos = responseRepos.filter((repo): repo is Repo => (
           repo?.private === false && repo.visibility !== 'private' && repo.visibility !== 'internal'
-        ));
+        )).map((repo) => {
+          const displayName = repo.name
+            .replace(/Arceus[ -]Labs/gi, 'Eleven October')
+            .replace(/^About-/, 'About ');
+
+          return {
+            ...repo,
+            name: displayName,
+            full_name: `${organization.login}/${displayName}`,
+            description: (repo.description || '').replace(/Arceus[ -]Labs/gi, 'Eleven October'),
+          };
+        });
         organizationRepos.push(...publicOrganizationRepos);
 
         if (responseRepos.length < perPage) break;

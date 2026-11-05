@@ -185,7 +185,7 @@ function getExperienceMetrics(projects: Project[]): ExperienceMetrics {
   const organizations = new Set<string>();
 
   projects.forEach((project) => {
-    if (project.category === 'COMMUNITY_PROJECT') organizations.add('Arceus Labs');
+    if (project.category === 'COMMUNITY_PROJECT') organizations.add('Eleven October');
     if (project.category === 'RAGASTRA_PROJECT') organizations.add('Ragastra');
   });
 

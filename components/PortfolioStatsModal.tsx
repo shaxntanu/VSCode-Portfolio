@@ -156,7 +156,7 @@ const PortfolioStatsModal = () => {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', lineHeight: '1.6' }}>
-              <span style={{ color: '#9cdcfe' }}>ARCEUS_LABS</span>
+              <span style={{ color: '#9cdcfe' }}>ELEVEN_OCTOBER</span>
               <span style={{ color: '#ce9178' }}> = {communityProjects}</span>
             </div>
 
