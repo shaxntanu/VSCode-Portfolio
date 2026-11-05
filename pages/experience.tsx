@@ -85,7 +85,7 @@ const ExperiencePage = () => {
 *   **Public iteration** - Making mistakes in public, learning from them, and building something real.
 *   **Open hardware** - Every project designed to be forked, learned from, and improved upon.
 
-### PROJECTS UNDER ELEVEN OCTOBER
+### Projects under Eleven October
 *   [Jolt Locator](https://github.com/ElevenOctober/Jolt-Locator) - Offline GPS navigation with compass guidance
 *   [The Ruin Machine](https://github.com/ElevenOctober/The-Ruin-Machine) - Probability simulator proving gambling math
 *   [Servo Light Switch](https://github.com/ElevenOctober/Servo-Light-Switch-Control-ESP8266-and-HC06) - Bluetooth home automation

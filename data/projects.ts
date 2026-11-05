@@ -20,7 +20,7 @@ export const categoryConfig: Record<ProjectCategory, CategoryConfig> = {
   },
   COMMUNITY_PROJECT: {
     title: '// ',
-    titleHighlight: 'ELEVEN_OCTOBER',
+    titleHighlight: 'Eleven October',
     color: '#00dc8c', // Green - Eleven October (swapped)
     link: 'https://github.com/ElevenOctober',
   },
