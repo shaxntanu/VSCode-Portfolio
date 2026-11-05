@@ -37,6 +37,8 @@ interface GithubPageProps {
   languagesDetected?: number;
 }
 
+const excludedRepositoryFullNames = new Set(['shaxntanu/about-arceus-labs']);
+
 const GithubPage = ({ 
   repos = [], 
   organizationRepositories = [],
@@ -324,18 +326,7 @@ export async function getStaticProps() {
 
         const publicOrganizationRepos = responseRepos.filter((repo): repo is Repo => (
           repo?.private === false && repo.visibility !== 'private' && repo.visibility !== 'internal'
-        )).map((repo) => {
-          const displayName = repo.name
-            .replace(/Arceus[ -]Labs/gi, 'Eleven October')
-            .replace(/^About-/, 'About ');
-
-          return {
-            ...repo,
-            name: displayName,
-            full_name: `${organization.login}/${displayName}`,
-            description: (repo.description || '').replace(/Arceus[ -]Labs/gi, 'Eleven October'),
-          };
-        });
+        ));
         organizationRepos.push(...publicOrganizationRepos);
 
         if (responseRepos.length < perPage) break;
@@ -362,7 +353,10 @@ export async function getStaticProps() {
     // private repository names and language data out of the page if API auth is
     // added later.
     const publicRepos = repos.filter((repo) => (
-      repo?.private === false && repo.visibility !== 'private' && repo.visibility !== 'internal'
+      repo?.private === false &&
+      repo.visibility !== 'private' &&
+      repo.visibility !== 'internal' &&
+      !excludedRepositoryFullNames.has(repo.full_name?.toLowerCase() || '')
     ));
     
     // Calculate total stars and forks
