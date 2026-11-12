@@ -30,7 +30,7 @@ const certificateData: CertificateCategory[] = [
       {
         provider: "MIT x Santander",
         courses: [
-          { name: "Generative AI", url: "https://drive.google.com/file/d/1ZVLtjz0xh-Yxdh__egPgba0zjxqEiLeF/view?usp=sharing", tags: ["#GenerativeAI", "#AIFoundations", "#MLBasics"] },
+          { name: "Introduction to Generative AI", url: "https://drive.google.com/file/d/1ZVLtjz0xh-Yxdh__egPgba0zjxqEiLeF/view?usp=sharing", tags: ["#GenerativeAI", "#AIFoundations", "#MLBasics"] },
           { name: "IoT", url: "https://drive.google.com/file/d/1yQglfFhR8SS8y3ibK8zGnDyMitvzIPrU/view?usp=sharing", tags: ["#InternetOfThings", "#EmbeddedSystems", "#SmartDevices"] }
         ]
       },
@@ -83,7 +83,7 @@ const certificateData: CertificateCategory[] = [
       {
         provider: "Formula 1 x Santander",
         courses: [
-          { name: "Leadership", url: "https://drive.google.com/file/d/1xO1YFj5lDT6cGhEAfhUgioW6dyHj9OpC/view?usp=drive_link", tags: ["#LeadershipSkills", "#HighPerformance", "#TeamDynamics"] }
+          { name: "High-Performance Leadership", url: "https://drive.google.com/file/d/1xO1YFj5lDT6cGhEAfhUgioW6dyHj9OpC/view?usp=drive_link", tags: ["#LeadershipSkills", "#HighPerformance", "#TeamDynamics"] }
         ]
       },
       {
@@ -104,6 +104,14 @@ const certificateData: CertificateCategory[] = [
         provider: "Internshala",
         courses: [
           { name: "Certificate of Selection (CoS)", tags: ["#InAmigosFoundation", "#InternshipSelection"] }
+        ]
+      },
+      {
+        provider: "InAmigos Foundation",
+        courses: [
+          { name: "Certificate of Appreciation", url: "https://drive.google.com/file/d/14QzNApAns4CzCBBUIAs_WUOQKnwR7Ctb/view?usp=sharing", tags: ["#InAmigosFoundation", "#Recognition"] },
+          { name: "Certificate of Completion", url: "https://drive.google.com/file/d/1PU0_HF7DRZ_8d2wIXCMgp3iMG6ky7xBb/view?usp=sharing", tags: ["#InAmigosFoundation", "#Internship"] },
+          { name: "Letter of Recommendation", url: "https://drive.google.com/file/d/1knqLnMWHbWbX7cnEcszX18qwDJfkjxoE/view?usp=sharing", tags: ["#InAmigosFoundation", "#Recommendation"] },
         ]
       }
     ]

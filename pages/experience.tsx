@@ -67,7 +67,7 @@ const ExperiencePage = () => {
 ---
 
 ## [Open Source Organization] Founder @ Eleven October
-**Timeline:** December 2025 - Present · ${calculateDuration('2025-12-01', 'Present')}  
+**Timeline:** October 2025 - Present · ${calculateDuration('2025-10-01', 'Present')}\\
 **Location:** Remote
 
 ### MISSION
@@ -125,8 +125,8 @@ const ExperiencePage = () => {
 
 ---
 
-## [Current Role] InAmigos Foundation
-**Role:** Prompt Engineer · **Timeline:** October 2026 - Present · ${calculateDuration('2026-10-01', 'Present')} · **Location:** India
+## [Internship] InAmigos Foundation
+**Role:** Prompt Engineer · **Timeline:** October 2026 (1 month) · **Location:** India
 
 Developing and refining prompts for the foundation's content and communication workflows.
 
@@ -172,7 +172,7 @@ Mentoring students in electronics and embedded systems at the Institution of Ele
 
 ---
 
-### ElectroFusion TIET
+### ElectroFusion Research Society, TIET
 **Role:** Core Member
 **Timeline:** December 2025 - Present · ${calculateDuration('2025-12-01', 'Present')}  
 **Location:** Patiala, Punjab

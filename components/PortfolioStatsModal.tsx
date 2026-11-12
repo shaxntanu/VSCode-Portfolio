@@ -26,7 +26,7 @@ const PortfolioStatsModal = () => {
     (p) => p.category === 'RAGASTRA_PROJECT'
   ).length;
   const publicationsCount = 9;
-  const certificatesCount = 13;
+  const certificatesCount = 20;
 
   // Handle Escape key
   useEffect(() => {

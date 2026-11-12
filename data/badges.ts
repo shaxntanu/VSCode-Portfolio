@@ -5,7 +5,7 @@ import { projects } from './projects';
 const publicationsCount = 7; // 5 technical reports + 2 placeholder research papers
 
 // Count certificates from certificates page data
-const certificatesCount = 13; // Total courses across all categories
+const certificatesCount = 20; // Certificates and internship documents
 
 // Calculate project count dynamically
 const projectsCount = projects.length;
