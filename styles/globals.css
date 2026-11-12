@@ -31,6 +31,12 @@
     --page-height: calc(100vh - 182px);
 }
 
+@media (min-width: 769px) {
+    html {
+        zoom: 0.8;
+    }
+}
+
 /* Make all text unselectable */
 body {
     -webkit-user-select: none;
