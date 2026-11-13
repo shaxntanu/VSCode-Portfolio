@@ -64,6 +64,7 @@ export const navFolders: NavFolder[] = [
     files: [
       { name: 'leetcode.stats', path: '/leetcode', icon: '/logos/leetcode_icon.svg' },
       { name: 'keysprint.env', path: '/keysprint', icon: '/logos/env_icon.svg' },
+      { name: 'workstation.wcfg', path: '/workstation.wcfg', icon: '/logos/garuda_linux.svg' },
       { name: 'whitepapers.pdf', path: '/publications', icon: '/logos/pdf_icon.svg' },
       { name: 'creative.lab', path: '/creativelab', icon: '/icons/creative_lab_icon.svg' },
       { name: 'medium.md', path: '/journal', icon: 'medium', iconType: 'component' },
